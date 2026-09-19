@@ -3,8 +3,7 @@ mod state_machine;
 use state_machine::{JobEvent, JobState, initial_state};
 
 fn main() {
-
-// Pruebas maquina de estados
+    // Pruebas maquina de estados
     let state = JobState::Queued;
     let next_state = state.transition(JobEvent::CapacityAvailable);
     println!("{:?}", next_state);
@@ -21,18 +20,16 @@ fn main() {
     let next_state = state.transition(JobEvent::Cancel);
     println!("{:?}", next_state);
 
-
-//Pruebas estado inicial
+    //Pruebas estado inicial
     let state = initial_state(true);
-    println!("{:?}",state);
+    println!("{:?}", state);
 
     let state = initial_state(false);
-    println!("{:?}",state);
+    println!("{:?}", state);
 
+    //Pruebas maquina de estados, eventos invalidos
 
-//Pruebas maquina de estados, eventos invalidos
-
-// Pruebas maquina de estados
+    // Pruebas maquina de estados
     let state = JobState::Queued;
     let next_state = state.transition(JobEvent::Completed);
     println!("{:?}", next_state);
@@ -48,6 +45,4 @@ fn main() {
     let state = JobState::Failed;
     let next_state = state.transition(JobEvent::Completed);
     println!("{:?}", next_state);
-
-
 }
