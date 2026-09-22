@@ -1,48 +1,42 @@
 mod state_machine;
 
-use state_machine::{JobEvent, JobState, initial_state};
+use state_machine::{JobEvent, JobState, new_job};
 
 fn main() {
     // Pruebas maquina de estados
-    let state = JobState::Queued;
-    let next_state = state.transition(JobEvent::CapacityAvailable);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::Completed);
+    println!("{:?}", job.state);
 
-    let state = JobState::Running;
-    let next_state = state.transition(JobEvent::Completed);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::Error);
+    println!("{:?}", job.state);
 
-    let state = JobState::Running;
-    let next_state = state.transition(JobEvent::Error);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::Cancel);
+    println!("{:?}", job.state);
 
-    let state = JobState::Running;
-    let next_state = state.transition(JobEvent::Cancel);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), true);
+    JobState::transition(&mut job, JobEvent::CapacityAvailable);
+    println!("{:?}", job.state);
 
-    //Pruebas estado inicial
-    let state = initial_state(true);
-    println!("{:?}", state);
+    //Pruebas de invalidas
 
-    let state = initial_state(false);
-    println!("{:?}", state);
+    let mut job = new_job(1, "sleep 10".to_string(), true);
+    JobState::transition(&mut job, JobEvent::Completed);
+    println!("{:?}", job.state);
 
-    //Pruebas maquina de estados, eventos invalidos
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::CapacityAvailable);
+    println!("{:?}", job.state);
 
-    // Pruebas maquina de estados
-    let state = JobState::Queued;
-    let next_state = state.transition(JobEvent::Completed);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::Completed);
+    JobState::transition(&mut job, JobEvent::Error);
+    println!("{:?}", job.state);
 
-    let state = JobState::Running;
-    let next_state = state.transition(JobEvent::CapacityAvailable);
-    println!("{:?}", next_state);
-
-    let state = JobState::Succeeded;
-    let next_state = state.transition(JobEvent::Completed);
-    println!("{:?}", next_state);
-
-    let state = JobState::Failed;
-    let next_state = state.transition(JobEvent::Completed);
-    println!("{:?}", next_state);
+    let mut job = new_job(1, "sleep 10".to_string(), false);
+    JobState::transition(&mut job, JobEvent::Error);
+    JobState::transition(&mut job, JobEvent::Completed);
+    println!("{:?}", job.state);
 }
