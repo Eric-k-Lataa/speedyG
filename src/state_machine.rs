@@ -19,26 +19,32 @@ pub enum JobEvent {
 
 pub struct Job {
     id: u32,
-    command: String,
+    program: String,
+    args: Vec<String>,
     state: JobState,
 }
 
-pub fn new_job(id: u32, command: String, waiting: bool) -> Job {
+pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Job {
     let state = if waiting {
         JobState::Queued
     } else {
         JobState::Running
     };
 
-    Job { id, command, state }
+    Job {
+        id,
+        program,
+        args,
+        state,
+    }
 }
 
 impl Job {
     pub fn get_id(&self) -> u32 {
         self.id
     }
-    pub fn get_command(&self) -> &str {
-        &self.command
+    pub fn get_program(&self) -> &str {
+        &self.program
     }
 
     pub fn get_state(&self) -> JobState {
