@@ -50,20 +50,24 @@ impl Job {
     pub fn get_state(&self) -> JobState {
         self.state
     }
-}
 
-impl JobState {
-    pub fn transition(job: &mut Job, event: JobEvent) {
-        match (job.state, event) {
-            (JobState::Queued, JobEvent::CapacityAvailable) => job.state = JobState::Running,
-            (JobState::Queued, JobEvent::Cancel) => job.state = JobState::Canceled,
-            (JobState::Running, JobEvent::Completed) => job.state = JobState::Succeeded,
-            (JobState::Running, JobEvent::Error) => job.state = JobState::Failed,
-            (JobState::Running, JobEvent::Cancel) => job.state = JobState::Canceled,
+    pub fn get_args(&self) -> &Vec<String> {
+	&self.args
+    }
+
+    pub fn transition(&mut self, event: JobEvent) {
+        match (self.state, event) {
+            (JobState::Queued, JobEvent::CapacityAvailable) => self.state = JobState::Running,
+            (JobState::Queued, JobEvent::Cancel) => self.state = JobState::Canceled,
+            (JobState::Running, JobEvent::Completed) => self.state = JobState::Succeeded,
+            (JobState::Running, JobEvent::Error) => self.state = JobState::Failed,
+            (JobState::Running, JobEvent::Cancel) => self.state = JobState::Canceled,
             _ => warn!(
                 "Transicion de estado invalida: {:?} + {:?}",
-                job.state, event
+                self.state, event
             ),
         }
     }
+
 }
+

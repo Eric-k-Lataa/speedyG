@@ -41,6 +41,9 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
             if args.len() != 1 {
                 return Err(format!("{} requiere un ID", program));
             }
+	    if args[0].parse::<u32>().is_err() {
+   		return Err("El ID debe ser un entero".to_string());
+	    }
         }
         "sleep" => {
             if args.len() != 1 {
@@ -100,7 +103,7 @@ mod tests {
         assert!(is_authorized("health"));
         assert!(is_authorized("status"));
         assert!(is_authorized("cancel"));
-        assert!(is_authorized("cancel"));
+        assert!(is_authorized("help"));
     }
 
     #[test]
@@ -136,4 +139,10 @@ mod tests {
         let args = vec!["hola".to_string()];
         assert!(validate_command("health", &args).is_err());
     }
+	#[test]
+    fn validate_status_with_invalid_id() {
+        let args = vec!["hola".to_string()];
+        assert!(validate_command("status", &args).is_err());
+    }
+
 }
