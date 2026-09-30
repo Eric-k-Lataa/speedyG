@@ -1,6 +1,6 @@
 use tracing::warn;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum JobState {
     Queued,
     Running,
@@ -52,7 +52,7 @@ impl Job {
     }
 
     pub fn get_args(&self) -> &Vec<String> {
-	&self.args
+        &self.args
     }
 
     pub fn transition(&mut self, event: JobEvent) {
@@ -68,6 +68,4 @@ impl Job {
             ),
         }
     }
-
 }
-

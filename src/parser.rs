@@ -1,4 +1,5 @@
 //lo que devuelve el parse
+#[derive(Debug)]
 pub struct ParsedCommand {
     pub program: String,
     pub args: Vec<String>,
@@ -41,9 +42,9 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
             if args.len() != 1 {
                 return Err(format!("{} requiere un ID", program));
             }
-	    if args[0].parse::<u32>().is_err() {
-   		return Err("El ID debe ser un entero".to_string());
-	    }
+            if args[0].parse::<u32>().is_err() {
+                return Err("El ID debe ser un entero".to_string());
+            }
         }
         "sleep" => {
             if args.len() != 1 {
@@ -139,10 +140,9 @@ mod tests {
         let args = vec!["hola".to_string()];
         assert!(validate_command("health", &args).is_err());
     }
-	#[test]
+    #[test]
     fn validate_status_with_invalid_id() {
         let args = vec!["hola".to_string()];
         assert!(validate_command("status", &args).is_err());
     }
-
 }
