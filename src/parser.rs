@@ -1,12 +1,23 @@
 //lo que devuelve el parse
-pub struct ParsedCommand {
-    pub program: String,
-    pub args: Vec<String>,
+#[derive(Debug)]
+pub enum ParsedInput {
+    SpeedygCommand {
+        program: String,
+        args: Vec<String>,
+    },
+    Job {
+        program: String,	
+        args: Vec<String>,
+    },
+}
+//comandos reservados para speedyG
+pub fn is_reserved(program:&str) ->bool{
+    matches!(program, "status" | "health" | "cancel" | "help")
 }
 
 //flujo del parser
 
-pub fn parse(input: &str) -> Result<ParsedCommand, String> {
+pub fn parse(input: &str) -> Result<ParsedInput, String> {
     let parts: Vec<&str> = input.split_whitespace().collect();
     if parts.is_empty() {
         return Err("El comando està vacio".to_string());
@@ -23,9 +34,13 @@ pub fn parse(input: &str) -> Result<ParsedCommand, String> {
     }
 
     validate_command(&program, &args)?;
-    Ok(ParsedCommand { program, args })
-}
 
+    if is_reserved(&program) {
+        Ok(ParsedInput::SpeedygCommand {program,args})
+    } else {
+       Ok(ParsedInput::Job { program, args })
+    }
+}
 //comandos autorizados
 pub fn is_authorized(program: &str) -> bool {
     matches!(
@@ -37,13 +52,23 @@ pub fn is_authorized(program: &str) -> bool {
 //estructura del comando autorizado bien hecha
 pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
     match program {
-        "status" | "cancel" => {
+        "status" => {
+            if args.len() > 1 {
+                return Err("status solo acepta un ID opcional".to_string());
+            }
+            if let Some(id_str) = args.get(0) {
+                if id_str.parse::<u32>().is_err() {
+                    return Err("El ID debe ser un entero".to_string());
+                }
+            }
+        }
+        "cancel" => {
             if args.len() != 1 {
                 return Err(format!("{} requiere un ID", program));
             }
-	    if args[0].parse::<u32>().is_err() {
-   		return Err("El ID debe ser un entero".to_string());
-	    }
+            if args[0].parse::<u32>().is_err() {
+                return Err("El ID debe ser un entero".to_string());
+            }
         }
         "sleep" => {
             if args.len() != 1 {
@@ -68,20 +93,27 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    //pruebas parser
+    //pruebas parser: Jobs
     #[test]
-    fn parse_sleep_command() {
+    fn parse_sleep_job() {
         let result = parse("sleep 10").unwrap();
-        assert_eq!(result.program, "sleep");
-        assert_eq!(result.args, vec!["10"]);
+        if let ParsedInput::Job{program,args} = result{
+           assert_eq!(program, "sleep");
+           assert_eq!(args, vec!["10"]);
+    }else{
+      assert!(false);
     }
-
+}
     #[test]
-    fn parse_echo_command() {
-        let result = parse("echo hola mundo").unwrap();
-        assert_eq!(result.program, "echo");
-        assert_eq!(result.args, vec!["hola", "mundo"]);
+    fn parse_status_command(){
+        let result = parse("status 5").unwrap();
+        if let ParsedInput::SpeedygCommand{program,args} = result{
+           assert_eq!(program, "status");
+           assert_eq!(args, vec!["5"]);
+    }else{
+      assert!(false);
     }
+}
 
     //prubas parser invalido
     #[test]
@@ -118,6 +150,25 @@ mod tests {
         assert!(result.is_err());
     }
 
+
+    // pruebas palabras reservadas
+    #[test]
+    fn reserved_command() {
+       assert!(is_reserved("status"));
+       assert!(is_reserved("health"));
+       assert!(is_reserved("cancel"));
+       assert!(is_reserved("help"));
+    }
+    // pruebas palabras no reservadas
+    #[test]
+    fn no_reserved_command() {
+       assert!(!is_reserved("sleep"));
+       assert!(!is_reserved("ls"));
+       assert!(!is_reserved("echo"));
+    }
+
+
+
     //pruebas comando valido
     #[test]
     fn validate_status_with_id() {
@@ -125,24 +176,19 @@ mod tests {
         assert!(validate_command("status", &args).is_ok());
     }
     #[test]
-    fn validate_status_without_id() {
-        let args = vec![];
-        assert!(validate_command("status", &args).is_err());
-    }
-    #[test]
     fn validate_health_without_args() {
         let args = vec![];
         assert!(validate_command("health", &args).is_ok());
     }
+    
     #[test]
     fn validate_health_with_args() {
         let args = vec!["hola".to_string()];
         assert!(validate_command("health", &args).is_err());
     }
-	#[test]
+    #[test]
     fn validate_status_with_invalid_id() {
         let args = vec!["hola".to_string()];
         assert!(validate_command("status", &args).is_err());
     }
-
 }

@@ -1,19 +1,20 @@
+use std::fmt;
 use tracing::warn;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum JobState {
     Queued,
     Running,
     Succeeded,
-    Failed,
+    Failed(i32), // Guarda el codigo de error (esto lo añadí yo Caro)
     Canceled,
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum JobEvent {
     CapacityAvailable,
-    Completed,
-    Error,
+    Completed(i32), // Mismo caso que para Failed
+    // Error, //Segun yo, teniendo la definición del Completed, no hace falta si es error
     Cancel,
 }
 
@@ -22,6 +23,7 @@ pub struct Job {
     program: String,
     args: Vec<String>,
     state: JobState,
+    exit_code: Option<i32>, // Almacena el codigo de salida
 }
 
 pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Job {
@@ -36,6 +38,37 @@ pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Jo
         program,
         args,
         state,
+        exit_code: None,
+    }
+}
+
+impl fmt::Display for Job {
+    // Es como un printer por así decirlo
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let args_str = if self.get_args().is_empty() {
+            String::new()
+        } else {
+            format!(" {}", self.get_args().join(" "))
+        };
+        match self.get_exit_code() {
+            Some(code) => write!(
+                f,
+                "Job #{}: {}{} [{:?}] (exit code: {})",
+                self.get_id(),
+                self.get_program(),
+                args_str,
+                self.get_state(),
+                code
+            ),
+            None => write!(
+                f,
+                "Job #{}: {}{} [{:?}]",
+                self.get_id(),
+                self.get_program(),
+                args_str,
+                self.get_state()
+            ),
+        }
     }
 }
 
@@ -52,22 +85,37 @@ impl Job {
     }
 
     pub fn get_args(&self) -> &Vec<String> {
-	&self.args
+        &self.args
     }
 
+    pub fn get_exit_code(&self) -> Option<i32> {
+        self.exit_code
+    }
+
+    // Tambien cambie esta función Caro, sorry :<
     pub fn transition(&mut self, event: JobEvent) {
         match (self.state, event) {
-            (JobState::Queued, JobEvent::CapacityAvailable) => self.state = JobState::Running,
-            (JobState::Queued, JobEvent::Cancel) => self.state = JobState::Canceled,
-            (JobState::Running, JobEvent::Completed) => self.state = JobState::Succeeded,
-            (JobState::Running, JobEvent::Error) => self.state = JobState::Failed,
-            (JobState::Running, JobEvent::Cancel) => self.state = JobState::Canceled,
+            (JobState::Queued, JobEvent::CapacityAvailable) => {
+                self.state = JobState::Running;
+            }
+            (JobState::Queued, JobEvent::Cancel) => {
+                self.state = JobState::Canceled;
+            }
+            (JobState::Running, JobEvent::Completed(code)) => {
+                self.exit_code = Some(code);
+                if code == 0 {
+                    self.state = JobState::Succeeded;
+                } else {
+                    self.state = JobState::Failed(code);
+                }
+            }
+            (JobState::Running, JobEvent::Cancel) => {
+                self.state = JobState::Canceled;
+            }
             _ => warn!(
-                "Transicion de estado invalida: {:?} + {:?}",
+                "Transición de estado inválida: {:?} + {:?}",
                 self.state, event
             ),
         }
     }
-
 }
-
