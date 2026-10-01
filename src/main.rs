@@ -1,7 +1,7 @@
+mod executor;
 mod parser;
+mod scheduler;
 mod state_machine;
-// mod scheduler;
-// mod executor;
 
 use std::fs;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -9,7 +9,7 @@ use tokio::net::{UnixListener, UnixStream};
 use tokio::sync::mpsc;
 
 use parser::ParsedCommand;
-use state_machine::{Job, JobEvent, new_job};
+use state_machine::{new_job, Job, JobEvent};
 
 const SOCKET_PATH: &str = "/tmp/speedyg.sock";
 

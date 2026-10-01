@@ -1,4 +1,5 @@
 use std::env;
+use std::process;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixStream;
 
@@ -7,7 +8,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.is_empty() {
         eprintln!("Uso: speedyg <comando>");
-        return Ok(());
+        process::exit(2); // code 2, uso incorrecto argumentos
     }
 
     let command_raw = args.join(" ");
@@ -17,11 +18,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Ok(stream) => stream,
         Err(_) => {
             eprintln!("Error: El demonio speedyg no está en ejecución.");
-            return Ok(());
+            process::exit(1); // code 1, error general
         }
     };
 
-    stream.write_all(command_raw.as_bytes()).await?;
+    if let Err(e) = stream.write_all(command_raw.as_bytes()).await {
+        eprintln!("Error al enviar datos al demonio: {}", e);
+        process::exit(1);
+    }
+
+    //stream.write_all(command_raw.as_bytes()).await?;
     stream.shutdown().await?;
 
     let mut response = String::new();
