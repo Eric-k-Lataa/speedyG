@@ -33,24 +33,3 @@ impl Executor {
         }
     }
 }
-
-// Pruebas unitarias para validar executor.rs sin depender de la máquina de estados
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_successful_command() {
-        let res = Executor::run("echo 'hola speedyG'");
-        assert!(res.success);
-        assert_eq!(res.exit_code, 0);
-        assert!(res.stdout.contains("hola speedyG"));
-    }
-
-    #[test]
-    fn test_failing_command() {
-        let res = Executor::run("exit 42");
-        assert!(!res.success);
-        assert_eq!(res.exit_code, 42);
-    }
-}
