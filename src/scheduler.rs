@@ -1,37 +1,10 @@
 // src/scheduler.rs
-use crate::executor::{ExecutionResult, Executor};
+use crate::state_machine::{new_job, Job, JobEvent};
 use std::collections::VecDeque;
 
-/// Representa el estado en el que se encuentra una tarea dentro del scheduler
-#[derive(Debug, Clone, PartialEq)]
-pub enum JobStatus {
-    Pending,
-    Running,
-    Completed(i32), // Almacena el exit_code final (ej. 0)
-    Failed(i32),    // Almacena el exit_code de error
-}
-
-/// Estructura de un trabajo individual dentro de la cola
-#[derive(Debug, Clone)]
-pub struct Job {
-    pub id: usize,
-    pub command: String,
-    pub status: JobStatus,
-}
-
-impl Job {
-    pub fn new(id: usize, command: String) -> Self {
-        Self {
-            id,
-            command,
-            status: JobStatus::Pending,
-        }
-    }
-}
-
-/// Administrador de la cola de tareas y despacho hacia el Executor
+/// Administrador de la cola de tareas y envio (?) hacia el Executor
 pub struct Scheduler {
-    next_id: usize,
+    next_id: u32,
     queue: VecDeque<Job>,
     history: Vec<Job>,
 }
@@ -45,61 +18,64 @@ impl Scheduler {
         }
     }
 
-    /// Encola un nuevo comando y devuelve el Job asignado
-    pub fn add_job(&mut self, command: String) -> Job {
-        let job = Job::new(self.next_id, command);
+    /// Encola un nuevo comando usando la máquina de estados
+    pub fn add_job(&mut self, program: String, args: Vec<String>) -> &Job {
+        let job = new_job(self.next_id, program, args, true);
         self.next_id += 1;
-        self.queue.push_back(job.clone());
-        job
+        self.queue.push_back(job);
+        self.queue.back().unwrap()
     }
 
-    /// Despacha la siguiente tarea pendiente usando el Executor
-    pub fn run_next(&mut self) -> Option<(Job, ExecutionResult)> {
-        let mut job = self.queue.pop_front()?;
-        job.status = JobStatus::Running;
+    /// Busca un Job por ID tanto en la cola activa como en el historial
+    pub fn get_job(&self, id: u32) -> Option<&Job> {
+        self.queue
+            .iter()
+            .chain(self.history.iter())
+            .find(|j| j.get_id() == id)
+    }
 
-        // Se ejecuta el subproceso usando el Executor que construiste
-        let result = Executor::run(&job.command);
-
-        // Actualizamos el estado final según el resultado
-        if result.success {
-            job.status = JobStatus::Completed(result.exit_code);
+    /// Cancela un Job si aún está en la cola o ejecución
+    pub fn cancel_job(&mut self, id: u32) -> bool {
+        if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
+            let mut job = self.queue.remove(pos).unwrap();
+            job.transition(JobEvent::Cancel);
+            self.history.push(job);
+            true
         } else {
-            job.status = JobStatus::Failed(result.exit_code);
+            false
         }
-
-        self.history.push(job.clone());
-        Some((job, result))
     }
 
-    /// Retorna una lista con las tareas actualmente en cola
-    pub fn pending_jobs(&self) -> Vec<Job> {
-        self.queue.iter().cloned().collect()
+    /// Marca un proceso como running (para cuando se llaman asincronos mas que nada)
+    pub fn start_job(&mut self, id: u32) -> bool {
+        if let Some(job) = self.queue.iter_mut().find(|j| j.get_id() == id) {
+            job.transition(JobEvent::CapacityAvailable);
+            true
+        } else {
+            false
+        }
     }
 
-    /// Retorna el historial de tareas finalizadas
-    pub fn history_jobs(&self) -> Vec<Job> {
-        self.history.clone()
+    /// Completa la ejecución de un trabajo y actualiza la FSM
+    pub fn complete_job(&mut self, id: u32, exit_code: i32) -> bool {
+        if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
+            let mut job = self.queue.remove(pos).unwrap();
+            // Solo enviamos Completed, el Job ya pasó a Running mediante start_job
+            job.transition(JobEvent::Completed(exit_code));
+            self.history.push(job);
+            true
+        } else {
+            false
+        }
     }
-}
 
-// Pruebas unitarias para validar el Scheduler
-#[cfg(test)]
-mod tests {
-    use super::*;
+    /// Retorna una lista de referencias con las tareas actualmente en cola
+    pub fn pending_jobs(&self) -> Vec<&Job> {
+        self.queue.iter().collect()
+    }
 
-    #[test]
-    fn test_add_and_run_job() {
-        let mut scheduler = Scheduler::new();
-        let job = scheduler.add_job("echo 'test scheduler'".to_string());
-
-        assert_eq!(job.id, 1);
-        assert_eq!(scheduler.pending_jobs().len(), 1);
-
-        let (completed_job, result) = scheduler.run_next().unwrap();
-        assert_eq!(result.exit_code, 0);
-        assert_eq!(completed_job.status, JobStatus::Completed(0));
-        assert_eq!(scheduler.pending_jobs().len(), 0);
-        assert_eq!(scheduler.history_jobs().len(), 1);
+    /// Retorna una lista de referencias con el historial de tareas finalizadas
+    pub fn history_jobs(&self) -> Vec<&Job> {
+        self.history.iter().collect()
     }
 }

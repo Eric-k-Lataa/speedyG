@@ -1,3 +1,4 @@
+use std::fmt;
 use tracing::warn;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -38,6 +39,36 @@ pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Jo
         args,
         state,
         exit_code: None,
+    }
+}
+
+impl fmt::Display for Job {
+    // Es como un printer por así decirlo
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let args_str = if self.get_args().is_empty() {
+            String::new()
+        } else {
+            format!(" {}", self.get_args().join(" "))
+        };
+        match self.get_exit_code() {
+            Some(code) => write!(
+                f,
+                "Job #{}: {}{} [{:?}] (exit code: {})",
+                self.get_id(),
+                self.get_program(),
+                args_str,
+                self.get_state(),
+                code
+            ),
+            None => write!(
+                f,
+                "Job #{}: {}{} [{:?}]",
+                self.get_id(),
+                self.get_program(),
+                args_str,
+                self.get_state()
+            ),
+        }
     }
 }
 
