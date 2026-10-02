@@ -2,8 +2,8 @@
 
 | Req ID    | Descripción breve | Prioridad | Método | Caso(s) | Evidencia | Resultado | Defecto/Excepción |
 |:------------:|:------------------|:---------:|:------:|:-------:|:----------|:---------:|:------------------|
-| RF-01     | Enviar trabajo e ID único | Alta | Prueba | TC-001 | resultado + log      | Pendiente | —|
-| RF-02     | Validar solicitud con mensaje útil | Alta | Prueba | TC-001 | resultado + log | Pendiente | —|
+| RF-01     | Enviar trabajo e ID único | Alta | PRUEBA | TC-001 | Pendiente      | BLOCKED | Flujo completo pendiente|
+| RF-02     | Validar solicitud con mensaje útil | Alta | PRUEBA | TC-001 | Pendiente | BLOCKED | Integracioń pendiente|
 | RF-03     | Mantener una cola | Alta | Prueba | TC-002 | resultado + log | Pendiente | —|
 | RF-04     | Procesos independientes | Alta | Prueba | TC-001 | timeline + ps/log | Pendiente | —|
 | RF-05     | Límite de concurrencia    | Alta | Prueba | TC-002 | timeline + ps/log | Pendiente | —|
