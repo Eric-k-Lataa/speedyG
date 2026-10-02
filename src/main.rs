@@ -1,147 +1,160 @@
-mod executor;
-mod parser;
-mod scheduler;
-mod state_machine;
+use speedyG::executor::Executor;
+use speedyG::parser::parse;
+use speedyG::scheduler::Scheduler;
 
 use std::fs;
+use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::{UnixListener, UnixStream};
-use tokio::sync::mpsc;
-
-use parser::ParsedCommand;
-use state_machine::{new_job, Job, JobEvent};
-
-const SOCKET_PATH: &str = "/tmp/speedyg.sock";
-
-/// Eventos del Event Loop del Daemon
-#[derive(Debug)]
-pub enum SystemEvent {
-    /// Llegó un comando válido desde la CLI `speedyg`
-    NewCommand {
-        cmd: ParsedCommand,
-        // Canal para responder directamente al cliente CLI que envió el comando
-        responder: tokio::sync::oneshot::Sender<String>,
-    },
-    /// Un Job terminó de ejecutarse
-    JobFinished { id: u32, success: bool },
-}
+use tokio::net::UnixListener;
+use tracing::{error, info};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("Iniciando Daemon speedyg...");
+    // Inicializar el logger
+    tracing_subscriber::fmt::init();
 
-    if fs::metadata(SOCKET_PATH).is_ok() {
-        fs::remove_file(SOCKET_PATH)?;
+    let socket_path = "/tmp/speedyg.sock";
+
+    // Eliminar el socket si quedó de una ejecución previa
+    if fs::metadata(socket_path).is_ok() {
+        fs::remove_file(socket_path)?;
     }
 
-    let listener = UnixListener::bind(SOCKET_PATH)?;
-    println!("Demonio escuchando en {}", SOCKET_PATH);
+    let listener = UnixListener::bind(socket_path)?;
+    info!("Demonio speedyG escuchando en {}", socket_path);
 
-    // Canal principal del Event Loop (MPSC)
-    let (event_tx, mut event_rx) = mpsc::channel::<SystemEvent>(32);
-
-    // Contador de IDs para Jobs (temporal hasta integrarlo en Scheduler)
-    let mut next_job_id: u32 = 1;
+    // Scheduler compartido entre las conexiones que entran por el socket
+    let scheduler = Arc::new(Mutex::new(Scheduler::new()));
 
     loop {
-        tokio::select! {
-            // 1. Aceptar conexiones entrantes del socket IPC
-            Ok((stream, _)) = listener.accept() => {
-                let tx = event_tx.clone();
-                tokio::spawn(async move {
-                    if let Err(e) = handle_client(stream, tx).await {
-                        eprintln!("Error procesando cliente: {}", e);
-                    }
-                });
-            }
+        let (mut stream, _) = listener.accept().await?;
+        let scheduler = Arc::clone(&scheduler);
 
-            // 2. Event Loop Principal: Procesar eventos del sistema
-            Some(event) = event_rx.recv() => {
-                match event {
-                    SystemEvent::NewCommand { cmd, responder } => {
-                        let response = process_command(cmd, &mut next_job_id).await;
-                        let _ = responder.send(response);
-                    }
-                    SystemEvent::JobFinished { id, success } => {
-                        println!("Evento recibido: Job {} finalizado (Éxito: {})", id, success);
-                        // Aquí el Scheduler buscaría el Job y llamaría a:
-                        // job.transition(if success { JobEvent::Completed } else { JobEvent::Error });
-                    }
+        tokio::spawn(async move {
+            let mut buffer = [0; 1024];
+
+            let n = match stream.read(&mut buffer).await {
+                Ok(n) if n == 0 => return, // Conexión cerrada
+                Ok(n) => n,
+                Err(e) => {
+                    error!("Error al leer del socket: {}", e);
+                    return;
                 }
+            };
+
+            let input = String::from_utf8_lossy(&buffer[..n]);
+            let input_str = input.trim();
+
+            // 1. Decodificar la entrada usando el parser
+            let response = match parse(input_str) {
+                Ok(cmd) => match cmd.program.as_str() {
+                    "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
+
+                    "help" => {
+                        "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
+                            .to_string()
+                    }
+
+                    "status" => {
+                        let sched = scheduler.lock().unwrap();
+
+                        if let Some(id_str) = cmd.args.get(0) {
+                            // Caso: status <id>
+                            match id_str.parse::<u32>() {
+                                Ok(id) => match sched.get_job(id) {
+                                    Some(job) => format!("{}\n", job), // O usar job.format_status() / Display
+                                    None => format!("Error: Job #{} no encontrado\n", id),
+                                },
+                                Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
+                            }
+                        } else {
+                            // Caso: status general (lista de jobs)
+                            let pending = sched.pending_jobs();
+                            let history = sched.history_jobs();
+
+                            if pending.is_empty() && history.is_empty() {
+                                "No hay jobs registrados.\n".to_string()
+                            } else {
+                                let mut out = String::new();
+                                if !pending.is_empty() {
+                                    out.push_str("--- Pendientes / En ejecución ---\n");
+                                    for job in pending {
+                                        out.push_str(&format!("{}\n", job));
+                                    }
+                                }
+                                if !history.is_empty() {
+                                    out.push_str("--- Historial ---\n");
+                                    for job in history {
+                                        out.push_str(&format!("{}\n", job));
+                                    }
+                                }
+                                out
+                            }
+                        }
+                    }
+
+                    "cancel" => {
+                        if let Some(id_str) = cmd.args.get(0) {
+                            match id_str.parse::<u32>() {
+                                Ok(id) => {
+                                    let mut sched = scheduler.lock().unwrap();
+                                    if sched.cancel_job(id) {
+                                        format!("Job #{} cancelado correctamente\n", id)
+                                    } else {
+                                        format!("Error: No se pudo cancelar el Job #{}\n", id)
+                                    }
+                                }
+                                Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
+                            }
+                        } else {
+                            "Uso: cancel <id>\n".to_string()
+                        }
+                    }
+
+                    // Comandos de ejecución (echo, sleep, ls, etc.)
+                    _ => {
+                        let (job_id, full_command) = {
+                            let mut sched = scheduler.lock().unwrap();
+                            let job = sched.add_job(cmd.program.clone(), cmd.args.clone());
+                            let job_id = job.get_id();
+
+                            let full_command = if cmd.args.is_empty() {
+                                cmd.program.clone()
+                            } else {
+                                format!("{} {}", cmd.program, cmd.args.join(" "))
+                            };
+
+                            (job_id, full_command)
+                        };
+
+                        // Tarea asíncrona en segundo plano sin bloquear el socket
+                        let scheduler_clone = Arc::clone(&scheduler);
+                        tokio::spawn(async move {
+                            // 1. Cambiar estado a Running en el Scheduler antes de ejecutar
+                            {
+                                let mut sched = scheduler_clone.lock().unwrap();
+                                sched.start_job(job_id);
+                            }
+
+                            // 2. Ejecutar comando (durante este tiempo status mostrará Running)
+                            let exec_result = Executor::run(&full_command).await;
+
+                            // 3. Al terminar, marcar como completado
+                            let mut sched = scheduler_clone.lock().unwrap();
+                            sched.complete_job(job_id, exec_result.exit_code);
+                        });
+
+                        // Respuesta inmediata al cliente CLI
+                        format!("Job #{} encolado correctamente\n", job_id)
+                        }
+                },
+                Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
+            };
+
+            // Responder al cliente CLI
+            if let Err(e) = stream.write_all(response.as_bytes()).await {
+                error!("Error al escribir en el socket: {}", e);
             }
-        }
-    }
-}
-
-/// Atiende la conexión individual de un usuario ejecutando `speedyg <cmd>`
-async fn handle_client(
-    mut stream: UnixStream,
-    event_tx: mpsc::Sender<SystemEvent>,
-) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let mut buffer = String::new();
-    stream.read_to_string(&mut buffer).await?;
-    let input = buffer.trim();
-
-    if input.is_empty() {
-        return Ok(());
-    }
-
-    // Usamos TU parser.rs
-    match parser::parse(input) {
-        Ok(cmd) => {
-            let (resp_tx, resp_rx) = tokio::sync::oneshot::channel();
-
-            // Enviar comando al Event Loop
-            event_tx
-                .send(SystemEvent::NewCommand {
-                    cmd,
-                    responder: resp_tx,
-                })
-                .await?;
-
-            // Esperar la respuesta procesada por el Event Loop
-            if let Ok(response) = resp_rx.await {
-                stream.write_all(response.as_bytes()).await?;
-            }
-        }
-        Err(err) => {
-            let error_msg = format!("Error de sintaxis: {}\n", err);
-            stream.write_all(error_msg.as_bytes()).await?;
-        }
-    }
-
-    Ok(())
-}
-
-/// Procesa la lógica de negocio según el tipo de comando parseado
-async fn process_command(cmd: ParsedCommand, next_job_id: &mut u32) -> String {
-    match cmd.program.as_str() {
-        "help" => {
-            "Comandos disponibles: status <id>, cancel <id>, sleep <sec>, echo <txt>, health, ls, help\n".to_string()
-        }
-        "health" => {
-            "OK: Daemon speedyg funcionando correctamente\n".to_string()
-        }
-        "status" => {
-            let job_id = cmd.args[0].parse::<u32>().unwrap();
-            format!("Consultando estado del Job {}\n", job_id)
-        }
-        "cancel" => {
-            let job_id = cmd.args[0].parse::<u32>().unwrap();
-            format!("Cancelando Job {}\n", job_id)
-        }
-        // Comandos de ejecución que crean un Job con FSM
-        "sleep" | "echo" | "ls" => {
-            let job_id = *next_job_id;
-            *next_job_id += 1;
-
-            // Instanciamos TU struct Job de state_machine.rs
-            let mut job: Job = new_job(job_id, cmd.program, cmd.args, true);
-            // La FSM transiciona al ser enviado a ejecución
-            job.transition(JobEvent::CapacityAvailable);
-
-            format!("Job {} creado en estado: {:?}\n", job.get_id(), job.get_state())
-        }
-        _ => "Comando no reconocido\n".to_string(),
+        });
     }
 }

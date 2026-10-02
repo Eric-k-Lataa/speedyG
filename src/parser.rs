@@ -38,7 +38,17 @@ pub fn is_authorized(program: &str) -> bool {
 //estructura del comando autorizado bien hecha
 pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
     match program {
-        "status" | "cancel" => {
+        "status" => {
+            if args.len() > 1 {
+                return Err("status solo acepta un ID opcional".to_string());
+            }
+            if let Some(id_str) = args.get(0) {
+                if id_str.parse::<u32>().is_err() {
+                    return Err("El ID debe ser un entero".to_string());
+                }
+            }
+        }
+        "cancel" => {
             if args.len() != 1 {
                 return Err(format!("{} requiere un ID", program));
             }
@@ -124,11 +134,6 @@ mod tests {
     fn validate_status_with_id() {
         let args = vec!["5".to_string()];
         assert!(validate_command("status", &args).is_ok());
-    }
-    #[test]
-    fn validate_status_without_id() {
-        let args = vec![];
-        assert!(validate_command("status", &args).is_err());
     }
     #[test]
     fn validate_health_without_args() {

@@ -1,5 +1,5 @@
 // src/executor.rs
-use std::process::Command;
+use tokio::process::Command;
 
 /// Resultado de la ejecución de un subproceso
 #[derive(Debug, PartialEq)]
@@ -14,8 +14,8 @@ pub struct Executor;
 
 impl Executor {
     /// Ejecuta un comando en el sistema operativo mediante la shell /bin/sh
-    pub fn run(cmd: &str) -> ExecutionResult {
-        let output = Command::new("sh").arg("-c").arg(cmd).output();
+    pub async fn run(cmd: &str) -> ExecutionResult {
+        let output = Command::new("sh").arg("-c").arg(cmd).output().await;
 
         match output {
             Ok(out) => ExecutionResult {
