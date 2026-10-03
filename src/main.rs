@@ -49,8 +49,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
             // 1. Decodificar la entrada usando el parser
             let response = match parse(input_str) {
-                Ok(cmd) => match cmd.program.as_str() {
-                    "health" => "OK: Daemon speedyG funcionando correctamente\n".to_string(),
+                Ok(cmd) => match cmd.program.as_str() {//Corregi la G a g
+                    "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
                     "help" => {
                         "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
                             .to_string()

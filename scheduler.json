@@ -1,5 +1,5 @@
 {
-  "next_id": 3,
+  "next_id": 5,
   "queue": [],
   "history": [
     {
@@ -18,6 +18,24 @@
       "args": [
         "prueba",
         "dos"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 3,
+      "program": "echo",
+      "args": [
+        "hola"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 4,
+      "program": "sleep",
+      "args": [
+        "10"
       ],
       "state": "Succeeded",
       "exit_code": 0
