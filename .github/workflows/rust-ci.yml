@@ -13,4 +13,18 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
 
-      - run: cargo test
+      - name: Build
+        run: cargo build --bins
+
+      - name: Unit tests
+        run: cargo test
+
+      - name: Run TC-001
+        run: ./verif/scripts/TC-001.sh
+
+      - name: Upload TC-001 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TC-001-results
+          path: verif/results/TC-001/
