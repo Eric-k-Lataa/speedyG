@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/speedyg status 1`
+Job #1: echo hola [Succeeded] (exit code: 0)
