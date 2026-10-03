@@ -1,11 +1,11 @@
 # Matrix de trazabilidad
 
 | Req ID    | Descripción breve | Prioridad | Método | Caso(s) | Evidencia | Resultado | Defecto/Excepción |
-|:------------:|:------------------|:---------:|:------:|:-------:|:----------|:---------:|:------------------|
-| RF-01     | Enviar trabajo e ID único | Alta | PRUEBA | TC-001 | Pendiente      | BLOCKED | Flujo completo pendiente|
-| RF-02     | Validar solicitud con mensaje útil | Alta | PRUEBA | TC-001 | Pendiente | BLOCKED | Integracioń pendiente|
+|:------------|:------------------|:---------:|:------:|:----------|:----------|:---------:|:------------------|
+| RF-01     | Enviar trabajo e ID único | Alta | PRUEBA | TC-001 | resultado + log      | PASS | —|
+| RF-02     | Validar solicitud con mensaje útil | Alta | PRUEBA | TC-001 | resultado + log | PASS | —|
 | RF-03     | Mantener una cola | Alta | Prueba | TC-002 | resultado + log | Pendiente | —|
-| RF-04     | Procesos independientes | Alta | Prueba | TC-001 | timeline + ps/log | Pendiente | —|
+| RF-04     | Procesos independientes | Alta | Prueba | TC-001 | estados + log | PASS | —|
 | RF-05     | Límite de concurrencia    | Alta | Prueba | TC-002 | timeline + ps/log | Pendiente | —|
 | RF-06     | Estados de un trabajo | Alta | Prueba | TC-003 | timeline + ps/log  | Pendiente | —|
 | RF-07     | Registrar timers y còdigo de salida | Alta | Prueba | TC-003, TC-006 | resultado + log | Pendiente | —|
