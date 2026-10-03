@@ -1,12 +1,12 @@
 use speedyG::executor::Executor;
 use speedyG::parser::parse;
 use speedyG::scheduler::Scheduler;
-
 use std::fs;
 use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
 use tracing::{error, info};
+use speedyG::persistence::{guardar_scheduler, cargar_scheduler};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -24,7 +24,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Demonio speedyG escuchando en {}", socket_path);
 
     // Scheduler compartido entre las conexiones que entran por el socket
-    let scheduler = Arc::new(Mutex::new(Scheduler::new()));
+    let scheduler = Arc::new(Mutex::new(
+        cargar_scheduler().unwrap_or_else(|_| Scheduler::new())
+    ));
 
     loop {
         let (mut stream, _) = listener.accept().await?;
@@ -48,27 +50,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             // 1. Decodificar la entrada usando el parser
             let response = match parse(input_str) {
                 Ok(cmd) => match cmd.program.as_str() {
-                    "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
-
+                    "health" => "OK: Daemon speedyG funcionando correctamente\n".to_string(),
                     "help" => {
                         "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
                             .to_string()
                     }
-
                     "status" => {
                         let sched = scheduler.lock().unwrap();
-
                         if let Some(id_str) = cmd.args.get(0) {
-                            // Caso: status <id>
                             match id_str.parse::<u32>() {
                                 Ok(id) => match sched.get_job(id) {
-                                    Some(job) => format!("{}\n", job), // O usar job.format_status() / Display
+                                    Some(job) => format!("{}\n", job),
                                     None => format!("Error: Job #{} no encontrado\n", id),
                                 },
                                 Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
                             }
                         } else {
-                            // Caso: status general (lista de jobs)
                             let pending = sched.pending_jobs();
                             let history = sched.history_jobs();
 
@@ -92,13 +89,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             }
                         }
                     }
-
                     "cancel" => {
                         if let Some(id_str) = cmd.args.get(0) {
                             match id_str.parse::<u32>() {
                                 Ok(id) => {
                                     let mut sched = scheduler.lock().unwrap();
                                     if sched.cancel_job(id) {
+                                        // Guardar cambios después de cancelar
+                                        guardar_scheduler(&sched).unwrap_or_else(|e| {
+                                            error!("Error al guardar scheduler: {}", e);
+                                        });
                                         format!("Job #{} cancelado correctamente\n", id)
                                     } else {
                                         format!("Error: No se pudo cancelar el Job #{}\n", id)
@@ -110,7 +110,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             "Uso: cancel <id>\n".to_string()
                         }
                     }
-
                     // Comandos de ejecución (echo, sleep, ls, etc.)
                     _ => {
                         let (job_id, full_command) = {
@@ -118,35 +117,39 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                             let job = sched.add_job(cmd.program.clone(), cmd.args.clone());
                             let job_id = job.get_id();
 
+                            // Guardar cambios después de agregar
+                            guardar_scheduler(&sched).unwrap_or_else(|e| {
+                                error!("Error al guardar scheduler: {}", e);
+                            });
+
                             let full_command = if cmd.args.is_empty() {
                                 cmd.program.clone()
                             } else {
                                 format!("{} {}", cmd.program, cmd.args.join(" "))
                             };
-
                             (job_id, full_command)
                         };
 
                         // Tarea asíncrona en segundo plano sin bloquear el socket
                         let scheduler_clone = Arc::clone(&scheduler);
                         tokio::spawn(async move {
-                            // 1. Cambiar estado a Running en el Scheduler antes de ejecutar
                             {
                                 let mut sched = scheduler_clone.lock().unwrap();
                                 sched.start_job(job_id);
                             }
-
-                            // 2. Ejecutar comando (durante este tiempo status mostrará Running)
                             let exec_result = Executor::run(&full_command).await;
 
-                            // 3. Al terminar, marcar como completado
                             let mut sched = scheduler_clone.lock().unwrap();
                             sched.complete_job(job_id, exec_result.exit_code);
+
+                            // Guardar cambios después de completar
+                            guardar_scheduler(&sched).unwrap_or_else(|e| {
+                                error!("Error al guardar scheduler: {}", e);
+                            });
                         });
 
-                        // Respuesta inmediata al cliente CLI
                         format!("Job #{} encolado correctamente\n", job_id)
-                        }
+                    }
                 },
                 Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
             };
@@ -158,3 +161,4 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         });
     }
 }
+

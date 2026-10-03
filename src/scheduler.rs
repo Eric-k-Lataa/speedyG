@@ -1,8 +1,10 @@
 // src/scheduler.rs
 use crate::state_machine::{new_job, Job, JobEvent};
 use std::collections::VecDeque;
+use serde::{Serialize, Deserialize};
 
 /// Administrador de la cola de tareas y envio (?) hacia el Executor
+#[derive(Serialize, Deserialize)]
 pub struct Scheduler {
     next_id: u32,
     queue: VecDeque<Job>,
