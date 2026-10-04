@@ -1,0 +1,44 @@
+{
+  "next_id": 5,
+  "queue": [],
+  "history": [
+    {
+      "id": 1,
+      "program": "echo",
+      "args": [
+        "Hola",
+        "Mundo"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 2,
+      "program": "echo",
+      "args": [
+        "prueba",
+        "dos"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 3,
+      "program": "echo",
+      "args": [
+        "hola"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 4,
+      "program": "sleep",
+      "args": [
+        "10"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    }
+  ]
+}

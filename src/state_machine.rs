@@ -1,7 +1,8 @@
 use std::fmt;
 use tracing::warn;
+use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum JobState {
     Queued,
     Running,
@@ -10,7 +11,7 @@ pub enum JobState {
     Canceled,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum JobEvent {
     CapacityAvailable,
     Completed(i32), // Mismo caso que para Failed
@@ -18,6 +19,7 @@ pub enum JobEvent {
     Cancel,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Job {
     id: u32,
     program: String,
