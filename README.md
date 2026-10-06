@@ -73,7 +73,7 @@ Este proyecto se compone de dos partes:
   
   rustup component add clippy rustfmt
   
-- Compilar: Utilizamos los siguiente comandos
+- Compilar: Utilizamos los siguiente comandos:
   
   *cargo check* para revisar que el código compila sin generar un ejecutable.
   *cargo build* para compilar el programa.
