@@ -32,7 +32,7 @@ speedyG necesita almacenar la información de los trabajos ejecutados para permi
 
 ## Decisión
 
-**Pendiente**
+La implementación de JSON guarda el estado del scheduler en un archivo legible (scheduler.json) y permite recuperar jobs al reiniciar el demonio, proporciona persistencia básica y tolerancia mínima a fallos, cumpliendo con los requisitos básicos.
 
 ## Consecuencias
 
