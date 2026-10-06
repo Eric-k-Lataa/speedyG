@@ -52,7 +52,7 @@ Este proyecto se compone de dos partes:
 
 ### Primeros pasos
 
-- Clonar el repositorio con el comando
+- Clonar el repositorio con el comando:
   
   git clone https://github.com/Eric-k-Lataa/speedyG
   cd speedyG
