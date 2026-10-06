@@ -134,7 +134,7 @@ Realiza 7 pruebas distintas, y si se logran marca PASS.
 
 Estado actual:
 
-- Estructura base del proyecto speedyG
+- Estructura base del proyecto speedyG:
   - speedyG : *Cargo.lock, Cargo.toml, docs, project-management, Readme.md, src, target, tests, verif*
   - /src/ ls : *main.rs, lib.rs, parser.rs.persistence.rs, state_machine.rs, scheduler.rs, executor.rs*
   
