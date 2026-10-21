@@ -1,0 +1,30 @@
+name: Rust CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        run: cargo build --bins
+
+      - name: Unit tests
+        run: cargo test
+
+      - name: Run TC-001
+        run: ./verif/scripts/TC-001.sh
+
+      - name: Upload TC-001 results
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: TC-001-results
+          path: verif/results/TC-001/
