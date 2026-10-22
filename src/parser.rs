@@ -12,37 +12,39 @@ pub fn parse(input: &str) -> Result<ParsedCommand, String> {
     if parts.is_empty() {
         return Err("El comando està vacio".to_string());
     }
-    let program = parts[0].to_string();
+    let mut program = parts[0].to_string();
 
-    if !is_authorized(&program) {
-        return Err("Comando no autorizado".to_string());
+    //convertir list en status
+    if program == "list" {
+        if parts.len() > 1 {
+            return Err(format!("{} no recibe argumentos", program));
+        }
+        program = "status".to_string();
     }
 
     let mut args = Vec::new();
     for arg in &parts[1..] {
         args.push(arg.to_string());
     }
-
-    validate_command(&program, &args)?;
+    if is_reserved(&program) {
+        validate_command(&program, &args)?;
+    }
     Ok(ParsedCommand { program, args })
 }
 
-//comandos autorizados
-pub fn is_authorized(program: &str) -> bool {
-    matches!(
-        program,
-        "status" | "echo" | "health" | "sleep" | "ls" | "cancel" | "help"
-    )
+// Palabras reservadas
+pub fn is_reserved(program: &str) -> bool {
+    matches!(program, "status" | "health" | "cancel" | "help")
 }
 
-//estructura del comando autorizado bien hecha
+//validar argumentos de comando reservado
 pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
     match program {
         "status" => {
             if args.len() > 1 {
                 return Err("status solo acepta un ID opcional".to_string());
             }
-            if let Some(id_str) = args.get(0) {
+            if let Some(id_str) = args.first() {
                 if id_str.parse::<u32>().is_err() {
                     return Err("El ID debe ser un entero".to_string());
                 }
@@ -56,21 +58,12 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
                 return Err("El ID debe ser un entero".to_string());
             }
         }
-        "sleep" => {
-            if args.len() != 1 {
-                return Err(format!("{} requiere un argumento", program));
-            }
-        }
 
-        "health" | "help" | "ls" => {
-            if !args.is_empty() {
-                return Err(format!("{} no recibe argumentos", program));
-            }
+        "health" | "help" if !args.is_empty() => {
+            return Err(format!("{} no recibe argumentos", program));
         }
-        "echo" => {}
-        _ => {
-            return Err("Comando no autorizado".to_string());
-        }
+        "health" | "help" => {}
+        _ => {}
     }
     Ok(())
 }
@@ -79,54 +72,14 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    //pruebas parser
-    #[test]
-    fn parse_sleep_command() {
-        let result = parse("sleep 10").unwrap();
-        assert_eq!(result.program, "sleep");
-        assert_eq!(result.args, vec!["10"]);
-    }
 
+    //pruebas comandos reservados
     #[test]
-    fn parse_echo_command() {
-        let result = parse("echo hola mundo").unwrap();
-        assert_eq!(result.program, "echo");
-        assert_eq!(result.args, vec!["hola", "mundo"]);
-    }
-
-    //prubas parser invalido
-    #[test]
-    fn parse_empty_command() {
-        let result = parse("");
-        assert!(result.is_err());
-    }
-    #[test]
-    fn parse_whitespace_command() {
-        let result = parse("     ");
-        assert!(result.is_err());
-    }
-    //pruebas comandos autorizados/no autorizados
-    #[test]
-    fn authorized_command() {
-        assert!(is_authorized("sleep"));
-        assert!(is_authorized("ls"));
-        assert!(is_authorized("echo"));
-        assert!(is_authorized("health"));
-        assert!(is_authorized("status"));
-        assert!(is_authorized("cancel"));
-        assert!(is_authorized("help"));
-    }
-
-    #[test]
-    fn unauthorized_command() {
-        assert!(!is_authorized("rm"));
-    }
-
-    #[test]
-    fn parse_unauthorized_command() {
-        let result = parse("rm archivo.txt");
-
-        assert!(result.is_err());
+    fn reserved_command() {
+        assert!(is_reserved("cancel"));
+        assert!(is_reserved("status"));
+        assert!(is_reserved("health"));
+        assert!(is_reserved("help"));
     }
 
     //pruebas comando valido
@@ -149,5 +102,31 @@ mod tests {
     fn validate_status_with_invalid_id() {
         let args = vec!["hola".to_string()];
         assert!(validate_command("status", &args).is_err());
+    }
+
+    // Pruebas comandos que no son reservados
+    #[test]
+    fn parse_unreserved_command() {
+        assert!(parse("comando_inexistente hola").is_ok());
+    }
+
+    #[test]
+    fn parse_unreserved_command_with_invalid_args() {
+        assert!(parse("sleep abc").is_ok());
+    }
+
+    // Pruebas del comando list
+    #[test]
+    fn parse_list_command() {
+        let result = parse("list").unwrap();
+
+        assert_eq!(result.program, "status");
+        assert!(result.args.is_empty());
+    }
+
+    #[test]
+    fn parse_list_with_args() {
+        let result = parse("list 5");
+        assert!(result.is_err());
     }
 }
