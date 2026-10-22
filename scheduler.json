@@ -1,5 +1,5 @@
 {
-  "next_id": 5,
+  "next_id": 13,
   "queue": [],
   "history": [
     {
@@ -36,6 +36,83 @@
       "program": "sleep",
       "args": [
         "10"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 5,
+      "program": "echo",
+      "args": [
+        "Hola",
+        "Persistencia"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 6,
+      "program": "sleep",
+      "args": [
+        "30"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0
+    },
+    {
+      "id": 7,
+      "program": "sleep",
+      "args": [
+        "40"
+      ],
+      "state": "Canceled",
+      "exit_code": null
+    },
+    {
+      "id": 8,
+      "program": "sleep",
+      "args": [
+        "70"
+      ],
+      "state": "Canceled",
+      "exit_code": null
+    },
+    {
+      "id": 9,
+      "program": "sleep",
+      "args": [
+        "90"
+      ],
+      "state": {
+        "Failed": -1
+      },
+      "exit_code": -1
+    },
+    {
+      "id": 10,
+      "program": "sleep",
+      "args": [
+        "80"
+      ],
+      "state": {
+        "Failed": -1
+      },
+      "exit_code": -1
+    },
+    {
+      "id": 11,
+      "program": "sleep",
+      "args": [
+        "40"
+      ],
+      "state": "Canceled",
+      "exit_code": null
+    },
+    {
+      "id": 12,
+      "program": "sleep",
+      "args": [
+        "20"
       ],
       "state": "Succeeded",
       "exit_code": 0

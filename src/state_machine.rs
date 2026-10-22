@@ -2,6 +2,8 @@ use std::fmt;
 use tracing::warn;
 use serde::{Serialize, Deserialize};
 
+pub const EXIT_INTERRUMPIDO: i32 = -1;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum JobState {
     Queued,
@@ -10,6 +12,33 @@ pub enum JobState {
     Failed(i32), // Guarda el codigo de error (esto lo añadí yo Caro)
     Canceled,
 }
+
+impl JobState {
+    pub fn to_db(self) -> &'static str {
+        match self {
+            JobState::Queued => "Queued",
+            JobState::Running => "Running",
+            JobState::Succeeded => "Succeeded",
+            JobState::Failed(_) => "Failed",
+            JobState::Canceled => "Canceled",
+        }
+    }
+
+    pub fn from_db(state: &str, exit_code: Option<i32>) -> Option<JobState> {
+        match state {
+            "Queued" => Some(JobState::Queued),
+            "Running" => Some(JobState::Running),
+            "Succeeded" => Some(JobState::Succeeded),
+            "Failed" => Some(JobState::Failed(exit_code.unwrap_or(EXIT_INTERRUMPIDO))),
+            "Canceled" => Some(JobState::Canceled),
+            _ => None,
+        }
+    }
+}
+
+
+
+
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum JobEvent {
@@ -75,6 +104,25 @@ impl fmt::Display for Job {
 }
 
 impl Job {
+
+    //Recontruccion de un job para la persistencia
+    pub fn from_parts(
+        id: u32,
+        program: String,
+        args: Vec<String>,
+        state: JobState,
+        exit_code: Option<i32>,
+    ) -> Job {
+        Job {
+            id,
+            program,
+            args,
+            state,
+            exit_code,
+        }
+    }
+
+
     pub fn get_id(&self) -> u32 {
         self.id
     }
@@ -93,6 +141,17 @@ impl Job {
     pub fn get_exit_code(&self) -> Option<i32> {
         self.exit_code
     }
+
+
+    //
+    pub fn get_command_line(&self) -> String {
+        if self.args.is_empty() {
+            self.program.clone()
+        } else {
+            format!("{} {}", self.program, self.args.join(" "))
+        }
+    }
+
 
     // Tambien cambie esta función Caro, sorry :<
     pub fn transition(&mut self, event: JobEvent) {
@@ -121,3 +180,5 @@ impl Job {
         }
     }
 }
+
+
