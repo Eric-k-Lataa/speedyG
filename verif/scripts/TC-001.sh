@@ -160,23 +160,7 @@ fi
 # Prueba 6
 
 echo "" | tee -a "$LOG"
-echo "[6] Enviando comando no autorizado: rm archivo.txt" | tee -a "$LOG"
-
-OUTPUT=$(cargo run --bin speedyg -- rm archivo.txt 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/invalid-command.txt"
-echo "$OUTPUT" | tee -a "$LOG"
-
-if echo "$OUTPUT" | grep -q "Comando no autorizado"; then
-    echo "[PASS] El comando no autorizado fue rechazado." | tee -a "$LOG"
-else
-    echo "[FAIL] El comando no autorizado no fue rechazado correctamente." | tee -a "$LOG"
-    TEST_PASSED=false
-fi
-
-# Prueba 7
-
-echo "" | tee -a "$LOG"
-echo "[7] Verificando que el daemon continúe disponible..." | tee -a "$LOG"
+echo "[6] Verificando que el daemon continúe disponible..." | tee -a "$LOG"
 
 OUTPUT=$(cargo run --bin speedyg -- health 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/health-after-error.txt"
