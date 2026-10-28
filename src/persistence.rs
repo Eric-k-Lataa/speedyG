@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     id         INTEGER PRIMARY KEY,
     program    TEXT    NOT NULL,
     args       TEXT    NOT NULL,                    -- arreglo JSON, ej. [\"hola\"]
-    state      TEXT    NOT NULL CHECK (state IN ('Queued','Running','Succeeded','Failed','Canceled')),
+    state      TEXT    NOT NULL,                    -- se valida al leer con JonState::from_db
     exit_code  INTEGER,
     location   TEXT    NOT NULL CHECK (location IN ('queue','history')),
     position   INTEGER NOT NULL,                    -- orden dentro de queue o history

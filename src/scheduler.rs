@@ -1,5 +1,5 @@
 // src/scheduler.rs
-use crate::state_machine::{new_job, Job, JobEvent, JobState, EXIT_INTERRUMPIDO};
+use crate::state_machine::{new_job, Job, JobEvent, JobState};
 use std::collections::VecDeque;
 use serde::{Serialize, Deserialize};
 
@@ -112,21 +112,24 @@ impl Scheduler {
         let mut restantes = VecDeque::new();
 
         while let Some(mut job) = self.queue.pop_front() {
+            job.transition(JobEvent::ServiceRestarted);
+
             match job.get_state() {
-                JobState::Running => {
-                    warn!(
-                        "Recuperación: Job #{} estaba Running; se marca Failed({})",
-                        job.get_id(),
-                        EXIT_INTERRUMPIDO
-                    );
-                    job.transition(JobEvent::Completed(EXIT_INTERRUMPIDO));
-                    self.history.push(job);
-                }
+
                 JobState::Queued => {
                     info!("Recuperación: Job #{} sigue en cola; se relanzará", job.get_id());
                     por_relanzar.push(job.get_id());
                     restantes.push_back(job);
                 }
+
+                JobState::Interrupted => {
+                    warn!(
+                        "Recuperación: Job #{} estaba Running; se marca Interrupted",
+                        job.get_id()
+                    );
+                    self.history.push(job);
+                }
+
                 otro => {
                     warn!(
                         "Recuperación: Job #{} en cola con estado {:?}; se mueve al historial",

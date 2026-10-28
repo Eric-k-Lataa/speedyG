@@ -1,2 +1,9 @@
 /target
 /context
+
+# Archivos de datos locales y persistencia
+scheduler.json
+*.db
+*.db-wal
+*.db-shm
+

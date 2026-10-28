@@ -84,8 +84,13 @@ fn recuperacion_tras_reinicio() {
     let por_relanzar = s.recuperar_tras_reinicio();
 
     assert_eq!(por_relanzar, vec![5]); // solo el Queued se relanza
-    assert_eq!(s.get_job(4).unwrap().get_state(), JobState::Failed(-1)); // el Running se marca fallido
+    assert_eq!(s.get_job(4).unwrap().get_state(), JobState::Interrupted);
     assert_eq!(s.get_job(5).unwrap().get_state(), JobState::Queued);
+
+    //Interrupted sobrevive a otro guardado
+    guardar_en(&s, &db, &json).unwrap();
+    let otra_vez = cargar_desde(&db, &json);
+    assert_eq!(otra_vez.get_job(4).unwrap().get_state(), JobState::Interrupted);
 
     // Los IDs no se reutilizan
     let nuevo = s.add_job("echo".into(), vec![]).get_id();
