@@ -22,6 +22,7 @@ impl JobState {
             JobState::Succeeded => "Succeeded",
             JobState::Failed(_) => "Failed",
             JobState::Canceled => "Canceled",
+            JobState::Interrupted => "Interrupted",
         }
     }
 
@@ -32,6 +33,7 @@ impl JobState {
             "Succeeded" => Some(JobState::Succeeded),
             "Failed" => Some(JobState::Failed(exit_code.unwrap_or(EXIT_INTERRUMPIDO))),
             "Canceled" => Some(JobState::Canceled),
+            "Interrupted" => Some(JobState::Interrupted),
             _ => None,
         }
     }
