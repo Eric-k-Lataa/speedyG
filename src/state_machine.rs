@@ -11,6 +11,7 @@ pub enum JobState {
     Succeeded,
     Failed(i32), // Guarda el codigo de error (esto lo añadí yo Caro)
     Canceled,
+    Interrupted,
 }
 
 impl JobState {
@@ -46,6 +47,7 @@ pub enum JobEvent {
     Completed(i32), // Mismo caso que para Failed
     // Error, //Segun yo, teniendo la definición del Completed, no hace falta si es error
     Cancel,
+    ServiceRestarted,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -143,6 +145,7 @@ impl Job {
     }
 
 
+
     //
     pub fn get_command_line(&self) -> String {
         if self.args.is_empty() {
@@ -152,8 +155,6 @@ impl Job {
         }
     }
 
-
-    // Tambien cambie esta función Caro, sorry :<
     pub fn transition(&mut self, event: JobEvent) {
         match (self.state, event) {
             (JobState::Queued, JobEvent::CapacityAvailable) => {
@@ -172,6 +173,21 @@ impl Job {
             }
             (JobState::Running, JobEvent::Cancel) => {
                 self.state = JobState::Canceled;
+            }
+            (JobState::Running, JobEvent::ServiceRestarted) => {
+                self.state = JobState::Interrupted;
+            }
+            (JobState::Queued, JobEvent::ServiceRestarted) => {
+                // el trabajo permanece en la cola
+            }
+            (
+                JobState::Succeeded
+                | JobState::Failed(_)
+                | JobState::Canceled
+                | JobState::Interrupted,
+                JobEvent::ServiceRestarted,
+            ) => {
+                // Los estados terminales se conservan tras el reinicio
             }
             _ => warn!(
                 "Transición de estado inválida: {:?} + {:?}",
