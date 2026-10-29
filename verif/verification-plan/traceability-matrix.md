@@ -13,6 +13,7 @@
 | RF-09     | Lista | Alta | Prueba | TC-004 | estados + señal | Pendiente | —|
 | RF-10     | Cancelación | Alta | Prueba | TC-005 | estados + señal | Pendiente | —|
 | RF-11     | Consultar stdout y stderr | Alta | Prueba | TC-006 | resultado + log | Pendiente | —|
+| RF-16     | Parámetros configurables por flags o variables de entorno (socket, queue-cap, max-current, grace-ms, data-dir) | Alta | Prueba/Inspección | TC-009 | config.example.toml + log de arranque | Pendiente | —|
 | RNF-01    | Compilar y ejecutar en linux | Alta | Prueba | TC-014 | resultado + log | Pendiente | —|
 | RNF-02    | Construcción reproducible | Alta | Prueba/Inspeccioń | TC-014 | log de build | Pendiente | —|
 | RNF-03    | Còdigo sin privilegios de root | Alta | Prueba | TC-014 | - | Pendiente | —|
@@ -24,3 +25,4 @@
 | RNF-09    | Aislamiento de fallo  | Alta | Prueba | TC-008 | log + estados | Pendiente | —|
 | RNF-10    | Condiciones de reinicio | Alta | Prueba | TC-007 | resultado + log | Pendiente | —|
 | RNF-11    | Condición para archivos persistentes | Alta | Prueba | TC-007 | resultado + log | Pendiente | —|
+| RNF-18    | Valores inválidos de configuración se rechazan al arrancar con mensaje descriptivo | Alta | Prueba | TC-009 | salida stderr con SPEEDYG_QUEUE_CAP=0 | Pendiente | —|

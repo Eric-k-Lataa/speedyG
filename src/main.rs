@@ -7,6 +7,7 @@ use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
 use tracing::{error, info, warn};
+use speedyG::config::Config;
 
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
@@ -60,14 +61,34 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Inicializar el logger
     tracing_subscriber::fmt::init();
 
-    let socket_path = "/tmp/speedyg.sock";
+    // Cargar configuración desde flags / variables de entorno / defaults
+    let cfg = Config::from_env_and_args().unwrap_or_else(|err| {
+        eprintln!("Error al cargar configuración: {}", err);
+        std::process::exit(1);
+    });
 
-    // Eliminar el socket si quedó de una ejecución previa
-    if fs::metadata(socket_path).is_ok() {
-        fs::remove_file(socket_path)?;
+    info!(
+        socket_path    = %cfg.socket_path,
+        queue_cap      = %cfg.queue_cap,
+        max_current    = %cfg.max_current,
+        grace_ms       = %cfg.grace_ms,
+        data_dir       = %cfg.data_dir,
+        "Configuración cargada"
+    );
+
+    let socket_path = cfg.socket_path.clone();
+
+    // Crear el directorio de datos si no existe
+    if let Err(e) = fs::create_dir_all(&cfg.data_dir) {
+        error!("Error al crear directorio de datos {}: {}", cfg.data_dir, e);
     }
 
-    let listener = UnixListener::bind(socket_path)?;
+    // Eliminar el socket si quedó de una ejecución previa
+    if fs::metadata(&socket_path).is_ok() {
+        fs::remove_file(&socket_path)?;
+    }
+
+    let listener = UnixListener::bind(&socket_path)?;
     info!("Demonio speedyG escuchando en {}", socket_path);
 
     // Scheduler compartido entre las conexiones. Se carga de SQLite/JSON.
