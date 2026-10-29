@@ -48,7 +48,7 @@ setup_run_env() {
     RUN_DIR="$REPO_ROOT/verif/results/$tc_id/$run_id"
     mkdir -p "$RUN_DIR"
 
-    SOCKET=$(mktemp -u "/tmp/speedyg-${tc_id}-${run_id}.sock")
+    SOCKET=$(mktemp -u "/tmp/speedyg-${tc_id}-${run_id}-XXXXXX.sock")
     DATA_DIR=$(mktemp -d "/tmp/speedyg-${tc_id}-${run_id}-data-XXXXXX")
     LOG="$RUN_DIR/output.log"
 
