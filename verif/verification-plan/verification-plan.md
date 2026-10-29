@@ -209,7 +209,7 @@ Cuando una prueba requiera condiciones específicas, estas deberán indicarse en
 La información del ambiente podrá almacenarse como parte de la evidencia en:
 
 ```text
-verif/results/<fecha>/<TC-XXX>/environment.txt
+verif/results/<TC-XXX>/<AAAAMMDD-HHMMSS-PID>/environment.txt
 ```
 
 ---
@@ -245,22 +245,24 @@ Las evidencias se almacenarán dentro de:
 verif/results/
 ```
 
-utilizando una organización por fecha y caso de prueba.
+utilizando una organización por caso de prueba y `run-id` único por ejecución (`AAAAMMDD-HHMMSS-PID`).
 
 Ejemplo:
 
 ```text
 verif/results/
-└── 2026-10-03/
-    ├── TC-001/
-    │   ├── environment.txt
-    │   ├── test-output.txt
-    │   └── summary.md
-    └── TC-006/
-        ├── environment.txt
-        ├── test-output.txt
-        └── summary.md
+├── TC-001/
+│   └── 20260103-142500-12345/   ← run-id único
+│       ├── environment.txt      ← entorno, commit, branch, rutas
+│       ├── output.log           ← log completo de la corrida
+│       ├── summary.txt          ← result=PASS|FAIL, conteos
+│       ├── daemon.log           ← stdout/stderr del daemon
+│       └── <salidas por prueba>.txt
+└── avance-01/                   ← resultados históricos (no modificar)
+    └── TC-001/
 ```
+
+Los resultados del Avance 1 se conservan sin modificar en `verif/results/avance-01/`.
 
 ---
 
@@ -322,3 +324,41 @@ El objetivo final es mantener una cadena de trazabilidad completa:
 > **Requisito → Método de verificación → Caso de prueba → Ejecución → Evidencia → Resultado**
 
 Esto permite determinar qué requisitos han sido verificados, cuáles presentan defectos y cuáles todavía se encuentran pendientes de implementación o verificación.
+
+---
+
+## 11. Procedimiento de ejecución
+
+### Prerequisito
+
+Los scripts usan los binarios compilados en `target/debug/`. Compilar una vez antes de correr cualquier TC:
+
+```bash
+cargo build
+```
+
+### Ejecutar un caso de prueba
+
+```bash
+bash verif/scripts/TC-001.sh
+```
+
+Cada ejecución es completamente aislada: crea su propio socket Unix temporal, su propio directorio de datos y su propio `run-id`. No reutiliza daemons entre corridas ni sobrescribe resultados anteriores.
+
+### Biblioteca compartida
+
+Todos los scripts sourcea `verif/scripts/lib/common.sh`, que provee:
+
+* Creación del entorno temporal aislado por corrida.
+* Arranque y detención del daemon con su **PID real** (no el PID de `cargo`).
+* Espera de socket y de estado de job con timeout configurable.
+* Funciones de aserción (`assert_contains`, `assert_exit_zero`, …).
+* Conteo de file descriptors abiertos por el daemon.
+* Detección de procesos zombi y huérfanos.
+* Escritura automática de `summary.txt` y salida con código 0/1.
+
+### Casos de prueba disponibles
+
+| Script | ID | Descripción |
+|---|---|---|
+| `verif/scripts/TC-001.sh` | TC-001 | Envío y ejecución de un trabajo |
