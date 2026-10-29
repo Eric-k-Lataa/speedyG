@@ -1,0 +1,67 @@
+========================================
+TC-001 - Envío y ejecución de un trabajo
+========================================
+
+Caso: TC-001
+Fecha de ejecución: 2026-10-02 19:35:54 CST
+Entorno: Linux
+Kernel: 6.12.107+deb13-amd64
+Arquitectura: x86_64
+Hostname: Makena
+Rust: rustc 1.98.1 (48a229cea 2026-09-01)
+Cargo: cargo 1.98.1 (797e8a9bc 2026-08-05)
+Branch: erick
+Commit: 09e377b6ffa9b420783fa8c1b235fd7317515385
+
+========================================
+[INFO] Iniciando daemon speedyG...
+[INFO] PID del daemon: 7470
+[PASS] Daemon disponible.
+
+[1] Enviando comando válido: echo hola
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target/debug/speedyg echo hola`
+Job #1 encolado correctamente
+[PASS] Job creado correctamente. ID: 1
+
+[2] Consultando estado del Job #1
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/speedyg status 1`
+Job #1: echo hola [Succeeded] (exit code: 0)
+[PASS] El Job #1 puede ser consultado.
+
+[3] Enviando comando de ejecución prolongada: sleep 10
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/speedyg sleep 10`
+Job #2 encolado correctamente
+[PASS] Job sleep creado correctamente. ID: 2
+
+[4] Consultando estado del Job #2
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target/debug/speedyg status 2`
+Job #2: sleep 10 [Running]
+[PASS] El Job #2 está en estado Running.
+
+[5] Esperando finalización del Job #2...
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target/debug/speedyg status 2`
+Job #2: sleep 10 [Succeeded] (exit code: 0)
+[PASS] El Job #2 terminó correctamente.
+
+[6] Enviando comando no autorizado: rm archivo.txt
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/speedyg rm archivo.txt`
+Error de sintaxis: Comando no autorizado
+[PASS] El comando no autorizado fue rechazado.
+
+[7] Verificando que el daemon continúe disponible...
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running `target/debug/speedyg health`
+OK: Daemon speedyg funcionando correctamente
+[PASS] El daemon continúa disponible.
+
+========================================
+RESULTADO TC-001: PASS
+========================================
+
+[INFO] Deteniendo daemon PID 7470...

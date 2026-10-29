@@ -1,195 +1,101 @@
 #!/bin/bash
+# verif/scripts/TC-001.sh
+#
+# TC-001 — Envío y ejecución de un trabajo
+#
+# Prerrequisito: cargo build (desde la raíz del repositorio)
+#
+# Uso:
+#   bash verif/scripts/TC-001.sh
+#
+# Resultados en:
+#   verif/results/TC-001/<AAAAMMDD-HHMMSS-PID>/
 
-RESULTS_DIR="verif/results/TC-001"
-LOG="$RESULTS_DIR/execution.log"
+set -euo pipefail
 
-# Socket y directorio de datos aislados por corrida
-SOCKET=$(mktemp -u /tmp/speedyg-tc001-XXXXXX.sock)
-DATA_DIR=$(mktemp -d /tmp/speedyg-tc001-data-XXXXXX)
-export SPEEDYG_SOCKET="$SOCKET"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/common.sh"
 
-TEST_PASSED=true
-DAEMON_PID=""
+# ── Inicializar corrida ───────────────────────────────────────────────────────
+setup_run_env "TC-001"
+start_daemon
 
-mkdir -p "$RESULTS_DIR"
-
-echo "========================================" | tee "$LOG"
-echo "TC-001 - Envío y ejecución de un trabajo" | tee -a "$LOG"
-echo "========================================" | tee -a "$LOG"
-
-echo "" | tee -a "$LOG"
-echo "Caso: TC-001" | tee -a "$LOG"
-echo "Fecha de ejecución: $(date '+%Y-%m-%d %H:%M:%S %Z')" | tee -a "$LOG"
-echo "Entorno: $(uname -s)" | tee -a "$LOG"
-echo "Kernel: $(uname -r)" | tee -a "$LOG"
-echo "Arquitectura: $(uname -m)" | tee -a "$LOG"
-echo "Hostname: $(hostname)" | tee -a "$LOG"
-echo "Rust: $(rustc --version)" | tee -a "$LOG"
-echo "Cargo: $(cargo --version)" | tee -a "$LOG"
-echo "Branch: $(git branch --show-current)" | tee -a "$LOG"
-echo "Commit: $(git rev-parse HEAD)" | tee -a "$LOG"
-echo "Socket: $SOCKET" | tee -a "$LOG"
-echo "Data dir: $DATA_DIR" | tee -a "$LOG"
-
-echo "" | tee -a "$LOG"
-echo "========================================" | tee -a "$LOG"
-
-# Limpiar daemon y artefactos temporales al terminar
-cleanup() {
-    if [ -n "$DAEMON_PID" ]; then
-        echo "" | tee -a "$LOG"
-        echo "[INFO] Deteniendo daemon PID $DAEMON_PID..." | tee -a "$LOG"
-        kill "$DAEMON_PID" 2>/dev/null || true
-        wait "$DAEMON_PID" 2>/dev/null || true
-        rm -f "$SOCKET"
-        rm -rf "$DATA_DIR"
-    fi
-}
-
-trap cleanup EXIT
-
-# Preparar daemon
-
-echo "[INFO] Iniciando daemon speedyG..." | tee -a "$LOG"
-echo "[INFO] Socket: $SOCKET" | tee -a "$LOG"
-
-SPEEDYG_SOCKET="$SOCKET" cargo run --bin speedyG -- \
-    --socket "$SOCKET" \
-    --data-dir "$DATA_DIR" \
-    > "$RESULTS_DIR/daemon.log" 2>&1 &
-DAEMON_PID=$!
-
-echo "[INFO] PID del daemon: $DAEMON_PID" | tee -a "$LOG"
-
-for i in {1..20}; do
-    if [ -S "$SOCKET" ]; then
-        break
-    fi
-    sleep 1
-done
-
-if [ ! -S "$SOCKET" ]; then
-    echo "[FAIL] El daemon no creó el socket." | tee -a "$LOG"
-    TEST_PASSED=false
-else
-    echo "[PASS] Daemon disponible." | tee -a "$LOG"
-fi
-
-# Prueba 1
-
+# ── Prueba 1: enviar comando válido y obtener Job ID ─────────────────────────
 echo "" | tee -a "$LOG"
 echo "[1] Enviando comando válido: echo hola" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" echo hola 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/valid-command.txt"
-echo "$OUTPUT" | tee -a "$LOG"
+OUT1=$(client echo hola 2>&1)
+echo "$OUT1" | tee -a "$LOG"
+echo "$OUT1" > "$RUN_DIR/valid-command.txt"
 
-JOB_ID=$(echo "$OUTPUT" | grep -oE 'Job #[0-9]+' | grep -oE '[0-9]+' | head -1)
+JOB_ID=$(echo "$OUT1" | grep -oE 'Job #[0-9]+' | grep -oE '[0-9]+' | head -1)
+assert_contains "Job ID obtenido en la respuesta" "Job #" "$OUT1"
 
-if [ -n "$JOB_ID" ]; then
-    echo "[PASS] Job creado correctamente. ID: $JOB_ID" | tee -a "$LOG"
-else
-    echo "[FAIL] No se obtuvo un Job ID." | tee -a "$LOG"
-    TEST_PASSED=false
-fi
-
-# Prueba 2
-
+# ── Prueba 2: consultar estado del job ───────────────────────────────────────
 echo "" | tee -a "$LOG"
 echo "[2] Consultando estado del Job #$JOB_ID" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$JOB_ID" 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/status.txt"
-echo "$OUTPUT" | tee -a "$LOG"
+OUT2=$(client status "$JOB_ID" 2>&1)
+echo "$OUT2" | tee -a "$LOG"
+echo "$OUT2" > "$RUN_DIR/status.txt"
 
-if echo "$OUTPUT" | grep -q "Job #$JOB_ID"; then
-    echo "[PASS] El Job #$JOB_ID puede ser consultado." | tee -a "$LOG"
-else
-    echo "[FAIL] No se pudo consultar el Job #$JOB_ID." | tee -a "$LOG"
-    TEST_PASSED=false
-fi
+assert_contains "Job #$JOB_ID aparece en status" "Job #$JOB_ID" "$OUT2"
 
-# Prueba 3
-
+# ── Prueba 3: enviar comando de larga duración ───────────────────────────────
 echo "" | tee -a "$LOG"
 echo "[3] Enviando comando de ejecución prolongada: sleep 10" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" sleep 10 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/running-command.txt"
-echo "$OUTPUT" | tee -a "$LOG"
+OUT3=$(client sleep 10 2>&1)
+echo "$OUT3" | tee -a "$LOG"
+echo "$OUT3" > "$RUN_DIR/running-command.txt"
 
-RUNNING_JOB_ID=$(echo "$OUTPUT" | grep -oE 'Job #[0-9]+' | grep -oE '[0-9]+' | head -1)
+RUNNING_JOB_ID=$(echo "$OUT3" | grep -oE 'Job #[0-9]+' | grep -oE '[0-9]+' | head -1)
+assert_contains "Job sleep creado y Job ID obtenido" "Job #" "$OUT3"
 
-if [ -n "$RUNNING_JOB_ID" ]; then
-    echo "[PASS] Job sleep creado correctamente. ID: $RUNNING_JOB_ID" | tee -a "$LOG"
-else
-    echo "[FAIL] No se obtuvo el ID del Job sleep." | tee -a "$LOG"
-    TEST_PASSED=false
-fi
-
-# Prueba 4
-
+# ── Prueba 4: verificar estado Running ───────────────────────────────────────
 echo "" | tee -a "$LOG"
-echo "[4] Consultando estado del Job #$RUNNING_JOB_ID" | tee -a "$LOG"
+echo "[4] Esperando estado Running del Job #$RUNNING_JOB_ID..." | tee -a "$LOG"
 
-sleep 1
-
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$RUNNING_JOB_ID" 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/running-status.txt"
-echo "$OUTPUT" | tee -a "$LOG"
-
-if echo "$OUTPUT" | grep -q "\[Running\]"; then
-    echo "[PASS] El Job #$RUNNING_JOB_ID está en estado Running." | tee -a "$LOG"
+if wait_job_state "$RUNNING_JOB_ID" "\[Running\]" 10; then
+    OUT4=$(client status "$RUNNING_JOB_ID" 2>&1)
+    echo "$OUT4" | tee -a "$LOG"
+    echo "$OUT4" > "$RUN_DIR/running-status.txt"
+    assert_contains "Job #$RUNNING_JOB_ID está en estado Running" "[Running]" "$OUT4"
 else
-    echo "[FAIL] El Job #$RUNNING_JOB_ID no está en Running." | tee -a "$LOG"
-    TEST_PASSED=false
+    echo "[FAIL] Job #$RUNNING_JOB_ID no alcanzó estado Running en 10s." | tee -a "$LOG"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
-# Prueba 5
-
+# ── Prueba 5: verificar finalización correcta ────────────────────────────────
 echo "" | tee -a "$LOG"
-echo "[5] Esperando finalización del Job #$RUNNING_JOB_ID..." | tee -a "$LOG"
+echo "[5] Esperando finalización del Job #$RUNNING_JOB_ID (sleep 10)..." | tee -a "$LOG"
 
-sleep 11
-
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$RUNNING_JOB_ID" 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/final-status.txt"
-echo "$OUTPUT" | tee -a "$LOG"
-
-if echo "$OUTPUT" | grep -q "\[Succeeded\].*exit code: 0"; then
-    echo "[PASS] El Job #$RUNNING_JOB_ID terminó correctamente." | tee -a "$LOG"
+if wait_job_state "$RUNNING_JOB_ID" "\[Succeeded\]" 20; then
+    OUT5=$(client status "$RUNNING_JOB_ID" 2>&1)
+    echo "$OUT5" | tee -a "$LOG"
+    echo "$OUT5" > "$RUN_DIR/final-status.txt"
+    assert_contains "Job #$RUNNING_JOB_ID terminó con exit code 0" "exit code: 0" "$OUT5"
 else
-    echo "[FAIL] El Job #$RUNNING_JOB_ID no terminó correctamente." | tee -a "$LOG"
-    TEST_PASSED=false
+    echo "[FAIL] Job #$RUNNING_JOB_ID no alcanzó estado Succeeded en 20s." | tee -a "$LOG"
+    OUT5=$(client status "$RUNNING_JOB_ID" 2>&1)
+    echo "$OUT5" > "$RUN_DIR/final-status.txt"
+    FAIL_COUNT=$((FAIL_COUNT + 1))
 fi
 
-# Prueba 6
-
+# ── Prueba 6: daemon sigue disponible ────────────────────────────────────────
 echo "" | tee -a "$LOG"
 echo "[6] Verificando que el daemon continúe disponible..." | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" health 2>&1)
-echo "$OUTPUT" > "$RESULTS_DIR/health-after-error.txt"
-echo "$OUTPUT" | tee -a "$LOG"
+OUT6=$(client health 2>&1)
+echo "$OUT6" | tee -a "$LOG"
+echo "$OUT6" > "$RUN_DIR/health-after-error.txt"
 
-if echo "$OUTPUT" | grep -q "OK: Daemon speedyg funcionando correctamente"; then
-    echo "[PASS] El daemon continúa disponible." | tee -a "$LOG"
-else
-    echo "[FAIL] El daemon no continúa disponible." | tee -a "$LOG"
-    TEST_PASSED=false
-fi
+assert_contains "Daemon responde health correctamente" "OK: Daemon speedyg funcionando correctamente" "$OUT6"
 
-# Resultado
-
+# ── Diagnóstico: fds y procesos zombie ───────────────────────────────────────
 echo "" | tee -a "$LOG"
-echo "========================================" | tee -a "$LOG"
+echo "[INFO] File descriptors abiertos por daemon: $(count_open_fds)" | tee -a "$LOG"
+check_no_zombies
 
-if [ "$TEST_PASSED" = true ]; then
-    echo "RESULTADO TC-001: PASS" | tee -a "$LOG"
-    echo "========================================" | tee -a "$LOG"
-    exit 0
-else
-    echo "RESULTADO TC-001: FAIL" | tee -a "$LOG"
-    echo "========================================" | tee -a "$LOG"
-    exit 1
-fi
+# ── Resultado final ───────────────────────────────────────────────────────────
+finish_run
