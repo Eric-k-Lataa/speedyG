@@ -1,6 +1,6 @@
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use tracing::warn;
-use serde::{Serialize, Deserialize};
 
 pub const EXIT_INTERRUMPIDO: i32 = -1;
 
@@ -38,10 +38,6 @@ impl JobState {
         }
     }
 }
-
-
-
-
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum JobEvent {
@@ -108,7 +104,6 @@ impl fmt::Display for Job {
 }
 
 impl Job {
-
     //Recontruccion de un job para la persistencia
     pub fn from_parts(
         id: u32,
@@ -125,7 +120,6 @@ impl Job {
             exit_code,
         }
     }
-
 
     pub fn get_id(&self) -> u32 {
         self.id
@@ -145,8 +139,6 @@ impl Job {
     pub fn get_exit_code(&self) -> Option<i32> {
         self.exit_code
     }
-
-
 
     //
     pub fn get_command_line(&self) -> String {
@@ -198,5 +190,3 @@ impl Job {
         }
     }
 }
-
-

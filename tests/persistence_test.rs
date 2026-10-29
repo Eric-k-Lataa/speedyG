@@ -7,7 +7,6 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Instant;
 
-
 fn rutas(nombre: &str) -> (PathBuf, PathBuf, PathBuf) {
     let dir = std::env::temp_dir().join(format!("speedyg_test_{}_{}", nombre, std::process::id()));
     let _ = fs::remove_dir_all(&dir);
@@ -22,7 +21,6 @@ fn texto(s: &Scheduler) -> Vec<String> {
         .map(|j| j.to_string())
         .collect()
 }
-
 
 fn scheduler_ejemplo() -> Scheduler {
     let mut s = Scheduler::new();
@@ -90,7 +88,10 @@ fn recuperacion_tras_reinicio() {
     //Interrupted sobrevive a otro guardado
     guardar_en(&s, &db, &json).unwrap();
     let otra_vez = cargar_desde(&db, &json);
-    assert_eq!(otra_vez.get_job(4).unwrap().get_state(), JobState::Interrupted);
+    assert_eq!(
+        otra_vez.get_job(4).unwrap().get_state(),
+        JobState::Interrupted
+    );
 
     // Los IDs no se reutilizan
     let nuevo = s.add_job("echo".into(), vec![]).get_id();
@@ -159,7 +160,9 @@ fn concurrencia_sin_corrupcion_ni_ids_repetidos() {
             thread::spawn(move || {
                 for i in 0..25 {
                     let mut s = sched.lock().unwrap();
-                    let id = s.add_job("echo".into(), vec![format!("h{}-{}", h, i)]).get_id();
+                    let id = s
+                        .add_job("echo".into(), vec![format!("h{}-{}", h, i)])
+                        .get_id();
                     s.start_job(id);
                     s.complete_job(id, 0);
                     guardar_en(&s, &db, &json).unwrap();
@@ -199,4 +202,3 @@ fn rendimiento_500_jobs() {
     println!("Guardar + cargar 500 jobs: {:?}", dur);
     let _ = fs::remove_dir_all(dir);
 }
-

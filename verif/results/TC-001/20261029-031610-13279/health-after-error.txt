@@ -1,0 +1,1 @@
+OK: Daemon speedyg funcionando correctamente

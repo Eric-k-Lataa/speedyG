@@ -1,0 +1,1 @@
+Job #7: echo hola [Succeeded] (exit code: 0)

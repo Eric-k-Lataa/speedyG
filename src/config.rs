@@ -129,13 +129,19 @@ fn next_arg<'a>(args: &'a [String], i: usize, flag: &str) -> Result<&'a str, Str
 }
 
 fn parse_usize(flag: &str, val: &str) -> Result<usize, String> {
-    val 
-        .parse::<usize>()
-        .map_err(|_| format!("Config: '{}' requiere un número entero válido, se recibió '{}'", flag, val))
+    val.parse::<usize>().map_err(|_| {
+        format!(
+            "Config: '{}' requiere un número entero válido, se recibió '{}'",
+            flag, val
+        )
+    })
 }
 
 fn parse_u64(flag: &str, val: &str) -> Result<u64, String> {
-    val 
-        .parse::<u64>()
-        .map_err(|_| format!("Config: '{}' requiere un número entero válido, se recibió '{}'", flag, val))
+    val.parse::<u64>().map_err(|_| {
+        format!(
+            "Config: '{}' requiere un número entero válido, se recibió '{}'",
+            flag, val
+        )
+    })
 }
