@@ -1,13 +1,24 @@
 // src/scheduler.rs
-use crate::state_machine::{new_job, Job, JobEvent};
+use crate::state_machine::{new_job, Job, JobEvent, JobState};
 use std::collections::VecDeque;
+use serde::{Serialize, Deserialize};
+
+use tracing::{info, warn};
 
 /// Administrador de la cola de tareas y envio (?) hacia el Executor
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Scheduler {
     next_id: u32,
     queue: VecDeque<Job>,
     history: Vec<Job>,
 }
+
+impl Default for Scheduler {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 
 impl Scheduler {
     pub fn new() -> Self {
@@ -16,6 +27,20 @@ impl Scheduler {
             queue: VecDeque::new(),
             history: Vec::new(),
         }
+    }
+
+    ///Reconstruye scheduler con datos leidos del disco para la persistencia.
+    pub fn from_parts(next_id: u32, queue: VecDeque<Job>, history: Vec<Job>) -> Self {
+        Self {
+            next_id,
+            queue,
+            history,
+        }
+    }
+
+    ///Siguiente ID asignado para no reutilizar tras el reinicio.
+    pub fn next_id(&self) -> u32 {
+        self.next_id
     }
 
     /// Encola un nuevo comando usando la máquina de estados
@@ -78,4 +103,46 @@ impl Scheduler {
     pub fn history_jobs(&self) -> Vec<&Job> {
         self.history.iter().collect()
     }
+
+
+
+    ///Recuperacion
+    pub fn recuperar_tras_reinicio(&mut self) -> Vec<u32> {
+        let mut por_relanzar = Vec::new();
+        let mut restantes = VecDeque::new();
+
+        while let Some(mut job) = self.queue.pop_front() {
+            job.transition(JobEvent::ServiceRestarted);
+
+            match job.get_state() {
+
+                JobState::Queued => {
+                    info!("Recuperación: Job #{} sigue en cola; se relanzará", job.get_id());
+                    por_relanzar.push(job.get_id());
+                    restantes.push_back(job);
+                }
+
+                JobState::Interrupted => {
+                    warn!(
+                        "Recuperación: Job #{} estaba Running; se marca Interrupted",
+                        job.get_id()
+                    );
+                    self.history.push(job);
+                }
+
+                otro => {
+                    warn!(
+                        "Recuperación: Job #{} en cola con estado {:?}; se mueve al historial",
+                        job.get_id(),
+                        otro
+                    );
+                    self.history.push(job);
+                }
+            }
+        }
+
+        self.queue = restantes;
+        por_relanzar
+    }
+
 }
