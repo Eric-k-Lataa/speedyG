@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running `/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg rm archivo.txt`
+Error de sintaxis: Comando no autorizado

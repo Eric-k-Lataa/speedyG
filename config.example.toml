@@ -1,0 +1,84 @@
+# config.example.toml — Ejemplo de configuración del demonio speedyG
+#
+# speedyG no lee este archivo directamente en tiempo de ejecución.
+# Los valores se configuran mediante variables de entorno o flags CLI.
+# Este archivo documenta todos los parámetros disponibles con sus valores
+# por defecto y explica cómo usarlos.
+#
+# ──────────────────────────────────────────────────────────────────────────────
+# Parámetro        | Variable de entorno        | Flag CLI           | Default
+# ──────────────────────────────────────────────────────────────────────────────
+# socket           | SPEEDYG_SOCKET             | --socket           | /tmp/speedyg.sock
+# queue_cap        | SPEEDYG_QUEUE_CAP          | --queue-cap        | 64
+# max_concurrent   | SPEEDYG_MAX_CONCURRENT     | --max-concurrent   | 4
+# grace_ms         | SPEEDYG_GRACE_MS           | --grace-ms         | 5000
+# data_dir         | SPEEDYG_DATA_DIR           | --data-dir         | /var/lib/speedyg
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Ruta del socket Unix donde el demonio acepta conexiones del cliente CLI.
+# Cambiar este valor permite correr múltiples instancias en paralelo
+# (útil para tests de verificación aislados).
+#
+# SPEEDYG_SOCKET=/tmp/speedyg.sock
+# Equivalente CLI: --socket /tmp/speedyg.sock
+socket = "/tmp/speedyg.sock"
+
+# Capacidad máxima de la cola de jobs pendientes.
+# Debe ser un entero positivo (>= 1).
+#
+# SPEEDYG_QUEUE_CAP=64
+# Equivalente CLI: --queue-cap 64
+queue_cap = 64
+
+# Número máximo de jobs que pueden ejecutarse en paralelo.
+# Debe ser un entero positivo (>= 1).
+#
+# SPEEDYG_MAX_CONCURRENT=4
+# Equivalente CLI: --max-concurrent 4
+max_concurrent = 4
+
+# Tiempo de gracia en milisegundos antes de forzar el cierre del demonio
+# cuando recibe una señal de apagado. Permite que los jobs en ejecución
+# terminen ordenadamente.
+# Debe ser un entero sin signo (0 = sin gracia, cierre inmediato).
+#
+# SPEEDYG_GRACE_MS=5000
+# Equivalente CLI: --grace-ms 5000
+grace_ms = 5000
+
+# Directorio base donde el demonio guarda logs y datos persistentes.
+# El demonio crea el directorio automáticamente si no existe.
+#
+# SPEEDYG_DATA_DIR=/var/lib/speedyg
+# Equivalente CLI: --data-dir /var/lib/speedyg
+data_dir = "/var/lib/speedyg"
+
+# ── Ejemplos de uso ───────────────────────────────────────────────────────────
+#
+# Arrancar el demonio con valores personalizados (variables de entorno):
+#
+#   SPEEDYG_SOCKET=/tmp/my.sock \
+#   SPEEDYG_QUEUE_CAP=128       \
+#   SPEEDYG_MAX_CONCURRENT=8    \
+#   SPEEDYG_GRACE_MS=10000      \
+#   SPEEDYG_DATA_DIR=/tmp/speedyg-data \
+#   cargo run --bin speedyG
+#
+# Arrancar el demonio con flags CLI:
+#
+#   cargo run --bin speedyG -- \
+#     --socket /tmp/my.sock   \
+#     --queue-cap 128         \
+#     --max-concurrent 8      \
+#     --grace-ms 10000        \
+#     --data-dir /tmp/speedyg-data
+#
+# Cliente CLI apuntando a un socket personalizado:
+#
+#   cargo run --bin speedyg -- --socket /tmp/my.sock health
+#   SPEEDYG_SOCKET=/tmp/my.sock cargo run --bin speedyg -- health
+#
+# Valores inválidos se rechazan al arrancar con un mensaje descriptivo:
+#
+#   SPEEDYG_QUEUE_CAP=0 cargo run --bin speedyG
+#   # Error de configuración: Config: 'queue-cap' debe ser mayor que 0.

@@ -2,7 +2,11 @@
 
 RESULTS_DIR="verif/results/TC-001"
 LOG="$RESULTS_DIR/execution.log"
-SOCKET="/tmp/speedyg.sock"
+
+# Socket y directorio de datos aislados por corrida
+SOCKET=$(mktemp -u /tmp/speedyg-tc001-XXXXXX.sock)
+DATA_DIR=$(mktemp -d /tmp/speedyg-tc001-data-XXXXXX)
+export SPEEDYG_SOCKET="$SOCKET"
 
 TEST_PASSED=true
 DAEMON_PID=""
@@ -24,39 +28,13 @@ echo "Rust: $(rustc --version)" | tee -a "$LOG"
 echo "Cargo: $(cargo --version)" | tee -a "$LOG"
 echo "Branch: $(git branch --show-current)" | tee -a "$LOG"
 echo "Commit: $(git rev-parse HEAD)" | tee -a "$LOG"
+echo "Socket: $SOCKET" | tee -a "$LOG"
+echo "Data dir: $DATA_DIR" | tee -a "$LOG"
 
 echo "" | tee -a "$LOG"
 echo "========================================" | tee -a "$LOG"
 
-# Preparar daemon
-
-if [ -S "$SOCKET" ]; then
-    echo "[INFO] El daemon ya está ejecutándose." | tee -a "$LOG"
-else
-    echo "[INFO] Iniciando daemon speedyG..." | tee -a "$LOG"
-
-    cargo run --bin speedyG > "$RESULTS_DIR/daemon.log" 2>&1 &
-    DAEMON_PID=$!
-
-    echo "[INFO] PID del daemon: $DAEMON_PID" | tee -a "$LOG"
-
-    for i in {1..20}; do
-        if [ -S "$SOCKET" ]; then
-            break
-        fi
-        sleep 1
-    done
-
-    if [ ! -S "$SOCKET" ]; then
-        echo "[FAIL] El daemon no creó el socket." | tee -a "$LOG"
-        TEST_PASSED=false
-    else
-        echo "[PASS] Daemon disponible." | tee -a "$LOG"
-    fi
-fi
-
-# Limpiar daemon al terminar
-
+# Limpiar daemon y artefactos temporales al terminar
 cleanup() {
     if [ -n "$DAEMON_PID" ]; then
         echo "" | tee -a "$LOG"
@@ -64,17 +42,45 @@ cleanup() {
         kill "$DAEMON_PID" 2>/dev/null || true
         wait "$DAEMON_PID" 2>/dev/null || true
         rm -f "$SOCKET"
+        rm -rf "$DATA_DIR"
     fi
 }
 
 trap cleanup EXIT
+
+# Preparar daemon
+
+echo "[INFO] Iniciando daemon speedyG..." | tee -a "$LOG"
+echo "[INFO] Socket: $SOCKET" | tee -a "$LOG"
+
+SPEEDYG_SOCKET="$SOCKET" cargo run --bin speedyG -- \
+    --socket "$SOCKET" \
+    --data-dir "$DATA_DIR" \
+    > "$RESULTS_DIR/daemon.log" 2>&1 &
+DAEMON_PID=$!
+
+echo "[INFO] PID del daemon: $DAEMON_PID" | tee -a "$LOG"
+
+for i in {1..20}; do
+    if [ -S "$SOCKET" ]; then
+        break
+    fi
+    sleep 1
+done
+
+if [ ! -S "$SOCKET" ]; then
+    echo "[FAIL] El daemon no creó el socket." | tee -a "$LOG"
+    TEST_PASSED=false
+else
+    echo "[PASS] Daemon disponible." | tee -a "$LOG"
+fi
 
 # Prueba 1
 
 echo "" | tee -a "$LOG"
 echo "[1] Enviando comando válido: echo hola" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- echo hola 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" echo hola 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/valid-command.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 
@@ -92,7 +98,7 @@ fi
 echo "" | tee -a "$LOG"
 echo "[2] Consultando estado del Job #$JOB_ID" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- status "$JOB_ID" 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$JOB_ID" 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/status.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 
@@ -108,7 +114,7 @@ fi
 echo "" | tee -a "$LOG"
 echo "[3] Enviando comando de ejecución prolongada: sleep 10" | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- sleep 10 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" sleep 10 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/running-command.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 
@@ -128,7 +134,7 @@ echo "[4] Consultando estado del Job #$RUNNING_JOB_ID" | tee -a "$LOG"
 
 sleep 1
 
-OUTPUT=$(cargo run --bin speedyg -- status "$RUNNING_JOB_ID" 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$RUNNING_JOB_ID" 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/running-status.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 
@@ -146,7 +152,7 @@ echo "[5] Esperando finalización del Job #$RUNNING_JOB_ID..." | tee -a "$LOG"
 
 sleep 11
 
-OUTPUT=$(cargo run --bin speedyg -- status "$RUNNING_JOB_ID" 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" status "$RUNNING_JOB_ID" 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/final-status.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 
@@ -162,7 +168,7 @@ fi
 echo "" | tee -a "$LOG"
 echo "[6] Verificando que el daemon continúe disponible..." | tee -a "$LOG"
 
-OUTPUT=$(cargo run --bin speedyg -- health 2>&1)
+OUTPUT=$(cargo run --bin speedyg -- --socket "$SOCKET" health 2>&1)
 echo "$OUTPUT" > "$RESULTS_DIR/health-after-error.txt"
 echo "$OUTPUT" | tee -a "$LOG"
 

@@ -1,3 +1,11 @@
+// src/bin/speedyg.rs
+
+// Cliente CLI del demonio speedyG.
+// El socket al que se conecta se determnina en este orden:
+//      1. Flag --socket <ruta>
+//      2. Variable de entorno SPEEDYG_SOCKET
+//      3. Valor por defecto: /tmp/speedyg.sock
+
 use std::env;
 use std::process;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -5,13 +13,32 @@ use tokio::net::UnixStream;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = env::args().skip(1).collect();
-    if args.is_empty() {
-        eprintln!("Uso: speedyg <comando>");
+    let raw_args: Vec<String> = env::args().skip(1).collect();
+
+    let mut _socket_path = env::var("SPEEDYG_SOCKET").unwrap_or_else(|_| "/tmp/speedyg.sock".to_string());
+    let mut command_args: Vec<String> = Vec::new();
+
+    let mut i = 0;
+    while i < raw_args.len() {
+        if raw_args[i] == "--socket" {
+            if let Some(val) = raw_args.get(i + 1) {
+                _socket_path = val.clone();
+                i += 2;
+            } else {
+                eprintln!("Error: Falta el valor para la opción --socket");
+                process::exit(2);
+            }
+        } else {
+            command_args.push(raw_args[i].clone());
+            i += 1;
+        }
+    }
+    if raw_args.is_empty() {
+        eprintln!("Uso: speedyg [--socket <path>] <comando> [args...]");
         process::exit(2); // code 2, uso incorrecto argumentos
     }
 
-    let command_raw = args.join(" ");
+    let command_raw = raw_args.join(" ");
     let socket_path = "/tmp/speedyg.sock";
 
     let mut stream = match UnixStream::connect(socket_path).await {
