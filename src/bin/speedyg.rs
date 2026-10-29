@@ -33,19 +33,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             i += 1;
         }
     }
-    if raw_args.is_empty() {
+    if command_args.is_empty() {
         eprintln!("Uso: speedyg [--socket <path>] <comando> [args...]");
-        process::exit(2); // code 2, uso incorrecto argumentos
+        process::exit(2);
     }
 
-    let command_raw = raw_args.join(" ");
-    let socket_path = "/tmp/speedyg.sock";
+    let command_raw = command_args.join(" ");
 
-    let mut stream = match UnixStream::connect(socket_path).await {
+    let mut stream = match UnixStream::connect(&_socket_path).await {
         Ok(stream) => stream,
         Err(_) => {
-            eprintln!("Error: El demonio speedyg no está en ejecución.");
-            process::exit(1); // code 1, error general
+            eprintln!("Error: El demonio speedyg no está en ejecución (socket: {}).", _socket_path);
+            process::exit(1);
         }
     };
 
