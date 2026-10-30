@@ -8,7 +8,7 @@ use std::env;
 // -- Valores por defecto --
 pub const DEFAULT_QUEUE_CAP: usize = 3;
 pub const DEFAULT_SPEEDYG_SOCKET: &str = "/tmp/speedyg.sock";
-pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 4;
+pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 3;
 pub const DEFAULT_SPEEDYG_GRACE_MS: u64 = 5_000;
 pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/var/lib/speedyg";
 

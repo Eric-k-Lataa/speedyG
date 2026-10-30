@@ -24,21 +24,27 @@ fn texto(s: &Scheduler) -> Vec<String> {
 
 fn scheduler_ejemplo() -> Scheduler {
     let mut s = Scheduler::new();
-    for (p, a) in [
-        ("echo", "hola"),
-        ("sh", "-c"),
-        ("sleep", "100"),
-        ("sleep", "10"),
-        ("ls", "-l"),
-    ] {
-        s.add_job(p.to_string(), vec![a.to_string()]);
-    }
+    //lo modifiqué para que los jobs se agreguen y procesen en orden,
+    //ya que con la capacidad maxima de cola, daba error
+    s.add_job("echo".to_string(), vec!["hola".to_string()])
+        .unwrap();
     s.start_job(1);
     s.complete_job(1, 0);
+
+    s.add_job("sh".to_string(), vec!["-c".to_string()]).unwrap();
     s.start_job(2);
     s.complete_job(2, 3);
+
+    s.add_job("sleep".to_string(), vec!["100".to_string()])
+        .unwrap();
     s.cancel_job(3);
+
+    s.add_job("sleep".to_string(), vec!["10".to_string()])
+        .unwrap();
     s.start_job(4);
+
+    s.add_job("ls".to_string(), vec!["-l".to_string()]).unwrap();
+
     s
 }
 
@@ -94,7 +100,7 @@ fn recuperacion_tras_reinicio() {
     );
 
     // Los IDs no se reutilizan
-    let nuevo = s.add_job("echo".into(), vec![]).get_id();
+    let nuevo = s.add_job("echo".into(), vec![]).unwrap().get_id();
     assert_eq!(nuevo, 6);
     let _ = fs::remove_dir_all(dir);
 }
@@ -162,6 +168,7 @@ fn concurrencia_sin_corrupcion_ni_ids_repetidos() {
                     let mut s = sched.lock().unwrap();
                     let id = s
                         .add_job("echo".into(), vec![format!("h{}-{}", h, i)])
+                        .unwrap()
                         .get_id();
                     s.start_job(id);
                     s.complete_job(id, 0);
@@ -188,7 +195,10 @@ fn rendimiento_500_jobs() {
     let (db, json, dir) = rutas("rendimiento");
     let mut s = Scheduler::new();
     for i in 0..500 {
-        let id = s.add_job("echo".into(), vec![i.to_string()]).get_id();
+        let id = s
+            .add_job("echo".into(), vec![i.to_string()])
+            .unwrap()
+            .get_id();
         s.start_job(id);
         s.complete_job(id, 0);
     }

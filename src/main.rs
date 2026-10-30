@@ -3,6 +3,7 @@ use speedyG::executor::Executor;
 use speedyG::parser::parse;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::Scheduler;
+use speedyG::state_machine::JobState;
 use std::fs;
 use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -24,19 +25,22 @@ fn persistir(sched: &Scheduler) {
     }
 }
 
-fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String) {
+fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max_current: usize) {
     tokio::spawn(async move {
-        //  Pasar a Running. Si el Job ya no está en cola (p. ej. lo cancelaron) NO se ejecuta.
+        // Verificar que el Job siga en estado Running antes de ejecutarlo
         {
-            let mut sched = lock(&scheduler);
-            if !sched.start_job(job_id) {
+            let sched = lock(&scheduler);
+
+            if !matches!(
+                sched.get_job(job_id).map(|job| job.get_state()),
+                Some(JobState::Running)
+            ) {
                 warn!(
-                    "Job #{} ya no está en cola (¿cancelado?); no se ejecuta",
+                    "Job #{} ya no está en ejecución (¿cancelado?); no se ejecuta",
                     job_id
                 );
                 return;
             }
-            persistir(&sched);
         }
 
         //  Ejecutar (mientras tanto, `status` mostrará Running)
@@ -45,20 +49,44 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String) {
 
         //  Marcar como completado y guardar. Si lo cancelaron mientras corría,
         //    complete_job devuelve false y se conserva el estado Canceled.
-        let mut sched = lock(&scheduler);
-        if sched.complete_job(job_id, exec_result.exit_code) {
-            info!(
-                "Job #{} terminó con código {}",
-                job_id, exec_result.exit_code
-            );
-            persistir(&sched);
-        } else {
-            info!(
-                "Job #{} terminó pero ya estaba cancelado; se ignora el resultado",
-                job_id
-            );
+        {
+            let mut sched = lock(&scheduler);
+            if sched.complete_job(job_id, exec_result.exit_code) {
+                info!(
+                    "Job #{} terminó con código {}",
+                    job_id, exec_result.exit_code
+                );
+                persistir(&sched);
+            } else {
+                info!(
+                    "Job #{} terminó pero ya estaba cancelado; se ignora el resultado",
+                    job_id
+                );
+            }
         }
+        //Despachar el siguiente trabajo si hay capacidad
+        despachar(Arc::clone(&scheduler), max_current);
     });
+}
+
+fn despachar(scheduler: SharedScheduler, max_current: usize) {
+    loop {
+        let siguiente = {
+            let mut sched = lock(&scheduler);
+            let siguiente = sched.start_next_job(max_current);
+
+            if siguiente.is_some() {
+                persistir(&sched);
+            }
+            siguiente
+        };
+        match siguiente {
+            Some((job_id, full_command)) => {
+                lanzar_job(Arc::clone(&scheduler), job_id, full_command, max_current);
+            }
+            None => break,
+        }
+    }
 }
 
 #[tokio::main]
@@ -97,22 +125,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Demonio speedyG escuchando en {}", socket_path);
 
     // Scheduler compartido entre las conexiones. Se carga de SQLite/JSON.
-    let scheduler: SharedScheduler = Arc::new(Mutex::new(cargar_scheduler()));
+    let mut sched = cargar_scheduler();
+    sched.set_queue_cap(cfg.queue_cap);
 
-    // Recuperación tras reinicio: Running -> Failed(-1); Queued, se vuelve a lanzar.
-    let por_relanzar = {
+    let scheduler: SharedScheduler = Arc::new(Mutex::new(sched));
+
+    // Recuperación tras reinicio: Running -> Interrupted; Queued, permanece en cola.
+    {
         let mut sched = lock(&scheduler);
-        let ids = sched.recuperar_tras_reinicio();
+        sched.recuperar_tras_reinicio();
         persistir(&sched);
-        ids.into_iter()
-            .filter_map(|id| sched.get_job(id).map(|j| (id, j.get_command_line())))
-            .collect::<Vec<_>>()
-    };
-    for (id, comando) in por_relanzar {
-        info!("Relanzando Job #{} recuperado: {}", id, comando);
-        lanzar_job(Arc::clone(&scheduler), id, comando);
     }
 
+    // despachar los trabajos recuperados respetando el limite de concurrencia
+    despachar(Arc::clone(&scheduler), cfg.max_current);
     loop {
         let (mut stream, _) = listener.accept().await?;
         let scheduler = Arc::clone(&scheduler);
@@ -202,23 +228,35 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     }
                     // Comandos de ejecución (echo, sleep, ls, etc.)
                     _ => {
-                        let (job_id, full_command) = {
+                        let resultado = {
                             let mut sched = lock(&scheduler);
-                            let job = sched.add_job(cmd.program.clone(), cmd.args.clone());
-                            let job_id = job.get_id();
-                            let full_command = job.get_command_line();
 
-                            // Guardar cambios después de agregar
-                            persistir(&sched);
-                            (job_id, full_command)
+                            match sched.add_job(cmd.program.clone(), cmd.args.clone()){
+                            	Ok(job)=> {
+			    		let job_id = job.get_id();
+                            		let full_command = job.get_command_line();
+
+                            		// Guardar cambios después de agregar
+                            		persistir(&sched);
+                            		Ok((job_id, full_command))
+			    	}
+			        Err(error)=> Err(error),
+			    }
                         };
 
-                        // Tarea asíncrona en segundo plano sin bloquear el socket
-                        lanzar_job(Arc::clone(&scheduler), job_id, full_command);
+			match resultado {
+			   Ok((job_id,_full_command))=> {
+                               // despachar trabajos respetando el limite de concurrencia
+                               despachar(Arc::clone(&scheduler), cfg.max_current);
 
-                        // Respuesta inmediata al cliente CLI
-                        format!("Job #{} encolado correctamente\n", job_id)
-                    }
+                               // Respuesta inmediata al cliente CLI
+                               format!("Job #{} encolado correctamente\n", job_id)
+                           }
+		           Err(error)=> {
+			       format!("{}\n",error)
+		           }
+		        }
+		    }
                 },
                 Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
             };
