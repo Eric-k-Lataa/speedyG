@@ -155,5 +155,5 @@ Para cerrar el issue #83 hace falta que alguien ajeno al equipo siga **solo esta
 | Fecha | 30-10-2026 |
 | ¿Instaló, inició, envió y consultó un trabajo sin ayuda? | Sí |
 | Pasos donde se atoró | Algunas ocasiones olvido colocar el comando completo para enviar ordenes al Daemon o problemas con la g|
-| Correcciones aplicadas | Marcar la diferencia entre g y G |
+| Correcciones aplicadas | Marcar la diferencia entre g y G. |
 
