@@ -10,7 +10,7 @@ pub const DEFAULT_QUEUE_CAP: usize = 3;
 pub const DEFAULT_SPEEDYG_SOCKET: &str = "/tmp/speedyg.sock";
 pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 3;
 pub const DEFAULT_SPEEDYG_GRACE_MS: u64 = 5_000;
-pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/home/caro/.local/share/speedyg";
+pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/var/lib/speedyg";
 
 // - struct de configuración en tiempo de ejecución -
 #[derive(Debug, Clone)]
