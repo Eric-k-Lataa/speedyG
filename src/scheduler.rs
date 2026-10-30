@@ -1,7 +1,7 @@
 // src/scheduler.rs
 use crate::state_machine::{new_job, Job, JobEvent, JobState};
+use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
-use serde::{Serialize, Deserialize};
 
 use tracing::{info, warn};
 
@@ -11,6 +11,7 @@ pub struct Scheduler {
     next_id: u32,
     queue: VecDeque<Job>,
     history: Vec<Job>,
+    queue_cap: usize,
 }
 
 impl Default for Scheduler {
@@ -19,14 +20,17 @@ impl Default for Scheduler {
     }
 }
 
-
 impl Scheduler {
     pub fn new() -> Self {
         Self {
             next_id: 1,
             queue: VecDeque::new(),
             history: Vec::new(),
+            queue_cap: crate::config::DEFAULT_QUEUE_CAP,
         }
+    }
+    pub fn set_queue_cap(&mut self, capacity: usize) {
+        self.queue_cap = capacity;
     }
 
     ///Reconstruye scheduler con datos leidos del disco para la persistencia.
@@ -35,6 +39,7 @@ impl Scheduler {
             next_id,
             queue,
             history,
+            queue_cap: crate::config::DEFAULT_QUEUE_CAP,
         }
     }
 
@@ -43,12 +48,23 @@ impl Scheduler {
         self.next_id
     }
 
-    /// Encola un nuevo comando usando la máquina de estados
-    pub fn add_job(&mut self, program: String, args: Vec<String>) -> &Job {
+    /// Encola un nuevo comando si hay espacio disponible
+    pub fn add_job(&mut self, program: String, args: Vec<String>) -> Result<&Job, String> {
+        let waiting = self
+            .queue
+            .iter()
+            .filter(|job| matches!(job.get_state(), JobState::Queued))
+            .count();
+        if waiting >= self.queue_cap {
+            let error = format!("Error al enviar '{}': la cola está llena (capacidad: {}). Espera a que se libere un espacio", program, self.queue_cap);
+            warn!("{}", error);
+            return Err(error);
+        }
         let job = new_job(self.next_id, program, args, true);
         self.next_id += 1;
         self.queue.push_back(job);
-        self.queue.back().unwrap()
+
+        Ok(self.queue.back().unwrap())
     }
 
     /// Busca un Job por ID tanto en la cola activa como en el historial
@@ -104,8 +120,6 @@ impl Scheduler {
         self.history.iter().collect()
     }
 
-
-
     ///Recuperacion
     pub fn recuperar_tras_reinicio(&mut self) -> Vec<u32> {
         let mut por_relanzar = Vec::new();
@@ -115,9 +129,11 @@ impl Scheduler {
             job.transition(JobEvent::ServiceRestarted);
 
             match job.get_state() {
-
                 JobState::Queued => {
-                    info!("Recuperación: Job #{} sigue en cola; se relanzará", job.get_id());
+                    info!(
+                        "Recuperación: Job #{} sigue en cola; se relanzará",
+                        job.get_id()
+                    );
                     por_relanzar.push(job.get_id());
                     restantes.push_back(job);
                 }
@@ -144,5 +160,4 @@ impl Scheduler {
         self.queue = restantes;
         por_relanzar
     }
-
 }
