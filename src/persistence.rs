@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS meta (
 );
 ";
 
-
 const UPSERT_JOB: &str = "
 INSERT INTO jobs (id, program, args, state, exit_code, location, position)
 VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
@@ -49,8 +48,6 @@ WHERE jobs.state     IS NOT excluded.state
    OR jobs.location  IS NOT excluded.location
    OR jobs.position  IS NOT excluded.position
 ";
-
-
 
 #[derive(Debug)]
 pub enum PersistenceError {
@@ -89,7 +86,6 @@ impl From<rusqlite::Error> for PersistenceError {
     }
 }
 
-
 fn ruta_db() -> PathBuf {
     env::var_os("SPEEDYG_DB")
         .map(PathBuf::from)
@@ -102,17 +98,13 @@ fn ruta_json() -> PathBuf {
         .unwrap_or_else(|| PathBuf::from(JSON_POR_DEFECTO))
 }
 
-
 pub fn guardar_scheduler(sched: &Scheduler) -> Result<(), PersistenceError> {
     guardar_en(sched, &ruta_db(), &ruta_json())
 }
 
-
 pub fn cargar_scheduler() -> Scheduler {
     cargar_desde(&ruta_db(), &ruta_json())
 }
-
-
 
 pub fn guardar_en(
     sched: &Scheduler,
@@ -120,7 +112,11 @@ pub fn guardar_en(
     ruta_json: &Path,
 ) -> Result<(), PersistenceError> {
     guardar_sqlite(sched, ruta_db).map_err(|e| {
-        error!("No se pudo guardar en SQLite ({}): {}", ruta_db.display(), e);
+        error!(
+            "No se pudo guardar en SQLite ({}): {}",
+            ruta_db.display(),
+            e
+        );
         e
     })?;
 
@@ -154,7 +150,11 @@ pub fn cargar_desde(ruta_db: &Path, ruta_json: &Path) -> Scheduler {
             return sched;
         }
         Ok(None) => info!("SQLite sin datos previos; se intentará el respaldo JSON"),
-        Err(e) => warn!("No se pudo leer SQLite ({}): {}; se intentará JSON", ruta_db.display(), e),
+        Err(e) => warn!(
+            "No se pudo leer SQLite ({}): {}; se intentará JSON",
+            ruta_db.display(),
+            e
+        ),
     }
 
     match cargar_json(ruta_json) {
@@ -172,7 +172,11 @@ pub fn cargar_desde(ruta_db: &Path, ruta_json: &Path) -> Scheduler {
             Scheduler::new()
         }
         Err(e) => {
-            error!("No se pudo leer el JSON ({}): {}; se inicia un Scheduler vacío", ruta_json.display(), e);
+            error!(
+                "No se pudo leer el JSON ({}): {}; se inicia un Scheduler vacío",
+                ruta_json.display(),
+                e
+            );
             Scheduler::new()
         }
     }
@@ -182,10 +186,9 @@ pub fn cargar_desde(ruta_db: &Path, ruta_json: &Path) -> Scheduler {
 
 fn abrir_db(ruta: &Path) -> Result<Connection, PersistenceError> {
     let conn = Connection::open(ruta)?;
-    
+
     conn.busy_timeout(Duration::from_secs(5))?;
 
-    
     conn.pragma_update(None, "journal_mode", "WAL")?;
     conn.pragma_update(None, "synchronous", "FULL")?;
     conn.execute_batch(ESQUEMA)?;
@@ -195,7 +198,6 @@ fn abrir_db(ruta: &Path) -> Result<Connection, PersistenceError> {
 fn guardar_sqlite(sched: &Scheduler, ruta: &Path) -> Result<(), PersistenceError> {
     let mut conn = abrir_db(ruta)?;
 
-    
     let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
     {
         let mut stmt = tx.prepare_cached(UPSERT_JOB)?;
@@ -242,7 +244,9 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     let conn = abrir_db(ruta)?;
 
     let next_meta: Option<String> = conn
-        .query_row("SELECT value FROM meta WHERE key = 'next_id'", [], |r| r.get(0))
+        .query_row("SELECT value FROM meta WHERE key = 'next_id'", [], |r| {
+            r.get(0)
+        })
         .map(Some)
         .or_else(|e| match e {
             rusqlite::Error::QueryReturnedNoRows => Ok(None),
@@ -252,9 +256,9 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
         Some(v) => v,
         None => return Ok(None),
     };
-    let next_meta: u32 = next_meta
-        .parse()
-        .map_err(|_| PersistenceError::DatosInvalidos(format!("next_id inválido: {}", next_meta)))?;
+    let next_meta: u32 = next_meta.parse().map_err(|_| {
+        PersistenceError::DatosInvalidos(format!("next_id inválido: {}", next_meta))
+    })?;
 
     let mut stmt = conn.prepare(
         "SELECT id, program, args, state, exit_code, location
@@ -280,7 +284,10 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     for (id, program, args_json, state, exit_code, location) in filas {
         let args: Vec<String> = serde_json::from_str(&args_json)?;
         let state = JobState::from_db(&state, exit_code).ok_or_else(|| {
-            PersistenceError::DatosInvalidos(format!("Job #{} con estado desconocido '{}'", id, state))
+            PersistenceError::DatosInvalidos(format!(
+                "Job #{} con estado desconocido '{}'",
+                id, state
+            ))
         })?;
         max_id = max_id.max(id);
         let job = Job::from_parts(id, program, args, state, exit_code);
@@ -300,8 +307,6 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     let next_id = next_meta.max(max_id + 1);
     Ok(Some(Scheduler::from_parts(next_id, queue, history)))
 }
-
-
 
 fn guardar_json(sched: &Scheduler, ruta: &Path) -> Result<(), PersistenceError> {
     let json = serde_json::to_string_pretty(sched)?;
@@ -323,4 +328,3 @@ fn cargar_json(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     let contenido = fs::read_to_string(ruta)?;
     Ok(Some(serde_json::from_str(&contenido)?))
 }
-

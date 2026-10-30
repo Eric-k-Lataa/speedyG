@@ -1,7 +1,7 @@
 // src/scheduler.rs
 use crate::state_machine::{new_job, Job, JobEvent, JobState};
+use serde::{Deserialize, Serialize};
 use std::collections::VecDeque;
-use serde::{Serialize, Deserialize};
 
 use tracing::{info, warn};
 
@@ -18,7 +18,6 @@ impl Default for Scheduler {
         Self::new()
     }
 }
-
 
 impl Scheduler {
     pub fn new() -> Self {
@@ -104,8 +103,6 @@ impl Scheduler {
         self.history.iter().collect()
     }
 
-
-
     ///Recuperacion
     pub fn recuperar_tras_reinicio(&mut self) -> Vec<u32> {
         let mut por_relanzar = Vec::new();
@@ -115,9 +112,11 @@ impl Scheduler {
             job.transition(JobEvent::ServiceRestarted);
 
             match job.get_state() {
-
                 JobState::Queued => {
-                    info!("Recuperación: Job #{} sigue en cola; se relanzará", job.get_id());
+                    info!(
+                        "Recuperación: Job #{} sigue en cola; se relanzará",
+                        job.get_id()
+                    );
                     por_relanzar.push(job.get_id());
                     restantes.push_back(job);
                 }
@@ -144,5 +143,4 @@ impl Scheduler {
         self.queue = restantes;
         por_relanzar
     }
-
 }

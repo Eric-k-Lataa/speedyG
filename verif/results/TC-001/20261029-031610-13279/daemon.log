@@ -1,0 +1,7 @@
+[2m2026-10-29T09:16:10.644524Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-001-20261029-031610-13279-cMaz0F.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-001-20261029-031610-13279-data-x2c2eC
+[2m2026-10-29T09:16:10.644954Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-001-20261029-031610-13279-cMaz0F.sock
+[2m2026-10-29T09:16:10.648579Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (speedyg.db): 0 en cola, 6 en historial
+[2m2026-10-29T09:16:11.695383Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo hola
+[2m2026-10-29T09:16:11.698529Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-10-29T09:16:11.803533Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: sleep 10
+[2m2026-10-29T09:16:21.811283Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 terminó con código 0

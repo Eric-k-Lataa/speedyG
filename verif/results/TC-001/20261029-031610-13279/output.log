@@ -1,0 +1,59 @@
+========================================
+TC-001  —  run 20261029-031610-13279
+========================================
+tc_id=TC-001
+run_id=20261029-031610-13279
+date=2026-10-29 03:16:10 CST
+os=Linux
+kernel=6.12.111+deb13-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=infraestructura
+commit=821cdf4dc1cdbffe0037c89f3acbdb3ab12fda77
+socket=/tmp/speedyg-TC-001-20261029-031610-13279-cMaz0F.sock
+data_dir=/tmp/speedyg-TC-001-20261029-031610-13279-data-x2c2eC
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+[INFO] Socket: /tmp/speedyg-TC-001-20261029-031610-13279-cMaz0F.sock
+[INFO] PID del daemon: 13319
+[PASS] Daemon disponible (PID 13319).
+
+[1] Enviando comando válido: echo hola
+Job #7 encolado correctamente
+[PASS] Job ID obtenido en la respuesta
+
+[2] Consultando estado del Job #7
+Job #7: echo hola [Succeeded] (exit code: 0)
+[PASS] Job #7 aparece en status
+
+[3] Enviando comando de ejecución prolongada: sleep 10
+Job #8 encolado correctamente
+[PASS] Job sleep creado y Job ID obtenido
+
+[4] Esperando estado Running del Job #8...
+Job #8: sleep 10 [Running]
+[PASS] Job #8 está en estado Running
+
+[5] Esperando finalización del Job #8 (sleep 10)...
+Job #8: sleep 10 [Succeeded] (exit code: 0)
+[PASS] Job #8 terminó con exit code 0
+
+[6] Verificando que el daemon continúe disponible...
+OK: Daemon speedyg funcionando correctamente
+[PASS] Daemon responde health correctamente
+
+[INFO] File descriptors abiertos por daemon: 10
+[PASS] Sin procesos zombi bajo daemon PID 13319.
+[PASS] Sin procesos huérfanos bajo daemon PID 13319.
+
+========================================
+RESULTADO: PASS
+PASS: 7  FAIL: 0
+========================================
+
+[INFO] Deteniendo daemon PID 13319...

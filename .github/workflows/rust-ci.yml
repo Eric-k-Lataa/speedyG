@@ -4,27 +4,52 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
 
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Instalar Rust (versión fija)
+        uses: dtolnay/rust-toolchain@1.81.0
+        with:
+          components: rustfmt, clippy
 
-      - name: Build
+      - name: Formato — cargo fmt
+        run: cargo fmt --check
+
+      - name: Lint — cargo clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Compilar binarios
         run: cargo build --bins
 
-      - name: Unit tests
+      - name: Pruebas unitarias
         run: cargo test
 
-      - name: Run TC-001
-        run: ./verif/scripts/TC-001.sh
+      - name: Ejecutar casos de verificación
+        run: bash verif/scripts/run-all.sh
 
-      - name: Upload TC-001 results
+      - name: Subir evidencias de verificación
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
-          name: TC-001-results
-          path: verif/results/TC-001/
+          name: verif-results
+          path: verif/results/
+
+      - name: Detectar procesos speedyG huérfanos
+        if: always()
+        run: |
+          ORPHANS=$(pgrep -x speedyG || true)
+          if [[ -n "$ORPHANS" ]]; then
+            echo "Procesos speedyG huérfanos detectados: $ORPHANS"
+            kill $ORPHANS 2>/dev/null || true
+            exit 1
+          fi
+          echo "Sin procesos speedyG huérfanos."

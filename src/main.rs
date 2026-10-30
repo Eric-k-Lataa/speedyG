@@ -1,3 +1,4 @@
+use speedyG::config::Config;
 use speedyG::executor::Executor;
 use speedyG::parser::parse;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
@@ -7,11 +8,8 @@ use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
 use tracing::{error, info, warn};
-use speedyG::config::Config;
-
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
-
 
 fn lock(s: &SharedScheduler) -> MutexGuard<'_, Scheduler> {
     s.lock().unwrap_or_else(|e| {
@@ -20,13 +18,11 @@ fn lock(s: &SharedScheduler) -> MutexGuard<'_, Scheduler> {
     })
 }
 
-
 fn persistir(sched: &Scheduler) {
     if let Err(e) = guardar_scheduler(sched) {
         error!("Error al guardar scheduler: {}", e);
     }
 }
-
 
 fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String) {
     tokio::spawn(async move {
@@ -34,7 +30,10 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String) {
         {
             let mut sched = lock(&scheduler);
             if !sched.start_job(job_id) {
-                warn!("Job #{} ya no está en cola (¿cancelado?); no se ejecuta", job_id);
+                warn!(
+                    "Job #{} ya no está en cola (¿cancelado?); no se ejecuta",
+                    job_id
+                );
                 return;
             }
             persistir(&sched);
@@ -48,10 +47,16 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String) {
         //    complete_job devuelve false y se conserva el estado Canceled.
         let mut sched = lock(&scheduler);
         if sched.complete_job(job_id, exec_result.exit_code) {
-            info!("Job #{} terminó con código {}", job_id, exec_result.exit_code);
+            info!(
+                "Job #{} terminó con código {}",
+                job_id, exec_result.exit_code
+            );
             persistir(&sched);
         } else {
-            info!("Job #{} terminó pero ya estaba cancelado; se ignora el resultado", job_id);
+            info!(
+                "Job #{} terminó pero ya estaba cancelado; se ignora el resultado",
+                job_id
+            );
         }
     });
 }
@@ -225,5 +230,3 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         });
     }
 }
-
-

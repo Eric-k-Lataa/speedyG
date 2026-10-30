@@ -15,7 +15,8 @@ use tokio::net::UnixStream;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let raw_args: Vec<String> = env::args().skip(1).collect();
 
-    let mut _socket_path = env::var("SPEEDYG_SOCKET").unwrap_or_else(|_| "/tmp/speedyg.sock".to_string());
+    let mut _socket_path =
+        env::var("SPEEDYG_SOCKET").unwrap_or_else(|_| "/tmp/speedyg.sock".to_string());
     let mut command_args: Vec<String> = Vec::new();
 
     let mut i = 0;
@@ -43,7 +44,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut stream = match UnixStream::connect(&_socket_path).await {
         Ok(stream) => stream,
         Err(_) => {
-            eprintln!("Error: El demonio speedyg no está en ejecución (socket: {}).", _socket_path);
+            eprintln!(
+                "Error: El demonio speedyg no está en ejecución (socket: {}).",
+                _socket_path
+            );
             process::exit(1);
         }
     };
