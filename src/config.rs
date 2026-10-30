@@ -8,9 +8,9 @@ use std::env;
 // -- Valores por defecto --
 pub const DEFAULT_QUEUE_CAP: usize = 3;
 pub const DEFAULT_SPEEDYG_SOCKET: &str = "/tmp/speedyg.sock";
-pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 4;
+pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 3;
 pub const DEFAULT_SPEEDYG_GRACE_MS: u64 = 5_000;
-pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/var/lib/speedyg";
+pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/home/caro/.local/share/speedyg";
 
 // - struct de configuración en tiempo de ejecución -
 #[derive(Debug, Clone)]
@@ -129,13 +129,19 @@ fn next_arg<'a>(args: &'a [String], i: usize, flag: &str) -> Result<&'a str, Str
 }
 
 fn parse_usize(flag: &str, val: &str) -> Result<usize, String> {
-    val 
-        .parse::<usize>()
-        .map_err(|_| format!("Config: '{}' requiere un número entero válido, se recibió '{}'", flag, val))
+    val.parse::<usize>().map_err(|_| {
+        format!(
+            "Config: '{}' requiere un número entero válido, se recibió '{}'",
+            flag, val
+        )
+    })
 }
 
 fn parse_u64(flag: &str, val: &str) -> Result<u64, String> {
-    val 
-        .parse::<u64>()
-        .map_err(|_| format!("Config: '{}' requiere un número entero válido, se recibió '{}'", flag, val))
+    val.parse::<u64>().map_err(|_| {
+        format!(
+            "Config: '{}' requiere un número entero válido, se recibió '{}'",
+            flag, val
+        )
+    })
 }

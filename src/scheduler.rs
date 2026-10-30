@@ -97,6 +97,28 @@ impl Scheduler {
         }
     }
 
+    ///Inicia el siguiente trabajo si hay capacidad disponible
+    pub fn start_next_job(&mut self, max_current: usize) -> Option<(u32, String)> {
+        let running = self
+            .queue
+            .iter()
+            .filter(|job| matches!(job.get_state(), JobState::Running))
+            .count();
+        if running >= max_current {
+            return None;
+        }
+
+        let job = self
+            .queue
+            .iter_mut()
+            .find(|job| matches!(job.get_state(), JobState::Queued))?;
+        let id = job.get_id();
+        let command = job.get_command_line();
+
+        job.transition(JobEvent::CapacityAvailable);
+
+        Some((id, command))
+    }
     /// Completa la ejecución de un trabajo y actualiza la FSM
     pub fn complete_job(&mut self, id: u32, exit_code: i32) -> bool {
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {

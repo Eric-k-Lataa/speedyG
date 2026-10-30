@@ -71,3 +71,66 @@ fn job_rechazado_no_consume_id() {
 
     assert_eq!(nuevo.get_id(), 4);
 }
+
+#[test]
+fn respeta_el_limite_de_trabajos_concurrentes() {
+    let mut scheduler = Scheduler::new();
+
+    for i in 0..3 {
+        scheduler
+            .add_job("echo".into(), vec![i.to_string()])
+            .unwrap();
+    }
+
+    for _ in 0..3 {
+        assert!(scheduler.start_next_job(3).is_some());
+    }
+
+    assert!(scheduler.start_next_job(3).is_none());
+
+    let running = scheduler
+        .pending_jobs()
+        .iter()
+        .filter(|job| job.get_state() == JobState::Running)
+        .count();
+
+    assert_eq!(running, 3);
+}
+
+#[test]
+fn inicia_el_siguiente_job_cuando_hay_capacidad() {
+    let mut scheduler = Scheduler::new();
+
+    for i in 0..3 {
+        scheduler
+            .add_job("echo".into(), vec![i.to_string()])
+            .unwrap();
+    }
+
+    for _ in 0..3 {
+        scheduler.start_next_job(3).unwrap();
+    }
+
+    assert!(scheduler.complete_job(1, 0));
+
+    let nuevo_id = scheduler
+        .add_job("echo".into(), vec!["nuevo".into()])
+        .unwrap()
+        .get_id();
+
+    let siguiente = scheduler.start_next_job(3);
+
+    assert_eq!(siguiente.unwrap().0, nuevo_id);
+}
+
+#[test]
+fn no_inicia_jobs_si_el_limite_es_cero() {
+    let mut scheduler = Scheduler::new();
+
+    scheduler
+        .add_job("echo".into(), vec!["uno".into()])
+        .unwrap();
+
+    assert!(scheduler.start_next_job(0).is_none());
+    assert_eq!(scheduler.get_job(1).unwrap().get_state(), JobState::Queued);
+}
