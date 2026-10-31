@@ -1,0 +1,8 @@
+--- Historial ---
+Job #1: sleep 8 [Succeeded] (exit code: 0)
+Job #2: sleep 8 [Succeeded] (exit code: 0)
+Job #3: sleep 8 [Succeeded] (exit code: 0)
+Job #4: sleep 8 [Succeeded] (exit code: 0)
+Job #5: sleep 8 [Succeeded] (exit code: 0)
+Job #7: echo recuperado [Succeeded] (exit code: 0)
+Job #6: sleep 8 [Succeeded] (exit code: 0)
