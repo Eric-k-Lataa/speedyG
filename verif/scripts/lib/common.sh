@@ -25,6 +25,7 @@ CMD_TIMEOUT_SECS=10   # timeout por defecto para cada comando cliente
 
 PASS_COUNT=0
 FAIL_COUNT=0
+BLOCKED_COUNT=0
 DAEMON_PID=""
 RUN_DIR=""
 SOCKET=""
@@ -325,22 +326,82 @@ require_daemon_config() {
     echo "[PASS] Configuración efectiva del daemon: $*" | tee -a "$LOG"
     PASS_COUNT=$((PASS_COUNT + 1))
 }
+# ── check <descripción> <código> ─────────────────────────────────────────────
+# Registra [PASS] si <código> es 0 y [FAIL] en otro caso.
+check() {
+    if [[ "$2" -eq 0 ]]; then
+        echo "[PASS] $1" | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
+    else
+        echo "[FAIL] $1" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+    fi
+}
+
+# ── block <descripción> ───────────────────────────────────────────────────────
+# Registra una comprobación que NO pudo evaluarse porque la funcionalidad que
+# necesita aún no existe (no es FAIL del sistema ni error de ambiente).
+# Si no hay FAIL, la corrida termina como BLOCKED (exit 3).
+block() {
+    echo "[BLOCKED] $1" | tee -a "$LOG"
+    BLOCKED_COUNT=$((BLOCKED_COUNT + 1))
+}
+
+# ── job_state <texto de status> ───────────────────────────────────────────────
+# Imprime el estado (sin código de salida) de la primera línea con [Estado].
+# Ejemplo: "Job #3: false [Failed(1)] (exit code: 1)"  ->  Failed
+job_state() {
+    grep -oE '\[[A-Za-z]+(\([-0-9]+\))?\]' <<< "$1" | head -1 | tr -d '[]' | sed -E 's/\(.*//'
+}
+
+# ── to_epoch <valor> ──────────────────────────────────────────────────────────
+# Convierte ISO-8601 o epoch (s o ms) a segundos con 3 decimales.
+# Imprime vacío si el valor no se puede interpretar.
+to_epoch() {
+    local v="${1:-}"
+    [[ -z "$v" ]] && return 0
+    if [[ "$v" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+        awk -v x="$v" 'BEGIN{ if (x >= 1e12) x = x / 1000; printf "%.3f", x }'
+    else
+        date -d "$v" +%s.%N 2>/dev/null | awk '{printf "%.3f", $1}'
+    fi
+}
+
+# ── ts_field <texto> <regex-de-etiqueta> ──────────────────────────────────────
+# Extrae el valor (ISO-8601 o epoch) que sigue a una etiqueta en <texto>.
+# Imprime vacío si la etiqueta no aparece con un valor de tiempo.
+ts_field() {
+    local text="$1" label="$2"
+    grep -oiE "(${label})[^0-9]{0,8}([0-9]{4}-[0-9]{2}-[0-9]{2}[T ][0-9:.]+(Z|[+-][0-9]{2}:?[0-9]{2})?|[0-9]{9,}(\.[0-9]+)?)" <<< "$text" \
+        | head -1 | sed -E "s/^(${label})[^0-9]{0,8}//I"
+}
+
+# ── num_le <a> <b> ────────────────────────────────────────────────────────────
+# Código 0 si a <= b (numérico). Código 1 si falta un valor o no se cumple.
+num_le() {
+    [[ -n "${1:-}" && -n "${2:-}" ]] || return 1
+    awk -v a="$1" -v b="$2" 'BEGIN{exit !(a <= b)}'
+}
+
+
 
 # ── finish_run ────────────────────────────────────────────────────────────────
 # Escribe el summary, detiene el daemon y sale con 0 (PASS) o 1 (FAIL).
 finish_run() {
     local result
-    if [[ $FAIL_COUNT -eq 0 ]]; then
-        result="PASS"
-    else
+    if [[ $FAIL_COUNT -gt 0 ]]; then
         result="FAIL"
+    elif [[ $BLOCKED_COUNT -gt 0 ]]; then
+        result="BLOCKED"
+    else
+        result="PASS"
     fi
 
     {
         echo ""
         echo "========================================"
         echo "RESULTADO: $result"
-        echo "PASS: $PASS_COUNT  FAIL: $FAIL_COUNT"
+        echo "PASS: $PASS_COUNT  FAIL: $FAIL_COUNT  BLOCKED: $BLOCKED_COUNT"
         echo "========================================"
     } | tee -a "$LOG"
 
@@ -349,15 +410,16 @@ finish_run() {
         echo "result=$result"
         echo "pass=$PASS_COUNT"
         echo "fail=$FAIL_COUNT"
+        echo "blocked=$BLOCKED_COUNT"
         echo "date=$(date '+%Y-%m-%d %H:%M:%S %Z')"
         echo "run_dir=$RUN_DIR"
     } > "$RUN_DIR/summary.txt"
 
     stop_daemon
 
-    if [[ "$result" == "PASS" ]]; then
-        exit 0
-    else
-        exit 1
-    fi
+    case "$result" in
+        PASS)    exit 0 ;;
+        BLOCKED) exit 3 ;;
+        *)       exit 1 ;;
+    esac
 }

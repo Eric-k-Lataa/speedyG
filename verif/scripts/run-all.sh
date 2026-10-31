@@ -30,6 +30,8 @@ run_tc() {
 # ── Ejecutar todos los TCs ────────────────────────────────────────────────────
 run_tc "TC-001"
 run_tc "TC-002"
+# run_tc "TC-003"
+# run_tc "TC-004" S e descomentaran cuando A2-07 este terminado
 run_tc "TC-016"
 
 # ── Resumen global ────────────────────────────────────────────────────────────

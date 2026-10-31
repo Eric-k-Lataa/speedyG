@@ -88,8 +88,8 @@ Un caso solo pasa a `PASS` con una corrida real y evidencia en `verif/results/<T
 |:-----|:-------|:-----------|:-------|:-------|
 | TC-001 | Enviar trabajo válido | RF-01, RF-02, RF-04 | `TC-001.sh` | PASS |
 | TC-002 | Cola y límite de concurrencia | RF-03, RF-05, RNF-04, RNF-07 | `TC-002.sh` | PASS |
-| TC-003 | Estados y tiempos | RF-06, RF-07 | — | Sin redactar |
-| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | — | Sin redactar |
+| TC-003 | Estados y tiempos | RF-06, RF-07 | `TC-003.sh` | BLOCKED |
+| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | BLOCKED |
 | TC-005 | Cancelar en cola y ejecución | RF-10 | — | Sin redactar |
 | TC-006 | Capturar stdout/stderr y código | RF-11, RF-07 | — | Sin redactar |
 | TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | — | Sin redactar |
