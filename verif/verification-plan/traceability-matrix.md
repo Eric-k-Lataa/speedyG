@@ -21,8 +21,11 @@
 | RNF-05    | Consulta de estado 1s/100 | Alta | Prueba | TC-004 | resultado + log | Pendiente | —|
 | RNF-06    | Soportar al menos 500 registros | Alta | Prueba | TC- | resultado + log | Pendiente | —|
 | RNF-07    | Cola y limite de concurrencia sincronizados | Alta | Prueba | TC-002 | resultado + log | Pendiente | —|
-| RNF-08    | Solicitud inválida o desconexioń de cliente y se mantiene el servicio | Alta | Prueba | TC-008 | resultado + log | Pendiente | —|
+| RNF-08    | Solicitud inválida o desconexioń de cliente y se mantiene el servicio | Alta | Prueba | TC-008 | resultado + log | PASS | —|
 | RNF-09    | Aislamiento de fallo  | Alta | Prueba | TC-008 | log + estados | Pendiente | —|
 | RNF-10    | Condiciones de reinicio | Alta | Prueba | TC-007 | resultado + log | Pendiente | —|
 | RNF-11    | Condición para archivos persistentes | Alta | Prueba | TC-007 | resultado + log | Pendiente | —|
-| RNF-18    | Valores inválidos de configuración se rechazan al arrancar con mensaje descriptivo | Alta | Prueba | TC-009 | salida stderr con SPEEDYG_QUEUE_CAP=0 | Pendiente | —|
+| RNF-18    | Valores inválidos de configuración se rechazan al arrancar con mensaje descriptivo | Alta | Prueba | TC-009 | salida stderr con SPEEDYG_QUEUE_CAP=0 | Pendiente | —|I
+
+
+

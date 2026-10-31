@@ -1,0 +1,7 @@
+tc_id=TC-017
+run_id=20261039-054305
+date= 2026-10-30 06:43:40 CST
+os=Linux
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+
