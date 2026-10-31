@@ -25,6 +25,7 @@ CMD_TIMEOUT_SECS=10   # timeout por defecto para cada comando cliente
 
 PASS_COUNT=0
 FAIL_COUNT=0
+BLOCKED_COUNT=0
 DAEMON_PID=""
 RUN_DIR=""
 SOCKET=""
@@ -53,6 +54,8 @@ setup_run_env() {
     LOG="$RUN_DIR/output.log"
 
     export SPEEDYG_SOCKET="$SOCKET"
+    export SPEEDYG_DB="$DATA_DIR/speedyg.db"
+    export SPEEDYG_JSON="$DATA_DIR/scheduler.json"
 
     # Guardar entorno de la corrida
     {
@@ -69,6 +72,8 @@ setup_run_env() {
         echo "commit=$(git -C "$REPO_ROOT" rev-parse HEAD 2>/dev/null || echo n/a)"
         echo "socket=$SOCKET"
         echo "data_dir=$DATA_DIR"
+        echo "db=$SPEEDYG_DB"
+        echo "json=$SPEEDYG_JSON"
         echo "daemon_bin=$DAEMON_BIN"
         echo "client_bin=$CLIENT_BIN"
     } > "$RUN_DIR/environment.txt"
@@ -103,20 +108,25 @@ require_binaries() {
     fi
 }
 
-# ── start_daemon ──────────────────────────────────────────────────────────────
+# ── start_daemon [flags extra...] ─────────────────────────────────────────────
 # Arranca el daemon con su PID real (no el PID de cargo).
+# Los argumentos opcionales se pasan al daemon (p. ej. --max-current 3 --queue-cap 3).
 # Espera hasta DAEMON_WAIT_SECS segundos a que el socket aparezca.
 start_daemon() {
     require_binaries
 
+    DAEMON_EXTRA_ARGS="$*"
+    echo "daemon_args=$DAEMON_EXTRA_ARGS" >> "$RUN_DIR/environment.txt"
+
     echo "" | tee -a "$LOG"
-    echo "[INFO] Iniciando daemon: $DAEMON_BIN" | tee -a "$LOG"
+    echo "[INFO] Iniciando daemon: $DAEMON_BIN $DAEMON_EXTRA_ARGS" | tee -a "$LOG"
     echo "[INFO] Socket: $SOCKET" | tee -a "$LOG"
 
     "$DAEMON_BIN" \
         --socket  "$SOCKET" \
         --data-dir "$DATA_DIR" \
-        > "$RUN_DIR/daemon.log" 2>&1 &
+        "$@" \
+        >> "$RUN_DIR/daemon.log" 2>&1 &
     DAEMON_PID=$!
 
     echo "[INFO] PID del daemon: $DAEMON_PID" | tee -a "$LOG"
@@ -250,8 +260,8 @@ count_open_fds() {
 }
 
 # ── check_no_zombies ──────────────────────────────────────────────────────────
-# Verifica que el daemon no haya dejado procesos zombi o huérfanos.
-# Registra [PASS] o [WARN] (no falla el TC, solo advierte).
+# Verifica que el daemon no tenga hijos zombi ni hijos vivos sin trabajo activo.
+# Cuenta como FAIL (no solo advertencia). Llamar ANTES de stop_daemon.
 check_no_zombies() {
     local zombies
     zombies=$(ps -eo pid,ppid,stat,comm 2>/dev/null \
@@ -259,9 +269,11 @@ check_no_zombies() {
 
     if [[ -z "$zombies" ]]; then
         echo "[PASS] Sin procesos zombi bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
     else
-        echo "[WARN] Procesos zombi detectados:" | tee -a "$LOG"
+        echo "[FAIL] Procesos zombi detectados:" | tee -a "$LOG"
         echo "$zombies" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
     fi
 
     local orphans
@@ -269,28 +281,127 @@ check_no_zombies() {
         | awk -v dpid="$DAEMON_PID" '$2 == dpid {print $0}')
 
     if [[ -z "$orphans" ]]; then
-        echo "[PASS] Sin procesos huérfanos bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        echo "[PASS] Sin procesos hijos residuales bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
     else
-        echo "[WARN] Procesos hijos activos bajo daemon PID $DAEMON_PID:" | tee -a "$LOG"
+        echo "[FAIL] Procesos hijos activos bajo daemon PID $DAEMON_PID:" | tee -a "$LOG"
         echo "$orphans" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
     fi
 }
+
+# ── daemon_config_value <clave> ───────────────────────────────────────────────
+# Lee de daemon.log el valor de <clave> en la línea "Configuración cargada"
+# (quita colores ANSI). Imprime el valor o nada si no existe.
+daemon_config_value() {
+    local key="$1"
+    sed 's/\x1b\[[0-9;]*m//g' "$RUN_DIR/daemon.log" 2>/dev/null \
+        | grep "Configuración cargada" | tail -1 \
+        | grep -oE "${key}=[^ ]+" | head -1 | cut -d= -f2
+}
+
+# ── require_daemon_config <clave=valor> ... ───────────────────────────────────
+# Si el daemon NO cargó la configuración esperada, el caso es BLOCKED:
+# escribe summary con result=BLOCKED y sale con código 3.
+# Evita dar PASS/FAIL con una configuración distinta a la que exige el TC.
+require_daemon_config() {
+    local pair key expected actual
+    for pair in "$@"; do
+        key="${pair%%=*}"
+        expected="${pair#*=}"
+        actual="$(daemon_config_value "$key")"
+        echo "config_${key}=${actual:-n/a}" >> "$RUN_DIR/environment.txt"
+        if [[ "$actual" != "$expected" ]]; then
+            echo "[BLOCKED] Configuración efectiva $key='${actual:-n/a}', se esperaba '$expected'." | tee -a "$LOG"
+            {
+                echo "result=BLOCKED"
+                echo "reason=config $key esperado=$expected obtenido=${actual:-n/a}"
+                echo "date=$(date '+%Y-%m-%d %H:%M:%S %Z')"
+                echo "run_dir=$RUN_DIR"
+            } > "$RUN_DIR/summary.txt"
+            stop_daemon
+            exit 3
+        fi
+    done
+    echo "[PASS] Configuración efectiva del daemon: $*" | tee -a "$LOG"
+    PASS_COUNT=$((PASS_COUNT + 1))
+}
+# ── check <descripción> <código> ─────────────────────────────────────────────
+# Registra [PASS] si <código> es 0 y [FAIL] en otro caso.
+check() {
+    if [[ "$2" -eq 0 ]]; then
+        echo "[PASS] $1" | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
+    else
+        echo "[FAIL] $1" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
+    fi
+}
+
+# ── block <descripción> ───────────────────────────────────────────────────────
+# Registra una comprobación que NO pudo evaluarse porque la funcionalidad que
+# necesita aún no existe (no es FAIL del sistema ni error de ambiente).
+# Si no hay FAIL, la corrida termina como BLOCKED (exit 3).
+block() {
+    echo "[BLOCKED] $1" | tee -a "$LOG"
+    BLOCKED_COUNT=$((BLOCKED_COUNT + 1))
+}
+
+# ── job_state <texto de status> ───────────────────────────────────────────────
+# Imprime el estado (sin código de salida) de la primera línea con [Estado].
+# Ejemplo: "Job #3: false [Failed(1)] (exit code: 1)"  ->  Failed
+job_state() {
+    grep -oE '\[[A-Za-z]+(\([-0-9]+\))?\]' <<< "$1" | head -1 | tr -d '[]' | sed -E 's/\(.*//'
+}
+
+# ── to_epoch <valor> ──────────────────────────────────────────────────────────
+# Convierte ISO-8601 o epoch (s o ms) a segundos con 3 decimales.
+# Imprime vacío si el valor no se puede interpretar.
+to_epoch() {
+    local v="${1:-}"
+    [[ -z "$v" ]] && return 0
+    if [[ "$v" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+        awk -v x="$v" 'BEGIN{ if (x >= 1e12) x = x / 1000; printf "%.3f", x }'
+    else
+        date -d "$v" +%s.%N 2>/dev/null | awk '{printf "%.3f", $1}'
+    fi
+}
+
+# ── ts_field <texto> <regex-de-etiqueta> ──────────────────────────────────────
+# Extrae el valor (ISO-8601 o epoch) que sigue a una etiqueta en <texto>.
+# Imprime vacío si la etiqueta no aparece con un valor de tiempo.
+ts_field() {
+    local text="$1" label="$2"
+    grep -oiE "(${label})[^0-9]{0,8}([0-9]{4}-[0-9]{2}-[0-9]{2}[T ][0-9:.]+(Z|[+-][0-9]{2}:?[0-9]{2})?|[0-9]{9,}(\.[0-9]+)?)" <<< "$text" \
+        | head -1 | sed -E "s/^(${label})[^0-9]{0,8}//I"
+}
+
+# ── num_le <a> <b> ────────────────────────────────────────────────────────────
+# Código 0 si a <= b (numérico). Código 1 si falta un valor o no se cumple.
+num_le() {
+    [[ -n "${1:-}" && -n "${2:-}" ]] || return 1
+    awk -v a="$1" -v b="$2" 'BEGIN{exit !(a <= b)}'
+}
+
+
 
 # ── finish_run ────────────────────────────────────────────────────────────────
 # Escribe el summary, detiene el daemon y sale con 0 (PASS) o 1 (FAIL).
 finish_run() {
     local result
-    if [[ $FAIL_COUNT -eq 0 ]]; then
-        result="PASS"
-    else
+    if [[ $FAIL_COUNT -gt 0 ]]; then
         result="FAIL"
+    elif [[ $BLOCKED_COUNT -gt 0 ]]; then
+        result="BLOCKED"
+    else
+        result="PASS"
     fi
 
     {
         echo ""
         echo "========================================"
         echo "RESULTADO: $result"
-        echo "PASS: $PASS_COUNT  FAIL: $FAIL_COUNT"
+        echo "PASS: $PASS_COUNT  FAIL: $FAIL_COUNT  BLOCKED: $BLOCKED_COUNT"
         echo "========================================"
     } | tee -a "$LOG"
 
@@ -299,15 +410,16 @@ finish_run() {
         echo "result=$result"
         echo "pass=$PASS_COUNT"
         echo "fail=$FAIL_COUNT"
+        echo "blocked=$BLOCKED_COUNT"
         echo "date=$(date '+%Y-%m-%d %H:%M:%S %Z')"
         echo "run_dir=$RUN_DIR"
     } > "$RUN_DIR/summary.txt"
 
     stop_daemon
 
-    if [[ "$result" == "PASS" ]]; then
-        exit 0
-    else
-        exit 1
-    fi
+    case "$result" in
+        PASS)    exit 0 ;;
+        BLOCKED) exit 3 ;;
+        *)       exit 1 ;;
+    esac
 }

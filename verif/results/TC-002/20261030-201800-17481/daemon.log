@@ -1,0 +1,16 @@
+[2m2026-10-31T02:18:00.725519Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-002-20261030-201800-17481-Bcyizi.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-002-20261030-201800-17481-data-2cEsmM
+[2m2026-10-31T02:18:00.726284Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-002-20261030-201800-17481-Bcyizi.sock
+[2m2026-10-31T02:18:00.726394Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-10-31T02:18:00.726447Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-10-31T02:18:01.811852Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 8
+[2m2026-10-31T02:18:01.848270Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 8
+[2m2026-10-31T02:18:01.876350Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: sleep 8
+[2m2026-10-31T02:18:09.819015Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-10-31T02:18:09.825264Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: sleep 8
+[2m2026-10-31T02:18:09.855897Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-10-31T02:18:09.861707Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: sleep 8
+[2m2026-10-31T02:18:09.883528Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-10-31T02:18:09.889237Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: sleep 8
+[2m2026-10-31T02:18:17.831298Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-10-31T02:18:17.867638Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-10-31T02:18:17.895343Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0
