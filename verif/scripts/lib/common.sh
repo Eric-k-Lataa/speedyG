@@ -53,6 +53,8 @@ setup_run_env() {
     LOG="$RUN_DIR/output.log"
 
     export SPEEDYG_SOCKET="$SOCKET"
+    export SPEEDYG_DB="$DATA_DIR/speedyg.db"
+    export SPEEDYG_JSON="$DATA_DIR/scheduler.json"
 
     # Guardar entorno de la corrida
     {
@@ -69,6 +71,8 @@ setup_run_env() {
         echo "commit=$(git -C "$REPO_ROOT" rev-parse HEAD 2>/dev/null || echo n/a)"
         echo "socket=$SOCKET"
         echo "data_dir=$DATA_DIR"
+        echo "db=$SPEEDYG_DB"
+        echo "json=$SPEEDYG_JSON"
         echo "daemon_bin=$DAEMON_BIN"
         echo "client_bin=$CLIENT_BIN"
     } > "$RUN_DIR/environment.txt"
@@ -103,20 +107,25 @@ require_binaries() {
     fi
 }
 
-# ── start_daemon ──────────────────────────────────────────────────────────────
+# ── start_daemon [flags extra...] ─────────────────────────────────────────────
 # Arranca el daemon con su PID real (no el PID de cargo).
+# Los argumentos opcionales se pasan al daemon (p. ej. --max-current 3 --queue-cap 3).
 # Espera hasta DAEMON_WAIT_SECS segundos a que el socket aparezca.
 start_daemon() {
     require_binaries
 
+    DAEMON_EXTRA_ARGS="$*"
+    echo "daemon_args=$DAEMON_EXTRA_ARGS" >> "$RUN_DIR/environment.txt"
+
     echo "" | tee -a "$LOG"
-    echo "[INFO] Iniciando daemon: $DAEMON_BIN" | tee -a "$LOG"
+    echo "[INFO] Iniciando daemon: $DAEMON_BIN $DAEMON_EXTRA_ARGS" | tee -a "$LOG"
     echo "[INFO] Socket: $SOCKET" | tee -a "$LOG"
 
     "$DAEMON_BIN" \
         --socket  "$SOCKET" \
         --data-dir "$DATA_DIR" \
-        > "$RUN_DIR/daemon.log" 2>&1 &
+        "$@" \
+        >> "$RUN_DIR/daemon.log" 2>&1 &
     DAEMON_PID=$!
 
     echo "[INFO] PID del daemon: $DAEMON_PID" | tee -a "$LOG"
@@ -250,8 +259,8 @@ count_open_fds() {
 }
 
 # ── check_no_zombies ──────────────────────────────────────────────────────────
-# Verifica que el daemon no haya dejado procesos zombi o huérfanos.
-# Registra [PASS] o [WARN] (no falla el TC, solo advierte).
+# Verifica que el daemon no tenga hijos zombi ni hijos vivos sin trabajo activo.
+# Cuenta como FAIL (no solo advertencia). Llamar ANTES de stop_daemon.
 check_no_zombies() {
     local zombies
     zombies=$(ps -eo pid,ppid,stat,comm 2>/dev/null \
@@ -259,9 +268,11 @@ check_no_zombies() {
 
     if [[ -z "$zombies" ]]; then
         echo "[PASS] Sin procesos zombi bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
     else
-        echo "[WARN] Procesos zombi detectados:" | tee -a "$LOG"
+        echo "[FAIL] Procesos zombi detectados:" | tee -a "$LOG"
         echo "$zombies" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
     fi
 
     local orphans
@@ -269,11 +280,50 @@ check_no_zombies() {
         | awk -v dpid="$DAEMON_PID" '$2 == dpid {print $0}')
 
     if [[ -z "$orphans" ]]; then
-        echo "[PASS] Sin procesos huérfanos bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        echo "[PASS] Sin procesos hijos residuales bajo daemon PID $DAEMON_PID." | tee -a "$LOG"
+        PASS_COUNT=$((PASS_COUNT + 1))
     else
-        echo "[WARN] Procesos hijos activos bajo daemon PID $DAEMON_PID:" | tee -a "$LOG"
+        echo "[FAIL] Procesos hijos activos bajo daemon PID $DAEMON_PID:" | tee -a "$LOG"
         echo "$orphans" | tee -a "$LOG"
+        FAIL_COUNT=$((FAIL_COUNT + 1))
     fi
+}
+
+# ── daemon_config_value <clave> ───────────────────────────────────────────────
+# Lee de daemon.log el valor de <clave> en la línea "Configuración cargada"
+# (quita colores ANSI). Imprime el valor o nada si no existe.
+daemon_config_value() {
+    local key="$1"
+    sed 's/\x1b\[[0-9;]*m//g' "$RUN_DIR/daemon.log" 2>/dev/null \
+        | grep "Configuración cargada" | tail -1 \
+        | grep -oE "${key}=[^ ]+" | head -1 | cut -d= -f2
+}
+
+# ── require_daemon_config <clave=valor> ... ───────────────────────────────────
+# Si el daemon NO cargó la configuración esperada, el caso es BLOCKED:
+# escribe summary con result=BLOCKED y sale con código 3.
+# Evita dar PASS/FAIL con una configuración distinta a la que exige el TC.
+require_daemon_config() {
+    local pair key expected actual
+    for pair in "$@"; do
+        key="${pair%%=*}"
+        expected="${pair#*=}"
+        actual="$(daemon_config_value "$key")"
+        echo "config_${key}=${actual:-n/a}" >> "$RUN_DIR/environment.txt"
+        if [[ "$actual" != "$expected" ]]; then
+            echo "[BLOCKED] Configuración efectiva $key='${actual:-n/a}', se esperaba '$expected'." | tee -a "$LOG"
+            {
+                echo "result=BLOCKED"
+                echo "reason=config $key esperado=$expected obtenido=${actual:-n/a}"
+                echo "date=$(date '+%Y-%m-%d %H:%M:%S %Z')"
+                echo "run_dir=$RUN_DIR"
+            } > "$RUN_DIR/summary.txt"
+            stop_daemon
+            exit 3
+        fi
+    done
+    echo "[PASS] Configuración efectiva del daemon: $*" | tee -a "$LOG"
+    PASS_COUNT=$((PASS_COUNT + 1))
 }
 
 # ── finish_run ────────────────────────────────────────────────────────────────
