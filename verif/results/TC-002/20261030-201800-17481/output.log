@@ -1,0 +1,79 @@
+========================================
+TC-002  —  run 20261030-201800-17481
+========================================
+tc_id=TC-002
+run_id=20261030-201800-17481
+date=2026-10-30 20:18:00 CST
+os=Linux
+kernel=6.12.111+deb13-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=50d431403f06ad1f8cc6cc64d3cd2ca7db95eb62
+socket=/tmp/speedyg-TC-002-20261030-201800-17481-Bcyizi.sock
+data_dir=/tmp/speedyg-TC-002-20261030-201800-17481-data-2cEsmM
+db=/tmp/speedyg-TC-002-20261030-201800-17481-data-2cEsmM/speedyg.db
+json=/tmp/speedyg-TC-002-20261030-201800-17481-data-2cEsmM/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 3 --queue-cap 3
+[INFO] Socket: /tmp/speedyg-TC-002-20261030-201800-17481-Bcyizi.sock
+[INFO] PID del daemon: 17521
+[PASS] Daemon disponible (PID 17521).
+[PASS] Configuración efectiva del daemon: max_current=3 queue_cap=3
+
+[1] Enviando 6 trabajos: sleep 8
+envio 1: Job #1 encolado correctamente
+envio 2: Job #2 encolado correctamente
+envio 3: Job #3 encolado correctamente
+envio 4: Job #4 encolado correctamente
+envio 5: Job #5 encolado correctamente
+envio 6: Job #6 encolado correctamente
+[PASS] Los 6 envíos fueron aceptados con ID (obtenidos: 6)
+[PASS] Los IDs devueltos son distintos (distintos: 6)
+
+[2] Esperando estado terminal de los 6 trabajos (máx. 40s)...
+--- Historial ---
+Job #1: sleep 8 [Succeeded] (exit code: 0)
+Job #2: sleep 8 [Succeeded] (exit code: 0)
+Job #3: sleep 8 [Succeeded] (exit code: 0)
+Job #4: sleep 8 [Succeeded] (exit code: 0)
+Job #5: sleep 8 [Succeeded] (exit code: 0)
+Job #6: sleep 8 [Succeeded] (exit code: 0)
+
+[3] Resumen de concurrencia:
+tiempo_total_s=16
+limite_exigido=3
+max_current_daemon=3
+queue_cap_daemon=3
+muestras=57
+max_running_status=3
+max_queued_status=3
+max_procesos_hijos_pgrep=3
+trabajos_desaparecidos=0
+violaciones_fifo=0
+detalle=lost=0 lostmsg=[] fifo_violations=0 fifomsg=[]
+
+[4] Evaluación
+[PASS] Máximo de Running por status es exactamente 3 (obtenido: 3)
+[PASS] Máximo de procesos hijos por pgrep es exactamente 3 (obtenido: 3)
+[PASS] Hubo 3 trabajos Queued en alguna muestra (máx. Queued: 3)
+[PASS] Orden FIFO en todas las muestras (violaciones: 0)
+[PASS] Ningún trabajo aceptado desapareció del listado (desaparecidos: 0)
+[PASS] Los 6 trabajos terminaron dentro de 40s
+[PASS] Los 6 trabajos terminaron en Succeeded con exit code 0 (obtenidos: 6)
+
+[INFO] File descriptors abiertos por daemon: 10
+[PASS] Sin procesos zombi bajo daemon PID 17521.
+[PASS] Sin procesos hijos residuales bajo daemon PID 17521.
+
+========================================
+RESULTADO: PASS
+PASS: 13  FAIL: 0
+========================================
+
+[INFO] Deteniendo daemon PID 17521...
