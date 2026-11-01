@@ -5,7 +5,7 @@ use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::Scheduler;
 use speedyG::state_machine::JobState;
 use std::fs;
-use std::os::unix::process::ExitStatusExt;
+//use std::os::unix::process::ExitStatusExt;
 use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;

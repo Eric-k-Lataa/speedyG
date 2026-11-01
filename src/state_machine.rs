@@ -119,6 +119,7 @@ impl fmt::Display for Job {
 
 impl Job {
     //Recontruccion de un job para la persistencia
+    #[allow(clippy::too_many_arguments)]
     pub fn from_parts(
         id: u32,
         program: String,
