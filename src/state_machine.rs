@@ -95,10 +95,12 @@ impl fmt::Display for Job {
 
         // Formatear tiempos
         let received = self.received_at.format("%Y-%m-%d %H:%M:%S UTC");
-        let started = self.started_at
+        let started = self
+            .started_at
             .map(|t| t.format("%Y-%m-%d %H:%M:%S UTC").to_string())
             .unwrap_or_else(|| "Pendiente".to_string());
-        let finished = self.finished_at
+        let finished = self
+            .finished_at
             .map(|t| t.format("%Y-%m-%d %H:%M:%S UTC").to_string())
             .unwrap_or_else(|| "En curso / No finalizado".to_string());
 
@@ -110,14 +112,7 @@ impl fmt::Display for Job {
         write!(
             f,
             "Job #{}: {}{} [{:?}]{}\n  ├─ Recibido:  {}\n  ├─ Iniciado:  {}\n  └─ Finalizado: {}",
-            self.id,
-            self.program,
-            args_str,
-            self.state,
-            exit_info,
-            received,
-            started,
-            finished
+            self.id, self.program, args_str, self.state, exit_info, received, started, finished
         )
     }
 }

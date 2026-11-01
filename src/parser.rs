@@ -49,7 +49,13 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
                 let es_numero = arg.parse::<u32>().is_ok();
                 let es_estado_valido = matches!(
                     arg.to_lowercase().as_str(),
-                    "queued" | "running" | "succeeded" | "failed" | "canceled" | "cancelled" | "interrupted"
+                    "queued"
+                        | "running"
+                        | "succeeded"
+                        | "failed"
+                        | "canceled"
+                        | "cancelled"
+                        | "interrupted"
                 );
 
                 if !es_numero && !es_estado_valido {
