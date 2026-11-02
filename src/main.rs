@@ -5,6 +5,7 @@ use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::Scheduler;
 use speedyG::state_machine::JobState;
 use std::fs;
+//use std::os::unix::process::ExitStatusExt;
 use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
@@ -169,14 +170,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     "status" => {
                         let sched = lock(&scheduler);
                         if let Some(id_str) = cmd.args.first() {
+                            let arg = id_str;
                             // Caso: status <id>
-                            match id_str.parse::<u32>() {
-                                Ok(id) => match sched.get_job(id) {
+                            if let Ok(id) = arg.parse::<u32>() {
+                                match sched.get_job(id) {
                                     Some(job) => format!("{}\n", job),
                                     None => format!("Error: Job #{} no encontrado\n", id),
-                                },
-                                Err(_) => {
-                                    "Error: El ID debe ser un número entero positivo\n".to_string()
+                                }
+                            } else {
+                                // Filtrar por estado
+                                let filtrados = sched.filter_jobs_by_state(arg);
+                                if filtrados.is_empty() {
+                                    format!("No hay jobs con el estado '{}'.\n", arg)
+                                } else {
+                                    let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
+                                    for job in filtrados {
+                                        out.push_str(&format!("{}\n", job));
+                                    }
+                                    out
                                 }
                             }
                         } else {

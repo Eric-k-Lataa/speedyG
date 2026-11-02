@@ -42,11 +42,24 @@ pub fn validate_command(program: &str, args: &[String]) -> Result<(), String> {
     match program {
         "status" => {
             if args.len() > 1 {
-                return Err("status solo acepta un ID opcional".to_string());
+                return Err("status solo acepta un argumento opcional (ID o estado)".to_string());
             }
-            if let Some(id_str) = args.first() {
-                if id_str.parse::<u32>().is_err() {
-                    return Err("El ID debe ser un entero".to_string());
+            if let Some(arg) = args.first() {
+                // Permitimos si es un u32 válido O si es una cadena de texto que representa un estado conocido
+                let es_numero = arg.parse::<u32>().is_ok();
+                let es_estado_valido = matches!(
+                    arg.to_lowercase().as_str(),
+                    "queued"
+                        | "running"
+                        | "succeeded"
+                        | "failed"
+                        | "canceled"
+                        | "cancelled"
+                        | "interrupted"
+                );
+
+                if !es_numero && !es_estado_valido {
+                    return Err("El argumento de status debe ser un ID entero o un estado válido (queued, running, succeeded, failed, canceled, interrupted)".to_string());
                 }
             }
         }
