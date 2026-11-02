@@ -33,6 +33,24 @@ impl Scheduler {
         self.queue_cap = capacity;
     }
 
+    // Primer intento de filtro para status
+    pub fn filter_jobs_by_state(&self, state_str: &str) -> Vec<&Job> {
+        let target = state_str.to_lowercase();
+        self.queue
+            .iter()
+            .chain(self.history.iter())
+            .filter(|j| match j.get_state() {
+                JobState::Queued => target == "queued" || target == "pending",
+                JobState::Running => target == "running",
+                JobState::Succeeded => target == "succeeded" || target == "success",
+                JobState::Failed(_) => target == "failed",
+                JobState::KillSignal(_) => target == "signaled" || target == "killed",
+                JobState::Canceled => target == "canceled" || target == "cancelled",
+                JobState::Interrupted => target == "interrupted",
+            })
+            .collect()
+    }
+
     ///Reconstruye scheduler con datos leidos del disco para la persistencia.
     pub fn from_parts(next_id: u32, queue: VecDeque<Job>, history: Vec<Job>) -> Self {
         Self {

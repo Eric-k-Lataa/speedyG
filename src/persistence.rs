@@ -21,6 +21,9 @@ CREATE TABLE IF NOT EXISTS jobs (
     args       TEXT    NOT NULL,                    -- arreglo JSON, ej. [\"hola\"]
     state      TEXT    NOT NULL,                    -- se valida al leer con JonState::from_db
     exit_code  INTEGER,
+    received_at TEXT   NOT NULL,
+    started_at TEXT,
+    finished_at TEXT,
     location   TEXT    NOT NULL CHECK (location IN ('queue','history')),
     position   INTEGER NOT NULL,                    -- orden dentro de queue o history
     updated_at TEXT    NOT NULL DEFAULT (datetime('now'))
@@ -33,13 +36,16 @@ CREATE TABLE IF NOT EXISTS meta (
 ";
 
 const UPSERT_JOB: &str = "
-INSERT INTO jobs (id, program, args, state, exit_code, location, position)
-VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
+INSERT INTO jobs (id, program, args, state, exit_code, received_at, started_at, finished_at, location, position)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
 ON CONFLICT(id) DO UPDATE SET
     program    = excluded.program,
     args       = excluded.args,
     state      = excluded.state,
     exit_code  = excluded.exit_code,
+    received_at = excluded.received_at,
+    started_at = excluded.started_at,
+    finished_at = excluded.finished_at,
     location   = excluded.location,
     position   = excluded.position,
     updated_at = datetime('now')
@@ -224,12 +230,21 @@ fn insertar_job(
     position: usize,
 ) -> Result<(), PersistenceError> {
     let args_json = serde_json::to_string(job.get_args())?;
+
+    // Serializar marcas de tiempo a String RFC3339 (o ISO8601) para SQLite
+    let received_str = job.get_received_at().to_rfc3339();
+    let started_str = job.get_started_at().map(|t| t.to_rfc3339());
+    let finished_str = job.get_finished_at().map(|t| t.to_rfc3339());
+
     stmt.execute(params![
         job.get_id(),
         job.get_program(),
         args_json,
         job.get_state().to_db(),
         job.get_exit_code(),
+        received_str,
+        started_str,
+        finished_str,
         location,
         position as i64,
     ])?;
@@ -261,7 +276,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     })?;
 
     let mut stmt = conn.prepare(
-        "SELECT id, program, args, state, exit_code, location
+        "SELECT id, program, args, state, exit_code, received_at, started_at, finished_at, location
          FROM jobs ORDER BY position ASC, id ASC",
     )?;
     let filas = stmt
@@ -273,6 +288,9 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
                 r.get::<_, String>(3)?,
                 r.get::<_, Option<i32>>(4)?,
                 r.get::<_, String>(5)?,
+                r.get::<_, Option<String>>(6)?,
+                r.get::<_, Option<String>>(7)?,
+                r.get::<_, String>(8)?,
             ))
         })?
         .collect::<Result<Vec<_>, _>>()?;
@@ -281,16 +299,51 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     let mut history = Vec::new();
     let mut max_id = 0u32;
 
-    for (id, program, args_json, state, exit_code, location) in filas {
+    for (id, program, args_json, state_str, exit_code, rec_str, start_str, finish_str, location) in
+        filas
+    {
         let args: Vec<String> = serde_json::from_str(&args_json)?;
-        let state = JobState::from_db(&state, exit_code).ok_or_else(|| {
+        let state = JobState::from_db(&state_str, exit_code).ok_or_else(|| {
             PersistenceError::DatosInvalidos(format!(
                 "Job #{} con estado desconocido '{}'",
-                id, state
+                id, state_str
             ))
         })?;
+
+        // Parsear fechas
+        let received_at = chrono::DateTime::parse_from_rfc3339(&rec_str)
+            .map(|dt| dt.with_timezone(&chrono::Utc))
+            .map_err(|e| PersistenceError::DatosInvalidos(e.to_string()))?;
+
+        let started_at = match start_str {
+            Some(s) => Some(
+                chrono::DateTime::parse_from_rfc3339(&s)
+                    .map(|dt| dt.with_timezone(&chrono::Utc))
+                    .map_err(|e| PersistenceError::DatosInvalidos(e.to_string()))?,
+            ),
+            None => None,
+        };
+
+        let finished_at = match finish_str {
+            Some(s) => Some(
+                chrono::DateTime::parse_from_rfc3339(&s)
+                    .map(|dt| dt.with_timezone(&chrono::Utc))
+                    .map_err(|e| PersistenceError::DatosInvalidos(e.to_string()))?,
+            ),
+            None => None,
+        };
+
         max_id = max_id.max(id);
-        let job = Job::from_parts(id, program, args, state, exit_code);
+        let job = Job::from_parts(
+            id,
+            program,
+            args,
+            state,
+            exit_code,
+            received_at,
+            started_at,
+            finished_at,
+        );
         match location.as_str() {
             "queue" => queue.push_back(job),
             "history" => history.push(job),

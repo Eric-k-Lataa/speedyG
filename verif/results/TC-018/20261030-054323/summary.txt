@@ -1,0 +1,4 @@
+result=PASS
+fail=0
+date=2026-10-30 7:0:0 CST
+run_dir=/A2/P1/speedyG/verif/results/TC-018/20261030-054323
