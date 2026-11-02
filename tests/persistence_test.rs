@@ -29,11 +29,11 @@ fn scheduler_ejemplo() -> Scheduler {
     s.add_job("echo".to_string(), vec!["hola".to_string()])
         .unwrap();
     s.start_job(1);
-    s.complete_job(1, 0);
+    s.complete_job(1, 0, "".into(), "".into());
 
     s.add_job("sh".to_string(), vec!["-c".to_string()]).unwrap();
     s.start_job(2);
-    s.complete_job(2, 3);
+    s.complete_job(2, 3, "".into(), "".into());
 
     s.add_job("sleep".to_string(), vec!["100".to_string()])
         .unwrap();
@@ -171,7 +171,7 @@ fn concurrencia_sin_corrupcion_ni_ids_repetidos() {
                         .unwrap()
                         .get_id();
                     s.start_job(id);
-                    s.complete_job(id, 0);
+                    s.complete_job(id, 0, "".into(), "".into());
                     guardar_en(&s, &db, &json).unwrap();
                 }
             })
@@ -200,7 +200,7 @@ fn rendimiento_500_jobs() {
             .unwrap()
             .get_id();
         s.start_job(id);
-        s.complete_job(id, 0);
+        s.complete_job(id, 0, "".into(), "".into());
     }
     let t = Instant::now();
     guardar_en(&s, &db, &json).unwrap();
