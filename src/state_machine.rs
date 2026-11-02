@@ -60,6 +60,8 @@ pub struct Job {
     args: Vec<String>,
     state: JobState,
     exit_code: Option<i32>, // Almacena el codigo de salida
+    stdout: Option<String>,
+    stderr: Option<String>,
     received_at: DateTime<Utc>,
     started_at: Option<DateTime<Utc>>,
     finished_at: Option<DateTime<Utc>>,
@@ -79,21 +81,25 @@ pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Jo
         args,
         state,
         exit_code: None,
+        stdout: None,
+        stderr: None,
         received_at: now,
         started_at: if !waiting { Some(now) } else { None },
         finished_at: None,
     }
 }
 
+// Función auxiliar para el display de los procesos
+fn indent_text(text: &str) -> String {
+    text.lines()
+        .map(|line| format!("    │ {}", line))
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
+// Vista detallada completa exclusiva para status <id>
 impl fmt::Display for Job {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let args_str = if self.args.is_empty() {
-            String::new()
-        } else {
-            format!(" {}", self.args.join(" "))
-        };
-
-        // Formatear tiempos
         let received = self.received_at.format("%Y-%m-%d %H:%M:%S UTC");
         let started = self
             .started_at
@@ -109,15 +115,89 @@ impl fmt::Display for Job {
             None => String::new(),
         };
 
-        write!(
+        // Cabecera e info temporal
+        writeln!(
             f,
             "Job #{}: {}{} [{:?}]{}\n  ├─ Recibido:  {}\n  ├─ Iniciado:  {}\n  └─ Finalizado: {}",
-            self.id, self.program, args_str, self.state, exit_info, received, started, finished
-        )
+            self.id,
+            self.program,
+            if self.args.is_empty() {
+                String::new()
+            } else {
+                format!(" {}", self.args.join(" "))
+            },
+            self.state,
+            exit_info,
+            received,
+            started,
+            finished
+        )?;
+
+        // Salida estándar separada (RF-11)
+        if let Some(ref out) = self.stdout {
+            if !out.is_empty() {
+                writeln!(f, "  [stdout]:\n{}", indent_text(out))?;
+            }
+        }
+
+        // Error estándar separado (RF-11)
+        if let Some(ref err) = self.stderr {
+            if !err.is_empty() {
+                writeln!(f, "  [stderr]:\n{}", indent_text(err))?;
+            }
+        }
+
+        Ok(())
     }
 }
 
 impl Job {
+    // Vista compacta para la lista general o filtros de estado
+    pub fn summary_string(&self) -> String {
+        let args_str = if self.args.is_empty() {
+            String::new()
+        } else {
+            format!(" {}", self.args.join(" "))
+        };
+
+        match self.exit_code {
+            Some(code) => format!(
+                "Job #{}: {}{} [{:?}] (exit code: {})",
+                self.id, self.program, args_str, self.state, code
+            ),
+            None => format!(
+                "Job #{}: {}{} [{:?}]",
+                self.id, self.program, args_str, self.state
+            ),
+        }
+    }
+
+    //"setter" para las salidas
+    pub fn set_output(&mut self, stdout: String, stderr: String) {
+        self.stdout = Some(stdout);
+        self.stderr = Some(stderr);
+    }
+
+    pub fn finish_execution(&mut self, exit_code: i32, stdout: String, stderr: String) -> bool {
+        // Si ya estaba cancelado, no sobreescribimos su estado final
+        if matches!(self.state, JobState::Canceled) {
+            return false;
+        }
+
+        self.exit_code = Some(exit_code);
+        self.stdout = Some(stdout);
+        self.stderr = Some(stderr);
+        self.finished_at = Some(Utc::now());
+
+        self.state = if exit_code == 0 {
+            JobState::Succeeded
+        } else {
+            JobState::Failed(exit_code)
+        };
+
+        true
+    }
+
     //Recontruccion de un job para la persistencia
     #[allow(clippy::too_many_arguments)]
     pub fn from_parts(
@@ -126,6 +206,8 @@ impl Job {
         args: Vec<String>,
         state: JobState,
         exit_code: Option<i32>,
+        stdout: Option<String>,
+        stderr: Option<String>,
         received_at: DateTime<Utc>,
         started_at: Option<DateTime<Utc>>,
         finished_at: Option<DateTime<Utc>>,
@@ -136,6 +218,8 @@ impl Job {
             args,
             state,
             exit_code,
+            stdout,
+            stderr,
             received_at,
             started_at,
             finished_at,
@@ -159,6 +243,14 @@ impl Job {
 
     pub fn get_exit_code(&self) -> Option<i32> {
         self.exit_code
+    }
+
+    pub fn get_stdout(&self) -> Option<&String> {
+        self.stdout.as_ref()
+    }
+
+    pub fn get_stderr(&self) -> Option<&String> {
+        self.stderr.as_ref()
     }
 
     pub fn get_received_at(&self) -> DateTime<Utc> {
