@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     args       TEXT    NOT NULL,                    -- arreglo JSON, ej. [\"hola\"]
     state      TEXT    NOT NULL,                    -- se valida al leer con JonState::from_db
     exit_code  INTEGER,
+    stdout      TEXT,
+    stderr      TEXT,
     received_at TEXT   NOT NULL,
     started_at TEXT,
     finished_at TEXT,
@@ -36,13 +38,15 @@ CREATE TABLE IF NOT EXISTS meta (
 ";
 
 const UPSERT_JOB: &str = "
-INSERT INTO jobs (id, program, args, state, exit_code, received_at, started_at, finished_at, location, position)
-VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
+INSERT INTO jobs (id, program, args, state, exit_code, stdout, stderr, received_at, started_at, finished_at, location, position)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
 ON CONFLICT(id) DO UPDATE SET
     program    = excluded.program,
     args       = excluded.args,
     state      = excluded.state,
     exit_code  = excluded.exit_code,
+    stdout     = excluded.stdout,
+    stderr     = excluded.stderr,
     received_at = excluded.received_at,
     started_at = excluded.started_at,
     finished_at = excluded.finished_at,
@@ -51,6 +55,8 @@ ON CONFLICT(id) DO UPDATE SET
     updated_at = datetime('now')
 WHERE jobs.state     IS NOT excluded.state
    OR jobs.exit_code IS NOT excluded.exit_code
+   OR jobs.stdout    IS NOT excluded.stdout
+   OR jobs.stderr    IS NOT excluded.stderr
    OR jobs.location  IS NOT excluded.location
    OR jobs.position  IS NOT excluded.position
 ";
@@ -236,12 +242,17 @@ fn insertar_job(
     let started_str = job.get_started_at().map(|t| t.to_rfc3339());
     let finished_str = job.get_finished_at().map(|t| t.to_rfc3339());
 
+    let stdout_ref = job.get_stdout();
+    let stderr_ref = job.get_stderr();
+
     stmt.execute(params![
         job.get_id(),
         job.get_program(),
         args_json,
         job.get_state().to_db(),
         job.get_exit_code(),
+        stdout_ref,
+        stderr_ref,
         received_str,
         started_str,
         finished_str,
@@ -276,7 +287,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     })?;
 
     let mut stmt = conn.prepare(
-        "SELECT id, program, args, state, exit_code, received_at, started_at, finished_at, location
+        "SELECT id, program, args, state, exit_code, stdout, stderr, received_at, started_at, finished_at, location
          FROM jobs ORDER BY position ASC, id ASC",
     )?;
     let filas = stmt
@@ -287,10 +298,12 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
                 r.get::<_, String>(2)?,
                 r.get::<_, String>(3)?,
                 r.get::<_, Option<i32>>(4)?,
-                r.get::<_, String>(5)?,
+                r.get::<_, Option<String>>(5)?,
                 r.get::<_, Option<String>>(6)?,
-                r.get::<_, Option<String>>(7)?,
-                r.get::<_, String>(8)?,
+                r.get::<_, String>(7)?,
+                r.get::<_, Option<String>>(8)?,
+                r.get::<_, Option<String>>(9)?,
+                r.get::<_, String>(10)?,
             ))
         })?
         .collect::<Result<Vec<_>, _>>()?;
@@ -299,8 +312,19 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     let mut history = Vec::new();
     let mut max_id = 0u32;
 
-    for (id, program, args_json, state_str, exit_code, rec_str, start_str, finish_str, location) in
-        filas
+    for (
+        id,
+        program,
+        args_json,
+        state_str,
+        exit_code,
+        stdout,
+        stderr,
+        rec_str,
+        start_str,
+        finish_str,
+        location,
+    ) in filas
     {
         let args: Vec<String> = serde_json::from_str(&args_json)?;
         let state = JobState::from_db(&state_str, exit_code).ok_or_else(|| {
@@ -340,6 +364,8 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
             args,
             state,
             exit_code,
+            stdout,
+            stderr,
             received_at,
             started_at,
             finished_at,

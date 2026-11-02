@@ -52,7 +52,12 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         //    complete_job devuelve false y se conserva el estado Canceled.
         {
             let mut sched = lock(&scheduler);
-            if sched.complete_job(job_id, exec_result.exit_code) {
+            if sched.complete_job(
+                job_id,
+                exec_result.exit_code,
+                exec_result.stdout,
+                exec_result.stderr,
+            ) {
                 info!(
                     "Job #{} terminó con código {}",
                     job_id, exec_result.exit_code
@@ -185,7 +190,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 } else {
                                     let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
                                     for job in filtrados {
-                                        out.push_str(&format!("{}\n", job));
+                                        out.push_str(&format!("{}\n", job.summary_string()));
                                     }
                                     out
                                 }
@@ -202,13 +207,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 if !pending.is_empty() {
                                     out.push_str("--- Pendientes / En ejecución ---\n");
                                     for job in pending {
-                                        out.push_str(&format!("{}\n", job));
+                                        out.push_str(&format!("{}\n", job.summary_string()));
                                     }
                                 }
                                 if !history.is_empty() {
                                     out.push_str("--- Historial ---\n");
                                     for job in history {
-                                        out.push_str(&format!("{}\n", job));
+                                        out.push_str(&format!("{}\n", job.summary_string()));
                                     }
                                 }
                                 out
