@@ -1,0 +1,36 @@
+--- filtro: Queued
+--- Jobs con estado 'Queued' ---
+Job #4: echo en-cola-1 [Queued]
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+Job #5: echo en-cola-2 [Queued]
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+--- filtro: Running
+--- Jobs con estado 'Running' ---
+Job #3: sleep 8 [Running]
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: En curso / No finalizado
+--- filtro: Succeeded
+--- Jobs con estado 'Succeeded' ---
+Job #1: echo hola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+--- filtro: Failed
+--- Jobs con estado 'Failed' ---
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+--- filtro: Canceled
+--- Jobs con estado 'Canceled' ---
+Job #6: echo cancelar [Canceled]
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-02 04:21:20 UTC
+--- filtro inválido
+Error de sintaxis: El argumento de status debe ser un ID entero o un estado válido (queued, running, succeeded, failed, canceled, interrupted)

@@ -1,1 +1,0 @@
-Error: No se pudo cancelar de Job
