@@ -1,0 +1,122 @@
+========================================
+TC-003  —  run 20261101-222048-42965
+========================================
+tc_id=TC-003
+run_id=20261101-222048-42965
+date=2026-11-01 22:20:48 CST
+os=Linux
+kernel=6.12.111+deb13-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=9da9b722c5ae4c12986ba4d9d4272938235739b5
+socket=/tmp/speedyg-TC-003-20261101-222048-42965-sDLACt.sock
+data_dir=/tmp/speedyg-TC-003-20261101-222048-42965-data-g60XPU
+db=/tmp/speedyg-TC-003-20261101-222048-42965-data-g60XPU/speedyg.db
+json=/tmp/speedyg-TC-003-20261101-222048-42965-data-g60XPU/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 3
+[INFO] Socket: /tmp/speedyg-TC-003-20261101-222048-42965-sDLACt.sock
+[INFO] PID del daemon: 43005
+[PASS] Daemon disponible (PID 43005).
+[PASS] Configuración efectiva del daemon: max_current=1 queue_cap=3
+
+[1] Enviando A='sleep 3' B='sleep 2' C='timeout 1 sleep 5' D='sleep 1'
+A: sleep 3 -> Job #1 encolado correctamente
+B: sleep 2 -> Job #2 encolado correctamente
+C: timeout 1 sleep 5 -> Job #3 encolado correctamente
+D: sleep 1 -> Job #4 encolado correctamente
+[PASS] Los 4 envíos fueron aceptados con ID distinto (distintos: 4)
+
+[2] Instantáneas: A debe estar Running y B Queued
+Job #1: sleep 3 [Running]
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  2026-11-02 04:20:49 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #2: sleep 2 [Queued]
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+[PASS] A está en Running mientras ejecuta (obtenido: 'Running')
+[PASS] B está en Queued mientras A ocupa la única ranura (obtenido: 'Queued')
+
+[3] Cancelando D (Job #4) mientras está en cola
+Job #4 cancelado correctamente
+
+[4] Esperando estado terminal de A, B y C (máx. 30s)
+[PASS] A, B y C llegaron a un estado terminal en 6s
+Job #1: sleep 3 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  2026-11-02 04:20:49 UTC
+  └─ Finalizado: 2026-11-02 04:20:52 UTC
+Job #2: sleep 2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  2026-11-02 04:20:52 UTC
+  └─ Finalizado: 2026-11-02 04:20:54 UTC
+Job #3: timeout 1 sleep 5 [Failed(124)] (exit code: 124)
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  2026-11-02 04:20:54 UTC
+  └─ Finalizado: 2026-11-02 04:20:55 UTC
+Job #4: sleep 1 [Canceled]
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-02 04:20:50 UTC
+
+[5] Parte A (RF-06): secuencia de estados observada
+JOB 1 Running>Succeeded |
+JOB 2 Queued>Running>Succeeded |
+JOB 3 Queued>Running>Failed |
+JOB 4 Queued>Canceled |
+MAXRUN 1
+[PASS] A: secuencia 'Running>Succeeded' cumple [Queued>]Running>Succeeded
+[PASS] A: sin regresiones ni cambios entre estados terminales
+[PASS] B: secuencia 'Queued>Running>Succeeded' cumple Queued>Running>Succeeded
+[PASS] B: sin regresiones ni cambios entre estados terminales
+[PASS] C: secuencia 'Queued>Running>Failed' cumple Queued>Running>Failed
+[PASS] C: sin regresiones ni cambios entre estados terminales
+[PASS] D: secuencia 'Queued>Canceled' cumple Queued>Canceled
+[PASS] D: sin regresiones ni cambios entre estados terminales
+[PASS] Con límite 1 nunca hubo más de 1 Running (máx. observado: 1)
+[PASS] A terminó con exit code 0
+[PASS] B terminó con exit code 0
+[PASS] C terminó con exit code 124
+[PASS] D (cancelado) respondió 'cancelado correctamente'
+
+[6] Parte B (RF-07): tiempos de recepción, inicio y terminación
+ventana_prueba: inicio=1793593249.666142259 fin=1793593256.128639704
+A: received=1793614849.000 started=1793614849.000 finished=1793614852.000
+B: received=1793614849.000 started=1793614852.000 finished=1793614854.000
+C: received=1793614849.000 started=1793614854.000 finished=1793614855.000
+B en cola:  received=1793614849.000 started= finished=
+A corriendo: received=1793614849.000 started=1793614849.000 finished=
+[PASS] A: expone received, started y finished
+[PASS] A: received <= started <= finished
+[FAIL] A: los tiempos caen dentro de la ventana real de la prueba (±2 s)
+[PASS] B: expone received, started y finished
+[PASS] B: received <= started <= finished
+[FAIL] B: los tiempos caen dentro de la ventana real de la prueba (±2 s)
+[PASS] C: expone received, started y finished
+[PASS] C: received <= started <= finished
+[FAIL] C: los tiempos caen dentro de la ventana real de la prueba (±2 s)
+[PASS] A: duración (finished-started) >= 2.5 s para sleep 3 (obtenida: 3.000)
+[PASS] B: esperó en cola >= 2.0 s (started-received: 3.000)
+[PASS] B inició después de que terminó A (ranura única)
+[PASS] C inició después de que terminó B (ranura única)
+[PASS] En Queued: received presente; started y finished ausentes
+[PASS] En Running: received y started presentes; finished ausente
+
+[INFO] File descriptors abiertos por daemon: 10
+[PASS] Sin procesos zombi bajo daemon PID 43005.
+[PASS] Sin procesos hijos residuales bajo daemon PID 43005.
+
+========================================
+RESULTADO: FAIL
+PASS: 33  FAIL: 3  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 43005...

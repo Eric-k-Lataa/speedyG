@@ -35,7 +35,7 @@ REPS=10                # mediciones por tipo de consulta
 MAX_QUERY_SECS=1.0     # RNF-05
 LOAD_WAIT_SECS=90
 
-FILTER_FMT='status --state %s'      # sintaxis provisional del filtro por estado
+FILTER_FMT='status %s'      # sintaxis provisional del filtro por estado
 STATES=(Queued Running Succeeded Failed Canceled)
 
 CMD_S=(echo hola)                   # Succeeded, exit 0

@@ -1,0 +1,4 @@
+Job #2: sleep 2 [Queued]
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
