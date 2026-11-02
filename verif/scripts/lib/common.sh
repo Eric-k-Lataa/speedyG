@@ -372,7 +372,7 @@ to_epoch() {
 # Imprime vacío si la etiqueta no aparece con un valor de tiempo.
 ts_field() {
     local text="$1" label="$2"
-    grep -oiE "(${label})[^0-9]{0,8}([0-9]{4}-[0-9]{2}-[0-9]{2}[T ][0-9:.]+(Z|[+-][0-9]{2}:?[0-9]{2})?|[0-9]{9,}(\.[0-9]+)?)" <<< "$text" \
+    grep -oiE "(${label})[^0-9]{0,8}([0-9]{4}-[0-9]{2}-[0-9]{2}[T ][0-9:.]+( ?UTC|Z|[+-][0-9]{2}:?[0-9]{2})?|[0-9]{9,}(\.[0-9]+)?)" <<< "$text" \
         | head -1 | sed -E "s/^(${label})[^0-9]{0,8}//I"
 }
 
