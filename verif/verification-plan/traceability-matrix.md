@@ -1,13 +1,3 @@
-Cadena obligatoria: Requisito → Método → Caso → Resultado esperado → Evidencia → PASS/FAIL.
-
-**Estados de resultado:** `PASS` · `FAIL` · `BLOCKED` · `Pendiente` (caso sin ejecución real).
-Un caso solo pasa a `PASS` con una corrida real y evidencia en `verif/results/<TC>/<run-id>/`.
-
-**Notas:**
-- Los casos TC-001…TC-024 siguen la numeración del Plan de Verificación (`context/05`).
-- `(propuesto)` indica un caso o método que el plan oficial no asigna a ese requisito y que el equipo debe confirmar.
-- `Inspección` significa que no hay script; la evidencia es el archivo o documento revisado.
-
 ## Requisitos funcionales
 
 | Req ID | Descripción breve | Prioridad | Método | Caso(s) | Evidencia | Resultado | Defecto/Excepción |
@@ -82,22 +72,23 @@ Un caso solo pasa a `PASS` con una corrida real y evidencia en `verif/results/<T
 | RNF-33 | Liberación de memoria, procesos, archivos y sockets bajo estrés | Alta | Prueba | TC-024 | fds + procesos + memoria | Pendiente | — |
 | RNF-34 | Decisiones de seguridad/consistencia con análisis de riesgo y prueba | Alta | Inspección | ADR + registro de riesgos (propuesto) | documentos | Pendiente | — |
 
+>>>>>>> Stashed changes
 ## Cobertura por caso
 
 | Caso | Título | Requisitos | Script | Estado |
 |:-----|:-------|:-----------|:-------|:-------|
 | TC-001 | Enviar trabajo válido | RF-01, RF-02, RF-04 | `TC-001.sh` | PASS |
 | TC-002 | Cola y límite de concurrencia | RF-03, RF-05, RNF-04, RNF-07 | `TC-002.sh` | PASS |
-| TC-003 | Estados y tiempos | RF-06, RF-07 | `TC-003.sh` | BLOCKED |
-| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | BLOCKED |
-| TC-005 | Cancelar en cola y ejecución | RF-10 | — | Sin redactar |
+| TC-003 | Estados y tiempos | RF-06, RF-07 | `TC-003.sh` | Pendiente |
+| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | Pendiente |
+| TC-005 | Cancelar en cola y ejecución | RF-10, RNF-21, RNF-30 | `TC-005.sh` | Pendiente |
 | TC-006 | Capturar stdout/stderr y código | RF-11, RF-07 | — | Sin redactar |
 | TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | — | Sin redactar |
 | TC-008 | Aislamiento de fallo | RNF-08, RNF-09 | — | Sin redactar |
 | TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | — | Sin redactar |
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
-| TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | — | Sin redactar |
-| TC-018 | Solicitud duplicada | RF-27 | — | Sin redactar |
+| TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | Pendiente |
+| TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | Pendiente |
 | TC-020 | Terminación inesperada del hijo | RF-14, RF-29, RNF-22, RNF-30 | — | Sin redactar |
 | TC-021 | Escalamiento de cancelación | RF-30 | — | Sin redactar |
 | TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | — | Sin redactar |
