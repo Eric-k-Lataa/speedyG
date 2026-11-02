@@ -1,0 +1,11 @@
+tiempo_total_s=16
+limite_exigido=3
+max_current_daemon=3
+queue_cap_daemon=3
+muestras=57
+max_running_status=3
+max_queued_status=3
+max_procesos_hijos_pgrep=3
+trabajos_desaparecidos=0
+violaciones_fifo=0
+detalle=lost=0 lostmsg=[] fifo_violations=0 fifomsg=[]

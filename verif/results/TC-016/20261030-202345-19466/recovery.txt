@@ -1,0 +1,8 @@
+t=0s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=2s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=3s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=4s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=5s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=6s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=7s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=8s: Job #7 encolado correctamente
