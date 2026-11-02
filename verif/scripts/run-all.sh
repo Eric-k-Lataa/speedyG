@@ -33,6 +33,8 @@ run_tc "TC-002"
 run_tc "TC-003"
 run_tc "TC-004"
 run_tc "TC-016"
+run_tc "TC-017"
+run_tc "TC-018"
 
 # ── Resumen global ────────────────────────────────────────────────────────────
 echo ""
