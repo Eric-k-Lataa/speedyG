@@ -111,7 +111,7 @@ fn inicia_el_siguiente_job_cuando_hay_capacidad() {
         scheduler.start_next_job(3).unwrap();
     }
 
-    assert!(scheduler.complete_job(1, 0));
+    assert!(scheduler.complete_job(1, 0, "".into(), "".into()));
 
     let nuevo_id = scheduler
         .add_job("echo".into(), vec!["nuevo".into()])
