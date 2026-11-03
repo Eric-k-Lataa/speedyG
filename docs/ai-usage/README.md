@@ -1,3 +1,4 @@
+# Registro de Uso de Inteligencia Artificial (AI-LOG) — speedyG
 
 # Registro de Uso de Inteligencia Artificial (AI-LOG) — speedyG
 
