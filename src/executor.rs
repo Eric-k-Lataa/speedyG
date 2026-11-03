@@ -1,5 +1,6 @@
 // src/executor.rs
-use tokio::process::Command;
+use std::process::Stdio;
+use tokio::process::{Child, Command};
 
 /// Resultado de la ejecución de un subproceso
 #[derive(Debug, PartialEq)]
@@ -13,9 +14,28 @@ pub struct ExecutionResult {
 pub struct Executor;
 
 impl Executor {
-    /// Ejecuta un comando en el sistema operativo mediante la shell /bin/sh
-    pub async fn run(cmd: &str) -> ExecutionResult {
-        let output = Command::new("sh").arg("-c").arg(cmd).output().await;
+    /// Lanza el comando y devuelve inmediatamente el proceso hijo (Child) y su PID
+    pub fn spawn_cmd(cmd: &str) -> Result<(Child, Option<u32>), String> {
+        let mut command = Command::new("sh");
+        command.arg("-c").arg(cmd);
+
+        command.stdout(Stdio::piped());
+        command.stderr(Stdio::piped());
+
+        #[cfg(unix)]
+        {
+            //use std::os::unix::process::CommandExt;
+            command.process_group(0);
+        }
+
+        let child = command.spawn().map_err(|e| e.to_string())?;
+        let pid = child.id();
+        Ok((child, pid))
+    }
+
+    /// Espera a que un proceso hijo termine y extrae su resultado
+    pub async fn wait_child(child: Child) -> ExecutionResult {
+        let output = child.wait_with_output().await;
 
         match output {
             Ok(out) => ExecutionResult {

@@ -51,6 +51,16 @@ impl Scheduler {
             .collect()
     }
 
+    /// Asigna el PID del sistema operativo a un trabajo en ejecución
+    pub fn set_job_pid(&mut self, id: u32, pid: u32) -> bool {
+        if let Some(job) = self.queue.iter_mut().find(|j| j.get_id() == id) {
+            job.set_pid(pid);
+            true
+        } else {
+            false
+        }
+    }
+
     ///Reconstruye scheduler con datos leidos del disco para la persistencia.
     pub fn from_parts(next_id: u32, queue: VecDeque<Job>, history: Vec<Job>) -> Self {
         Self {
@@ -95,8 +105,31 @@ impl Scheduler {
 
     /// Cancela un Job si aún está en la cola o ejecución
     pub fn cancel_job(&mut self, id: u32) -> bool {
+        // Buscar si está en la cola (pendiente o corriendo)
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
             let mut job = self.queue.remove(pos).unwrap();
+
+            // Si el trabajo estaba corriendo y tiene un PID asignado, lo matamos a nivel OS
+            if let Some(pid) = job.get_pid() {
+                #[cfg(unix)]
+                {
+                    use nix::sys::signal::{self, Signal};
+                    use nix::unistd::Pid;
+
+                    // Enviamos SIGTERM (o SIGKILL) al grupo de procesos negativo (-pid) para asegurar que matamos tanto a sh como al comando hijo.
+                    let target_pid = Pid::from_raw(-(pid as i32));
+                    let _ = signal::kill(target_pid, Signal::SIGTERM);
+                }
+                #[cfg(not(unix))]
+                {
+                    // Fallback genérico
+                    let _ = std::process::Command::new("kill")
+                        .arg("-9")
+                        .arg(pid.to_string())
+                        .status();
+                }
+            }
+
             job.transition(JobEvent::Cancel);
             self.history.push(job);
             true

@@ -62,6 +62,7 @@ pub struct Job {
     exit_code: Option<i32>, // Almacena el codigo de salida
     stdout: Option<String>,
     stderr: Option<String>,
+    pid: Option<u32>,
     received_at: DateTime<Utc>,
     started_at: Option<DateTime<Utc>>,
     finished_at: Option<DateTime<Utc>>,
@@ -83,6 +84,7 @@ pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Jo
         exit_code: None,
         stdout: None,
         stderr: None,
+        pid: None,
         received_at: now,
         started_at: if !waiting { Some(now) } else { None },
         finished_at: None,
@@ -178,6 +180,11 @@ impl Job {
         self.stderr = Some(stderr);
     }
 
+    //setter para el pid
+    pub fn set_pid(&mut self, pid: u32) {
+        self.pid = Some(pid);
+    }
+
     pub fn finish_execution(&mut self, exit_code: i32, stdout: String, stderr: String) -> bool {
         // Si ya estaba cancelado, no sobreescribimos su estado final
         if matches!(self.state, JobState::Canceled) {
@@ -208,6 +215,7 @@ impl Job {
         exit_code: Option<i32>,
         stdout: Option<String>,
         stderr: Option<String>,
+        pid: Option<u32>,
         received_at: DateTime<Utc>,
         started_at: Option<DateTime<Utc>>,
         finished_at: Option<DateTime<Utc>>,
@@ -220,6 +228,7 @@ impl Job {
             exit_code,
             stdout,
             stderr,
+            pid,
             received_at,
             started_at,
             finished_at,
@@ -229,6 +238,7 @@ impl Job {
     pub fn get_id(&self) -> u32 {
         self.id
     }
+
     pub fn get_program(&self) -> &str {
         &self.program
     }
@@ -251,6 +261,10 @@ impl Job {
 
     pub fn get_stderr(&self) -> Option<&String> {
         self.stderr.as_ref()
+    }
+
+    pub fn get_pid(&self) -> Option<u32> {
+        self.pid
     }
 
     pub fn get_received_at(&self) -> DateTime<Utc> {
