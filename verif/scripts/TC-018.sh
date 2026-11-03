@@ -84,13 +84,18 @@ echo "" | tee -a "$LOG"
 echo "[2] Escenario B: 10 envíos concurrentes de 'echo dup-B'" | tee -a "$LOG"
 : > "$RUN_DIR/submit-B.txt"
 
+# Se espera solo a los clientes (no a $SAMPLER_PID, que corre hasta borrar el flag).
+B_PIDS=()
 for i in $(seq 1 10); do
     (
         OUT=$(client echo dup-B 2>&1)
         echo "B$i: echo dup-B -> $OUT" >> "$RUN_DIR/submit-B.txt"
     ) &
+    B_PIDS+=("$!")
 done
-wait
+for b_pid in "${B_PIDS[@]}"; do
+    wait "$b_pid" 2>/dev/null || true
+done
 
 IDS_B=($(grep -oE 'Job #[0-9]+ encolado' "$RUN_DIR/submit-B.txt" | grep -oE '[0-9]+' | sort -n))
 DISTINCT_B=$(printf '%s\n' "${IDS_B[@]}" | grep -v '^$' | sort -u | grep -c .)

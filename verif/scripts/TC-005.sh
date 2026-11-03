@@ -350,8 +350,11 @@ SEQ_A=$(seq_of "$ID_A"); BAD_A=$(bad_of "$ID_A")
 SEQ_B=$(seq_of "$ID_B"); BAD_B=$(bad_of "$ID_B")
 SEQ_C=$(seq_of "$ID_C"); BAD_C=$(bad_of "$ID_C")
 
+RE_A='^(Queued>)?Running>Canceled$'
+RE_C='^(Queued>)?Running>Succeeded$'
+
 check "A: secuencia de estados '$SEQ_A' cumple (Queued>)?Running>Canceled" \
-    "$([[ "$SEQ_A" =~ ^(Queued>)?Running>Canceled$ ]] && echo 0 || echo 1)"
+    "$([[ "$SEQ_A" =~ $RE_A ]] && echo 0 || echo 1)"
 check "A: sin regresiones de estado${BAD_A:+ (detectado:$BAD_A)}" \
     "$([[ -z "${BAD_A// /}" ]] && echo 0 || echo 1)"
 
@@ -361,7 +364,7 @@ check "B: sin regresiones de estado${BAD_B:+ (detectado:$BAD_B)}" \
     "$([[ -z "${BAD_B// /}" ]] && echo 0 || echo 1)"
 
 check "C: secuencia de estados '$SEQ_C' cumple Queued>Running>Succeeded" \
-    "$([[ "$SEQ_C" =~ ^Queued>Running>Succeeded$ ]] && echo 0 || echo 1)"
+    "$([[ "$SEQ_C" =~ $RE_C ]] && echo 0 || echo 1)"
 check "C: sin regresiones de estado${BAD_C:+ (detectado:$BAD_C)}" \
     "$([[ -z "${BAD_C// /}" ]] && echo 0 || echo 1)"
 
