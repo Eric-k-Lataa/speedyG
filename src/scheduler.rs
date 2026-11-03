@@ -119,23 +119,6 @@ impl Scheduler {
     /// Cancela un Job si aún está en la cola o ejecución.
     /// Devuelve `true` solo si esta llamada efectuó la cancelación.
     pub fn cancel_job(&mut self, id: u32) -> bool {
-        self.try_cancel(id) == CancelOutcome::Canceled
-    }
-
-    /// Cancela un Job e informa el motivo cuando no es posible (RF-10, RF-26, RNF-21).
-    /// Las llamadas se serializan con el lock del Scheduler: solo la primera
-    /// obtiene `Canceled`; las siguientes obtienen `AlreadyCanceled`.
-    pub fn try_cancel(&mut self, id: u32) -> CancelOutcome {
-        if self.queue.iter().all(|j| j.get_id() != id) {
-            return match self.history.iter().find(|j| j.get_id() == id) {
-                None => CancelOutcome::NotFound,
-                Some(job) => match job.get_state() {
-                    JobState::Canceled => CancelOutcome::AlreadyCanceled,
-                    otro => CancelOutcome::AlreadyFinished(otro),
-                },
-            };
-        }
-
         // Buscar si está en la cola (pendiente o corriendo)
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
             let mut job = self.queue.remove(pos).unwrap();
