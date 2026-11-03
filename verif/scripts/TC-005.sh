@@ -351,7 +351,11 @@ SEQ_B=$(seq_of "$ID_B"); BAD_B=$(bad_of "$ID_B")
 SEQ_C=$(seq_of "$ID_C"); BAD_C=$(bad_of "$ID_C")
 
 RE_A='^(Queued>)?Running>Canceled$'
-RE_C='^(Queued>)?Running>Succeeded$'
+# C es un 'echo' que termina en milisegundos: el muestreo (0,1 s) puede no ver
+# 'Running'. Se acepta Queued>Succeeded si 'Iniciado' prueba que pasó por Running.
+RE_C='^Queued>(Running>)?Succeeded$'
+C_STARTED=1
+grep -qE 'Iniciado: +[0-9]{4}-' <<< "$FC" && C_STARTED=0
 
 check "A: secuencia de estados '$SEQ_A' cumple (Queued>)?Running>Canceled" \
     "$([[ "$SEQ_A" =~ $RE_A ]] && echo 0 || echo 1)"
@@ -363,8 +367,8 @@ check "B: secuencia de estados '$SEQ_B' cumple Queued>Canceled (nunca entró a R
 check "B: sin regresiones de estado${BAD_B:+ (detectado:$BAD_B)}" \
     "$([[ -z "${BAD_B// /}" ]] && echo 0 || echo 1)"
 
-check "C: secuencia de estados '$SEQ_C' cumple Queued>Running>Succeeded" \
-    "$([[ "$SEQ_C" =~ $RE_C ]] && echo 0 || echo 1)"
+check "C: secuencia de estados '$SEQ_C' cumple Queued>(Running>)?Succeeded y registra hora de inicio" \
+    "$([[ "$SEQ_C" =~ $RE_C && "$C_STARTED" -eq 0 ]] && echo 0 || echo 1)"
 check "C: sin regresiones de estado${BAD_C:+ (detectado:$BAD_C)}" \
     "$([[ -z "${BAD_C// /}" ]] && echo 0 || echo 1)"
 

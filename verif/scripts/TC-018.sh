@@ -178,10 +178,10 @@ check "Los 3 trabajos 'sleep 3001' están en Running simultáneamente" \
     "$([[ "$ST_D1" == "Running" && "$ST_D2" == "Running" && "$ST_D3" == "Running" ]] && echo 0 || echo 1)"
 
 # Contar procesos en el SO antes de cancelar D2
-PROCS_D_BEFORE=$(pgrep -f "sleep 3001" 2>/dev/null | grep -c .) || PROCS_D_BEFORE=0
+PROCS_D_BEFORE=$(pgrep -fx "sleep 3001" 2>/dev/null | grep -c .) || PROCS_D_BEFORE=0
 {
     echo "procs_before_cancel=$PROCS_D_BEFORE"
-    echo "pids=$(pgrep -f "sleep 3001" 2>/dev/null | tr '\n' ' ')"
+    echo "pids=$(pgrep -fx "sleep 3001" 2>/dev/null | tr '\n' ' ')"
 } > "$RUN_DIR/pids-D.txt"
 
 check "Existen 3 procesos independientes 'sleep 3001' en el SO (encontrados: $PROCS_D_BEFORE)" \
@@ -198,14 +198,14 @@ sleep 1
 ST_D2_AFTER=$(job_state "$(client status "$ID_D2" 2>&1)")
 ST_D1_AFTER=$(job_state "$(client status "$ID_D1" 2>&1)")
 ST_D3_AFTER=$(job_state "$(client status "$ID_D3" 2>&1)")
-PROCS_D_AFTER=$(pgrep -f "sleep 3001" 2>/dev/null | grep -c .) || PROCS_D_AFTER=0
+PROCS_D_AFTER=$(pgrep -fx "sleep 3001" 2>/dev/null | grep -c .) || PROCS_D_AFTER=0
 
 {
     echo "status_D1=$ST_D1_AFTER"
     echo "status_D2=$ST_D2_AFTER"
     echo "status_D3=$ST_D3_AFTER"
     echo "procs_after_cancel=$PROCS_D_AFTER"
-    echo "pids=$(pgrep -f "sleep 3001" 2>/dev/null | tr '\n' ' ')"
+    echo "pids=$(pgrep -fx "sleep 3001" 2>/dev/null | tr '\n' ' ')"
 } >> "$RUN_DIR/pids-D.txt"
 
 check "D2 (Job #$ID_D2) pasa a estado Canceled tras cancelación" \
