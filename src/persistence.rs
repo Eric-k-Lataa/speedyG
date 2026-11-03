@@ -366,6 +366,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
             exit_code,
             stdout,
             stderr,
+            None,
             received_at,
             started_at,
             finished_at,
