@@ -138,11 +138,22 @@ impl Scheduler {
         Some((id, command))
     }
     /// Completa la ejecución de un trabajo y actualiza la FSM
-    pub fn complete_job(&mut self, id: u32, exit_code: i32) -> bool {
+    pub fn complete_job(
+        &mut self,
+        id: u32,
+        exit_code: i32,
+        stdout: String,
+        stderr: String,
+    ) -> bool {
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
             let mut job = self.queue.remove(pos).unwrap();
+
             // Solo enviamos Completed, el Job ya pasó a Running mediante start_job
             job.transition(JobEvent::Completed(exit_code));
+
+            // Asignamos las salidas capturadas
+            job.set_output(stdout, stderr);
+
             self.history.push(job);
             true
         } else {
