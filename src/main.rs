@@ -2,7 +2,7 @@ use speedyG::config::Config;
 use speedyG::executor::Executor;
 use speedyG::parser::parse;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
-use speedyG::scheduler::Scheduler;
+use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
 use std::fs;
 //use std::os::unix::process::ExitStatusExt;
@@ -89,6 +89,25 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         //Despachar el siguiente trabajo si hay capacidad
         despachar(Arc::clone(&scheduler), max_current);
     });
+}
+
+/// Mensaje al cliente según el resultado de `cancel` (operación, causa y acción: RNF-21)
+fn mensaje_cancelacion(id: u32, outcome: CancelOutcome) -> String {
+    match outcome {
+        CancelOutcome::Canceled => format!("Job #{} cancelado correctamente\n", id),
+        CancelOutcome::AlreadyCanceled => format!(
+            "Job #{} ya estaba cancelado; no se realizó una nueva cancelación\n",
+            id
+        ),
+        CancelOutcome::AlreadyFinished(estado) => format!(
+            "Error: No se puede cancelar el Job #{}: ya está terminado (estado: {:?}). Consulta 'status {}' para ver su resultado\n",
+            id, estado, id
+        ),
+        CancelOutcome::NotFound => format!(
+            "Error: No se puede cancelar el Job #{}: no encontrado (no existe un trabajo con ese ID). Usa 'status' para ver los IDs disponibles\n",
+            id
+        ),
+    }
 }
 
 fn despachar(scheduler: SharedScheduler, max_current: usize) {
@@ -240,15 +259,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         if let Some(id_str) = cmd.args.first() {
                             match id_str.parse::<u32>() {
                                 Ok(id) => {
-                                    let mut sched = lock(&scheduler);
-                                    if sched.cancel_job(id) {
-                                        // Reflejar la cancelación en persistencia
-                                        persistir(&sched);
+                                    let (outcome, respuesta) = {
+                                        let mut sched = lock(&scheduler);
+                                        let outcome = sched.try_cancel(id);
+                                        if outcome == CancelOutcome::Canceled {
+                                            // Reflejar la cancelación en persistencia
+                                            persistir(&sched);
+                                        }
+                                        (outcome, mensaje_cancelacion(id, outcome))
+                                    };
+                                    if outcome == CancelOutcome::Canceled {
                                         info!("Job #{} cancelado", id);
-                                        format!("Job #{} cancelado correctamente\n", id)
-                                    } else {
-                                        format!("Error: No se pudo cancelar el Job #{}\n", id)
+                                        // La ranura quedó libre: avanzar la cola
+                                        despachar(Arc::clone(&scheduler), cfg.max_current);
                                     }
+                                    respuesta
                                 }
                                 Err(_) => {
                                     "Error: El ID debe ser un número entero positivo\n".to_string()
