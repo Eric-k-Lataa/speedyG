@@ -44,9 +44,28 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
             }
         }
 
-        //  Ejecutar (mientras tanto, `status` mostrará Running)
+        //  Ejecutar y obtener pid
         info!("Job #{} ejecutando: {}", job_id, full_command);
-        let exec_result = Executor::run(&full_command).await;
+
+        // 1. Lanzamos el proceso inmediatamente para obtener el PID
+        let (child, pid_opt) = match Executor::spawn_cmd(&full_command) {
+            Ok(res) => res,
+            Err(e) => {
+                // Manejo de error de inicio...
+                let mut sched = lock(&scheduler);
+                sched.complete_job(job_id, 1, "".into(), e);
+                return;
+            }
+        };
+
+        // 2. REGISTRAMOS EL PID EN EL SCHEDULER AL INSTANTE (Antes de esperar)
+        if let Some(pid) = pid_opt {
+            let mut sched = lock(&scheduler);
+            sched.set_job_pid(job_id, pid);
+        }
+
+        //Ahora si esperamos a que el proceso termine de forma asíncrona
+        let exec_result = Executor::wait_child(child).await;
 
         //  Marcar como completado y guardar. Si lo cancelaron mientras corría,
         //    complete_job devuelve false y se conserva el estado Canceled.
@@ -64,10 +83,7 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
                 );
                 persistir(&sched);
             } else {
-                info!(
-                    "Job #{} terminó pero ya estaba cancelado; se ignora el resultado",
-                    job_id
-                );
+                info!("Job #{} cancelado en Running.", job_id);
             }
         }
         //Despachar el siguiente trabajo si hay capacidad
