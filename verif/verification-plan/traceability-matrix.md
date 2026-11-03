@@ -7,11 +7,11 @@
 | RF-03 | Mantener una cola | Alta | Prueba | TC-002 | status-samples + resumen | PASS | — |
 | RF-04 | Procesos independientes | Alta | Prueba | TC-001, TC-002 | estados + log | PASS | — |
 | RF-05 | Límite de concurrencia | Alta | Prueba | TC-002 | timeline + ps/log | PASS | — |
-| RF-06 | Estados de un trabajo | Alta | Prueba | TC-003 | timeline + log | Pendiente | — |
-| RF-07 | Registrar tiempos y código de salida | Alta | Prueba | TC-003, TC-006 | resultado + log | Pendiente | — |
-| RF-08 | Consultar estado y metadatos por ID | Alta | Prueba | TC-004 | estados + log | Pendiente | — |
-| RF-09 | Listar trabajos con filtro por estado | Alta | Prueba | TC-004 | estados + log | Pendiente | — |
-| RF-10 | Cancelar en cola o en ejecución | Alta | Prueba | TC-005 | estados + señal | Pendiente | — |
+| RF-06 | Estados de un trabajo | Alta | Prueba | TC-003 | timeline + log | PASS | — |
+| RF-07 | Registrar tiempos y código de salida | Alta | Prueba | TC-003, TC-006 | resultado + log | PASS | — |
+| RF-08 | Consultar estado y metadatos por ID | Alta | Prueba | TC-004 | estados + log | PASS | — |
+| RF-09 | Listar trabajos con filtro por estado | Alta | Prueba | TC-004 | estados + log | PASS | — |
+| RF-10 | Cancelar en cola o en ejecución | Alta | Prueba | TC-005 | estados + señal | PASS | — |
 | RF-11 | Capturar y consultar stdout y stderr por separado | Alta | Prueba | TC-006 | resultado + log | Pendiente | — |
 | RF-12 | Conservar metadatos tras reiniciar | Alta | Prueba | TC-007 | resultado + log | Pendiente | — |
 | RF-13 | Recuperar historial y marcar interrumpidos al arrancar | Alta | Prueba | TC-007 | resultado + log | Pendiente | — |
@@ -27,8 +27,8 @@
 | RF-23 | Rechazar y registrar solicitudes que excedan límites | Crítica | Prueba | TC-016 | rejection.txt + daemon.log | PASS | — |
 | RF-24 | Resumen de salud: activo, en ejecución, en cola, errores | Alta | Prueba | TC-013 | salida de `health` | Pendiente | — |
 | RF-25 | Rechazo explícito con cola llena, sin bloquear ni perder trabajos | Crítica | Prueba | TC-016 | rejection.txt + status antes/después | PASS | — |
-| RF-26 | Cancelaciones concurrentes con estado final coherente | Crítica | Prueba | TC-017 | respuestas + estado final | Pendiente | — |
-| RF-27 | Solicitud duplicada sin estados contradictorios | Crítica | Prueba | TC-018 | respuestas + status | Pendiente | — |
+| RF-26 | Cancelaciones concurrentes con estado final coherente | Crítica | Prueba | TC-017 | respuestas + estado final | PASS | — |
+| RF-27 | Solicitud duplicada sin estados contradictorios | Crítica | Prueba | TC-018 | respuestas + status | PASS | — |
 | RF-28 | Desconexión durante solicitud con estado coherente | Crítica | Prueba | TC-019 | respuestas + status + log | Pendiente | — |
 | RF-29 | Terminación inesperada del hijo: detectar, liberar y registrar | Crítica | Prueba | TC-020 | estados + ps + log | Pendiente | — |
 | RF-30 | Escalamiento de cancelación documentado y verificable | Crítica | Prueba | TC-021 | señales + estados + log | Pendiente | — |
@@ -41,8 +41,8 @@
 | RNF-02 | Construcción reproducible desde clon limpio | Alta | Prueba/Inspección | TC-014 | log de build | Pendiente | — |
 | RNF-03 | Sin privilegios de root | Alta | Prueba | TC-014 | `id -u` + log | Pendiente | — |
 | RNF-04 | Con límite 3, al menos 3 trabajos simultáneos | Alta | Prueba | TC-002 | ps-samples + resumen | PASS | — |
-| RNF-05 | Consulta de estado ≤ 1 s con 100 trabajos | Alta | Prueba | TC-004 | tiempos medidos | Pendiente | — |
-| RNF-06 | Soportar al menos 500 registros sin pérdida | Alta | Prueba | TC-007 (propuesto) | conteo antes/después de reiniciar | Pendiente | — |
+| RNF-05 | Consulta de estado ≤ 1 s con 100 trabajos | Alta | Prueba | TC-004 | tiempos medidos | PASS | — |
+| RNF-06 | Soportar al menos 500 registros sin pérdida | Alta | Prueba | TC-007 | conteo antes/después de reiniciar | Pendiente | — |
 | RNF-07 | La cola no inicia más procesos que el límite | Alta | Prueba | TC-002 | ps-samples + resumen | PASS | — |
 | RNF-08 | Solicitud inválida o desconexión no termina el servicio | Alta | Prueba | TC-008 | resultado + log | Pendiente | — |
 | RNF-09 | Terminación anormal de un trabajo no afecta a otros | Crítica | Prueba | TC-008 | log + estados | Pendiente | — |
@@ -63,7 +63,7 @@
 | RNF-24 | Protocolo con mensajes fragmentados y solicitudes secuenciales | Alta | Prueba | TC-012 | resultado + log | Pendiente | — |
 | RNF-25 | Liberar sockets y procesos hijos al cerrar | Alta | Prueba | TC-009 | ps + ss + log | Pendiente | — |
 | RNF-26 | Demostración solo en red privada o VPN | Crítica | Inspección/Demo | TC-010, TC-011 | bind + reglas | Pendiente | — |
-| RNF-27 | Transiciones consistentes ante concurrencia, sin regresiones | Crítica | Prueba | TC-017 | estados + log | Pendiente | — |
+| RNF-27 | Transiciones consistentes ante concurrencia, sin regresiones | Crítica | Prueba | TC-017 | estados + log | PASS | — |
 | RNF-28 | Actualizaciones persistentes atómicas o recuperables | Crítica | Prueba | TC-022 | archivos antes/después + log | Pendiente | — |
 | RNF-29 | Backpressure o rechazo explícito en límites | Crítica | Prueba | TC-016 | rejection.txt + recovery.txt | PASS | — |
 | RNF-30 | Sin procesos huérfanos tras cierre o falla | Crítica | Prueba | TC-020, TC-009 | ps + log | Pendiente | — |
@@ -79,16 +79,16 @@
 |:-----|:-------|:-----------|:-------|:-------|
 | TC-001 | Enviar trabajo válido | RF-01, RF-02, RF-04 | `TC-001.sh` | PASS |
 | TC-002 | Cola y límite de concurrencia | RF-03, RF-05, RNF-04, RNF-07 | `TC-002.sh` | PASS |
-| TC-003 | Estados y tiempos | RF-06, RF-07 | `TC-003.sh` | Pendiente |
-| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | Pendiente |
-| TC-005 | Cancelar en cola y ejecución | RF-10, RNF-21, RNF-30 | `TC-005.sh` | Pendiente |
+| TC-003 | Estados y tiempos | RF-06, RF-07 | `TC-003.sh` | PASS |
+| TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | PASS |
+| TC-005 | Cancelar en cola y ejecución | RF-10, RNF-21, RNF-30 | `TC-005.sh` | PASS |
 | TC-006 | Capturar stdout/stderr y código | RF-11, RF-07 | — | Sin redactar |
 | TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | — | Sin redactar |
 | TC-008 | Aislamiento de fallo | RNF-08, RNF-09 | — | Sin redactar |
 | TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | — | Sin redactar |
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
-| TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | Pendiente |
-| TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | Pendiente |
+| TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | PASS |
+| TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | PASS |
 | TC-020 | Terminación inesperada del hijo | RF-14, RF-29, RNF-22, RNF-30 | — | Sin redactar |
 | TC-021 | Escalamiento de cancelación | RF-30 | — | Sin redactar |
 | TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | — | Sin redactar |
