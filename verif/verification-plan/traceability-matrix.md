@@ -13,8 +13,8 @@
 | RF-09 | Listar trabajos con filtro por estado | Alta | Prueba | TC-004 | estados + log | PASS | — |
 | RF-10 | Cancelar en cola o en ejecución | Alta | Prueba | TC-005 | estados + señal | PASS | — |
 | RF-11 | Capturar y consultar stdout y stderr por separado | Alta | Prueba | TC-006 | resultado + log | Pendiente | — |
-| RF-12 | Conservar metadatos tras reiniciar | Alta | Prueba | TC-007 | resultado + log | Pendiente | — |
-| RF-13 | Recuperar historial y marcar interrumpidos al arrancar | Alta | Prueba | TC-007 | resultado + log | Pendiente | — |
+| RF-12 | Conservar metadatos tras reiniciar | Alta | Prueba | TC-007 | resultado + log | PASS | — |
+| RF-13 | Recuperar historial y marcar interrumpidos al arrancar | Alta | Prueba | TC-007 | resultado + log | PASS | — |
 | RF-14 | Bitácora de eventos con marca temporal e ID de trabajo | Alta | Prueba/Inspección | TC-020 (propuesto) | daemon.log | Pendiente | — |
 | RF-15 | Inicio y cierre controlados, sin aceptar trabajos al cerrar | Alta | Prueba | TC-009 | resultado + log | Pendiente | — |
 | RF-16 | Configuración: directorio de datos, límite, interfaz y puerto | Alta | Prueba/Inspección | TC-013 | log de arranque + stderr con `SPEEDYG_QUEUE_CAP=0` | Pendiente | — |
@@ -42,12 +42,12 @@
 | RNF-03 | Sin privilegios de root | Alta | Prueba | TC-014 | `id -u` + log | Pendiente | — |
 | RNF-04 | Con límite 3, al menos 3 trabajos simultáneos | Alta | Prueba | TC-002 | ps-samples + resumen | PASS | — |
 | RNF-05 | Consulta de estado ≤ 1 s con 100 trabajos | Alta | Prueba | TC-004 | tiempos medidos | PASS | — |
-| RNF-06 | Soportar al menos 500 registros sin pérdida | Alta | Prueba | TC-007 | conteo antes/después de reiniciar | Pendiente | — |
+| RNF-06 | Soportar al menos 500 registros sin pérdida | Alta | Prueba | TC-007 | conteo antes/después de reiniciar | PASS | — |
 | RNF-07 | La cola no inicia más procesos que el límite | Alta | Prueba | TC-002 | ps-samples + resumen | PASS | — |
 | RNF-08 | Solicitud inválida o desconexión no termina el servicio | Alta | Prueba | TC-008 | resultado + log | Pendiente | — |
 | RNF-09 | Terminación anormal de un trabajo no afecta a otros | Crítica | Prueba | TC-008 | log + estados | Pendiente | — |
-| RNF-10 | Tras reiniciar, no reportar RUNNING un proceso no controlado | Alta | Prueba | TC-007 | resultado + log | Pendiente | — |
-| RNF-11 | Escritura de archivos persistentes sin estado parcial | Alta | Prueba | TC-007, TC-022 | resultado + log | Pendiente | — |
+| RNF-10 | Tras reiniciar, no reportar RUNNING un proceso no controlado | Alta | Prueba | TC-007 | resultado + log | PASS | — |
+| RNF-11 | Escritura de archivos persistentes sin estado parcial | Alta | Prueba | TC-007, TC-022 | resultado + log | PASS* | FALTA VERIFICAR TC-022 |
 | RNF-12 | No escuchar en interfaces públicas por defecto | Crítica | Prueba/Inspección | TC-011 | `ss -ltn` + configuración | Pendiente | — |
 | RNF-13 | Acceso remoto limitado a localhost, subred privada o VPN | Crítica | Prueba | TC-011 | configuración + intento | Pendiente | — |
 | RNF-14 | Validar longitud y formato de mensajes de red | Alta | Prueba | TC-012 | resultado + log | Pendiente | — |
@@ -67,7 +67,7 @@
 | RNF-28 | Actualizaciones persistentes atómicas o recuperables | Crítica | Prueba | TC-022 | archivos antes/después + log | Pendiente | — |
 | RNF-29 | Backpressure o rechazo explícito en límites | Crítica | Prueba | TC-016 | rejection.txt + recovery.txt | PASS | — |
 | RNF-30 | Sin procesos huérfanos tras cierre o falla | Crítica | Prueba | TC-020, TC-009 | ps + log | Pendiente | — |
-| RNF-31 | Recuperación distingue pendientes, terminados e interrumpidos | Crítica | Prueba | TC-007, TC-022 | estados antes/después | Pendiente | — |
+| RNF-31 | Recuperación distingue pendientes, terminados e interrumpidos | Crítica | Prueba | TC-007, TC-022 | estados antes/después | PASS* | Falta 022 |
 | RNF-32 | Compatibilidad de versión del protocolo | Alta | Prueba | TC-023 | respuesta a versión incompatible | Pendiente | — |
 | RNF-33 | Liberación de memoria, procesos, archivos y sockets bajo estrés | Alta | Prueba | TC-024 | fds + procesos + memoria | Pendiente | — |
 | RNF-34 | Decisiones de seguridad/consistencia con análisis de riesgo y prueba | Alta | Inspección | ADR + registro de riesgos (propuesto) | documentos | Pendiente | — |
@@ -83,7 +83,7 @@
 | TC-004 | Consultar y listar | RF-08, RF-09, RNF-05 | `TC-004.sh` | PASS |
 | TC-005 | Cancelar en cola y ejecución | RF-10, RNF-21, RNF-30 | `TC-005.sh` | PASS |
 | TC-006 | Capturar stdout/stderr y código | RF-11, RF-07 | — | Sin redactar |
-| TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | — | Sin redactar |
+| TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | `TC-007.sh` | PASS |
 | TC-008 | Aislamiento de fallo | RNF-08, RNF-09 | — | Sin redactar |
 | TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | — | Sin redactar |
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
