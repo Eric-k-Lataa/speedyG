@@ -1,7 +1,7 @@
 #!/bin/bash
 # verif/scripts/TC-007.sh
 #
-# TC-007 — Reinicio y recuperación del daemon
+# TC-007 — Reinicio, recuperación y capacidad de persistencia del daemon
 #
 # Prerrequisito: cargo build (desde la raíz del repositorio)
 #
@@ -13,8 +13,10 @@
 # Requisitos evaluados:
 #   - RF-12: Conservar metadatos y resultados mínimos después de reiniciar.
 #   - RF-13: Recuperar historial persistido y marcar coherentemente trabajos interrumpidos.
+#   - RNF-06: Soportar al menos 500 registros de trabajos sin pérdida de metadatos.
 #   - RNF-10: Tras reinicio, no reportar como RUNNING un proceso que ya no controla.
 #   - RNF-11: Integridad de archivos persistentes evitando estados parcialmente actualizados.
+#   - RNF-31: Distinguir trabajos pendientes, terminados e interrumpidos sin reportar ejecución inexistente.
 #
 # Resultados en:
 #   verif/results/TC-007/<AAAAMMDD-HHMMSS-PID>/
@@ -25,8 +27,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib/common.sh"
 
 MAX_CURRENT=1
-QUEUE_CAP=10
+QUEUE_CAP=550
 MAX_WAIT_DRAIN_SECS=15
+LOAD_500_COUNT=500
 
 CMD_J1=(echo terminado-exito)
 CMD_J2=(false)
@@ -261,9 +264,9 @@ if [[ "$RC_SOCK" -ne 0 ]]; then
     finish_run
 fi
 
-# ── Paso 7: Comprobación de recuperación de estados (RF-12, RF-13, RNF-10) ────
+# ── Paso 7: Comprobación de recuperación y distinción de estados (RF-12, RF-13, RNF-10, RNF-31) ────
 echo "" | tee -a "$LOG"
-echo "[7] Consultando estados tras reinicio (RF-12, RF-13, RNF-10)" | tee -a "$LOG"
+echo "[7] Consultando estados tras reinicio (RF-12, RF-13, RNF-10, RNF-31)" | tee -a "$LOG"
 
 POST_J1=$(client status "$ID_J1" 2>&1)
 POST_J2=$(client status "$ID_J2" 2>&1)
@@ -287,21 +290,21 @@ ST_J2_POST=$(job_state "$POST_J2")
 ST_J3_POST=$(job_state "$POST_J3")
 ST_J4_POST=$(job_state "$POST_J4")
 
-# RF-12: Conservación de metadatos y resultados
-check "RF-12: J1 conserva estado Succeeded y exit code 0 tras reinicio (obtenido: '$ST_J1_POST')" \
+# RF-12 & RNF-31: Conservación exacta de trabajos terminados
+check "RF-12/RNF-31: J1 conserva estado Succeeded y exit code 0 tras reinicio (obtenido: '$ST_J1_POST')" \
     "$(( [[ "$ST_J1_POST" == "Succeeded" ]] && grep -q 'exit code: 0' <<< "$POST_J1" ) && echo 0 || echo 1)"
-check "RF-12: J2 conserva estado Failed y exit code tras reinicio (obtenido: '$ST_J2_POST')" \
+check "RF-12/RNF-31: J2 conserva estado Failed y exit code tras reinicio (obtenido: '$ST_J2_POST')" \
     "$(( [[ "$ST_J2_POST" == "Failed" ]] && grep -q 'exit code: 1' <<< "$POST_J2" ) && echo 0 || echo 1)"
-check "RF-12: J3 conserva estado Canceled tras reinicio (obtenido: '$ST_J3_POST')" \
+check "RF-12/RNF-31: J3 conserva estado Canceled tras reinicio (obtenido: '$ST_J3_POST')" \
     "$([[ "$ST_J3_POST" == "Canceled" ]] && echo 0 || echo 1)"
 
-# RNF-10 & RF-13: J4 no debe ser Running, debe ser Interrupted
-check "RNF-10: J4 NO se reporta como Running tras el reinicio (obtenido: '$ST_J4_POST')" \
+# RNF-10, RF-13 & RNF-31: Distinción de trabajo interrumpido sin reportar ejecución fantasma
+check "RNF-10/RNF-31: J4 NO se reporta como Running tras el reinicio (obtenido: '$ST_J4_POST')" \
     "$([[ "$ST_J4_POST" != "Running" ]] && echo 0 || echo 1)"
-check "RF-13: J4 se marca coherentemente como Interrupted tras el reinicio (obtenido: '$ST_J4_POST')" \
+check "RF-13/RNF-31: J4 se marca coherentemente como Interrupted tras el reinicio (obtenido: '$ST_J4_POST')" \
     "$([[ "$ST_J4_POST" == "Interrupted" ]] && echo 0 || echo 1)"
 
-# ── Paso 8: Avance de trabajos en cola y nuevo trabajo (RF-13) ────────────────
+# ── Paso 8: Avance de trabajos en cola y nuevo trabajo (RF-13, RNF-31) ────────
 echo "" | tee -a "$LOG"
 echo "[8] Verificando despacho de trabajos recuperados en cola (J5, J6) y nuevo trabajo (J7)" | tee -a "$LOG"
 
@@ -323,9 +326,9 @@ while [[ $DRAIN_SECS -lt $MAX_WAIT_DRAIN_SECS ]]; do
     DRAIN_SECS=$((DRAIN_SECS + 1))
 done
 
-check "RF-13: J5 recuperado de cola avanza y termina en Succeeded (tiempo: ${DRAIN_SECS}s)" \
+check "RF-13/RNF-31: J5 recuperado de cola avanza y termina en Succeeded (tiempo: ${DRAIN_SECS}s)" \
     "$([[ "$J5_DONE" -eq 1 ]] && echo 0 || echo 1)"
-check "RF-13: J6 recuperado de cola avanza y termina en Succeeded (tiempo: ${DRAIN_SECS}s)" \
+check "RF-13/RNF-31: J6 recuperado de cola avanza y termina en Succeeded (tiempo: ${DRAIN_SECS}s)" \
     "$([[ "$J6_DONE" -eq 1 ]] && echo 0 || echo 1)"
 
 # Enviar nuevo trabajo J7 post-reinicio
@@ -344,12 +347,69 @@ check "Scheduler acepta y ejecuta nuevo trabajo J7 (#$ID_J7) tras reinicio (obte
     echo "J7: $FINAL_J7"
 } > "$RUN_DIR/queue-drain-and-new-job.txt"
 
-# ── Paso 9: Salud general del servicio y zombis ──────────────────────────────
+# ── Paso 9: Verificación de capacidad de al menos 500 registros (RNF-06) ──────
 echo "" | tee -a "$LOG"
-echo "[9] Verificando salud general y ausencia de procesos huérfanos / zombis" | tee -a "$LOG"
+echo "[9] Verificando soporte de al menos 500 registros sin pérdida de metadatos (RNF-06)" | tee -a "$LOG"
+
+: > "$RUN_DIR/rnf06-load-500.txt"
+LOAD_ACCEPTED=0
+for n in $(seq 1 "$LOAD_500_COUNT"); do
+    OUT_LOAD=$(client echo "carga-rnf06-$n" 2>&1)
+    echo "carga-$n: $OUT_LOAD" >> "$RUN_DIR/rnf06-load-500.txt"
+    if grep -q "encolado correctamente" <<< "$OUT_LOAD"; then
+        LOAD_ACCEPTED=$((LOAD_ACCEPTED + 1))
+    fi
+done
+
+check "RNF-06: Se encolaron $LOAD_500_COUNT trabajos de carga (aceptados: $LOAD_ACCEPTED/$LOAD_500_COUNT)" \
+    "$([[ "$LOAD_ACCEPTED" -eq "$LOAD_500_COUNT" ]] && echo 0 || echo 1)"
+
+# Reiniciar daemon (Instancia 3) para validar recuperación de volumen alto
+echo "[INFO] Reiniciando daemon (Instancia 3) para validar recuperación de 500+ registros persistidos..." | tee -a "$LOG"
+stop_daemon
+
+"$DAEMON_BIN" \
+    --socket "$SOCKET" \
+    --data-dir "$DATA_DIR" \
+    --max-current "$MAX_CURRENT" \
+    --queue-cap "$QUEUE_CAP" \
+    >> "$RUN_DIR/daemon.log" 2>&1 &
+DAEMON_PID=$!
+
+wait_socket "$SOCKET" "$DAEMON_WAIT_SECS"
+RC_SOCK_500=$?
+check "Daemon reiniciado exitosamente tras carga masiva (PID $DAEMON_PID)" \
+    "$([[ "$RC_SOCK_500" -eq 0 ]] && echo 0 || echo 1)"
+
+# Consultar listado total tras recuperación
+STATUS_ALL=$(client status 2>&1)
+TOTAL_RECORDS=$(grep -cE '^Job #[0-9]+:' <<< "$STATUS_ALL" || true)
+echo "$STATUS_ALL" > "$RUN_DIR/rnf06-recovered-500.txt"
+
+check "RNF-06: Persistencia y recuperación de al menos 500 registros (recuperados: $TOTAL_RECORDS)" \
+    "$([[ "$TOTAL_RECORDS" -ge "$LOAD_500_COUNT" ]] && echo 0 || echo 1)"
+
+# Validar integridad de metadatos de muestras del lote (primero, medio y último)
+SAMPLE_1=$(client status 8 2>&1)
+SAMPLE_MID=$(client status 250 2>&1)
+SAMPLE_LAST=$(client status "$((LOAD_500_COUNT + 7))" 2>&1)
+
+SAMPLE_CHECK=0
+if grep -q "echo carga-rnf06-1" <<< "$SAMPLE_1" && \
+   grep -q "echo carga-rnf06-" <<< "$SAMPLE_MID" && \
+   grep -q "echo carga-rnf06-500" <<< "$SAMPLE_LAST"; then
+    SAMPLE_CHECK=1
+fi
+
+check "RNF-06: Metadatos intactos en muestras de trabajos tras recuperación masiva" \
+    "$([[ "$SAMPLE_CHECK" -eq 1 ]] && echo 0 || echo 1)"
+
+# ── Paso 10: Salud general del servicio y zombis ─────────────────────────────
+echo "" | tee -a "$LOG"
+echo "[10] Verificando salud general y ausencia de procesos huérfanos / zombis" | tee -a "$LOG"
 
 HEALTH=$(client health 2>&1)
-check "Daemon reiniciado responde correctamente a health (obtenido: '$HEALTH')" \
+check "Daemon responde correctamente a health tras ciclo completo (obtenido: '$HEALTH')" \
     "$(grep -q "OK:" <<< "$HEALTH" && echo 0 || echo 1)"
 
 check_no_zombies
