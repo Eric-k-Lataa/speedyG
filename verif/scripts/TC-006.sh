@@ -120,9 +120,11 @@ wait_job_state "$ID_J5" "Succeeded" 10
 STATUS_J5=$(client status "$ID_J5" 2>&1)
 echo "$STATUS_J5" > "$RUN_DIR/status-j5-big-output.txt"
 
-LINES_COUNT=$(grep -c 'LINEA_BIG_' <<< "$STATUS_J5" || true)
-HAS_FIRST=$(grep -q 'LINEA_BIG_1$' <<< "$STATUS_J5" && echo 1 || echo 0)
-HAS_LAST=$(grep -q 'LINEA_BIG_1000$' <<< "$STATUS_J5" && echo 1 || echo 0)
+STDOUT_BLOCK_J5=$(sed -n '/\[stdout\]:/,$p' <<< "$STATUS_J5")
+
+LINES_COUNT=$(grep -c 'LINEA_BIG_' <<< "$STDOUT_BLOCK_J5" || true)
+HAS_FIRST=$(grep -q 'LINEA_BIG_1$' <<< "$STDOUT_BLOCK_J5" && echo 1 || echo 0)
+HAS_LAST=$(grep -q 'LINEA_BIG_1000$' <<< "$STDOUT_BLOCK_J5" && echo 1 || echo 0)
 
 {
     echo "total_lines_found=$LINES_COUNT"

@@ -1,0 +1,6 @@
+Job #6: binario_inexistente_speedyg_test_xyz [Failed(127)] (exit code: 127)
+  ├─ Recibido:  2026-11-08 18:10:09 UTC
+  ├─ Iniciado:  2026-11-08 18:10:09 UTC
+  └─ Finalizado: 2026-11-08 18:10:09 UTC
+  [stderr]:
+    │ sh: 1: binario_inexistente_speedyg_test_xyz: not found

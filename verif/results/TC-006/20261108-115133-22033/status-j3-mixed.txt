@@ -1,0 +1,8 @@
+Job #3: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 17:51:35 UTC
+  ├─ Iniciado:  2026-11-08 17:51:35 UTC
+  └─ Finalizado: 2026-11-08 17:51:35 UTC
+  [stdout]:
+    │ OUT_CANAL_1
+  [stderr]:
+    │ ERR_CANAL_2

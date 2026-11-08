@@ -1,0 +1,6 @@
+Job #1: echo SOLO_STDOUT_LINEA_1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 18:09:03 UTC
+  ├─ Iniciado:  2026-11-08 18:09:03 UTC
+  └─ Finalizado: 2026-11-08 18:09:03 UTC
+  [stdout]:
+    │ SOLO_STDOUT_LINEA_1
