@@ -1,0 +1,6 @@
+Job #4: echo "MSG_FAIL_ERR" >&2; exit 42 [Failed(42)] (exit code: 42)
+  ├─ Recibido:  2026-11-08 18:09:04 UTC
+  ├─ Iniciado:  2026-11-08 18:09:04 UTC
+  └─ Finalizado: 2026-11-08 18:09:04 UTC
+  [stderr]:
+    │ MSG_FAIL_ERR

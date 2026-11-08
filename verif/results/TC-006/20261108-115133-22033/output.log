@@ -1,0 +1,110 @@
+========================================
+TC-006  —  run 20261108-115133-22033
+========================================
+tc_id=TC-006
+run_id=20261108-115133-22033
+date=2026-11-08 11:51:33 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=feat/tc-006
+commit=99d589432e6ea569243eb7d43c14320b32c8d2f2
+socket=/tmp/speedyg-TC-006-20261108-115133-22033-UzkQNS.sock
+data_dir=/tmp/speedyg-TC-006-20261108-115133-22033-data-nW1z5f
+db=/tmp/speedyg-TC-006-20261108-115133-22033-data-nW1z5f/speedyg.db
+json=/tmp/speedyg-TC-006-20261108-115133-22033-data-nW1z5f/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 2 --queue-cap 10
+[INFO] Socket: /tmp/speedyg-TC-006-20261108-115133-22033-UzkQNS.sock
+[INFO] PID del daemon: 22073
+[PASS] Daemon disponible (PID 22073).
+[PASS] Configuración efectiva del daemon: max_current=2 queue_cap=10
+
+[1] Evaluando salida estándar exclusiva (J1_OUT)
+J1: echo SOLO_STDOUT_LINEA_1 -> Job #1 encolado correctamente
+Job #1: echo SOLO_STDOUT_LINEA_1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 17:51:34 UTC
+  ├─ Iniciado:  2026-11-08 17:51:34 UTC
+  └─ Finalizado: 2026-11-08 17:51:34 UTC
+  [stdout]:
+    │ SOLO_STDOUT_LINEA_1
+[PASS] J1 finalizó con estado Succeeded y exit code 0
+[PASS] J1 contiene 'SOLO_STDOUT_LINEA_1' en [stdout]
+[PASS] J1 NO contiene bloque [stderr]
+
+[2] Evaluando error estándar exclusivo (J2_ERR)
+J2: echo "SOLO_STDERR_LINEA_1" >&2 -> Job #2 encolado correctamente
+Job #2: echo "SOLO_STDERR_LINEA_1" >&2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 17:51:35 UTC
+  ├─ Iniciado:  2026-11-08 17:51:35 UTC
+  └─ Finalizado: 2026-11-08 17:51:35 UTC
+  [stderr]:
+    │ SOLO_STDERR_LINEA_1
+[PASS] J2 finalizó con estado Succeeded y exit code 0
+[PASS] J2 contiene 'SOLO_STDERR_LINEA_1' en [stderr]
+[PASS] J2 NO contiene bloque [stdout]
+
+[3] Evaluando salidas concurrentes no mezcladas (J3_MIX)
+J3: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2 -> Job #3 encolado correctamente
+Job #3: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 17:51:35 UTC
+  ├─ Iniciado:  2026-11-08 17:51:35 UTC
+  └─ Finalizado: 2026-11-08 17:51:35 UTC
+  [stdout]:
+    │ OUT_CANAL_1
+  [stderr]:
+    │ ERR_CANAL_2
+[PASS] J3 contiene 'OUT_CANAL_1' exclusivamente en [stdout]
+[PASS] J3 contiene 'ERR_CANAL_2' exclusivamente en [stderr]
+
+[4] Evaluando fallo con código de salida no cero (J4_FAIL)
+J4: echo "MSG_FAIL_ERR" >&2; exit 42 -> Job #4 encolado correctamente
+Job #4: echo "MSG_FAIL_ERR" >&2; exit 42 [Failed(42)] (exit code: 42)
+  ├─ Recibido:  2026-11-08 17:51:35 UTC
+  ├─ Iniciado:  2026-11-08 17:51:35 UTC
+  └─ Finalizado: 2026-11-08 17:51:35 UTC
+  [stderr]:
+    │ MSG_FAIL_ERR
+[PASS] J4 clasificado como Failed con exit code: 42
+[PASS] J4 contiene 'MSG_FAIL_ERR' en [stderr]
+
+[5] Evaluando captura de salida voluminosa de 1000 líneas (J5_BIG)
+J5: for i in $(seq 1 1000); do echo "LINEA_BIG_$i"; done -> Job #5 encolado correctamente
+total_lines_found=1001
+has_first_line=1
+has_last_line=1
+[FAIL] J5 capturó las 1000 líneas completas (líneas encontradas: 1001)
+[PASS] J5 contiene la primera y última línea sin truncamiento
+
+[6] Evaluando ejecución de comando inexistente (J6_NOENT)
+J6: binario_inexistente_speedyg_test_xyz -> Job #6 encolado correctamente
+Job #6: binario_inexistente_speedyg_test_xyz [Failed(127)] (exit code: 127)
+  ├─ Recibido:  2026-11-08 17:51:35 UTC
+  ├─ Iniciado:  2026-11-08 17:51:35 UTC
+  └─ Finalizado: 2026-11-08 17:51:35 UTC
+  [stderr]:
+    │ sh: 1: binario_inexistente_speedyg_test_xyz: not found
+[PASS] J6 clasificado como Failed ante comando inexistente
+[PASS] J6 reporta mensaje de error en [stderr]
+
+[8] Verificando marcas temporales cronológicas (RF-07)
+[PASS] J1 registra marcas temporales completas (Recibido, Iniciado, Finalizado)
+[PASS] J1 cumple la relación de orden cronológico (Recibido <= Iniciado <= Finalizado)
+
+[9] Verificando salud del daemon y ausencia de procesos zombis
+[PASS] Daemon responde a health con OK (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+[PASS] Sin procesos zombi bajo daemon PID 22073.
+[PASS] Sin procesos hijos residuales bajo daemon PID 22073.
+
+========================================
+RESULTADO: FAIL
+PASS: 20  FAIL: 1  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 22073...
