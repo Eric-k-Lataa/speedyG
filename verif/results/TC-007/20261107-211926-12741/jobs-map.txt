@@ -1,0 +1,6 @@
+J1=1 (Succeeded)
+J2=2 (Failed)
+J3=3 (Canceled)
+J4=4 (Running)
+J5=5 (Queued)
+J6=6 (Queued)

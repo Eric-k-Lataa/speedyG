@@ -1,0 +1,19 @@
+=== RESULTADOS FINALES DE COLA Y NUEVO TRABAJO ===
+J5: Job #5: echo en-cola-1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:23 UTC
+  └─ Finalizado: 2026-11-08 03:01:23 UTC
+  [stdout]:
+    │ en-cola-1
+J6: Job #6: echo en-cola-2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:23 UTC
+  └─ Finalizado: 2026-11-08 03:01:23 UTC
+  [stdout]:
+    │ en-cola-2
+J7: Job #7: echo post-reinicio [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:01:23 UTC
+  ├─ Iniciado:  2026-11-08 03:01:23 UTC
+  └─ Finalizado: 2026-11-08 03:01:23 UTC
+  [stdout]:
+    │ post-reinicio

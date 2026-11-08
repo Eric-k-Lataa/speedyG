@@ -1,0 +1,27 @@
+=== ESTADO PRE-KILL ===
+Job #1: echo terminado-exito [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:22 UTC
+  └─ Finalizado: 2026-11-08 03:01:22 UTC
+  [stdout]:
+    │ terminado-exito
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:22 UTC
+  └─ Finalizado: 2026-11-08 03:01:22 UTC
+Job #3: sleep 1003 [Canceled]
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:22 UTC
+  └─ Finalizado: 2026-11-08 03:01:22 UTC
+Job #4: sleep 1004 [Running]
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  2026-11-08 03:01:22 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #5: echo en-cola-1 [Queued]
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+Job #6: echo en-cola-2 [Queued]
+  ├─ Recibido:  2026-11-08 03:01:22 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
