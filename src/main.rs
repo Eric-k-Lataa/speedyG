@@ -9,6 +9,7 @@ use std::sync::{Arc, Mutex, MutexGuard};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
 use tracing::{error, info, warn};
+use speedyG::event_log::log_event;
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
 
@@ -44,6 +45,14 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         }
 
         //  Ejecutar (mientras tanto, `status` mostrará Running)
+        log_event(
+            "./logs",
+            "INFO",
+            "JOB_STARTED",
+            Some(job_id),
+            &full_command,
+        );
+
         info!("Job #{} ejecutando: {}", job_id, full_command);
         let exec_result = Executor::run(&full_command).await;
 
@@ -52,12 +61,33 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         {
             let mut sched = lock(&scheduler);
             if sched.complete_job(job_id, exec_result.exit_code) {
+
+                log_event(
+                    "./logs",
+                    "INFO",
+                    "JOB_COMPLETED",
+                    Some(job_id),
+                    &format!("exit_code={}", exec_result.exit_code),
+                );
+
+
                 info!(
                     "Job #{} terminó con código {}",
                     job_id, exec_result.exit_code
                 );
+
                 persistir(&sched);
+
             } else {
+
+                log_event(
+                    "./logs",
+                    "INFO",
+                    "JOB_COMPLETED",
+                    Some(job_id),
+                    &format!("exit_code={}", exec_result.exit_code),
+                );
+
                 info!(
                     "Job #{} terminó pero ya estaba cancelado; se ignora el resultado",
                     job_id
@@ -134,6 +164,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     {
         let mut sched = lock(&scheduler);
         sched.recuperar_tras_reinicio();
+
+        log_event(
+    	    "./logs",
+	    "INFO",
+	    "SERVICE_RESTART",
+	    None,
+	    "Scheduler recuperado",
+        );
+
         persistir(&sched);
     }
 
@@ -210,11 +249,31 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 Ok(id) => {
                                     let mut sched = lock(&scheduler);
                                     if sched.cancel_job(id) {
+
+
+                                        log_event(
+        	                            "./logs",
+	                                    "INFO",
+	                                    "JOB_CANCELED",
+    	                                    Some(id),
+	                                    "Trabajo cancelado",
+                                        );
+
+
                                         // Reflejar la cancelación en persistencia
                                         persistir(&sched);
                                         info!("Job #{} cancelado", id);
                                         format!("Job #{} cancelado correctamente\n", id)
                                     } else {
+
+                                        log_event(
+                                            "./logs",
+                                            "WARN",
+                                            "JOB_CANCEL_FAILED",
+                                            Some(id),
+                                            "Intento de cancelación fallido",
+                                        );
+
                                         format!("Error: No se pudo cancelar el Job #{}\n", id)
                                     }
                                 }
@@ -236,11 +295,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 			    		let job_id = job.get_id();
                             		let full_command = job.get_command_line();
 
+                                        log_event(
+                                            "./logs",
+                                            "INFO",
+                                            "JOB_RECEIVED",
+                                            Some(job_id),
+                                            &full_command,
+                                        );
+
+                                        log_event(
+                                            "./logs",
+                                            "INFO",
+                                            "JOB_QUEUED",
+                                            Some(job_id),
+                                            "Trabajo agregado a la cola",
+                                        );
+
+
                             		// Guardar cambios después de agregar
                             		persistir(&sched);
                             		Ok((job_id, full_command))
 			    	}
-			        Err(error)=> Err(error),
+			        Err(error) => {
+
+                                    log_event(
+                                        "./logs",
+                                        "WARN",
+                                        "JOB_REJECTED",
+                                        None,
+                                        &error,
+                                        );
+                                    Err(error)
+                                }
+
+
 			    }
                         };
 
