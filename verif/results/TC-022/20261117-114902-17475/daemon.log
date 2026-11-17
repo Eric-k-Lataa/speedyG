@@ -1,0 +1,594 @@
+[2m2026-11-17T17:49:02.719154Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:02.719686Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:02.719855Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-17T17:49:02.719959Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-17T17:49:03.841198Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo carga-1-1
+[2m2026-11-17T17:49:03.856612Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-17T17:49:03.861684Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo carga-1-2
+[2m2026-11-17T17:49:03.871571Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: echo carga-1-4
+[2m2026-11-17T17:49:03.872370Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-17T17:49:03.890497Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-11-17T17:49:03.900188Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: echo carga-1-5
+[2m2026-11-17T17:49:03.927854Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: echo carga-1-3
+[2m2026-11-17T17:49:03.937553Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: echo carga-1-6
+[2m2026-11-17T17:49:03.938363Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-17T17:49:03.956178Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-17T17:49:03.964069Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo carga-1-7
+[2m2026-11-17T17:49:03.964224Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: echo carga-1-8
+[2m2026-11-17T17:49:03.989924Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0
+[2m2026-11-17T17:49:04.011851Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ejecutando: echo carga-1-12
+[2m2026-11-17T17:49:04.026558Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-11-17T17:49:04.045206Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 terminó con código 0
+[2m2026-11-17T17:49:04.055914Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 ejecutando: echo carga-1-14
+[2m2026-11-17T17:49:04.055947Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 terminó con código 0
+[2m2026-11-17T17:49:04.065988Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 ejecutando: echo carga-1-11
+[2m2026-11-17T17:49:04.066031Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 ejecutando: echo carga-1-10
+[2m2026-11-17T17:49:04.066122Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 ejecutando: echo carga-1-9
+[2m2026-11-17T17:49:04.106193Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 terminó con código 0
+[2m2026-11-17T17:49:04.729019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:04.729231Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:04.731224Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 10 en cola, 10 en historial
+[2m2026-11-17T17:49:04.731409Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #10 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:04.731523Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #12 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:04.731609Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #13 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:04.731661Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #14 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731690Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #15 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731715Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #16 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731739Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #17 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731764Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #18 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731801Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #19 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.731826Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #20 sigue en cola; se relanzará
+[2m2026-11-17T17:49:04.739710Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 ejecutando: echo carga-1-13
+[2m2026-11-17T17:49:04.743146Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 ejecutando: echo carga-1-17
+[2m2026-11-17T17:49:04.746734Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 ejecutando: echo carga-1-15
+[2m2026-11-17T17:49:04.746763Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 ejecutando: echo carga-1-18
+[2m2026-11-17T17:49:04.746840Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 terminó con código 0
+[2m2026-11-17T17:49:04.752103Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ejecutando: echo carga-1-16
+[2m2026-11-17T17:49:04.752209Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 terminó con código 0
+[2m2026-11-17T17:49:04.756705Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 terminó con código 0
+[2m2026-11-17T17:49:04.761791Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ejecutando: echo carga-1-19
+[2m2026-11-17T17:49:04.761886Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 ejecutando: echo carga-1-20
+[2m2026-11-17T17:49:04.761900Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 terminó con código 0
+[2m2026-11-17T17:49:04.764687Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 terminó con código 0
+[2m2026-11-17T17:49:04.767572Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 terminó con código 0
+[2m2026-11-17T17:49:04.770493Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 terminó con código 0
+[2m2026-11-17T17:49:04.871212Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 ejecutando: echo nuevo
+[2m2026-11-17T17:49:04.872382Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 terminó con código 0
+[2m2026-11-17T17:49:04.911740Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 ejecutando: echo carga-2-1
+[2m2026-11-17T17:49:04.911861Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 ejecutando: echo carga-2-2
+[2m2026-11-17T17:49:04.931876Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 ejecutando: echo carga-2-6
+[2m2026-11-17T17:49:04.936896Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 terminó con código 0
+[2m2026-11-17T17:49:04.951688Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #25 ejecutando: echo carga-2-5
+[2m2026-11-17T17:49:04.951904Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 ejecutando: echo carga-2-4
+[2m2026-11-17T17:49:04.951957Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 terminó con código 0
+[2m2026-11-17T17:49:04.963807Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 terminó con código 0
+[2m2026-11-17T17:49:04.967566Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 terminó con código 0
+[2m2026-11-17T17:49:04.970481Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #25 terminó con código 0
+[2m2026-11-17T17:49:04.973377Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 ejecutando: echo carga-2-3
+[2m2026-11-17T17:49:04.979434Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 ejecutando: echo carga-2-10
+[2m2026-11-17T17:49:04.995326Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 ejecutando: echo carga-2-12
+[2m2026-11-17T17:49:04.999391Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #30 ejecutando: echo carga-2-11
+[2m2026-11-17T17:49:05.006846Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 terminó con código 0
+[2m2026-11-17T17:49:05.013500Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 ejecutando: echo carga-2-8
+[2m2026-11-17T17:49:05.013514Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #30 terminó con código 0
+[2m2026-11-17T17:49:05.024850Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 terminó con código 0
+[2m2026-11-17T17:49:05.039784Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 ejecutando: echo carga-2-7
+[2m2026-11-17T17:49:05.039815Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 ejecutando: echo carga-2-9
+[2m2026-11-17T17:49:05.043815Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 terminó con código 0
+[2m2026-11-17T17:49:05.052355Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 ejecutando: echo carga-2-13
+[2m2026-11-17T17:49:05.056593Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 terminó con código 0
+[2m2026-11-17T17:49:05.067950Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 terminó con código 0
+[2m2026-11-17T17:49:05.075972Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 ejecutando: echo carga-2-18
+[2m2026-11-17T17:49:05.079791Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #35 ejecutando: echo carga-2-17
+[2m2026-11-17T17:49:05.079889Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 terminó con código 0
+[2m2026-11-17T17:49:05.350283Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:05.350453Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:05.352296Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 8 en cola, 33 en historial
+[2m2026-11-17T17:49:05.352365Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #34 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.352397Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #35 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.352423Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #36 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.352449Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #37 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.352480Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #38 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.352507Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #39 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.352533Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #40 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.352559Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #41 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.373051Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 ejecutando: echo carga-2-15
+[2m2026-11-17T17:49:05.373050Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 ejecutando: echo carga-2-19
+[2m2026-11-17T17:49:05.373134Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #40 ejecutando: echo carga-2-20
+[2m2026-11-17T17:49:05.373050Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 ejecutando: echo carga-2-16
+[2m2026-11-17T17:49:05.374733Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 terminó con código 0
+[2m2026-11-17T17:49:05.379935Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 terminó con código 0
+[2m2026-11-17T17:49:05.384030Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #40 terminó con código 0
+[2m2026-11-17T17:49:05.388094Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 terminó con código 0
+[2m2026-11-17T17:49:05.481944Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 ejecutando: echo nuevo
+[2m2026-11-17T17:49:05.483252Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 terminó con código 0
+[2m2026-11-17T17:49:05.533296Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 ejecutando: echo carga-3-2
+[2m2026-11-17T17:49:05.536078Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 terminó con código 0
+[2m2026-11-17T17:49:05.576678Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 ejecutando: echo carga-3-1
+[2m2026-11-17T17:49:05.580963Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #45 ejecutando: echo carga-3-3
+[2m2026-11-17T17:49:05.581019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 ejecutando: echo carga-3-10
+[2m2026-11-17T17:49:05.591509Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 ejecutando: echo carga-3-4
+[2m2026-11-17T17:49:05.600917Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #45 terminó con código 0
+[2m2026-11-17T17:49:05.610098Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 ejecutando: echo carga-3-7
+[2m2026-11-17T17:49:05.610117Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 terminó con código 0
+[2m2026-11-17T17:49:05.624024Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 terminó con código 0
+[2m2026-11-17T17:49:05.638047Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 terminó con código 0
+[2m2026-11-17T17:49:05.647726Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 ejecutando: echo carga-3-6
+[2m2026-11-17T17:49:05.653655Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #50 ejecutando: echo carga-3-9
+[2m2026-11-17T17:49:05.653641Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 ejecutando: echo carga-3-5
+[2m2026-11-17T17:49:05.695063Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 terminó con código 0
+[2m2026-11-17T17:49:05.705781Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 ejecutando: echo carga-3-11
+[2m2026-11-17T17:49:05.705789Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 terminó con código 0
+[2m2026-11-17T17:49:05.715801Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 ejecutando: echo carga-3-8
+[2m2026-11-17T17:49:05.715817Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #50 terminó con código 0
+[2m2026-11-17T17:49:05.726570Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 terminó con código 0
+[2m2026-11-17T17:49:05.726567Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 ejecutando: echo carga-3-17
+[2m2026-11-17T17:49:05.996907Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:05.997080Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:05.999162Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 11 en cola, 51 en historial
+[2m2026-11-17T17:49:05.999235Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #52 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.999267Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #53 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.999308Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #54 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:05.999341Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #55 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999368Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #56 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999394Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #57 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999419Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #58 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999445Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #59 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999483Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #60 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999510Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #61 sigue en cola; se relanzará
+[2m2026-11-17T17:49:05.999536Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #62 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.017156Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #55 ejecutando: echo carga-3-13
+[2m2026-11-17T17:49:06.029855Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 ejecutando: echo carga-3-19
+[2m2026-11-17T17:49:06.029909Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #55 terminó con código 0
+[2m2026-11-17T17:49:06.040646Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 ejecutando: echo carga-3-18
+[2m2026-11-17T17:49:06.040674Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 ejecutando: echo carga-3-16
+[2m2026-11-17T17:49:06.040808Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 terminó con código 0
+[2m2026-11-17T17:49:06.040669Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 ejecutando: echo carga-3-12
+[2m2026-11-17T17:49:06.052288Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #60 ejecutando: echo carga-3-14
+[2m2026-11-17T17:49:06.052558Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 terminó con código 0
+[2m2026-11-17T17:49:06.066069Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 terminó con código 0
+[2m2026-11-17T17:49:06.077403Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 terminó con código 0
+[2m2026-11-17T17:49:06.082992Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 ejecutando: echo carga-3-20
+[2m2026-11-17T17:49:06.083086Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 ejecutando: echo carga-3-15
+[2m2026-11-17T17:49:06.083140Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #60 terminó con código 0
+[2m2026-11-17T17:49:06.089718Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 terminó con código 0
+[2m2026-11-17T17:49:06.095603Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 terminó con código 0
+[2m2026-11-17T17:49:06.193057Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 ejecutando: echo nuevo
+[2m2026-11-17T17:49:06.194485Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 terminó con código 0
+[2m2026-11-17T17:49:06.235431Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 ejecutando: echo carga-4-1
+[2m2026-11-17T17:49:06.236782Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 terminó con código 0
+[2m2026-11-17T17:49:06.280272Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #66 ejecutando: echo carga-4-6
+[2m2026-11-17T17:49:06.305407Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #67 ejecutando: echo carga-4-3
+[2m2026-11-17T17:49:06.305452Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #68 ejecutando: echo carga-4-4
+[2m2026-11-17T17:49:06.312719Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 ejecutando: echo carga-4-2
+[2m2026-11-17T17:49:06.312940Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #67 terminó con código 0
+[2m2026-11-17T17:49:06.325092Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #68 terminó con código 0
+[2m2026-11-17T17:49:06.325086Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #69 ejecutando: echo carga-4-5
+[2m2026-11-17T17:49:06.331001Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #66 terminó con código 0
+[2m2026-11-17T17:49:06.362888Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 terminó con código 0
+[2m2026-11-17T17:49:06.381219Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #69 terminó con código 0
+[2m2026-11-17T17:49:06.387222Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #70 ejecutando: echo carga-4-7
+[2m2026-11-17T17:49:06.387233Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #71 ejecutando: echo carga-4-14
+[2m2026-11-17T17:49:06.399677Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #73 ejecutando: echo carga-4-10
+[2m2026-11-17T17:49:06.406219Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #72 ejecutando: echo carga-4-15
+[2m2026-11-17T17:49:06.469633Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #72 terminó con código 0
+[2m2026-11-17T17:49:06.738513Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:06.738710Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:06.741055Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 13 en cola, 70 en historial
+[2m2026-11-17T17:49:06.741123Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #70 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:06.741155Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #71 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:06.741180Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #73 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:06.741210Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #74 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741238Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #75 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741273Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #76 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741300Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #77 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741325Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #78 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741362Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #79 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741389Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #80 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741415Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #81 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741440Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #82 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.741468Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #83 sigue en cola; se relanzará
+[2m2026-11-17T17:49:06.763905Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #74 ejecutando: echo carga-4-11
+[2m2026-11-17T17:49:06.776880Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #75 ejecutando: echo carga-4-12
+[2m2026-11-17T17:49:06.776898Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #74 terminó con código 0
+[2m2026-11-17T17:49:06.790462Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #76 ejecutando: echo carga-4-8
+[2m2026-11-17T17:49:06.790480Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #77 ejecutando: echo carga-4-13
+[2m2026-11-17T17:49:06.790489Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #78 ejecutando: echo carga-4-9
+[2m2026-11-17T17:49:06.790978Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #75 terminó con código 0
+[2m2026-11-17T17:49:06.807793Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #79 ejecutando: echo carga-4-18
+[2m2026-11-17T17:49:06.807995Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #76 terminó con código 0
+[2m2026-11-17T17:49:06.821283Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #80 ejecutando: echo carga-4-20
+[2m2026-11-17T17:49:06.821292Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #77 terminó con código 0
+[2m2026-11-17T17:49:06.834732Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #81 ejecutando: echo carga-4-16
+[2m2026-11-17T17:49:06.834892Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #79 terminó con código 0
+[2m2026-11-17T17:49:06.848377Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #82 ejecutando: echo carga-4-17
+[2m2026-11-17T17:49:06.848514Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #78 terminó con código 0
+[2m2026-11-17T17:49:06.866094Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #81 terminó con código 0
+[2m2026-11-17T17:49:06.872942Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #80 terminó con código 0
+[2m2026-11-17T17:49:06.880746Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #82 terminó con código 0
+[2m2026-11-17T17:49:06.887969Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #83 ejecutando: echo carga-4-19
+[2m2026-11-17T17:49:06.889095Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #83 terminó con código 0
+[2m2026-11-17T17:49:06.960405Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #84 ejecutando: echo nuevo
+[2m2026-11-17T17:49:06.961934Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #84 terminó con código 0
+[2m2026-11-17T17:49:07.047216Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #87 ejecutando: echo carga-5-2
+[2m2026-11-17T17:49:07.073496Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #86 ejecutando: echo carga-5-3
+[2m2026-11-17T17:49:07.073552Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #85 ejecutando: echo carga-5-1
+[2m2026-11-17T17:49:07.073690Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #88 ejecutando: echo carga-5-4
+[2m2026-11-17T17:49:07.182886Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #85 terminó con código 0
+[2m2026-11-17T17:49:07.198327Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #87 terminó con código 0
+[2m2026-11-17T17:49:07.213984Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #90 ejecutando: echo carga-5-6
+[2m2026-11-17T17:49:07.213991Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #86 terminó con código 0
+[2m2026-11-17T17:49:07.229543Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #91 ejecutando: echo carga-5-8
+[2m2026-11-17T17:49:07.229552Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #88 terminó con código 0
+[2m2026-11-17T17:49:07.245211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #89 ejecutando: echo carga-5-5
+[2m2026-11-17T17:49:07.245211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #92 ejecutando: echo carga-5-12
+[2m2026-11-17T17:49:07.245448Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #91 terminó con código 0
+[2m2026-11-17T17:49:07.262234Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #93 ejecutando: echo carga-5-7
+[2m2026-11-17T17:49:07.270221Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #90 terminó con código 0
+[2m2026-11-17T17:49:07.540652Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:07.540830Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:07.543833Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 14 en cola, 90 en historial
+[2m2026-11-17T17:49:07.543916Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #89 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:07.543937Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #92 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:07.543952Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #93 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:07.543969Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #94 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.543984Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #95 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.543998Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #96 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544012Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #97 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544035Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #98 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544078Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #99 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544094Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #100 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544108Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #101 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544122Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #102 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544137Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #103 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.544151Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #104 sigue en cola; se relanzará
+[2m2026-11-17T17:49:07.581408Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #95 ejecutando: echo carga-5-10
+[2m2026-11-17T17:49:07.581445Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #94 ejecutando: echo carga-5-15
+[2m2026-11-17T17:49:07.581464Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #97 ejecutando: echo carga-5-9
+[2m2026-11-17T17:49:07.581559Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #96 ejecutando: echo carga-5-13
+[2m2026-11-17T17:49:07.582603Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #94 terminó con código 0
+[2m2026-11-17T17:49:07.598329Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #98 ejecutando: echo carga-5-16
+[2m2026-11-17T17:49:07.598897Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #95 terminó con código 0
+[2m2026-11-17T17:49:07.611887Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #99 ejecutando: echo carga-5-11
+[2m2026-11-17T17:49:07.611896Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #96 terminó con código 0
+[2m2026-11-17T17:49:07.624952Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #97 terminó con código 0
+[2m2026-11-17T17:49:07.640271Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #98 terminó con código 0
+[2m2026-11-17T17:49:07.653526Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #102 ejecutando: echo carga-5-19
+[2m2026-11-17T17:49:07.653560Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #100 ejecutando: echo carga-5-14
+[2m2026-11-17T17:49:07.653554Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #101 ejecutando: echo carga-5-17
+[2m2026-11-17T17:49:07.653655Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #99 terminó con código 0
+[2m2026-11-17T17:49:07.667128Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #103 ejecutando: echo carga-5-20
+[2m2026-11-17T17:49:07.667292Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #100 terminó con código 0
+[2m2026-11-17T17:49:07.681298Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #104 ejecutando: echo carga-5-18
+[2m2026-11-17T17:49:07.681353Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #101 terminó con código 0
+[2m2026-11-17T17:49:07.689490Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #102 terminó con código 0
+[2m2026-11-17T17:49:07.696594Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #103 terminó con código 0
+[2m2026-11-17T17:49:07.705349Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #104 terminó con código 0
+[2m2026-11-17T17:49:07.775878Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #105 ejecutando: echo nuevo
+[2m2026-11-17T17:49:07.777943Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #105 terminó con código 0
+[2m2026-11-17T17:49:07.823798Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #106 ejecutando: echo carga-6-1
+[2m2026-11-17T17:49:07.883908Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #109 ejecutando: echo carga-6-4
+[2m2026-11-17T17:49:07.883928Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #108 ejecutando: echo carga-6-2
+[2m2026-11-17T17:49:07.884568Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #106 terminó con código 0
+[2m2026-11-17T17:49:07.893504Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #107 ejecutando: echo carga-6-3
+[2m2026-11-17T17:49:07.909602Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #109 terminó con código 0
+[2m2026-11-17T17:49:07.942805Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #108 terminó con código 0
+[2m2026-11-17T17:49:07.969318Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #112 ejecutando: echo carga-6-8
+[2m2026-11-17T17:49:07.969348Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #110 ejecutando: echo carga-6-20
+[2m2026-11-17T17:49:07.969367Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #111 ejecutando: echo carga-6-12
+[2m2026-11-17T17:49:08.075249Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #110 terminó con código 0
+[2m2026-11-17T17:49:08.093099Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #107 terminó con código 0
+[2m2026-11-17T17:49:08.110627Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #112 terminó con código 0
+[2m2026-11-17T17:49:08.375959Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:08.376164Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:08.380191Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 14 en cola, 111 en historial
+[2m2026-11-17T17:49:08.380273Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #111 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:08.380304Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #113 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:08.380328Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #114 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:08.380354Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #115 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:08.380383Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #116 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380410Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #117 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380434Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #118 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380458Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #119 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380481Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #120 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380544Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #121 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380571Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #122 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380594Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #123 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380619Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #124 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.380644Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #125 sigue en cola; se relanzará
+[2m2026-11-17T17:49:08.409565Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #116 ejecutando: echo carga-6-7
+[2m2026-11-17T17:49:08.409633Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #117 ejecutando: echo carga-6-13
+[2m2026-11-17T17:49:08.426430Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #118 ejecutando: echo carga-6-17
+[2m2026-11-17T17:49:08.426430Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #119 ejecutando: echo carga-6-18
+[2m2026-11-17T17:49:08.426491Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #117 terminó con código 0
+[2m2026-11-17T17:49:08.443641Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #120 ejecutando: echo carga-6-9
+[2m2026-11-17T17:49:08.443660Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #116 terminó con código 0
+[2m2026-11-17T17:49:08.460855Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #119 terminó con código 0
+[2m2026-11-17T17:49:08.478329Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #118 terminó con código 0
+[2m2026-11-17T17:49:08.493969Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #121 ejecutando: echo carga-6-14
+[2m2026-11-17T17:49:08.493972Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #120 terminó con código 0
+[2m2026-11-17T17:49:08.510303Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #122 ejecutando: echo carga-6-19
+[2m2026-11-17T17:49:08.510325Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #123 ejecutando: echo carga-6-15
+[2m2026-11-17T17:49:08.510526Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #121 terminó con código 0
+[2m2026-11-17T17:49:08.510303Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #124 ejecutando: echo carga-6-10
+[2m2026-11-17T17:49:08.526534Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #125 ejecutando: echo carga-6-11
+[2m2026-11-17T17:49:08.526694Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #124 terminó con código 0
+[2m2026-11-17T17:49:08.534934Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #123 terminó con código 0
+[2m2026-11-17T17:49:08.544635Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #122 terminó con código 0
+[2m2026-11-17T17:49:08.554032Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #125 terminó con código 0
+[2m2026-11-17T17:49:08.639005Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #126 ejecutando: echo nuevo
+[2m2026-11-17T17:49:08.640244Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #126 terminó con código 0
+[2m2026-11-17T17:49:08.734571Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #129 ejecutando: echo carga-7-2
+[2m2026-11-17T17:49:08.734616Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #128 ejecutando: echo carga-7-3
+[2m2026-11-17T17:49:08.734665Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #127 ejecutando: echo carga-7-1
+[2m2026-11-17T17:49:08.772889Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #127 terminó con código 0
+[2m2026-11-17T17:49:08.807695Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #130 ejecutando: echo carga-7-20
+[2m2026-11-17T17:49:08.807705Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #131 ejecutando: echo carga-7-16
+[2m2026-11-17T17:49:08.853525Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #129 terminó con código 0
+[2m2026-11-17T17:49:08.896387Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #132 ejecutando: echo carga-7-13
+[2m2026-11-17T17:49:08.932242Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #130 terminó con código 0
+[2m2026-11-17T17:49:08.950368Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #132 terminó con código 0
+[2m2026-11-17T17:49:08.968030Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #128 terminó con código 0
+[2m2026-11-17T17:49:08.985090Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #131 terminó con código 0
+[2m2026-11-17T17:49:09.002417Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #136 ejecutando: echo carga-7-18
+[2m2026-11-17T17:49:09.002433Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #133 ejecutando: echo carga-7-14
+[2m2026-11-17T17:49:09.002441Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #134 ejecutando: echo carga-7-12
+[2m2026-11-17T17:49:09.002443Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #135 ejecutando: echo carga-7-15
+[2m2026-11-17T17:49:09.003623Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #134 terminó con código 0
+[2m2026-11-17T17:49:09.258409Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:09.258723Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:09.263186Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 13 en cola, 133 en historial
+[2m2026-11-17T17:49:09.263264Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #133 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:09.263304Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #135 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:09.263331Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #136 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:09.263357Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #137 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:09.263388Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #138 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263416Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #139 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263442Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #140 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263467Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #141 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263493Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #142 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263521Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #143 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263546Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #144 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263571Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #145 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.263596Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #146 sigue en cola; se relanzará
+[2m2026-11-17T17:49:09.318246Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #138 ejecutando: echo carga-7-4
+[2m2026-11-17T17:49:09.318313Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #140 ejecutando: echo carga-7-9
+[2m2026-11-17T17:49:09.318246Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #139 ejecutando: echo carga-7-17
+[2m2026-11-17T17:49:09.318254Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #141 ejecutando: echo carga-7-10
+[2m2026-11-17T17:49:09.320040Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #138 terminó con código 0
+[2m2026-11-17T17:49:09.344904Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #139 terminó con código 0
+[2m2026-11-17T17:49:09.365640Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #142 ejecutando: echo carga-7-8
+[2m2026-11-17T17:49:09.365646Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #140 terminó con código 0
+[2m2026-11-17T17:49:09.386350Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #143 ejecutando: echo carga-7-11
+[2m2026-11-17T17:49:09.386507Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #142 terminó con código 0
+[2m2026-11-17T17:49:09.386349Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #144 ejecutando: echo carga-7-6
+[2m2026-11-17T17:49:09.407990Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #145 ejecutando: echo carga-7-7
+[2m2026-11-17T17:49:09.408060Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #141 terminó con código 0
+[2m2026-11-17T17:49:09.428573Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #144 terminó con código 0
+[2m2026-11-17T17:49:09.439322Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #143 terminó con código 0
+[2m2026-11-17T17:49:09.439322Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #146 ejecutando: echo carga-7-5
+[2m2026-11-17T17:49:09.452086Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #145 terminó con código 0
+[2m2026-11-17T17:49:09.464197Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #146 terminó con código 0
+[2m2026-11-17T17:49:09.556059Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #147 ejecutando: echo nuevo
+[2m2026-11-17T17:49:09.557290Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #147 terminó con código 0
+[2m2026-11-17T17:49:09.683978Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #150 ejecutando: echo carga-8-4
+[2m2026-11-17T17:49:09.684192Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #148 ejecutando: echo carga-8-1
+[2m2026-11-17T17:49:09.683983Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #149 ejecutando: echo carga-8-3
+[2m2026-11-17T17:49:09.683999Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #151 ejecutando: echo carga-8-2
+[2m2026-11-17T17:49:09.685639Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #150 terminó con código 0
+[2m2026-11-17T17:49:09.731108Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #148 terminó con código 0
+[2m2026-11-17T17:49:09.753949Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #152 ejecutando: echo carga-8-5
+[2m2026-11-17T17:49:09.753949Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #153 ejecutando: echo carga-8-13
+[2m2026-11-17T17:49:09.914003Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #153 terminó con código 0
+[2m2026-11-17T17:49:09.939046Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #152 terminó con código 0
+[2m2026-11-17T17:49:09.961822Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #151 terminó con código 0
+[2m2026-11-17T17:49:10.215326Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:10.215482Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:10.219431Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 15 en cola, 152 en historial
+[2m2026-11-17T17:49:10.219497Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #149 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:10.219516Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #154 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:10.219531Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #155 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:10.219559Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #156 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219601Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #157 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219622Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #158 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219635Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #159 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219648Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #160 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219662Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #161 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219675Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #162 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219688Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #163 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219701Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #164 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219715Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #165 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219728Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #166 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.219740Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #167 sigue en cola; se relanzará
+[2m2026-11-17T17:49:10.265438Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #157 ejecutando: echo carga-8-7
+[2m2026-11-17T17:49:10.265438Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #156 ejecutando: echo carga-8-18
+[2m2026-11-17T17:49:10.275670Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #158 ejecutando: echo carga-8-14
+[2m2026-11-17T17:49:10.275769Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #159 ejecutando: echo carga-8-19
+[2m2026-11-17T17:49:10.275875Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #156 terminó con código 0
+[2m2026-11-17T17:49:10.295695Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #160 ejecutando: echo carga-8-10
+[2m2026-11-17T17:49:10.295781Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #157 terminó con código 0
+[2m2026-11-17T17:49:10.315911Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #158 terminó con código 0
+[2m2026-11-17T17:49:10.337878Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #161 ejecutando: echo carga-8-11
+[2m2026-11-17T17:49:10.337983Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #162 ejecutando: echo carga-8-15
+[2m2026-11-17T17:49:10.337994Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #159 terminó con código 0
+[2m2026-11-17T17:49:10.360318Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #163 ejecutando: echo carga-8-20
+[2m2026-11-17T17:49:10.360339Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #160 terminó con código 0
+[2m2026-11-17T17:49:10.380382Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #162 terminó con código 0
+[2m2026-11-17T17:49:10.401186Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #161 terminó con código 0
+[2m2026-11-17T17:49:10.401184Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #165 ejecutando: echo carga-8-12
+[2m2026-11-17T17:49:10.421874Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #166 ejecutando: echo carga-8-16
+[2m2026-11-17T17:49:10.421916Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #164 ejecutando: echo carga-8-8
+[2m2026-11-17T17:49:10.422042Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #165 terminó con código 0
+[2m2026-11-17T17:49:10.446340Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #167 ejecutando: echo carga-8-9
+[2m2026-11-17T17:49:10.446387Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #163 terminó con código 0
+[2m2026-11-17T17:49:10.456987Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #164 terminó con código 0
+[2m2026-11-17T17:49:10.469158Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #167 terminó con código 0
+[2m2026-11-17T17:49:10.481758Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #166 terminó con código 0
+[2m2026-11-17T17:49:10.543343Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #168 ejecutando: echo nuevo
+[2m2026-11-17T17:49:10.544505Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #168 terminó con código 0
+[2m2026-11-17T17:49:10.675833Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #171 ejecutando: echo carga-9-2
+[2m2026-11-17T17:49:10.676147Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #172 ejecutando: echo carga-9-4
+[2m2026-11-17T17:49:10.676245Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #170 ejecutando: echo carga-9-3
+[2m2026-11-17T17:49:10.677468Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #171 terminó con código 0
+[2m2026-11-17T17:49:10.687566Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #169 ejecutando: echo carga-9-1
+[2m2026-11-17T17:49:10.729813Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #173 ejecutando: echo carga-9-5
+[2m2026-11-17T17:49:10.740455Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #170 terminó con código 0
+[2m2026-11-17T17:49:10.761740Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #174 ejecutando: echo carga-9-11
+[2m2026-11-17T17:49:10.761757Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #172 terminó con código 0
+[2m2026-11-17T17:49:10.802258Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #175 ejecutando: echo carga-9-20
+[2m2026-11-17T17:49:10.911575Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #175 terminó con código 0
+[2m2026-11-17T17:49:10.933372Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #174 terminó con código 0
+[2m2026-11-17T17:49:10.955929Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #173 terminó con código 0
+[2m2026-11-17T17:49:10.976628Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #169 terminó con código 0
+[2m2026-11-17T17:49:11.218993Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:11.219140Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:11.222482Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 13 en cola, 175 en historial
+[2m2026-11-17T17:49:11.222543Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #176 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:11.222561Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #177 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:11.222574Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #178 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:11.222586Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #179 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:11.222600Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #180 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222613Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #181 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222625Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #182 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222637Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #183 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222682Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #184 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222704Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #185 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222716Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #186 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222739Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #187 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.222752Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #188 sigue en cola; se relanzará
+[2m2026-11-17T17:49:11.262681Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #180 ejecutando: echo carga-9-8
+[2m2026-11-17T17:49:11.287040Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #181 ejecutando: echo carga-9-17
+[2m2026-11-17T17:49:11.287048Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #183 ejecutando: echo carga-9-9
+[2m2026-11-17T17:49:11.287068Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #180 terminó con código 0
+[2m2026-11-17T17:49:11.310654Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #184 ejecutando: echo carga-9-6
+[2m2026-11-17T17:49:11.310672Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #182 ejecutando: echo carga-9-14
+[2m2026-11-17T17:49:11.310815Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #181 terminó con código 0
+[2m2026-11-17T17:49:11.332716Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #185 ejecutando: echo carga-9-18
+[2m2026-11-17T17:49:11.332753Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #183 terminó con código 0
+[2m2026-11-17T17:49:11.357826Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #182 terminó con código 0
+[2m2026-11-17T17:49:11.381274Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #187 ejecutando: echo carga-9-10
+[2m2026-11-17T17:49:11.381274Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #184 terminó con código 0
+[2m2026-11-17T17:49:11.403383Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #188 ejecutando: echo carga-9-19
+[2m2026-11-17T17:49:11.403407Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #186 ejecutando: echo carga-9-15
+[2m2026-11-17T17:49:11.403532Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #187 terminó con código 0
+[2m2026-11-17T17:49:11.415115Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #185 terminó con código 0
+[2m2026-11-17T17:49:11.427417Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #188 terminó con código 0
+[2m2026-11-17T17:49:11.442254Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #186 terminó con código 0
+[2m2026-11-17T17:49:11.531316Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #189 ejecutando: echo nuevo
+[2m2026-11-17T17:49:11.532600Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #189 terminó con código 0
+[2m2026-11-17T17:49:11.671392Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #192 ejecutando: echo carga-10-1
+[2m2026-11-17T17:49:11.671429Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #190 ejecutando: echo carga-10-2
+[2m2026-11-17T17:49:11.671512Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #193 ejecutando: echo carga-10-4
+[2m2026-11-17T17:49:11.685435Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #191 ejecutando: echo carga-10-3
+[2m2026-11-17T17:49:11.685443Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #190 terminó con código 0
+[2m2026-11-17T17:49:11.709478Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #194 ejecutando: echo carga-10-5
+[2m2026-11-17T17:49:11.721369Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #192 terminó con código 0
+[2m2026-11-17T17:49:11.744730Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #193 terminó con código 0
+[2m2026-11-17T17:49:11.744727Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #195 ejecutando: echo carga-10-20
+[2m2026-11-17T17:49:11.780468Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #196 ejecutando: echo carga-10-12
+[2m2026-11-17T17:49:11.941777Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #196 terminó con código 0
+[2m2026-11-17T17:49:11.967205Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #191 terminó con código 0
+[2m2026-11-17T17:49:11.991166Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #198 ejecutando: echo carga-10-16
+[2m2026-11-17T17:49:11.991168Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #194 terminó con código 0
+[2m2026-11-17T17:49:12.233413Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:12.233566Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:12.237981Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 14 en cola, 195 en historial
+[2m2026-11-17T17:49:12.238053Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #195 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:12.238073Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #197 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:12.238087Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #198 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:12.238103Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #199 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238117Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #200 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238130Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #201 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238142Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #202 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238155Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #203 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238169Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #204 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238181Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #205 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238193Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #206 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238206Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #207 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238219Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #208 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.238231Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #209 sigue en cola; se relanzará
+[2m2026-11-17T17:49:12.284027Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #199 ejecutando: echo carga-10-6
+[2m2026-11-17T17:49:12.310709Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #202 ejecutando: echo carga-10-14
+[2m2026-11-17T17:49:12.310706Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #200 ejecutando: echo carga-10-15
+[2m2026-11-17T17:49:12.310730Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #199 terminó con código 0
+[2m2026-11-17T17:49:12.336164Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #203 ejecutando: echo carga-10-7
+[2m2026-11-17T17:49:12.336186Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #201 ejecutando: echo carga-10-17
+[2m2026-11-17T17:49:12.336313Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #202 terminó con código 0
+[2m2026-11-17T17:49:12.361501Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #204 ejecutando: echo carga-10-18
+[2m2026-11-17T17:49:12.362014Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #203 terminó con código 0
+[2m2026-11-17T17:49:12.389540Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #205 ejecutando: echo carga-10-19
+[2m2026-11-17T17:49:12.389547Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #200 terminó con código 0
+[2m2026-11-17T17:49:12.415813Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #201 terminó con código 0
+[2m2026-11-17T17:49:12.441318Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #204 terminó con código 0
+[2m2026-11-17T17:49:12.467151Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #207 ejecutando: echo carga-10-11
+[2m2026-11-17T17:49:12.467146Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #208 ejecutando: echo carga-10-8
+[2m2026-11-17T17:49:12.467177Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #206 ejecutando: echo carga-10-9
+[2m2026-11-17T17:49:12.467314Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #205 terminó con código 0
+[2m2026-11-17T17:49:12.492022Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #209 ejecutando: echo carga-10-10
+[2m2026-11-17T17:49:12.492188Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #207 terminó con código 0
+[2m2026-11-17T17:49:12.506115Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #208 terminó con código 0
+[2m2026-11-17T17:49:12.519786Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #206 terminó con código 0
+[2m2026-11-17T17:49:12.532805Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #209 terminó con código 0
+[2m2026-11-17T17:49:12.604642Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #210 ejecutando: echo nuevo
+[2m2026-11-17T17:49:12.605807Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #210 terminó con código 0
+[2m2026-11-17T17:49:12.625459Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:12.625636Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:12.631098Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 0 en cola, 210 en historial
+[2m2026-11-17T17:49:12.675941Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #211 ejecutando: echo terminado
+[2m2026-11-17T17:49:12.677035Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #211 terminó con código 0
+[2m2026-11-17T17:49:12.730306Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #212 ejecutando: sleep 1005
+[2m2026-11-17T17:49:12.759202Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #212 cancelado
+[2m2026-11-17T17:49:12.759242Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #212 cancelado en Running.
+[2m2026-11-17T17:49:13.928211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #213 ejecutando: sleep 1003
+[2m2026-11-17T17:49:14.169574Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:14.169822Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:14.175975Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 3 en cola, 212 en historial
+[2m2026-11-17T17:49:14.176057Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #213 estaba Running; se marca Interrupted
+[2m2026-11-17T17:49:14.176082Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #214 sigue en cola; se relanzará
+[2m2026-11-17T17:49:14.176113Z[0m [32m INFO[0m [2mspeedyG::scheduler[0m[2m:[0m Recuperación: Job #215 sigue en cola; se relanzará
+[2m2026-11-17T17:49:14.208843Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #214 ejecutando: sleep 2
+[2m2026-11-17T17:49:16.212659Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #214 terminó con código 0
+[2m2026-11-17T17:49:16.295757Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #215 ejecutando: echo pendiente
+[2m2026-11-17T17:49:16.298580Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #215 terminó con código 0
+[2m2026-11-17T17:49:16.440030Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:16.440351Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:16.449995Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 0 en cola, 215 en historial
+[2m2026-11-17T17:49:16.536743Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #216 ejecutando: echo base-uno
+[2m2026-11-17T17:49:16.538085Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #216 terminó con código 0
+[2m2026-11-17T17:49:16.579716Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #217 ejecutando: echo base-dos
+[2m2026-11-17T17:49:16.580724Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #217 terminó con código 0
+[2m2026-11-17T17:49:16.622814Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #218 ejecutando: sleep 1006
+[2m2026-11-17T17:49:16.657691Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #218 cancelado
+[2m2026-11-17T17:49:16.657722Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #218 cancelado en Running.
+[2m2026-11-17T17:49:17.992903Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:17.993089Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:17.997313Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 0 en cola, 218 en historial
+[2m2026-11-17T17:49:18.063064Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:18.063294Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:18.067723Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): 0 en cola, 218 en historial
+[2m2026-11-17T17:49:18.131970Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:18.132116Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:18.132532Z[0m [33m WARN[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo leer SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database; se intentará JSON
+[2m2026-11-17T17:49:18.142797Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde JSON (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/scheduler.json): 0 en cola, 218 en historial
+[2m2026-11-17T17:49:18.143095Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.143141Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.183767Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.183829Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.184012Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.184044Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.184143Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #219 ejecutando: echo c3-nuevo
+[2m2026-11-17T17:49:18.185325Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #219 terminó con código 0
+[2m2026-11-17T17:49:18.185689Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.185730Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.207835Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:18.208009Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:18.208495Z[0m [33m WARN[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo leer SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database; se intentará JSON
+[2m2026-11-17T17:49:18.217116Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m Scheduler recuperado desde JSON (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/scheduler.json): 0 en cola, 218 en historial
+[2m2026-11-17T17:49:18.217418Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.217459Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.242392Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ
+[2m2026-11-17T17:49:18.242669Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock
+[2m2026-11-17T17:49:18.243143Z[0m [33m WARN[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo leer SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database; se intentará JSON
+[2m2026-11-17T17:49:18.243219Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo leer el JSON (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/scheduler.json): error de JSON: expected value at line 1 column 1; se inicia un Scheduler vacío
+[2m2026-11-17T17:49:18.243440Z[0m [31mERROR[0m [2mspeedyG::persistence[0m[2m:[0m No se pudo guardar en SQLite (/tmp/speedyg-TC-022-20261117-114902-17475-data-VvqOWQ/speedyg.db): error de SQLite: file is not a database
+[2m2026-11-17T17:49:18.243491Z[0m [31mERROR[0m [2mspeedyG[0m[2m:[0m Error al guardar scheduler: error de SQLite: file is not a database

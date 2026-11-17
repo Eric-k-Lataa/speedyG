@@ -1,0 +1,20 @@
+[A-iter1] integrity_check: ok
+[A-iter1] scheduler.json válido: ok
+[A-iter2] integrity_check: ok
+[A-iter2] scheduler.json válido: ok
+[A-iter3] integrity_check: ok
+[A-iter3] scheduler.json válido: ok
+[A-iter4] integrity_check: ok
+[A-iter4] scheduler.json válido: ok
+[A-iter5] integrity_check: ok
+[A-iter5] scheduler.json válido: ok
+[A-iter6] integrity_check: ok
+[A-iter6] scheduler.json válido: ok
+[A-iter7] integrity_check: ok
+[A-iter7] scheduler.json válido: ok
+[A-iter8] integrity_check: ok
+[A-iter8] scheduler.json válido: ok
+[A-iter9] integrity_check: ok
+[A-iter9] scheduler.json válido: ok
+[A-iter10] integrity_check: ok
+[A-iter10] scheduler.json válido: ok

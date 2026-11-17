@@ -478,17 +478,24 @@ check "[C] Línea base: BL1=$BL_STATE1 BL2=$BL_STATE2 BL3=$BL_STATE3" \
     "$([[ "$BL_STATE1" == "Succeeded" && "$BL_STATE2" == "Succeeded" && "$BL_STATE3" == "Canceled" ]] \
        && echo 0 || echo 1)"
 
-# Kill en reposo y copiar la carpeta de datos
-kill_daemon_sigkill
-BASELINE_BACKUP="$DATA_DIR/../tc022-baseline-backup"
-cp -a "$DATA_DIR/." "$BASELINE_BACKUP"
-echo "[INFO] Línea base guardada en $BASELINE_BACKUP" | tee -a "$LOG"
+# ── Modificación en el Escenario C para el respaldo seguro ───────────────
 
-# Función para restaurar la línea base
+# Definir el respaldo dentro de la carpeta de ejecución actual ($RUN_DIR)
+BASELINE_BACKUP="$RUN_DIR/tc022-baseline-backup"
+
+# Kill en reposo y copiar la carpeta de datos de forma segura
+kill_daemon_sigkill
+rm -rf "$BASELINE_BACKUP"
+mkdir -p "$BASELINE_BACKUP"
+cp -a "$DATA_DIR/." "$BASELINE_BACKUP"
+echo "[INFO] Línea base guardada de forma segura en $BASELINE_BACKUP" | tee -a "$LOG"
+
+# Función para restaurar la línea base correctamente
 restore_baseline() {
     kill_daemon_sigkill 2>/dev/null || true
     rm -rf "$DATA_DIR"
-    cp -a "$BASELINE_BACKUP" "$DATA_DIR"
+    mkdir -p "$DATA_DIR"
+    cp -a "$BASELINE_BACKUP/." "$DATA_DIR"
 }
 
 # Función para verificar que el estado recuperado coincide con la línea base
