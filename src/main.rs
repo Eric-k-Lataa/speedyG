@@ -64,13 +64,23 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
             sched.set_job_pid(job_id, pid);
         }
 
-        // Ahora sí esperamos a que el proceso termine de forma asíncrona
+        // Esperamos a que el proceso termine de forma asíncrona
         let exec_result = Executor::wait_child(child).await;
 
         // Marcar como completado y guardar.
         {
             let mut sched = lock(&scheduler);
-            if sched.complete_job(
+            let ya_cancelado = sched
+                .history_jobs()
+                .iter()
+                .any(|j| j.get_id() == job_id && matches!(j.get_state(), JobState::Canceled));
+
+            if ya_cancelado {
+                info!(
+                    "Job #{} ya estaba cancelado; se ignora salida de wait_child",
+                    job_id
+                );
+            } else if sched.complete_job(
                 job_id,
                 exec_result.exit_code,
                 exec_result.stdout,
@@ -82,7 +92,7 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
                 );
                 persistir(&sched);
             } else {
-                info!("Job #{} cancelado en Running.", job_id);
+                info!("Job #{} ya no estaba en cola activa al finalizar.", job_id);
             }
         }
         // Despachar el siguiente trabajo si hay capacidad
@@ -291,40 +301,27 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 if let Some(id_str) = cmd.args.first() {
                                     match id_str.parse::<u32>() {
                                         Ok(id) => {
-                                            // Obtener PID si el job está Running antes de cancelar
-                                            let pid_running = {
-                                                let sched = lock(&scheduler);
-                                                sched.get_job(id).and_then(|job| {
-                                                    if matches!(job.get_state(), JobState::Running) {
-                                                        job.get_pid()
-                                                    } else {
-                                                        None
-                                                    }
-                                                })
-                                            };
-
-                                            if let Some(pid) = pid_running {
-                                                Executor::kill_process_group(pid, grace_ms).await;
-                                            }
-
-                                            let (outcome, respuesta) = {
+                                            let (outcome, pid_opt, respuesta) = {
                                                 let mut sched = lock(&scheduler);
-                                                let (outcome, _pid) = sched.try_cancel(id);
+                                                let (outcome, pid) = sched.try_cancel(id);
                                                 if outcome == CancelOutcome::Canceled {
                                                     persistir(&sched);
                                                 }
-                                                (outcome, mensaje_cancelacion(id, outcome))
+                                                (outcome, pid, mensaje_cancelacion(id, outcome))
                                             };
 
                                             if outcome == CancelOutcome::Canceled {
+                                                if let Some(pid) = pid_opt {
+                                                    tokio::spawn(async move {
+                                                        Executor::kill_process_group(pid, grace_ms).await;
+                                                    });
+                                                }
                                                 info!("Job #{} cancelado", id);
                                                 despachar(Arc::clone(&scheduler), max_current);
                                             }
                                             respuesta
                                         }
-                                        Err(_) => {
-                                            "Error: El ID debe ser un número entero positivo\n".to_string()
-                                        }
+                                        Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
                                     }
                                 } else {
                                     "Uso: cancel <id>\n".to_string()
