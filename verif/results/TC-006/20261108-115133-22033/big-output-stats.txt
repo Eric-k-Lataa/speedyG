@@ -1,0 +1,3 @@
+total_lines_found=1001
+has_first_line=1
+has_last_line=1

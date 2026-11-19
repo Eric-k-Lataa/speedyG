@@ -1,0 +1,425 @@
+--- Historial ---
+Job #1: echo hola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+Job #6: echo cancelar [Canceled]
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-02 04:21:20 UTC
+Job #3: sleep 8 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:27 UTC
+Job #4: echo en-cola-1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:27 UTC
+  └─ Finalizado: 2026-11-02 04:21:27 UTC
+Job #5: echo en-cola-2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  2026-11-02 04:21:27 UTC
+  └─ Finalizado: 2026-11-02 04:21:27 UTC
+Job #7: echo carga-1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #8: echo carga-2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #9: echo carga-3 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #10: echo carga-4 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #11: echo carga-5 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #12: echo carga-6 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #13: echo carga-7 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #14: echo carga-8 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #15: echo carga-9 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #16: echo carga-10 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #17: echo carga-11 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #18: echo carga-12 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #19: echo carga-13 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #20: echo carga-14 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #21: echo carga-15 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #22: echo carga-16 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #23: echo carga-17 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #24: echo carga-18 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #25: echo carga-19 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #26: echo carga-20 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #27: echo carga-21 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #28: echo carga-22 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #29: echo carga-23 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:28 UTC
+Job #30: echo carga-24 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:28 UTC
+  ├─ Iniciado:  2026-11-02 04:21:28 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #31: echo carga-25 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #32: echo carga-26 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #33: echo carga-27 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #34: echo carga-28 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #35: echo carga-29 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #36: echo carga-30 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #37: echo carga-31 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #38: echo carga-32 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #39: echo carga-33 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #40: echo carga-34 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #41: echo carga-35 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #42: echo carga-36 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #43: echo carga-37 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #44: echo carga-38 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #45: echo carga-39 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #46: echo carga-40 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #47: echo carga-41 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #48: echo carga-42 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #49: echo carga-43 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #50: echo carga-44 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #51: echo carga-45 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #52: echo carga-46 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #53: echo carga-47 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #54: echo carga-48 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #55: echo carga-49 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #56: echo carga-50 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #57: echo carga-51 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #58: echo carga-52 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #59: echo carga-53 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #60: echo carga-54 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #61: echo carga-55 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #62: echo carga-56 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #63: echo carga-57 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #64: echo carga-58 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #65: echo carga-59 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #66: echo carga-60 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #67: echo carga-61 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #68: echo carga-62 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #69: echo carga-63 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #70: echo carga-64 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #71: echo carga-65 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #72: echo carga-66 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #73: echo carga-67 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #74: echo carga-68 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #75: echo carga-69 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #76: echo carga-70 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #77: echo carga-71 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #78: echo carga-72 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #79: echo carga-73 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #80: echo carga-74 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #81: echo carga-75 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #82: echo carga-76 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #83: echo carga-77 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #84: echo carga-78 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #85: echo carga-79 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #86: echo carga-80 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #87: echo carga-81 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #88: echo carga-82 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #89: echo carga-83 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #90: echo carga-84 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #91: echo carga-85 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #92: echo carga-86 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #93: echo carga-87 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #94: echo carga-88 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #95: echo carga-89 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #96: echo carga-90 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #97: echo carga-91 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #98: echo carga-92 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #99: echo carga-93 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:29 UTC
+  └─ Finalizado: 2026-11-02 04:21:29 UTC
+Job #100: echo carga-94 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:29 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #101: echo carga-95 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #102: echo carga-96 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #103: echo carga-97 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #104: echo carga-98 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #105: echo carga-99 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC
+Job #106: echo carga-100 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:30 UTC
+  ├─ Iniciado:  2026-11-02 04:21:30 UTC
+  └─ Finalizado: 2026-11-02 04:21:30 UTC

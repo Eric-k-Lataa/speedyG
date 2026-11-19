@@ -1,0 +1,6 @@
+J1: echo SOLO_STDOUT_LINEA_1 -> Job #1 encolado correctamente
+J2: echo "SOLO_STDERR_LINEA_1" >&2 -> Job #2 encolado correctamente
+J3: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2 -> Job #3 encolado correctamente
+J4: echo "MSG_FAIL_ERR" >&2; exit 42 -> Job #4 encolado correctamente
+J5: for i in $(seq 1 1000); do echo "LINEA_BIG_$i"; done -> Job #5 encolado correctamente
+J6: binario_inexistente_speedyg_test_xyz -> Job #6 encolado correctamente

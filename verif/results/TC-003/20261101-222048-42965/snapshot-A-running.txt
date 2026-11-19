@@ -1,0 +1,4 @@
+Job #1: sleep 3 [Running]
+  ├─ Recibido:  2026-11-02 04:20:49 UTC
+  ├─ Iniciado:  2026-11-02 04:20:49 UTC
+  └─ Finalizado: En curso / No finalizado

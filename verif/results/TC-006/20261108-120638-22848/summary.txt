@@ -1,0 +1,6 @@
+result=FAIL
+pass=19
+fail=2
+blocked=0
+date=2026-11-08 12:06:40 CST
+run_dir=/home/elataa/Documents/Workspace/speedyG/verif/results/TC-006/20261108-120638-22848

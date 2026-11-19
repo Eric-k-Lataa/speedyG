@@ -33,6 +33,26 @@ impl Executor {
         Ok((child, pid))
     }
 
+    #[cfg(unix)]
+    pub async fn kill_process_group(pid: u32, grace_ms: u64) {
+        use nix::sys::signal::{kill, Signal};
+        use nix::unistd::Pid;
+        use std::time::{Duration, Instant};
+
+        let pgid = Pid::from_raw(-(pid as i32));
+        let _ = kill(pgid, Signal::SIGTERM);
+
+        let deadline = Instant::now() + Duration::from_millis(grace_ms);
+        while Instant::now() < deadline {
+            if kill(pgid, None).is_err() {
+                return;
+            }
+            tokio::time::sleep(Duration::from_millis(25)).await;
+        }
+
+        let _ = kill(pgid, Signal::SIGKILL);
+    }
+
     /// Espera a que un proceso hijo termine y extrae su resultado
     pub async fn wait_child(child: Child) -> ExecutionResult {
         let output = child.wait_with_output().await;

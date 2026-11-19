@@ -1,0 +1,30 @@
+--- S (Job #1) t=0.013s
+Job #1: echo hola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+--- F (Job #2) t=0.013s
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC
+--- R (Job #3) t=0.010s
+Job #3: sleep 8 [Running]
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: En curso / No finalizado
+--- Q1 (Job #4) t=0.011s
+Job #4: echo en-cola-1 [Queued]
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+--- Q2 (Job #5) t=0.008s
+Job #5: echo en-cola-2 [Queued]
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+--- X (Job #6) t=0.008s
+Job #6: echo cancelar [Canceled]
+  ├─ Recibido:  2026-11-02 04:21:20 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-02 04:21:20 UTC

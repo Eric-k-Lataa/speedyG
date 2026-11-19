@@ -1,0 +1,33 @@
+status-por-id rep=1 t=0.006s bytes=165
+status-por-id rep=2 t=0.006s bytes=165
+status-por-id rep=3 t=0.006s bytes=165
+status-por-id rep=4 t=0.006s bytes=165
+status-por-id rep=5 t=0.006s bytes=165
+status-por-id rep=6 t=0.006s bytes=165
+status-por-id rep=7 t=0.006s bytes=165
+status-por-id rep=8 t=0.006s bytes=165
+status-por-id rep=9 t=0.006s bytes=165
+status-por-id rep=10 t=0.006s bytes=165
+status-por-id MAX=0.006s
+status-listado rep=1 t=0.008s bytes=18087
+status-listado rep=2 t=0.008s bytes=18087
+status-listado rep=3 t=0.008s bytes=18087
+status-listado rep=4 t=0.008s bytes=18087
+status-listado rep=5 t=0.008s bytes=18087
+status-listado rep=6 t=0.008s bytes=18087
+status-listado rep=7 t=0.008s bytes=18087
+status-listado rep=8 t=0.008s bytes=18087
+status-listado rep=9 t=0.008s bytes=18087
+status-listado rep=10 t=0.008s bytes=18087
+status-listado MAX=0.008s
+status-filtrado rep=1 t=0.008s bytes=17803
+status-filtrado rep=2 t=0.008s bytes=17803
+status-filtrado rep=3 t=0.008s bytes=17803
+status-filtrado rep=4 t=0.008s bytes=17803
+status-filtrado rep=5 t=0.008s bytes=17803
+status-filtrado rep=6 t=0.008s bytes=17803
+status-filtrado rep=7 t=0.008s bytes=17803
+status-filtrado rep=8 t=0.008s bytes=17803
+status-filtrado rep=9 t=0.008s bytes=17803
+status-filtrado rep=10 t=0.008s bytes=17803
+status-filtrado MAX=0.008s

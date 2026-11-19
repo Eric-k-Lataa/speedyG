@@ -1,0 +1,6 @@
+sonda: status Succeeded
+--- Jobs con estado 'Succeeded' ---
+Job #1: echo hola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-02 04:21:19 UTC
+  ├─ Iniciado:  2026-11-02 04:21:19 UTC
+  └─ Finalizado: 2026-11-02 04:21:19 UTC

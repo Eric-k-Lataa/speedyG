@@ -1,0 +1,2 @@
+respuesta: Error al enviar 'sleep': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+tiempo_respuesta_s: 0.020

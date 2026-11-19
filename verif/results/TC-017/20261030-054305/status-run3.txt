@@ -1,2 +1,0 @@
-Job #41: sleep 70 [Canceled]
-

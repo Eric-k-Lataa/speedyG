@@ -1,0 +1,11 @@
+[2m2026-11-02T04:20:48.628533Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-003-20261101-222048-42965-sDLACt.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-003-20261101-222048-42965-data-g60XPU
+[2m2026-11-02T04:20:48.628816Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-003-20261101-222048-42965-sDLACt.sock
+[2m2026-11-02T04:20:48.628883Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-02T04:20:48.628910Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-02T04:20:49.682912Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 3
+[2m2026-11-02T04:20:50.369627Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 cancelado
+[2m2026-11-02T04:20:52.687061Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-02T04:20:52.694616Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 2
+[2m2026-11-02T04:20:54.701828Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-02T04:20:54.709189Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: timeout 1 sleep 5
+[2m2026-11-02T04:20:55.718652Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 124

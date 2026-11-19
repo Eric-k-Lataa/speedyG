@@ -1,0 +1,26 @@
+[2m2026-10-31T02:23:45.499368Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-016-20261030-202345-19466-dAYZEF.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-016-20261030-202345-19466-data-HMA0c0
+[2m2026-10-31T02:23:45.499797Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-016-20261030-202345-19466-dAYZEF.sock
+[2m2026-10-31T02:23:45.499920Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-10-31T02:23:45.500028Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-10-31T02:23:46.573529Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 8
+[2m2026-10-31T02:23:46.600746Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 8
+[2m2026-10-31T02:23:46.627184Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: sleep 8
+[2m2026-10-31T02:23:47.828756Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'sleep': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:47.983893Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:49.012620Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:50.041101Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:51.069056Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:52.096855Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:53.125143Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:54.153506Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-10-31T02:23:54.580735Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-10-31T02:23:54.587919Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: sleep 8
+[2m2026-10-31T02:23:54.607158Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-10-31T02:23:54.616054Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: sleep 8
+[2m2026-10-31T02:23:54.633815Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-10-31T02:23:54.639974Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: sleep 8
+[2m2026-10-31T02:24:02.602202Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-10-31T02:24:02.615609Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo recuperado
+[2m2026-10-31T02:24:02.624391Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-10-31T02:24:02.634098Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-10-31T02:24:02.654224Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0

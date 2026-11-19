@@ -2,7 +2,7 @@ use speedyG::config::Config;
 use speedyG::executor::Executor;
 use speedyG::parser::parse;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
-use speedyG::scheduler::Scheduler;
+use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
 use std::fs;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -88,6 +88,25 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         // Despachar el siguiente trabajo si hay capacidad
         despachar(Arc::clone(&scheduler), max_current);
     });
+}
+
+/// Mensaje al cliente según el resultado de `cancel` (operación, causa y acción: RNF-21)
+fn mensaje_cancelacion(id: u32, outcome: CancelOutcome) -> String {
+    match outcome {
+        CancelOutcome::Canceled => format!("Job #{} cancelado correctamente\n", id),
+        CancelOutcome::AlreadyCanceled => format!(
+            "Job #{} ya estaba cancelado; no se realizó una nueva cancelación\n",
+            id
+        ),
+        CancelOutcome::AlreadyFinished(estado) => format!(
+            "Error: No se puede cancelar el Job #{}: ya está terminado (estado: {:?}). Consulta 'status {}' para ver su resultado\n",
+            id, estado, id
+        ),
+        CancelOutcome::NotFound => format!(
+            "Error: No se puede cancelar el Job #{}: no encontrado (no existe un trabajo con ese ID). Usa 'status' para ver los IDs disponibles\n",
+            id
+        ),
+    }
 }
 
 fn despachar(scheduler: SharedScheduler, max_current: usize) {
@@ -198,6 +217,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
 
                 let scheduler = Arc::clone(&scheduler);
+                let grace_ms = cfg.grace_ms;
+                let max_current = cfg.max_current;
 
                 tokio::spawn(async move {
                     let mut buffer = [0; 1024];
@@ -270,14 +291,36 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 if let Some(id_str) = cmd.args.first() {
                                     match id_str.parse::<u32>() {
                                         Ok(id) => {
-                                            let mut sched = lock(&scheduler);
-                                            if sched.cancel_job(id) {
-                                                persistir(&sched);
-                                                info!("Job #{} cancelado", id);
-                                                format!("Job #{} cancelado correctamente\n", id)
-                                            } else {
-                                                format!("Error: No se pudo cancelar el Job #{}\n", id)
+                                            // Obtener PID si el job está Running antes de cancelar
+                                            let pid_running = {
+                                                let sched = lock(&scheduler);
+                                                sched.get_job(id).and_then(|job| {
+                                                    if matches!(job.get_state(), JobState::Running) {
+                                                        job.get_pid()
+                                                    } else {
+                                                        None
+                                                    }
+                                                })
+                                            };
+
+                                            if let Some(pid) = pid_running {
+                                                Executor::kill_process_group(pid, grace_ms).await;
                                             }
+
+                                            let (outcome, respuesta) = {
+                                                let mut sched = lock(&scheduler);
+                                                let (outcome, _pid) = sched.try_cancel(id);
+                                                if outcome == CancelOutcome::Canceled {
+                                                    persistir(&sched);
+                                                }
+                                                (outcome, mensaje_cancelacion(id, outcome))
+                                            };
+
+                                            if outcome == CancelOutcome::Canceled {
+                                                info!("Job #{} cancelado", id);
+                                                despachar(Arc::clone(&scheduler), max_current);
+                                            }
+                                            respuesta
                                         }
                                         Err(_) => {
                                             "Error: El ID debe ser un número entero positivo\n".to_string()
@@ -291,24 +334,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 let resultado = {
                                     let mut sched = lock(&scheduler);
 
-                                    match sched.add_job(cmd.program.clone(), cmd.args.clone()){
-                                        Ok(job)=> {
+                                    match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
+                                        Ok(job) => {
                                             let job_id = job.get_id();
                                             let full_command = job.get_command_line();
                                             persistir(&sched);
                                             Ok((job_id, full_command))
                                         }
-                                        Err(error)=> Err(error),
+                                        Err(error) => Err(error),
                                     }
                                 };
 
                                 match resultado {
-                                    Ok((job_id,_full_command))=> {
-                                        despachar(Arc::clone(&scheduler), cfg.max_current);
+                                    Ok((job_id, _full_command)) => {
+                                        despachar(Arc::clone(&scheduler), max_current);
                                         format!("Job #{} encolado correctamente\n", job_id)
                                     }
-                                    Err(error)=> {
-                                        format!("{}\n",error)
+                                    Err(error) => {
+                                        format!("{}\n", error)
                                     }
                                 }
                             }
@@ -327,10 +370,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // --- FASE DE APAGADO LIMPIO (Graceful Shutdown) ---
     info!("Ejecutando rutina de limpieza de cierre...");
 
-    // 1. Matar todos los trabajos que sigan corriendo en el sistema operativo
-    {
+    let running_targets: Vec<(u32, Option<u32>)> = {
         let mut sched = lock(&scheduler);
-        // Obtenemos los IDs de los jobs activos pendientes o en ejecución
         let running_ids: Vec<u32> = sched
             .pending_jobs()
             .iter()
@@ -338,15 +379,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .map(|j| j.get_id())
             .collect();
 
+        let mut targets = Vec::new();
         for id in running_ids {
             info!(
                 "Terminando job activo #{} debido al cierre del demonio...",
                 id
             );
-            sched.cancel_job(id);
+            let (outcome, pid_opt) = sched.try_cancel(id);
+            if outcome == CancelOutcome::Canceled {
+                targets.push((id, pid_opt));
+            }
         }
         persistir(&sched);
+        targets
+    };
+
+    let mut kill_handles = Vec::new();
+    for (id, pid_opt) in running_targets {
+        if let Some(pid) = pid_opt {
+            let g_ms = cfg.grace_ms;
+            kill_handles.push(tokio::spawn(async move {
+                info!(
+                    "Enviando señal de terminación a grupo de job #{} (PID {})",
+                    id, pid
+                );
+                Executor::kill_process_group(pid, g_ms).await;
+            }));
+        }
     }
+    for handle in kill_handles {
+        let _ = handle.await;
+    }
+
+    // Margen breve para que las tareas de lanzar_job completen wait_child y cosechen hijos
+    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
 
     // 2. Eliminar el archivo del socket Unix
     if fs::metadata(&socket_path).is_ok() {

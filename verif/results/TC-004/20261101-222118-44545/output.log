@@ -1,0 +1,102 @@
+========================================
+TC-004  —  run 20261101-222118-44545
+========================================
+tc_id=TC-004
+run_id=20261101-222118-44545
+date=2026-11-01 22:21:18 CST
+os=Linux
+kernel=6.12.111+deb13-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=9da9b722c5ae4c12986ba4d9d4272938235739b5
+socket=/tmp/speedyg-TC-004-20261101-222118-44545-P8wVkV.sock
+data_dir=/tmp/speedyg-TC-004-20261101-222118-44545-data-ExpLKe
+db=/tmp/speedyg-TC-004-20261101-222118-44545-data-ExpLKe/speedyg.db
+json=/tmp/speedyg-TC-004-20261101-222118-44545-data-ExpLKe/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 100
+[INFO] Socket: /tmp/speedyg-TC-004-20261101-222118-44545-P8wVkV.sock
+[INFO] PID del daemon: 44585
+[PASS] Daemon disponible (PID 44585).
+[PASS] Configuración efectiva del daemon: max_current=1 queue_cap=100
+
+[1] Preparando trabajos en estados Succeeded, Failed, Running, Queued y Canceled
+S: echo hola -> Job #1 encolado correctamente
+F: false -> Job #2 encolado correctamente
+R: sleep 8 -> Job #3 encolado correctamente
+Q1: echo en-cola-1 -> Job #4 encolado correctamente
+Q2: echo en-cola-2 -> Job #5 encolado correctamente
+X: echo cancelar -> Job #6 encolado correctamente
+[PASS] Los 6 trabajos de preparación fueron aceptados con ID distinto (distintos: 6)
+
+[2] Parte A (RF-08): consulta por ID
+[PASS] status 1 responde con el ID consultado (Job #1)
+[PASS] status 1 muestra el comando enviado
+[PASS] status 1 muestra el estado Succeeded (obtenido: 'Succeeded')
+[PASS] status 2 responde con el ID consultado (Job #2)
+[PASS] status 2 muestra el comando enviado
+[PASS] status 2 muestra el estado Failed (obtenido: 'Failed')
+[PASS] status 3 responde con el ID consultado (Job #3)
+[PASS] status 3 muestra el comando enviado
+[PASS] status 3 muestra el estado Running (obtenido: 'Running')
+[PASS] status 4 responde con el ID consultado (Job #4)
+[PASS] status 4 muestra el comando enviado
+[PASS] status 4 muestra el estado Queued (obtenido: 'Queued')
+[PASS] status 5 responde con el ID consultado (Job #5)
+[PASS] status 5 muestra el comando enviado
+[PASS] status 5 muestra el estado Queued (obtenido: 'Queued')
+[PASS] status 6 responde con el ID consultado (Job #6)
+[PASS] status 6 muestra el comando enviado
+[PASS] status 6 muestra el estado Canceled (obtenido: 'Canceled')
+[PASS] El trabajo exitoso muestra 'exit code: 0'
+[PASS] El trabajo fallido muestra 'exit code: 1'
+[PASS] ID inexistente: respuesta explícita 'no encontrado'
+[PASS] ID inexistente: el mensaje incluye el ID consultado
+[PASS] ID no numérico: se rechaza con mensaje (no se interpreta como consulta válida)
+
+[3] Parte B (RF-09): listado completo
+[PASS] status sin argumentos lista exactamente los 6 trabajos (esperado: 1,2,3,4,5,6; obtenido: 1,2,3,4,5,6)
+[PASS] El listado no repite ningún trabajo (repetidos: ninguno)
+[PASS] Cada estado del listado coincide con el de la consulta por ID
+[PASS] 'list' devuelve los mismos trabajos que 'status' (obtenido: 1,2,3,4,5,6)
+
+[4] Parte C (RF-09): filtro por estado (sintaxis provisional: 'status %s')
+[PASS] Filtro Queued devuelve exactamente [4,5] (obtenido: [4,5])
+[PASS] Filtro Queued no devuelve trabajos de otro estado (ajenos: 0)
+[PASS] Filtro Running devuelve exactamente [3] (obtenido: [3])
+[PASS] Filtro Running no devuelve trabajos de otro estado (ajenos: 0)
+[PASS] Filtro Succeeded devuelve exactamente [1] (obtenido: [1])
+[PASS] Filtro Succeeded no devuelve trabajos de otro estado (ajenos: 0)
+[PASS] Filtro Failed devuelve exactamente [2] (obtenido: [2])
+[PASS] Filtro Failed no devuelve trabajos de otro estado (ajenos: 0)
+[PASS] Filtro Canceled devuelve exactamente [6] (obtenido: [6])
+[PASS] Filtro Canceled no devuelve trabajos de otro estado (ajenos: 0)
+[PASS] Un estado inexistente se rechaza con mensaje (no devuelve el listado completo)
+
+[5] Parte D (RNF-05): cargando 100 trabajos 'echo carga'
+[PASS] Los 100 trabajos de carga fueron aceptados (aceptados: 100)
+[PASS] Hay al menos 100 trabajos almacenados y ninguno pendiente (almacenados: 106)
+status-por-id MAX=0.006s
+[PASS] RNF-05: status <id> con 106 trabajos (máx. 0.006s <= 1.0s)
+status-listado MAX=0.008s
+[PASS] RNF-05: status (listado completo) con 106 trabajos (máx. 0.008s <= 1.0s)
+[PASS] El listado completo devolvió los 106 trabajos (líneas: 106)
+status-filtrado MAX=0.008s
+[PASS] RNF-05: consulta filtrada con 106 trabajos (máx. 0.008s <= 1.0s)
+
+[INFO] File descriptors abiertos por daemon: 10
+[PASS] Sin procesos zombi bajo daemon PID 44585.
+[PASS] Sin procesos hijos residuales bajo daemon PID 44585.
+
+========================================
+RESULTADO: PASS
+PASS: 49  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 44585...

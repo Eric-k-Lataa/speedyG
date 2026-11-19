@@ -1,0 +1,4 @@
+integrity_result=0
+details=JSON válido verificado con jq.
+json_path=/tmp/speedyg-TC-007-20261107-210121-11770-data-8DUd2C/scheduler.json
+db_path=/tmp/speedyg-TC-007-20261107-210121-11770-data-8DUd2C/speedyg.db

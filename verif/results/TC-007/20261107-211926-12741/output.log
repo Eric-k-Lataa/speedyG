@@ -1,0 +1,162 @@
+========================================
+TC-007  —  run 20261107-211926-12741
+========================================
+tc_id=TC-007
+run_id=20261107-211926-12741
+date=2026-11-07 21:19:26 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=195854251f7b97434d3f17688c30418d0a4bd214
+socket=/tmp/speedyg-TC-007-20261107-211926-12741-9dCUuN.sock
+data_dir=/tmp/speedyg-TC-007-20261107-211926-12741-data-ulOfeA
+db=/tmp/speedyg-TC-007-20261107-211926-12741-data-ulOfeA/speedyg.db
+json=/tmp/speedyg-TC-007-20261107-211926-12741-data-ulOfeA/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 550
+[INFO] Socket: /tmp/speedyg-TC-007-20261107-211926-12741-9dCUuN.sock
+[INFO] PID del daemon: 12781
+[PASS] Daemon disponible (PID 12781).
+[PASS] Configuración efectiva del daemon: max_current=1 queue_cap=550
+
+[1] Preparando mezcla de trabajos en distintos estados antes de la caída
+J1: echo terminado-exito -> Job #1 encolado correctamente
+J2: false -> Job #2 encolado correctamente
+J3: sleep 1003 -> Job #3 encolado correctamente
+J4: sleep 1004 -> Job #4 encolado correctamente
+J5: echo en-cola-1 -> Job #5 encolado correctamente
+J6: echo en-cola-2 -> Job #6 encolado correctamente
+J1=1 (Succeeded)
+J2=2 (Failed)
+J3=3 (Canceled)
+J4=4 (Running)
+J5=5 (Queued)
+J6=6 (Queued)
+[PASS] Los 6 trabajos iniciales fueron aceptados con IDs únicos (distintos: 6)
+
+[2] Verificando estados consolidados antes de kill -9
+=== ESTADO PRE-KILL ===
+Job #1: echo terminado-exito [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:19:27 UTC
+  ├─ Iniciado:  2026-11-08 03:19:27 UTC
+  └─ Finalizado: 2026-11-08 03:19:27 UTC
+  [stdout]:
+    │ terminado-exito
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-08 03:19:27 UTC
+  ├─ Iniciado:  2026-11-08 03:19:27 UTC
+  └─ Finalizado: 2026-11-08 03:19:27 UTC
+Job #3: sleep 1003 [Canceled]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:28 UTC
+  └─ Finalizado: 2026-11-08 03:19:28 UTC
+Job #4: sleep 1004 [Running]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:28 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #5: echo en-cola-1 [Queued]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+Job #6: echo en-cola-2 [Queued]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+[PASS] J1 está en Succeeded (exit code 0) antes del kill (obtenido: 'Succeeded')
+[PASS] J2 está en Failed antes del kill (obtenido: 'Failed')
+[PASS] J3 está en Canceled antes del kill (obtenido: 'Canceled')
+[PASS] J4 está en Running antes del kill (obtenido: 'Running')
+[PASS] J5 está en Queued antes del kill (obtenido: 'Queued')
+[PASS] J6 está en Queued antes del kill (obtenido: 'Queued')
+
+[3] Registrando PIDs y snapshot de persistencia en disco
+daemon_pid=12781
+direct_children=12900
+marker_pids_sleep_1004=12900
+12901
+
+[4] Provocando caída abrupta del daemon con kill -9 (PID 12781)
+[PASS] Daemon PID 12781 terminado abruptamente por SIGKILL
+
+[5] Verificando integridad del archivo de persistencia en disco (RNF-11)
+integrity_result=0
+details=JSON válido verificado con jq.
+json_path=/tmp/speedyg-TC-007-20261107-211926-12741-data-ulOfeA/scheduler.json
+db_path=/tmp/speedyg-TC-007-20261107-211926-12741-data-ulOfeA/speedyg.db
+[PASS] Archivo de persistencia íntegro y sin estado parcialmente corrupto (RNF-11)
+
+[6] Reiniciando daemon (Instancia 2) sobre el mismo directorio de datos
+[INFO] Nuevo PID del daemon: 13063
+[PASS] Daemon reiniciado exitosamente y socket disponible (PID 13063)
+
+[7] Consultando estados tras reinicio (RF-12, RF-13, RNF-10, RNF-31)
+=== ESTADOS INMEDIATOS POST-REINICIO ===
+Job #1: echo terminado-exito [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:19:27 UTC
+  ├─ Iniciado:  2026-11-08 03:19:27 UTC
+  └─ Finalizado: 2026-11-08 03:19:27 UTC
+  [stdout]:
+    │ terminado-exito
+Job #2: false [Failed(1)] (exit code: 1)
+  ├─ Recibido:  2026-11-08 03:19:27 UTC
+  ├─ Iniciado:  2026-11-08 03:19:27 UTC
+  └─ Finalizado: 2026-11-08 03:19:27 UTC
+Job #3: sleep 1003 [Canceled]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:28 UTC
+  └─ Finalizado: 2026-11-08 03:19:28 UTC
+Job #4: sleep 1004 [Interrupted]
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:28 UTC
+  └─ Finalizado: 2026-11-08 03:19:29 UTC
+Job #5: echo en-cola-1 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:29 UTC
+  └─ Finalizado: 2026-11-08 03:19:29 UTC
+  [stdout]:
+    │ en-cola-1
+Job #6: echo en-cola-2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-08 03:19:28 UTC
+  ├─ Iniciado:  2026-11-08 03:19:29 UTC
+  └─ Finalizado: 2026-11-08 03:19:29 UTC
+  [stdout]:
+    │ en-cola-2
+[PASS] RF-12/RNF-31: J1 conserva estado Succeeded y exit code 0 tras reinicio (obtenido: 'Succeeded')
+[PASS] RF-12/RNF-31: J2 conserva estado Failed y exit code tras reinicio (obtenido: 'Failed')
+[PASS] RF-12/RNF-31: J3 conserva estado Canceled tras reinicio (obtenido: 'Canceled')
+[PASS] RNF-10/RNF-31: J4 NO se reporta como Running tras el reinicio (obtenido: 'Interrupted')
+[PASS] RF-13/RNF-31: J4 se marca coherentemente como Interrupted tras el reinicio (obtenido: 'Interrupted')
+
+[8] Verificando despacho de trabajos recuperados en cola (J5, J6) y nuevo trabajo (J7)
+[PASS] RF-13/RNF-31: J5 recuperado de cola avanza y termina en Succeeded (tiempo: 0s)
+[PASS] RF-13/RNF-31: J6 recuperado de cola avanza y termina en Succeeded (tiempo: 0s)
+J7: echo post-reinicio -> Job #7 encolado correctamente
+[PASS] Scheduler acepta y ejecuta nuevo trabajo J7 (#7) tras reinicio (obtenido: 'Succeeded')
+
+[9] Verificando soporte de al menos 500 registros sin pérdida de metadatos (RNF-06)
+[PASS] RNF-06: Se encolaron 500 trabajos de carga (aceptados: 500/500)
+[INFO] Reiniciando daemon (Instancia 3) para validar recuperación de 500+ registros persistidos...
+
+[INFO] Deteniendo daemon PID 13063...
+[PASS] Daemon reiniciado exitosamente tras carga masiva (PID 17241)
+[PASS] RNF-06: Persistencia y recuperación de al menos 500 registros (recuperados: 507)
+[PASS] RNF-06: Metadatos intactos en muestras de trabajos tras recuperación masiva
+
+[10] Verificando salud general y ausencia de procesos huérfanos / zombis
+[PASS] Daemon responde correctamente a health tras ciclo completo (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+[PASS] Sin procesos zombi bajo daemon PID 17241.
+[PASS] Sin procesos hijos residuales bajo daemon PID 17241.
+
+========================================
+RESULTADO: PASS
+PASS: 27  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 17241...

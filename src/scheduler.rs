@@ -5,6 +5,19 @@ use std::collections::VecDeque;
 
 use tracing::{info, warn};
 
+/// Resultado de una solicitud de cancelación
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum CancelOutcome {
+    /// Esta solicitud canceló el Job
+    Canceled,
+    /// El Job ya había sido cancelado por una solicitud anterior
+    AlreadyCanceled,
+    /// El Job ya terminó (Succeeded, Failed, ...) y no puede cancelarse
+    AlreadyFinished(JobState),
+    /// No existe un Job con ese ID
+    NotFound,
+}
+
 /// Administrador de la cola de tareas y envio (?) hacia el Executor
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Scheduler {
@@ -103,41 +116,43 @@ impl Scheduler {
             .find(|j| j.get_id() == id)
     }
 
-    /// Cancela un Job si aún está en la cola o ejecución
+    /// Cancela un Job si aún está en la cola o ejecución.
+    /// Devuelve `true` solo si esta llamada efectuó la cancelación.
     pub fn cancel_job(&mut self, id: u32) -> bool {
-        // Buscar si está en la cola (pendiente o corriendo)
+        let (outcome, _pid) = self.try_cancel(id);
+        outcome == CancelOutcome::Canceled
+    }
+
+    /// Cancela un Job e informa el motivo cuando no es posible (RF-10, RF-26, RNF-21).
+    /// Las llamadas se serializan con el lock del Scheduler: solo la primera
+    /// obtiene `Canceled`; las siguientes obtienen `AlreadyCanceled`.
+    pub fn try_cancel(&mut self, id: u32) -> (CancelOutcome, Option<u32>) {
+        if self.queue.iter().all(|j| j.get_id() != id) {
+            let outcome = match self.history.iter().find(|j| j.get_id() == id) {
+                None => CancelOutcome::NotFound,
+                Some(job) => match job.get_state() {
+                    JobState::Canceled => CancelOutcome::AlreadyCanceled,
+                    otro => CancelOutcome::AlreadyFinished(otro),
+                },
+            };
+            return (outcome, None);
+        }
+
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
             let mut job = self.queue.remove(pos).unwrap();
-
-            // Si el trabajo estaba corriendo y tiene un PID asignado, lo matamos a nivel OS
-            if let Some(pid) = job.get_pid() {
-                #[cfg(unix)]
-                {
-                    use nix::sys::signal::{self, Signal};
-                    use nix::unistd::Pid;
-
-                    // Enviamos SIGTERM (o SIGKILL) al grupo de procesos negativo (-pid) para asegurar que matamos tanto a sh como al comando hijo.
-                    let target_pid = Pid::from_raw(-(pid as i32));
-                    let _ = signal::kill(target_pid, Signal::SIGTERM);
-                }
-                #[cfg(not(unix))]
-                {
-                    // Fallback genérico
-                    let _ = std::process::Command::new("kill")
-                        .arg("-9")
-                        .arg(pid.to_string())
-                        .status();
-                }
-            }
+            let pid_si_corria = if matches!(job.get_state(), JobState::Running) {
+                job.get_pid()
+            } else {
+                None
+            };
 
             job.transition(JobEvent::Cancel);
             self.history.push(job);
-            true
+            (CancelOutcome::Canceled, pid_si_corria)
         } else {
-            false
+            (CancelOutcome::NotFound, None)
         }
     }
-
     /// Marca un proceso como running (para cuando se llaman asincronos mas que nada)
     pub fn start_job(&mut self, id: u32) -> bool {
         if let Some(job) = self.queue.iter_mut().find(|j| j.get_id() == id) {

@@ -1,0 +1,16 @@
+[2m2026-11-08T18:13:13.953277Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-006-20261108-121313-24546-0ujoou.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m2 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-006-20261108-121313-24546-data-hFI8QJ
+[2m2026-11-08T18:13:13.953772Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-006-20261108-121313-24546-0ujoou.sock
+[2m2026-11-08T18:13:13.953932Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-08T18:13:13.954037Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-08T18:13:15.029898Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo SOLO_STDOUT_LINEA_1
+[2m2026-11-08T18:13:15.033346Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-08T18:13:15.153719Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo "SOLO_STDERR_LINEA_1" >&2
+[2m2026-11-08T18:13:15.158910Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-08T18:13:15.279973Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2
+[2m2026-11-08T18:13:15.283504Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-08T18:13:15.401405Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: echo "MSG_FAIL_ERR" >&2; exit 42
+[2m2026-11-08T18:13:15.404202Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 42
+[2m2026-11-08T18:13:15.508548Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: for i in $(seq 1 1000); do echo "LINEA_BIG_$i"; done
+[2m2026-11-08T18:13:15.522728Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-08T18:13:15.659411Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: binario_inexistente_speedyg_test_xyz
+[2m2026-11-08T18:13:15.662829Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 127
