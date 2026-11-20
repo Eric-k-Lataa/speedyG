@@ -1,0 +1,5 @@
+Job #215: echo pendiente [Queued]
+  ├─ Recibido:  2026-11-17 17:49:14 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+

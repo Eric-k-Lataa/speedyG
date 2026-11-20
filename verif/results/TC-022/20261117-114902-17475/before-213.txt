@@ -1,0 +1,5 @@
+Job #213: sleep 1003 [Running]
+  ├─ Recibido:  2026-11-17 17:49:13 UTC
+  ├─ Iniciado:  2026-11-17 17:49:13 UTC
+  └─ Finalizado: En curso / No finalizado
+

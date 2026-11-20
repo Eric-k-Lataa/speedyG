@@ -1,0 +1,11 @@
+before_D_id=211 state=Succeeded
+before_E_id=212 state=Canceled
+before_A_id=213 state=Running
+before_B_id=214 state=Queued
+before_C_id=215 state=Queued
+after_D_id=211 state=Succeeded
+after_E_id=212 state=Canceled
+after_A_id=213 state=Interrupted
+after_B_id=214 state=Running
+after_C_id=215 state=Queued
+final_B=Succeeded final_C=Succeeded final_A=Interrupted

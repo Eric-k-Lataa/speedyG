@@ -1,0 +1,3 @@
+Error: El demonio speedyg no está en ejecución (socket: /tmp/speedyg-TC-022-20261117-114902-17475-KaN5QP.sock).
+states: BL1=Succeeded BL2=Succeeded BL3=Canceled
+daemon_log_recovery_mentions=3
