@@ -89,10 +89,10 @@
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
 | TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | PASS |
 | TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | PASS |
-| TC-020 | Terminación inesperada del hijo | RF-29, RNF-30 | `TC-020.sh` | Pendiente |
-| TC-021 | Escalamiento de cancelación | RF-30, RNF-30 | `TC-021.sh` | Pendiente |
-| TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | — | Sin redactar |
-| TC-024 | Liberación de recursos bajo carga | RNF-33 | — | Sin redactar |
+| TC-020 | Terminación inesperada del hijo | RF-29, RNF-30 | `TC-020.sh` | BLOCKED |
+| TC-021 | Escalamiento de cancelación | RF-30, RNF-30 | `TC-021.sh` | BLOCKED |
+| TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | `TC-022.sh` | BLOCKED |
+| TC-024 | Liberación de recursos bajo carga | RNF-33 | `TC-024.sh` | PASS |
 
 Los TC-010 a TC-015, TC-019 y TC-023 aparecen en la matriz pero aún no tienen archivo ni script. Hay que confirmar con el equipo cuáles entran en este avance. TC-019 (RF-28) sí lo exige el brief del Avance 02.
 
