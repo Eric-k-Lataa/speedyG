@@ -152,7 +152,11 @@ echo "$STATUS_J1_POST" > "$RUN_DIR/status-j1-post-kill.txt"
 ST_J1_POST=$(job_state "$STATUS_J1_POST")
 
 check "[RF-29] Trabajo víctima J1 transicionó a estado terminal de fallo tras kill (estado: '$ST_J1_POST')" \
-    "$([[ "$ST_J1_POST" != "Running" && "$ST_J1_POST" != "Queued" ]] && echo 0 || echo 1)"
+    "$([[ "$ST_J1_POST" == "Failed" || "$ST_J1_POST" == "KillSignal" ]] && echo 0 || echo 1)"
+
+# Diagnóstico de señal: debe indicar código 137 o SIGKILL / señal 9 (no solo -1 genérico)
+check "[RF-29] Diagnóstico de J1 refleja la señal o código de terminación (137/SIGKILL/señal 9, no solo -1)" \
+    "$(grep -qE '(137|SIGKILL|señal 9|signal 9|KillSignal\(9\))' <<< "$STATUS_J1_POST" && echo 0 || echo 1)"
 
 # Esperar a que J2 sea despachado y concluya en Succeeded
 wait_job_state "$ID_J2" "Succeeded" 10

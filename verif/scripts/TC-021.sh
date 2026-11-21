@@ -143,6 +143,10 @@ ST_J1_POST=$(job_state "$STATUS_J1_POST")
 check "[RF-30] Trabajo J1 transicionó a estado Canceled tras escalamiento (estado: '$ST_J1_POST')" \
     "$([[ "$J1_CANCEL_RC" -eq 0 && "$ST_J1_POST" == "Canceled" ]] && echo 0 || echo 1)"
 
+# Comprobación de registro de escalamiento / cancelación en la bitácora
+check "[RF-30] Bitácora del daemon documenta la cancelación y señalización de procesos" \
+    "$(grep -qiE '(cancel|SIGTERM|SIGKILL|termina|escalad)' "$RUN_DIR/daemon.log" && echo 0 || echo 1)"
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # FASE 4: Verificación de despacho y avance de cola de J2 (RF-30)
 # ═══════════════════════════════════════════════════════════════════════════════
