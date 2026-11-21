@@ -66,7 +66,7 @@
 | RNF-27 | Transiciones consistentes ante concurrencia, sin regresiones | Crítica | Prueba | TC-017 | estados + log | PASS | — |
 | RNF-28 | Actualizaciones persistentes atómicas o recuperables | Crítica | Prueba | TC-022 | archivos antes/después + log | Pendiente | — |
 | RNF-29 | Backpressure o rechazo explícito en límites | Crítica | Prueba | TC-016 | rejection.txt + recovery.txt | PASS | — |
-| RNF-30 | Sin procesos huérfanos tras cierre o falla | Crítica | Prueba | TC-020, TC-009 | ps + log | Pendiente | — |
+| RNF-30 | Sin procesos huérfanos tras cierre o falla | Crítica | Prueba | TC-020, TC-021, TC-009 | ps + log | Pendiente | — |
 | RNF-31 | Recuperación distingue pendientes, terminados e interrumpidos | Crítica | Prueba | TC-007, TC-022 | estados antes/después | BLOCKED | Falta 022 |
 | RNF-32 | Compatibilidad de versión del protocolo | Alta | Prueba | TC-023 | respuesta a versión incompatible | Pendiente | — |
 | RNF-33 | Liberación de memoria, procesos, archivos y sockets bajo estrés | Alta | Prueba | TC-024 | fds + procesos + memoria | Pendiente | — |
@@ -89,8 +89,8 @@
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
 | TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | PASS |
 | TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | PASS |
-| TC-020 | Terminación inesperada del hijo | RF-14, RF-29, RNF-22, RNF-30 | — | Sin redactar |
-| TC-021 | Escalamiento de cancelación | RF-30 | — | Sin redactar |
+| TC-020 | Terminación inesperada del hijo | RF-29, RNF-30 | `TC-020.sh` | Pendiente |
+| TC-021 | Escalamiento de cancelación | RF-30, RNF-30 | `TC-021.sh` | Pendiente |
 | TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | — | Sin redactar |
 | TC-024 | Liberación de recursos bajo carga | RNF-33 | — | Sin redactar |
 

@@ -40,6 +40,8 @@ run_tc "TC-009"
 run_tc "TC-016"
 run_tc "TC-017"
 run_tc "TC-018"
+run_tc "TC-020"
+run_tc "TC-021"
 # run_tc "TC-022"
 run_tc "TC-024"
 
