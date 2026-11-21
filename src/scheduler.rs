@@ -70,6 +70,9 @@ impl Scheduler {
             job.set_pid(pid);
             true
         } else {
+            if let Some(job) = self.history.iter_mut().find(|j| j.get_id() == id) {
+                job.set_pid(pid);
+            }
             false
         }
     }

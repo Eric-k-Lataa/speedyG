@@ -59,9 +59,36 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
         };
 
         // 2. REGISTRAMOS EL PID EN EL SCHEDULER AL INSTANTE (Antes de esperar)
-        if let Some(pid) = pid_opt {
+        /* if let Some(pid) = pid_opt {
             let mut sched = lock(&scheduler);
             sched.set_job_pid(job_id, pid);
+        }
+        */
+        //Comente esta parte porque me estaba dando problemas con huerfanos, es remplazada por el siguiente bloque de codigo
+
+        // Verificamos que sigue el job activo en la cola y registramos PID
+        let sigue_activo = {
+            let mut sched = lock(&scheduler);
+            if let Some(pid) = pid_opt {
+                sched.set_job_pid(job_id, pid)
+            } else {
+                sched
+                    .pending_jobs()
+                    .iter()
+                    .any(|j| j.get_id() == job_id && matches!(j.get_state(), JobState::Running))
+            }
+        };
+
+        if !sigue_activo {
+            warn!(
+                "Job #{} cancelado durante spawn; terminando proceso",
+                job_id
+            );
+            if let Some(pid) = pid_opt {
+                Executor::kill_process_group(pid, 100).await;
+            }
+            let _ = Executor::wait_child(child).await;
+            return;
         }
 
         // Esperamos a que el proceso termine de forma asíncrona

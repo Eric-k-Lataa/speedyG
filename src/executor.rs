@@ -39,6 +39,10 @@ impl Executor {
         use nix::unistd::Pid;
         use std::time::{Duration, Instant};
 
+        if pid == 0 {
+            return;
+        }
+
         let pgid = Pid::from_raw(-(pid as i32));
         let _ = kill(pgid, Signal::SIGTERM);
 
