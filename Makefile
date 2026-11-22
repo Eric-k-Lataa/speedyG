@@ -4,7 +4,7 @@
 
 CARGO ?= cargo
 
-.PHONY: all build test fmt clippy verify clean
+.PHONY: all build test fmt clippy run-all verify clean
 
 all: build
 
@@ -21,11 +21,14 @@ fmt:
 clippy:
 	$(CARGO) clippy --locked -- -D warnings
 
-# Verificación completa: fmt, clippy -D warnings, test y run-all.sh.
-# run-all.sh usa los binarios de target/debug, por eso se compilan aquí.
-verify: fmt clippy test
+# Casos de verificación. run-all.sh usa los binarios de target/debug,
+# por eso se compilan aquí.
+run-all:
 	$(CARGO) build --locked --bins
 	bash verif/scripts/run-all.sh
+
+# Verificación completa: fmt, clippy -D warnings, test y run-all.sh.
+verify: fmt clippy test run-all
 
 clean:
 	$(CARGO) clean
