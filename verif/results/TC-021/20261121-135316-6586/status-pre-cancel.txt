@@ -1,0 +1,3 @@
+--- Pendientes / En ejecución ---
+Job #1: sh -c trap '' TERM; sleep 2002 & wait [Running]
+Job #2: echo siguiente-tras-escalamiento [Queued]

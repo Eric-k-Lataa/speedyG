@@ -1,0 +1,12 @@
+Job #1: sleep 1001 [Running]
+  ├─ Recibido:  2026-11-17 22:01:12 UTC
+  ├─ Iniciado:  2026-11-17 22:01:12 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #2: sleep 1002 [Queued]
+  ├─ Recibido:  2026-11-17 22:01:12 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+Job #3: echo siguiente [Queued]
+  ├─ Recibido:  2026-11-17 22:01:12 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
