@@ -1,0 +1,5 @@
+elapsed_sec=0
+state_canceled=1
+procs_dead=1
+remaining_direct_children=
+remaining_sleep_1001=

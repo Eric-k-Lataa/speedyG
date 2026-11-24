@@ -1,0 +1,2 @@
+socket_path=/tmp/speedyg-TC-024-20261117-160125-43104-TD18hn.sock
+socket_gone=0

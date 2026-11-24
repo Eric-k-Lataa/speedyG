@@ -1,0 +1,10 @@
+--- cancel terminado (Job #3) ---
+Error: No se pudo cancelar el Job #3
+--- cancel ya cancelado (Job #1) ---
+Error: No se pudo cancelar el Job #1
+--- cancel id inexistente (99999) ---
+Error: No se pudo cancelar el Job #99999
+--- cancel sin id ---
+Error de sintaxis: cancel requiere un ID
+--- cancel id no numerico (abc) ---
+Error de sintaxis: El ID debe ser un entero

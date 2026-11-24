@@ -1,0 +1,13 @@
+[2m2026-11-21T19:53:17.141296Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-021-20261121-135316-6586-WBbSLg.sock [3mqueue_cap[0m[2m=[0m5 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m1000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-021-20261121-135316-6586-data-QGX5Id
+[2m2026-11-21T19:53:17.141760Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-021-20261121-135316-6586-WBbSLg.sock
+[2m2026-11-21T19:53:17.141895Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-21T19:53:17.141995Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-21T19:53:18.237614Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sh -c trap '' TERM; sleep 2002 & wait
+[2m2026-11-21T19:53:20.504006Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 cancelado
+[2m2026-11-21T19:53:20.507671Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo siguiente-tras-escalamiento
+[2m2026-11-21T19:53:20.510929Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-21T19:53:20.511379Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-21T19:53:20.830654Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-21T19:53:20.830693Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-21T19:53:20.932949Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-021-20261121-135316-6586-WBbSLg.sock eliminado correctamente.
+[2m2026-11-21T19:53:20.933080Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

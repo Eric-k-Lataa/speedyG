@@ -1,0 +1,75 @@
+========================================
+TC-021  —  run 20261121-135316-6586
+========================================
+tc_id=TC-021
+run_id=20261121-135316-6586
+date=2026-11-21 13:53:16 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=1faec03f0874b9630eab949dd6bacb6e40514cdf
+socket=/tmp/speedyg-TC-021-20261121-135316-6586-WBbSLg.sock
+data_dir=/tmp/speedyg-TC-021-20261121-135316-6586-data-QGX5Id
+db=/tmp/speedyg-TC-021-20261121-135316-6586-data-QGX5Id/speedyg.db
+json=/tmp/speedyg-TC-021-20261121-135316-6586-data-QGX5Id/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 5 --grace-ms 1000
+[INFO] Socket: /tmp/speedyg-TC-021-20261121-135316-6586-WBbSLg.sock
+[INFO] PID del daemon: 6626
+[PASS] Daemon disponible (PID 6626).
+[PASS] Configuración efectiva del daemon: max_current=1 grace_ms=1000
+
+════════════════════════════════════════
+[FASE 1] Lanzamiento de trabajos J1 (reacio a SIGTERM) y J2 (cola)
+════════════════════════════════════════
+J1: sh -c trap '' TERM; sleep 2002 & wait -> Job #1 encolado correctamente
+J2: echo siguiente-tras-escalamiento -> Job #2 encolado correctamente
+[PASS] Los 2 trabajos fueron aceptados con IDs válidos y distintos (distintos: 2)
+[PASS] J1 (sh -c trap '' TERM; sleep 2002 & wait) está en estado Running (obtenido: 'Running')
+[PASS] J2 (echo siguiente-tras-escalamiento) está en estado Queued (obtenido: 'Queued')
+
+════════════════════════════════════════
+[FASE 2] Identificación de procesos hijo y nieto en el SO
+════════════════════════════════════════
+[INFO] Proceso nieto sleep 2002 identificado con PID: '6667'
+[PASS] Proceso nieto sleep 2002 identificado en el SO (PID: '6667')
+
+════════════════════════════════════════
+[FASE 3] Solicitud de cancel de J1 y escalamiento (RF-30)
+════════════════════════════════════════
+[INFO] Respuesta de cancel: 'Job #1 cancelado correctamente'
+[PASS] Respuesta de cancelación confirma solicitud para Job #1
+[PASS] [RF-30] Trabajo J1 transicionó a estado Canceled tras escalamiento (estado: 'Canceled')
+
+════════════════════════════════════════
+[FASE 4] Verificación de avance y finalización de J2
+════════════════════════════════════════
+[PASS] [RF-30] Trabajo J2 avanzó de cola y culminó exitosamente (estado: 'Succeeded')
+
+════════════════════════════════════════
+[FASE 5] Verificación de procesos nietos huérfanos y zombis (RNF-30)
+════════════════════════════════════════
+[PASS] [RNF-30] Sin procesos nietos residuales sleep 2002 en el SO (PIDs: 'ninguno')
+[PASS] [RNF-30] Sin procesos zombi (STAT Z) bajo daemon PID 6626
+
+════════════════════════════════════════
+[FASE 6] Verificación de salud del daemon y cierre
+════════════════════════════════════════
+[INFO] Respuesta de health: 'OK: Daemon speedyg funcionando correctamente'
+[PASS] [RF-30] Daemon responde satisfactoriamente a health tras escalamiento
+[PASS] Sin procesos zombi bajo daemon PID 6626.
+[PASS] Sin procesos hijos residuales bajo daemon PID 6626.
+
+========================================
+RESULTADO: PASS
+PASS: 14  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 6626...
