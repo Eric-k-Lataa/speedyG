@@ -471,7 +471,7 @@ dependencies = [
 
 [[package]]
 name = "speedyG"
-version = "1.1.0"
+version = "1.0.0-rc1"
 dependencies = [
  "chrono",
  "nix",
