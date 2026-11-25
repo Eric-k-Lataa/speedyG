@@ -32,6 +32,39 @@ pub fn parse(input: &str) -> Result<ParsedCommand, String> {
     Ok(ParsedCommand { program, args })
 }
 
+//valida los limites de argumentos y analiza el comando
+pub fn parse_with_limits(
+    input: &str,
+    max_arguments: usize,
+    max_argument_bytes: usize,
+) -> Result<ParsedCommand, String> {
+    let parts: Vec<&str> = input.split_whitespace().collect();
+
+    if parts.is_empty() {
+        return Err("El comando está vacío".to_string());
+    }
+
+    let args = &parts[1..];
+
+    if args.len() > max_arguments {
+        return Err(format!(
+            "El comando supera el máximo de {} argumentos",
+            max_arguments
+        ));
+    }
+
+    for arg in args {
+        if arg.len() > max_argument_bytes {
+            return Err(format!(
+                "El argumento '{}' supera el máximo de {} bytes",
+                arg, max_argument_bytes
+            ));
+        }
+    }
+
+    parse(input)
+}
+
 // Palabras reservadas
 pub fn is_reserved(program: &str) -> bool {
     matches!(program, "status" | "health" | "cancel" | "help")

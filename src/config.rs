@@ -11,6 +11,9 @@ pub const DEFAULT_SPEEDYG_SOCKET: &str = "/tmp/speedyg.sock";
 pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 3;
 pub const DEFAULT_SPEEDYG_GRACE_MS: u64 = 5_000;
 pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/tmp/speedyg-data";
+pub const DEFAULT_MAX_MESSAGE_BYTES: usize = 4096;
+pub const DEFAULT_MAX_ARGUMENTS: usize = 32;
+pub const DEFAULT_MAX_ARGUMENT_BYTES: usize = 256;
 
 // - struct de configuración en tiempo de ejecución -
 #[derive(Debug, Clone)]
@@ -25,6 +28,12 @@ pub struct Config {
     pub grace_ms: u64,
     // Directorio base para logs y datos persistentes
     pub data_dir: String,
+    // Número máximo de bytes permitiddos por mensaje
+    pub max_message_bytes: usize,
+    // Número máximo de argumentos permitidos por comando
+    pub max_arguments: usize,
+    // Número máximo de bytes permitidos por argumento
+    pub max_argument_bytes: usize,
 }
 
 impl Default for Config {
@@ -35,6 +44,9 @@ impl Default for Config {
             max_current: DEFAULT_SPEEDYG_MAX_CURRENT,
             grace_ms: DEFAULT_SPEEDYG_GRACE_MS,
             data_dir: DEFAULT_SPEEDYG_DATA_DIR.to_string(),
+            max_message_bytes: DEFAULT_MAX_MESSAGE_BYTES,
+            max_arguments: DEFAULT_MAX_ARGUMENTS,
+            max_argument_bytes: DEFAULT_MAX_ARGUMENT_BYTES,
         }
     }
 }
@@ -58,6 +70,15 @@ impl Config {
         }
         if let Ok(v) = env::var("SPEEDYG_DATA_DIR") {
             cfg.data_dir = v;
+        }
+        if let Ok(v) = env::var("SPEEDYG_MAX_MESSAGE_BYTES") {
+            cfg.max_message_bytes = parse_usize("SPEEDYG_MAX_MESSAGE_BYTES", &v)?;
+        }
+        if let Ok(v) = env::var("SPEEDYG_MAX_ARGUMENTS") {
+            cfg.max_arguments = parse_usize("SPEEDYG_MAX_ARGUMENTS", &v)?;
+        }
+        if let Ok(v) = env::var("SPEEDYG_MAX_ARGUMENT_BYTES") {
+            cfg.max_argument_bytes = parse_usize("SPEEDYG_MAX_ARGUMENT_BYTES", &v)?;
         }
 
         // - Flags CLI
@@ -90,6 +111,22 @@ impl Config {
                     cfg.data_dir = val.to_string();
                     i += 2;
                 }
+                "--max-message-bytes" => {
+                    let val = next_arg(&args, i, "--max-message-bytes")?;
+                    cfg.max_message_bytes = parse_usize("--max-message-bytes", val)?;
+                    i += 2;
+                }
+                "--max-arguments" => {
+                    let val = next_arg(&args, i, "--max-arguments")?;
+                    cfg.max_arguments = parse_usize("--max-arguments", val)?;
+                    i += 2;
+                }
+                "--max-argument-bytes" => {
+                    let val = next_arg(&args, i, "--max-argument-bytes")?;
+                    cfg.max_argument_bytes = parse_usize("--max-argument-bytes", val)?;
+                    i += 2;
+                }
+
                 _ => {
                     i += 1;
                 }
@@ -116,6 +153,15 @@ impl Config {
         }
         if self.data_dir.is_empty() {
             return Err("Config: 'data_dir' no puede estar vacío".to_string());
+        }
+        if self.max_message_bytes == 0 {
+            return Err("Config: 'max_message_bytes' no puede ser cero".to_string());
+        }
+        if self.max_arguments == 0 {
+            return Err("Config: 'max_arguments' no puede ser cero".to_string());
+        }
+        if self.max_argument_bytes == 0 {
+            return Err("Config: 'max_argument_bytes' no puede ser cero".to_string());
         }
         Ok(())
     }
