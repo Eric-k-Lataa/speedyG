@@ -60,9 +60,13 @@ where
 
         if bytes_read == 0 {
             if raw_buf.is_empty() {
-                return Ok(None); // Cierre limpio del cliente
+                return Ok(None);
             }
-            return Err("Mensaje incompleto sin delimitador '\\n' antes de EOF".to_string());
+            let total = raw_buf.len();
+            let text =
+                String::from_utf8(raw_buf).map_err(|e| format!("Payload UTF-8 inválido: {}", e))?;
+            *line_buf = text;
+            return Ok(Some(total));
         }
 
         if raw_buf.len() + chunk.len() > max_bytes {
