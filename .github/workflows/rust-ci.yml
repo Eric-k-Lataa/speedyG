@@ -21,20 +21,23 @@ jobs:
         with:
           components: rustfmt, clippy
 
-      - name: Formato — cargo fmt
-        run: cargo fmt --check
+      - name: Formato — make fmt
+        run: make fmt
 
-      - name: Lint — cargo clippy
-        run: cargo clippy -- -D warnings
+      - name: Lint — make clippy
+        run: make clippy
 
-      - name: Compilar binarios
-        run: cargo build --bins
+      - name: Compilar release — make build
+        run: make build
 
-      - name: Pruebas unitarias
-        run: cargo test
+      - name: Comprobar binarios de release
+        run: test -x target/release/speedyG && test -x target/release/speedyg
 
-      - name: Ejecutar casos de verificación
-        run: bash verif/scripts/run-all.sh
+      - name: Pruebas unitarias — make test
+        run: make test
+
+      - name: Ejecutar casos de verificación — make run-all
+        run: make run-all
 
       - name: Subir evidencias de verificación
         if: always()

@@ -7,3 +7,6 @@ scheduler.json
 *.db-wal
 *.db-shm
 
+
+# Salidas de ejecuciones mal ubicadas (los resultados van en verif/results/)
+/verif/scripts/verif/
