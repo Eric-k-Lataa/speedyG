@@ -8,12 +8,15 @@ use std::fs;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
-use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
+use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
 use tracing::{error, info, warn};
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
+
+// Constante segun el ADR que hice
+const MAX_MESSAGE_BYTES: usize = 64 * 1024; // 65,536 bytes
 
 fn lock(s: &SharedScheduler) -> MutexGuard<'_, Scheduler> {
     s.lock().unwrap_or_else(|e| {
@@ -35,145 +38,198 @@ fn peer_allowed(peer: &SocketAddr, allowlist: &[IpAddr]) -> bool {
     allowlist.contains(&peer.ip())
 }
 
+// Funcion para sanitizar los json (?) algo así
+async fn read_ndjson_line<R>(
+    reader: &mut BufReader<R>,
+    line_buf: &mut String,
+    max_bytes: usize,
+) -> Result<Option<usize>, String>
+where
+    R: AsyncRead + Unpin,
+{
+    line_buf.clear();
+    let mut raw_buf = Vec::new();
+
+    loop {
+        let mut chunk = Vec::new();
+        // Leemos hasta '\n' o EOF en trozos controlados
+        let bytes_read = reader
+            .read_until(b'\n', &mut chunk)
+            .await
+            .map_err(|e| format!("Error de lectura en el stream: {}", e))?;
+
+        if bytes_read == 0 {
+            if raw_buf.is_empty() {
+                return Ok(None); // Cierre limpio del cliente
+            }
+            return Err("Mensaje incompleto sin delimitador '\\n' antes de EOF".to_string());
+        }
+
+        if raw_buf.len() + chunk.len() > max_bytes {
+            return Err(format!(
+                "Mensaje excede el tamaño máximo permitido de {} bytes",
+                max_bytes
+            ));
+        }
+
+        raw_buf.extend_from_slice(&chunk);
+
+        if raw_buf.ends_with(b"\n") {
+            let total = raw_buf.len();
+            let text =
+                String::from_utf8(raw_buf).map_err(|e| format!("Payload UTF-8 inválido: {}", e))?;
+            *line_buf = text;
+            return Ok(Some(total));
+        }
+    }
+}
+
 // Calando esta función para evitar hacer un cagadero en el loop principal
-async fn handle_client<S>(
-    mut stream: S,
-    scheduler: SharedScheduler,
-    grace_ms: u64,
-    max_current: usize,
-) where
+async fn handle_client<S>(stream: S, scheduler: SharedScheduler, grace_ms: u64, max_current: usize)
+where
     S: AsyncRead + AsyncWrite + Unpin,
 {
-    let mut buffer = [0; 1024];
+    let mut reader = BufReader::new(stream);
+    let mut line = String::new();
 
-    let n = match stream.read(&mut buffer).await {
-        Ok(0) => return,
-        Ok(n) => n,
-        Err(e) => {
-            error!("Error al leer del socket: {}", e);
-            return;
-        }
-    };
+    loop {
+        let read_res = read_ndjson_line(&mut reader, &mut line, MAX_MESSAGE_BYTES).await;
 
-    let input = String::from_utf8_lossy(&buffer[..n]);
-    let input_str = input.trim();
-
-    let response = match parse(input_str) {
-        Ok(cmd) => match cmd.program.as_str() {
-            "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
-            "help" => {
-                "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
-                    .to_string()
+        let input_str = match read_res {
+            Ok(Some(_)) => line.trim(),
+            Ok(None) => return, // Cliente cerró conexión limpiamente
+            Err(err_msg) => {
+                warn!("Rechazando mensaje/conexión: {}", err_msg);
+                let err_resp = format!("Error de protocolo: {}\n", err_msg);
+                let inner = reader.get_mut();
+                let _ = inner.write_all(err_resp.as_bytes()).await;
+                let _ = inner.shutdown().await;
+                return;
             }
-            "status" => {
-                let sched = lock(&scheduler);
-                if let Some(id_str) = cmd.args.first() {
-                    let arg = id_str;
-                    if let Ok(id) = arg.parse::<u32>() {
-                        match sched.get_job(id) {
-                            Some(job) => format!("{}\n", job),
-                            None => format!("Error: Job #{} no encontrado\n", id),
+        };
+
+        if input_str.is_empty() {
+            continue;
+        }
+
+        // Extraer el payload JSON o comando según cómo estés integrando el parser JSON del ADR-06
+        let response = match parse(input_str) {
+            Ok(cmd) => match cmd.program.as_str() {
+                "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
+                "help" => {
+                    "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
+                        .to_string()
+                }
+                "status" => {
+                    let sched = lock(&scheduler);
+                    if let Some(id_str) = cmd.args.first() {
+                        let arg = id_str;
+                        if let Ok(id) = arg.parse::<u32>() {
+                            match sched.get_job(id) {
+                                Some(job) => format!("{}\n", job),
+                                None => format!("Error: Job #{} no encontrado\n", id),
+                            }
+                        } else {
+                            let filtrados = sched.filter_jobs_by_state(arg);
+                            if filtrados.is_empty() {
+                                format!("No hay jobs con el estado '{}'.\n", arg)
+                            } else {
+                                let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
+                                for job in filtrados {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
+                                out
+                            }
                         }
                     } else {
-                        let filtrados = sched.filter_jobs_by_state(arg);
-                        if filtrados.is_empty() {
-                            format!("No hay jobs con el estado '{}'.\n", arg)
+                        let pending = sched.pending_jobs();
+                        let history = sched.history_jobs();
+
+                        if pending.is_empty() && history.is_empty() {
+                            "No hay jobs registrados.\n".to_string()
                         } else {
-                            let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
-                            for job in filtrados {
-                                out.push_str(&format!("{}\n", job.summary_string()));
+                            let mut out = String::new();
+                            if !pending.is_empty() {
+                                out.push_str("--- Pendientes / En ejecución ---\n");
+                                for job in pending {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
+                            }
+                            if !history.is_empty() {
+                                out.push_str("--- Historial ---\n");
+                                for job in history {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
                             }
                             out
                         }
                     }
-                } else {
-                    let pending = sched.pending_jobs();
-                    let history = sched.history_jobs();
-
-                    if pending.is_empty() && history.is_empty() {
-                        "No hay jobs registrados.\n".to_string()
-                    } else {
-                        let mut out = String::new();
-                        if !pending.is_empty() {
-                            out.push_str("--- Pendientes / En ejecución ---\n");
-                            for job in pending {
-                                out.push_str(&format!("{}\n", job.summary_string()));
-                            }
-                        }
-                        if !history.is_empty() {
-                            out.push_str("--- Historial ---\n");
-                            for job in history {
-                                out.push_str(&format!("{}\n", job.summary_string()));
-                            }
-                        }
-                        out
-                    }
                 }
-            }
-            "cancel" => {
-                if let Some(id_str) = cmd.args.first() {
-                    match id_str.parse::<u32>() {
-                        Ok(id) => {
-                            let (outcome, pid_opt, respuesta) = {
-                                let mut sched = lock(&scheduler);
-                                let (outcome, pid) = sched.try_cancel(id);
+                "cancel" => {
+                    if let Some(id_str) = cmd.args.first() {
+                        match id_str.parse::<u32>() {
+                            Ok(id) => {
+                                let (outcome, pid_opt, respuesta) = {
+                                    let mut sched = lock(&scheduler);
+                                    let (outcome, pid) = sched.try_cancel(id);
+                                    if outcome == CancelOutcome::Canceled {
+                                        persistir(&sched);
+                                    }
+                                    (outcome, pid, mensaje_cancelacion(id, outcome))
+                                };
+
                                 if outcome == CancelOutcome::Canceled {
-                                    persistir(&sched);
+                                    if let Some(pid) = pid_opt {
+                                        tokio::spawn(async move {
+                                            Executor::kill_process_group(pid, grace_ms).await;
+                                        });
+                                    }
+                                    info!("Job #{} cancelado", id);
+                                    despachar(Arc::clone(&scheduler), max_current);
                                 }
-                                (outcome, pid, mensaje_cancelacion(id, outcome))
-                            };
-
-                            if outcome == CancelOutcome::Canceled {
-                                if let Some(pid) = pid_opt {
-                                    tokio::spawn(async move {
-                                        Executor::kill_process_group(pid, grace_ms).await;
-                                    });
-                                }
-                                info!("Job #{} cancelado", id);
-                                despachar(Arc::clone(&scheduler), max_current);
+                                respuesta
                             }
-                            respuesta
+                            Err(_) => {
+                                "Error: El ID debe ser un número entero positivo\n".to_string()
+                            }
                         }
-                        Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
-                    }
-                } else {
-                    "Uso: cancel <id>\n".to_string()
-                }
-            }
-            _ => {
-                let resultado = {
-                    let mut sched = lock(&scheduler);
-
-                    match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
-                        Ok(job) => {
-                            let job_id = job.get_id();
-                            let full_command = job.get_command_line();
-                            persistir(&sched);
-                            Ok((job_id, full_command))
-                        }
-                        Err(error) => Err(error),
-                    }
-                };
-
-                match resultado {
-                    Ok((job_id, _full_command)) => {
-                        despachar(Arc::clone(&scheduler), max_current);
-                        format!("Job #{} encolado correctamente\n", job_id)
-                    }
-                    Err(error) => {
-                        format!("{}\n", error)
+                    } else {
+                        "Uso: cancel <id>\n".to_string()
                     }
                 }
-            }
-        },
-        Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
-    };
+                _ => {
+                    let resultado = {
+                        let mut sched = lock(&scheduler);
 
-    if let Err(e) = stream.write_all(response.as_bytes()).await {
-        error!("Error al escribir en el socket: {}", e);
+                        match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
+                            Ok(job) => {
+                                let job_id = job.get_id();
+                                let full_command = job.get_command_line();
+                                persistir(&sched);
+                                Ok((job_id, full_command))
+                            }
+                            Err(error) => Err(error),
+                        }
+                    };
+
+                    match resultado {
+                        Ok((job_id, _full_command)) => {
+                            despachar(Arc::clone(&scheduler), max_current);
+                            format!("Job #{} encolado correctamente\n", job_id)
+                        }
+                        Err(error) => format!("{}\n", error),
+                    }
+                }
+            },
+            Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
+        };
+
+        if let Err(e) = reader.get_mut().write_all(response.as_bytes()).await {
+            warn!("Error al escribir respuesta al cliente: {}", e);
+            return;
+        }
     }
 }
-
 fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max_current: usize) {
     tokio::spawn(async move {
         // Verificar que el Job siga en estado Running antes de ejecutarlo
