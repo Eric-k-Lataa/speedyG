@@ -1,6 +1,6 @@
 use speedyG::config::Config;
 use speedyG::executor::Executor;
-use speedyG::parser::parse;
+use speedyG::parser::parse_with_limits;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
@@ -256,23 +256,63 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let scheduler = Arc::clone(&scheduler);
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
+                let max_message_bytes = cfg.max_message_bytes;
+        let max_arguments = cfg.max_arguments;
+                let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    let mut buffer = [0; 1024];
+                    let mut buffer = Vec::new();
+            let mut chunk = [0; 1024];
 
-                    let n = match stream.read(&mut buffer).await {
-                        Ok(0) => return,
-                        Ok(n) => n,
-                        Err(e) => {
-                            error!("Error al leer del socket: {}", e);
-                            return;
-                        }
-                    };
+            loop {
 
-                    let input = String::from_utf8_lossy(&buffer[..n]);
+                        let n = match stream.read(&mut chunk).await {
+                            Ok(0) => break,
+                            Ok(n) => n,
+                            Err(e) => {
+                                error!("Error al leer del socket: {}", e);
+                                return;
+                            }
+                         };
+
+             buffer.extend_from_slice(&chunk[..n]);
+
+                 if buffer.len() > max_message_bytes {
+                        warn!("Solicitud rechazada: mensaje demasiado grande");
+                     let _ = stream.write_all(
+                         b"Error: el mensaje supera el tamanio maximo permitido.\n"
+                     ).await;
+                     return;
+                 }
+            }
+                    let input = match String::from_utf8(buffer) {
+                   Ok(input) => input,
+                   Err(_) => {
+                   warn!("Solicitud rechazada: UTF-8 invalido");
+                   let _ = stream.write_all(
+                           b"Error: mensaje rechazado por formato UTF-8 invalido. Envia texto valido.\n"
+                   ).await;
+                   return;
+                   }
+            };
                     let input_str = input.trim();
+            if input_str.is_empty() {
+                warn!("Solicitud rechazada: mensaje vacio");
+                let _ = stream.write_all(
+                    b"Error: mensaje vacio. Envia un comando valido.\n"
+                ).await;
+                return;
+            }
 
-                    let response = match parse(input_str) {
+            if input_str.chars().any(|c| c.is_control()) {
+                warn!("Solicitud rechazada: contiene caracteres de control");
+                let _ = stream.write_all(
+                    b"Error: el mensaje contiene caracteres no permitidos.\n"
+                ).await;
+                return;
+             }
+
+                    let response = match parse_with_limits(input_str,max_arguments,max_argument_bytes) {
                         Ok(cmd) => match cmd.program.as_str() {
                             "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
                             "help" => {
@@ -380,7 +420,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                                 }
                             }
                         },
-                        Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
+                        Err(err_msg) => {
+                warn!("Solicitud rechazada: {}", err_msg);
+                format!("Error de sintaxis: {}\n", err_msg)}
                     };
 
                     if let Err(e) = stream.write_all(response.as_bytes()).await {
