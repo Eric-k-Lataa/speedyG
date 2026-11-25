@@ -15,7 +15,6 @@ SCRIPTS_DIR="$REPO_ROOT/verif/scripts"
 # Si un TC listado pasa, se avisa para retirarlo de la lista.
 # La lista debe quedar vacía antes de etiquetar v1.0.0.
 KNOWN_FAILS=(
-    "TC-020|pendiente de implementación en PR/issue #64"
     "TC-022|bug de persistencia, issue #147"
 )
 
