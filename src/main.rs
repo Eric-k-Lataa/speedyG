@@ -5,10 +5,11 @@ use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
 use std::fs;
+use std::net::{IpAddr, SocketAddr};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
-use tokio::net::UnixListener;
+use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, AsyncWriteExt, BufReader};
+use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
 use tracing::{error, info, warn};
 
@@ -24,6 +25,229 @@ fn lock(s: &SharedScheduler) -> MutexGuard<'_, Scheduler> {
 fn persistir(sched: &Scheduler) {
     if let Err(e) = guardar_scheduler(sched) {
         error!("Error al guardar scheduler: {}", e);
+    }
+}
+
+fn peer_allowed(peer: &SocketAddr, allowlist: &[IpAddr]) -> bool {
+    if allowlist.is_empty() {
+        return true;
+    }
+    allowlist.contains(&peer.ip())
+}
+
+// Calando estas funciones para evitar hacer un cagadero en el loop principal
+async fn read_message_line<R>(
+    reader: &mut BufReader<R>,
+    max_message_bytes: usize,
+) -> Result<Option<String>, String>
+where
+    R: AsyncRead + Unpin,
+{
+    let mut raw = Vec::new();
+    let mut chunk = Vec::new();
+
+    loop {
+        chunk.clear();
+        let n = reader
+            .read_until(b'\n', &mut chunk)
+            .await
+            .map_err(|e| format!("Error de lectura en el socket: {}", e))?;
+
+        if n == 0 {
+            if raw.is_empty() {
+                return Ok(None);
+            }
+            break;
+        }
+
+        if raw.len() + chunk.len() > max_message_bytes {
+            return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
+        }
+
+        raw.extend_from_slice(&chunk);
+        if raw.len() > max_message_bytes {
+            return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
+        }
+        if raw.ends_with(b"\n") {
+            break;
+        }
+    }
+
+    let text = String::from_utf8(raw).map_err(|_| {
+        "Error: mensaje rechazado por formato UTF-8 invalido. Envia texto valido.\n".to_string()
+    })?;
+
+    Ok(Some(text))
+}
+
+async fn handle_client<S>(
+    stream: S,
+    scheduler: SharedScheduler,
+    grace_ms: u64,
+    max_current: usize,
+    max_message_bytes: usize,
+    max_arguments: usize,
+    max_argument_bytes: usize,
+) where
+    S: AsyncRead + AsyncWrite + Unpin,
+{
+    let mut reader = BufReader::new(stream);
+
+    loop {
+        let raw_msg = match read_message_line(&mut reader, max_message_bytes).await {
+            Ok(Some(msg)) => msg,
+            Ok(None) => return,
+            Err(err_msg) => {
+                warn!("Solicitud rechazada: {}", err_msg.trim());
+                let _ = reader.get_mut().write_all(err_msg.as_bytes()).await;
+                let _ = reader.get_mut().shutdown().await;
+                return;
+            }
+        };
+
+        // Quitar solo el salto de línea delimitador del final del mensaje
+        let without_newline = raw_msg
+            .strip_suffix("\r\n")
+            .or_else(|| raw_msg.strip_suffix('\n'))
+            .unwrap_or(&raw_msg);
+        let input_str = without_newline.trim();
+
+        if input_str.is_empty() {
+            warn!("Solicitud rechazada: mensaje vacio");
+            let msg = "Error: mensaje vacio. Envia un comando valido.\n";
+            if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
+                error!("Error al escribir en el socket: {}", e);
+                return;
+            }
+            continue;
+        }
+
+        if input_str.chars().any(|c| c.is_control()) {
+            warn!("Solicitud rechazada: contiene caracteres de control");
+            let msg = "Error: el mensaje contiene caracteres no permitidos.\n";
+            if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
+                error!("Error al escribir en el socket: {}", e);
+                return;
+            }
+            continue;
+        }
+
+        let response = match parse_with_limits(input_str, max_arguments, max_argument_bytes) {
+            Ok(cmd) => match cmd.program.as_str() {
+                "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
+                "help" => {
+                    "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
+                        .to_string()
+                }
+                "status" => {
+                    let sched = lock(&scheduler);
+                    if let Some(id_str) = cmd.args.first() {
+                        let arg = id_str;
+                        if let Ok(id) = arg.parse::<u32>() {
+                            match sched.get_job(id) {
+                                Some(job) => format!("{}\n", job),
+                                None => format!("Error: Job #{} no encontrado\n", id),
+                            }
+                        } else {
+                            let filtrados = sched.filter_jobs_by_state(arg);
+                            if filtrados.is_empty() {
+                                format!("No hay jobs con el estado '{}'.\n", arg)
+                            } else {
+                                let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
+                                for job in filtrados {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
+                                out
+                            }
+                        }
+                    } else {
+                        let pending = sched.pending_jobs();
+                        let history = sched.history_jobs();
+
+                        if pending.is_empty() && history.is_empty() {
+                            "No hay jobs registrados.\n".to_string()
+                        } else {
+                            let mut out = String::new();
+                            if !pending.is_empty() {
+                                out.push_str("--- Pendientes / En ejecución ---\n");
+                                for job in pending {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
+                            }
+                            if !history.is_empty() {
+                                out.push_str("--- Historial ---\n");
+                                for job in history {
+                                    out.push_str(&format!("{}\n", job.summary_string()));
+                                }
+                            }
+                            out
+                        }
+                    }
+                }
+                "cancel" => {
+                    if let Some(id_str) = cmd.args.first() {
+                        match id_str.parse::<u32>() {
+                            Ok(id) => {
+                                let (outcome, pid_opt, respuesta) = {
+                                    let mut sched = lock(&scheduler);
+                                    let (outcome, pid) = sched.try_cancel(id);
+                                    if outcome == CancelOutcome::Canceled {
+                                        persistir(&sched);
+                                    }
+                                    (outcome, pid, mensaje_cancelacion(id, outcome))
+                                };
+
+                                if outcome == CancelOutcome::Canceled {
+                                    if let Some(pid) = pid_opt {
+                                        tokio::spawn(async move {
+                                            Executor::kill_process_group(pid, grace_ms).await;
+                                        });
+                                    }
+                                    info!("Job #{} cancelado", id);
+                                    despachar(Arc::clone(&scheduler), max_current);
+                                }
+                                respuesta
+                            }
+                            Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
+                        }
+                    } else {
+                        "Uso: cancel <id>\n".to_string()
+                    }
+                }
+                _ => {
+                    let resultado = {
+                        let mut sched = lock(&scheduler);
+
+                        match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
+                            Ok(job) => {
+                                let job_id = job.get_id();
+                                let full_command = job.get_command_line();
+                                persistir(&sched);
+                                Ok((job_id, full_command))
+                            }
+                            Err(error) => Err(error),
+                        }
+                    };
+
+                    match resultado {
+                        Ok((job_id, _full_command)) => {
+                            despachar(Arc::clone(&scheduler), max_current);
+                            format!("Job #{} encolado correctamente\n", job_id)
+                        }
+                        Err(error) => format!("{}\n", error),
+                    }
+                }
+            },
+            Err(err_msg) => {
+                warn!("Solicitud rechazada: {}", err_msg);
+                format!("Error de sintaxis: {}\n", err_msg)
+            }
+        };
+
+        if let Err(e) = reader.get_mut().write_all(response.as_bytes()).await {
+            error!("Error al escribir en el socket: {}", e);
+            return;
+        }
     }
 }
 
@@ -179,6 +403,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     info!(
         socket_path    = %cfg.socket_path,
+        tcp_enabled    = %cfg.tcp_enabled,
+        tcp_host       = %cfg.tcp_host,
+        tcp_port       = %cfg.tcp_port,
         queue_cap      = %cfg.queue_cap,
         max_current    = %cfg.max_current,
         grace_ms       = %cfg.grace_ms,
@@ -200,6 +427,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let listener = UnixListener::bind(&socket_path)?;
     info!("Demonio speedyG escuchando en {}", socket_path);
+
+    let tcp_listener = if cfg.tcp_enabled {
+        let tcp = TcpListener::bind(cfg.tcp_addr()).await?;
+        let real_addr = tcp.local_addr()?;
+        info!("Demonio speedyG escuchando por TCP en {}", real_addr);
+        Some(tcp)
+    } else {
+        info!("Listener TCP deshabilitado por configuración");
+        None
+    };
 
     // Scheduler compartido entre las conexiones. Se carga de SQLite/JSON.
     let mut sched = cargar_scheduler();
@@ -237,6 +474,47 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 shutting_down.store(true, Ordering::SeqCst);
                 break;
             }
+
+           tcp_res = async {
+                match tcp_listener.as_ref() {
+                    Some(tcp) => tcp.accept().await,
+                    None => std::future::pending().await,
+                }
+            } => {
+                let (stream, peer_addr) = match tcp_res {
+                    Ok(res) => res,
+                    Err(e) => {
+                        error!("Error al aceptar conexión TCP: {}", e);
+                        continue;
+                    }
+                };
+
+                if !peer_allowed(&peer_addr, &cfg.tcp_allowlist) {
+                    warn!("Conexión TCP rechazada por allow-list desde {}", peer_addr);
+                    drop(stream);
+                    continue;
+                }
+
+                if shutting_down.load(Ordering::SeqCst) {
+                    let mut stream = stream;
+                    let _ = stream
+                        .write_all(b"Error: El demonio se esta apagando, no se aceptan nuevos comandos.\n")
+                        .await;
+                    let _ = stream.shutdown().await;
+                    continue;
+                }
+
+                let scheduler = Arc::clone(&scheduler);
+                let grace_ms = cfg.grace_ms;
+                let max_current = cfg.max_current;
+                let max_message_bytes = cfg.max_message_bytes;
+                let max_arguments = cfg.max_arguments;
+                let max_argument_bytes = cfg.max_argument_bytes;
+
+                tokio::spawn(async move {
+                    handle_client(stream, scheduler, grace_ms, max_current, max_message_bytes, max_arguments, max_argument_bytes).await;
+                });
+            }
             accept_res = listener.accept() => {
                 let (mut stream, _) = match accept_res {
                     Ok(res) => res,
@@ -257,177 +535,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
                 let max_message_bytes = cfg.max_message_bytes;
-        let max_arguments = cfg.max_arguments;
+                let max_arguments = cfg.max_arguments;
                 let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    let mut buffer = Vec::new();
-            let mut chunk = [0; 1024];
-
-            loop {
-
-                        let n = match stream.read(&mut chunk).await {
-                            Ok(0) => break,
-                            Ok(n) => n,
-                            Err(e) => {
-                                error!("Error al leer del socket: {}", e);
-                                return;
-                            }
-                         };
-
-             buffer.extend_from_slice(&chunk[..n]);
-
-                 if buffer.len() > max_message_bytes {
-                        warn!("Solicitud rechazada: mensaje demasiado grande");
-                     let _ = stream.write_all(
-                         b"Error: el mensaje supera el tamanio maximo permitido.\n"
-                     ).await;
-                     return;
-                 }
-            }
-                    let input = match String::from_utf8(buffer) {
-                   Ok(input) => input,
-                   Err(_) => {
-                   warn!("Solicitud rechazada: UTF-8 invalido");
-                   let _ = stream.write_all(
-                           b"Error: mensaje rechazado por formato UTF-8 invalido. Envia texto valido.\n"
-                   ).await;
-                   return;
-                   }
-            };
-                    let input_str = input.trim();
-            if input_str.is_empty() {
-                warn!("Solicitud rechazada: mensaje vacio");
-                let _ = stream.write_all(
-                    b"Error: mensaje vacio. Envia un comando valido.\n"
-                ).await;
-                return;
-            }
-
-            if input_str.chars().any(|c| c.is_control()) {
-                warn!("Solicitud rechazada: contiene caracteres de control");
-                let _ = stream.write_all(
-                    b"Error: el mensaje contiene caracteres no permitidos.\n"
-                ).await;
-                return;
-             }
-
-                    let response = match parse_with_limits(input_str,max_arguments,max_argument_bytes) {
-                        Ok(cmd) => match cmd.program.as_str() {
-                            "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
-                            "help" => {
-                                "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
-                                    .to_string()
-                            }
-                            "status" => {
-                                let sched = lock(&scheduler);
-                                if let Some(id_str) = cmd.args.first() {
-                                    let arg = id_str;
-                                    if let Ok(id) = arg.parse::<u32>() {
-                                        match sched.get_job(id) {
-                                            Some(job) => format!("{}\n", job),
-                                            None => format!("Error: Job #{} no encontrado\n", id),
-                                        }
-                                    } else {
-                                        let filtrados = sched.filter_jobs_by_state(arg);
-                                        if filtrados.is_empty() {
-                                            format!("No hay jobs con el estado '{}'.\n", arg)
-                                        } else {
-                                            let mut out = format!("--- Jobs con estado '{}' ---\n", arg);
-                                            for job in filtrados {
-                                                out.push_str(&format!("{}\n", job.summary_string()));
-                                            }
-                                            out
-                                        }
-                                    }
-                                } else {
-                                    let pending = sched.pending_jobs();
-                                    let history = sched.history_jobs();
-
-                                    if pending.is_empty() && history.is_empty() {
-                                        "No hay jobs registrados.\n".to_string()
-                                    } else {
-                                        let mut out = String::new();
-                                        if !pending.is_empty() {
-                                            out.push_str("--- Pendientes / En ejecución ---\n");
-                                            for job in pending {
-                                                out.push_str(&format!("{}\n", job.summary_string()));
-                                            }
-                                        }
-                                        if !history.is_empty() {
-                                            out.push_str("--- Historial ---\n");
-                                            for job in history {
-                                                out.push_str(&format!("{}\n", job.summary_string()));
-                                            }
-                                        }
-                                        out
-                                    }
-                                }
-                            }
-                            "cancel" => {
-                                if let Some(id_str) = cmd.args.first() {
-                                    match id_str.parse::<u32>() {
-                                        Ok(id) => {
-                                            let (outcome, pid_opt, respuesta) = {
-                                                let mut sched = lock(&scheduler);
-                                                let (outcome, pid) = sched.try_cancel(id);
-                                                if outcome == CancelOutcome::Canceled {
-                                                    persistir(&sched);
-                                                }
-                                                (outcome, pid, mensaje_cancelacion(id, outcome))
-                                            };
-
-                                            if outcome == CancelOutcome::Canceled {
-                                                if let Some(pid) = pid_opt {
-                                                    tokio::spawn(async move {
-                                                        Executor::kill_process_group(pid, grace_ms).await;
-                                                    });
-                                                }
-                                                info!("Job #{} cancelado", id);
-                                                despachar(Arc::clone(&scheduler), max_current);
-                                            }
-                                            respuesta
-                                        }
-                                        Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
-                                    }
-                                } else {
-                                    "Uso: cancel <id>\n".to_string()
-                                }
-                            }
-                            _ => {
-                                let resultado = {
-                                    let mut sched = lock(&scheduler);
-
-                                    match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
-                                        Ok(job) => {
-                                            let job_id = job.get_id();
-                                            let full_command = job.get_command_line();
-                                            persistir(&sched);
-                                            Ok((job_id, full_command))
-                                        }
-                                        Err(error) => Err(error),
-                                    }
-                                };
-
-                                match resultado {
-                                    Ok((job_id, _full_command)) => {
-                                        despachar(Arc::clone(&scheduler), max_current);
-                                        format!("Job #{} encolado correctamente\n", job_id)
-                                    }
-                                    Err(error) => {
-                                        format!("{}\n", error)
-                                    }
-                                }
-                            }
-                        },
-                        Err(err_msg) => {
-                warn!("Solicitud rechazada: {}", err_msg);
-                format!("Error de sintaxis: {}\n", err_msg)}
-                    };
-
-                    if let Err(e) = stream.write_all(response.as_bytes()).await {
-                        error!("Error al escribir en el socket: {}", e);
-                    }
+                    handle_client(stream, scheduler, grace_ms, max_current, max_message_bytes, max_arguments, max_argument_bytes).await;
                 });
             }
         }
@@ -481,6 +593,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tokio::time::sleep(std::time::Duration::from_millis(100)).await;
 
     // 2. Eliminar el archivo del socket Unix
+    drop(tcp_listener);
     if fs::metadata(&socket_path).is_ok() {
         if let Err(e) = fs::remove_file(&socket_path) {
             error!(
