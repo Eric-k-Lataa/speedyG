@@ -8,6 +8,7 @@ use std::fs;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
+use std::time::Instant;
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
@@ -79,6 +80,7 @@ where
 async fn handle_client<S>(
     stream: S,
     scheduler: SharedScheduler,
+    service_started_at: Instant,
     grace_ms: u64,
     max_current: usize,
     max_message_bytes: usize,
@@ -130,7 +132,28 @@ async fn handle_client<S>(
 
         let response = match parse_with_limits(input_str, max_arguments, max_argument_bytes) {
             Ok(cmd) => match cmd.program.as_str() {
-                "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
+                "health" => {
+                    let uptime_seconds = service_started_at.elapsed().as_secs();
+
+                    let sched = lock(&scheduler);
+
+                    let running = sched.filter_jobs_by_state("running").len();
+                    let queued = sched.filter_jobs_by_state("queued").len();
+
+                    format!(
+                        "status=active\n\
+                         service_version={}\n\
+                         uptime_seconds={}\n\
+                         running={}\n\
+                         queued={}\n\
+                         queue_capacity={}\n",
+                         env!("CARGO_PKG_VERSION"),
+                         uptime_seconds,
+                         running,
+                         queued,
+                         sched.get_queue_cap()
+    		     )
+		},
                 "help" => {
                     "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
                         .to_string()
@@ -391,6 +414,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Inicializar el logger
     tracing_subscriber::fmt::init();
 
+    // Inicializar tiempo de inicio
+    let service_started_at = Instant::now();
+
     // Cargar configuración desde flags / variables de entorno / defaults
     let cfg = Config::from_env_and_args().unwrap_or_else(|err| {
         eprintln!("Error al cargar configuración: {}", err);
@@ -511,6 +537,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     handle_client(
                         stream,
                         scheduler,
+                        service_started_at,
                         grace_ms,
                         max_current,
                         max_message_bytes,
@@ -548,6 +575,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     handle_client(
                         stream,
                         scheduler,
+                        service_started_at,
                         grace_ms,
                         max_current,
                         max_message_bytes,
