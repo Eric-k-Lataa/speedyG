@@ -1,6 +1,6 @@
 use speedyG::config::Config;
 use speedyG::executor::Executor;
-use speedyG::parser::parse;
+use speedyG::parser::parse_with_limits;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
@@ -14,9 +14,6 @@ use tokio::signal::unix::{signal, SignalKind};
 use tracing::{error, info, warn};
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
-
-// Constante segun el ADR que hice
-const MAX_MESSAGE_BYTES: usize = 64 * 1024; // 65,536 bytes
 
 fn lock(s: &SharedScheduler) -> MutexGuard<'_, Scheduler> {
     s.lock().unwrap_or_else(|e| {
@@ -38,86 +35,100 @@ fn peer_allowed(peer: &SocketAddr, allowlist: &[IpAddr]) -> bool {
     allowlist.contains(&peer.ip())
 }
 
-// Funcion para sanitizar los json (?) algo así
-async fn read_ndjson_line<R>(
+async fn read_message_line<R>(
     reader: &mut BufReader<R>,
-    line_buf: &mut String,
-    max_bytes: usize,
-) -> Result<Option<usize>, String>
+    max_message_bytes: usize,
+) -> Result<Option<String>, String>
 where
     R: AsyncRead + Unpin,
 {
-    line_buf.clear();
-    let mut raw_buf = Vec::new();
+    let mut raw = Vec::new();
+    let mut chunk = Vec::new();
 
     loop {
-        let mut chunk = Vec::new();
-        // Leemos hasta '\n' o EOF en trozos controlados
-        let bytes_read = reader
+        chunk.clear();
+        let n = reader
             .read_until(b'\n', &mut chunk)
             .await
-            .map_err(|e| format!("Error de lectura en el stream: {}", e))?;
+            .map_err(|e| format!("Error de lectura en el socket: {}", e))?;
 
-        if bytes_read == 0 {
-            if raw_buf.is_empty() {
+        if n == 0 {
+            if raw.is_empty() {
                 return Ok(None);
             }
-            let total = raw_buf.len();
-            let text =
-                String::from_utf8(raw_buf).map_err(|e| format!("Payload UTF-8 inválido: {}", e))?;
-            *line_buf = text;
-            return Ok(Some(total));
+            break;
         }
 
-        if raw_buf.len() + chunk.len() > max_bytes {
-            return Err(format!(
-                "Mensaje excede el tamaño máximo permitido de {} bytes",
-                max_bytes
-            ));
+        if raw.len() + chunk.len() > max_message_bytes {
+            return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
         }
 
-        raw_buf.extend_from_slice(&chunk);
-
-        if raw_buf.ends_with(b"\n") {
-            let total = raw_buf.len();
-            let text =
-                String::from_utf8(raw_buf).map_err(|e| format!("Payload UTF-8 inválido: {}", e))?;
-            *line_buf = text;
-            return Ok(Some(total));
+        raw.extend_from_slice(&chunk);
+        if raw.ends_with(b"\n") {
+            break;
         }
     }
+
+    let text = String::from_utf8(raw).map_err(|_| {
+        "Error: mensaje rechazado por formato UTF-8 invalido. Envia texto valido.\n".to_string()
+    })?;
+
+    Ok(Some(text))
 }
 
-// Calando esta función para evitar hacer un cagadero en el loop principal
-async fn handle_client<S>(stream: S, scheduler: SharedScheduler, grace_ms: u64, max_current: usize)
-where
+async fn handle_client<S>(
+    stream: S,
+    scheduler: SharedScheduler,
+    grace_ms: u64,
+    max_current: usize,
+    max_message_bytes: usize,
+    max_arguments: usize,
+    max_argument_bytes: usize,
+) where
     S: AsyncRead + AsyncWrite + Unpin,
 {
     let mut reader = BufReader::new(stream);
-    let mut line = String::new();
 
     loop {
-        let read_res = read_ndjson_line(&mut reader, &mut line, MAX_MESSAGE_BYTES).await;
-
-        let input_str = match read_res {
-            Ok(Some(_)) => line.trim(),
-            Ok(None) => return, // Cliente cerró conexión limpiamente
+        let raw_msg = match read_message_line(&mut reader, max_message_bytes).await {
+            Ok(Some(msg)) => msg,
+            Ok(None) => return,
             Err(err_msg) => {
-                warn!("Rechazando mensaje/conexión: {}", err_msg);
-                let err_resp = format!("Error de protocolo: {}\n", err_msg);
-                let inner = reader.get_mut();
-                let _ = inner.write_all(err_resp.as_bytes()).await;
-                let _ = inner.shutdown().await;
+                warn!("Solicitud rechazada: {}", err_msg.trim());
+                let _ = reader.get_mut().write_all(err_msg.as_bytes()).await;
+                let _ = reader.get_mut().shutdown().await;
                 return;
             }
         };
 
+        // Quitar solo el salto de línea delimitador del final del mensaje
+        let without_newline = raw_msg
+            .strip_suffix("\r\n")
+            .or_else(|| raw_msg.strip_suffix('\n'))
+            .unwrap_or(&raw_msg);
+        let input_str = without_newline.trim();
+
         if input_str.is_empty() {
+            warn!("Solicitud rechazada: mensaje vacio");
+            let msg = "Error: mensaje vacio. Envia un comando valido.\n";
+            if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
+                error!("Error al escribir en el socket: {}", e);
+                return;
+            }
             continue;
         }
 
-        // Extraer el payload JSON o comando según cómo estés integrando el parser JSON del ADR-06
-        let response = match parse(input_str) {
+        if input_str.chars().any(|c| c.is_control()) {
+            warn!("Solicitud rechazada: contiene caracteres de control");
+            let msg = "Error: el mensaje contiene caracteres no permitidos.\n";
+            if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
+                error!("Error al escribir en el socket: {}", e);
+                return;
+            }
+            continue;
+        }
+
+        let response = match parse_with_limits(input_str, max_arguments, max_argument_bytes) {
             Ok(cmd) => match cmd.program.as_str() {
                 "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
                 "help" => {
@@ -193,9 +204,7 @@ where
                                 }
                                 respuesta
                             }
-                            Err(_) => {
-                                "Error: El ID debe ser un número entero positivo\n".to_string()
-                            }
+                            Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
                         }
                     } else {
                         "Uso: cancel <id>\n".to_string()
@@ -225,15 +234,19 @@ where
                     }
                 }
             },
-            Err(err_msg) => format!("Error de sintaxis: {}\n", err_msg),
+            Err(err_msg) => {
+                warn!("Solicitud rechazada: {}", err_msg);
+                format!("Error de sintaxis: {}\n", err_msg)
+            }
         };
 
         if let Err(e) = reader.get_mut().write_all(response.as_bytes()).await {
-            warn!("Error al escribir respuesta al cliente: {}", e);
+            error!("Error al escribir en el socket: {}", e);
             return;
         }
     }
 }
+
 fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max_current: usize) {
     tokio::spawn(async move {
         // Verificar que el Job siga en estado Running antes de ejecutarlo
@@ -458,7 +471,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 break;
             }
 
-           tcp_res = async {
+            tcp_res = async {
                 match tcp_listener.as_ref() {
                     Some(tcp) => tcp.accept().await,
                     None => std::future::pending().await,
@@ -490,13 +503,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let scheduler = Arc::clone(&scheduler);
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
+                let max_message_bytes = cfg.max_message_bytes;
+                let max_arguments = cfg.max_arguments;
+                let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    handle_client(stream, scheduler, grace_ms, max_current).await;
+                    handle_client(
+                        stream,
+                        scheduler,
+                        grace_ms,
+                        max_current,
+                        max_message_bytes,
+                        max_arguments,
+                        max_argument_bytes,
+                    )
+                    .await;
                 });
             }
             accept_res = listener.accept() => {
-                let (mut stream, _) = match accept_res {
+                let (stream, _) = match accept_res {
                     Ok(res) => res,
                     Err(e) => {
                         error!("Error al aceptar conexión del socket: {}", e);
@@ -506,6 +531,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 // Si estamos en proceso de apagado, rechazamos nuevas solicitudes
                 if shutting_down.load(Ordering::SeqCst) {
+                    let mut stream = stream;
                     let _ = stream.write_all(b"Error: El demonio se esta apagando, no se aceptan nuevos comandos.\n").await;
                     let _ = stream.shutdown().await;
                     continue;
@@ -514,9 +540,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let scheduler = Arc::clone(&scheduler);
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
+                let max_message_bytes = cfg.max_message_bytes;
+                let max_arguments = cfg.max_arguments;
+                let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    handle_client(stream, scheduler, grace_ms, max_current).await;
+                    handle_client(
+                        stream,
+                        scheduler,
+                        grace_ms,
+                        max_current,
+                        max_message_bytes,
+                        max_arguments,
+                        max_argument_bytes,
+                    )
+                    .await;
                 });
             }
         }
