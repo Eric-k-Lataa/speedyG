@@ -77,6 +77,7 @@ where
     Ok(Some(text))
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn handle_client<S>(
     stream: S,
     scheduler: SharedScheduler,
