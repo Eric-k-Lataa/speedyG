@@ -8,7 +8,7 @@ use std::fs;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
-use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, AsyncBufReadExt};
+use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
 use tracing::{error, info, warn};
@@ -66,11 +66,11 @@ where
 
         raw.extend_from_slice(&chunk);
         if raw.len() > max_message_bytes {
-          return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
-          }
-          if raw.ends_with(b"\n") {
-              break;
-          }
+            return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
+        }
+        if raw.ends_with(b"\n") {
+            break;
+        }
     }
 
     let text = String::from_utf8(raw).map_err(|_| {
@@ -106,7 +106,10 @@ async fn handle_client<S>(
         };
 
         // Quitar solo el salto de línea delimitador del final del mensaje
-        let without_newline = raw_msg.strip_suffix("\r\n").or_else(|| raw_msg.strip_suffix('\n')).unwrap_or(&raw_msg);
+        let without_newline = raw_msg
+            .strip_suffix("\r\n")
+            .or_else(|| raw_msg.strip_suffix('\n'))
+            .unwrap_or(&raw_msg);
         let input_str = without_newline.trim();
 
         if input_str.is_empty() {
