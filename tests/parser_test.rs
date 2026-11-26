@@ -1,5 +1,5 @@
 #[cfg(test)]
-use speedyG::parser::{is_reserved, parse, validate_command};
+use speedyG::parser::{is_reserved, parse, parse_with_limits, validate_command};
 
 //pruebas comandos reservados
 #[test]
@@ -56,4 +56,24 @@ fn parse_list_command() {
 fn parse_list_with_args() {
     let result = parse("list 5");
     assert!(result.is_err());
+}
+
+// Pruebas de limites de argumentos
+
+#[test]
+fn parse_with_valid_limits() {
+    assert!(parse_with_limits("echo hola mundo", 32, 256).is_ok());
+}
+
+#[test]
+fn parse_exceeds_max_arguments() {
+    let input = format!("echo {}", vec!["a"; 33].join(" "));
+    assert!(parse_with_limits(&input, 32, 256).is_err());
+}
+
+#[test]
+fn parse_exceeds_max_argument_bytes() {
+    let argument = "a".repeat(257);
+    let input = format!("echo {}", argument);
+    assert!(parse_with_limits(&input, 32, 256).is_err());
 }

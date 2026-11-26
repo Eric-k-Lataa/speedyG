@@ -15,6 +15,9 @@ pub const DEFAULT_SPEEDYG_SOCKET: &str = "/tmp/speedyg.sock";
 pub const DEFAULT_SPEEDYG_MAX_CURRENT: usize = 3;
 pub const DEFAULT_SPEEDYG_GRACE_MS: u64 = 5_000;
 pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/tmp/speedyg-data";
+pub const DEFAULT_MAX_MESSAGE_BYTES: usize = 65536;
+pub const DEFAULT_MAX_ARGUMENTS: usize = 32;
+pub const DEFAULT_MAX_ARGUMENT_BYTES: usize = 256;
 
 pub const DEFAULT_SPEEDYG_TCP_ENABLED: bool = true;
 pub const DEFAULT_SPEEDYG_TCP_HOST: &str = "127.0.0.1";
@@ -41,6 +44,12 @@ pub struct Config {
     pub tcp_port: u16,
     // Lista blanca de IPs permitidas cuando tcp_host no es loopback (A3-09)
     pub tcp_allowlist: Vec<IpAddr>,
+    // Número máximo de bytes permitiddos por mensaje
+    pub max_message_bytes: usize,
+    // Número máximo de argumentos permitidos por comando
+    pub max_arguments: usize,
+    // Número máximo de bytes permitidos por argumento
+    pub max_argument_bytes: usize,
 }
 
 impl Default for Config {
@@ -55,6 +64,9 @@ impl Default for Config {
             tcp_host: DEFAULT_SPEEDYG_TCP_HOST.to_string(),
             tcp_port: DEFAULT_SPEEDYG_TCP_PORT,
             tcp_allowlist: Vec::new(),
+            max_message_bytes: DEFAULT_MAX_MESSAGE_BYTES,
+            max_arguments: DEFAULT_MAX_ARGUMENTS,
+            max_argument_bytes: DEFAULT_MAX_ARGUMENT_BYTES,
         }
     }
 }
@@ -98,6 +110,15 @@ impl Config {
         }
         if let Ok(v) = get_env("SPEEDYG_TCP_ALLOWLIST") {
             cfg.tcp_allowlist = parse_ip_list("SPEEDYG_TCP_ALLOWLIST", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_MESSAGE_BYTES") {
+            cfg.max_message_bytes = parse_usize("SPEEDYG_MAX_MESSAGE_BYTES", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_ARGUMENTS") {
+            cfg.max_arguments = parse_usize("SPEEDYG_MAX_ARGUMENTS", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_ARGUMENT_BYTES") {
+            cfg.max_argument_bytes = parse_usize("SPEEDYG_MAX_ARGUMENT_BYTES", &v)?;
         }
 
         // 2. Flags CLI (mayor precedencia)
@@ -153,6 +174,22 @@ impl Config {
                     cfg.tcp_allowlist = parse_ip_list("--tcp-allowlist", val)?;
                     i += 2;
                 }
+                "--max-message-bytes" => {
+                    let val = next_arg(args, i, "--max-message-bytes")?;
+                    cfg.max_message_bytes = parse_usize("--max-message-bytes", val)?;
+                    i += 2;
+                }
+                "--max-arguments" => {
+                    let val = next_arg(args, i, "--max-arguments")?;
+                    cfg.max_arguments = parse_usize("--max-arguments", val)?;
+                    i += 2;
+                }
+                "--max-argument-bytes" => {
+                    let val = next_arg(args, i, "--max-argument-bytes")?;
+                    cfg.max_argument_bytes = parse_usize("--max-argument-bytes", val)?;
+                    i += 2;
+                }
+
                 _ => {
                     i += 1;
                 }
@@ -206,6 +243,15 @@ impl Config {
             }
         }
 
+        if self.max_message_bytes == 0 {
+            return Err("Config: 'max_message_bytes' no puede ser cero".to_string());
+        }
+        if self.max_arguments == 0 {
+            return Err("Config: 'max_arguments' no puede ser cero".to_string());
+        }
+        if self.max_argument_bytes == 0 {
+            return Err("Config: 'max_argument_bytes' no puede ser cero".to_string());
+        }
         Ok(())
     }
 }
