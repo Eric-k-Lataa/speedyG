@@ -35,7 +35,6 @@ fn peer_allowed(peer: &SocketAddr, allowlist: &[IpAddr]) -> bool {
     allowlist.contains(&peer.ip())
 }
 
-// Calando estas funciones para evitar hacer un cagadero en el loop principal
 async fn read_message_line<R>(
     reader: &mut BufReader<R>,
     max_message_bytes: usize,
@@ -65,9 +64,6 @@ where
         }
 
         raw.extend_from_slice(&chunk);
-        if raw.len() > max_message_bytes {
-            return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
-        }
         if raw.ends_with(b"\n") {
             break;
         }
@@ -475,7 +471,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 break;
             }
 
-           tcp_res = async {
+            tcp_res = async {
                 match tcp_listener.as_ref() {
                     Some(tcp) => tcp.accept().await,
                     None => std::future::pending().await,
@@ -512,11 +508,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    handle_client(stream, scheduler, grace_ms, max_current, max_message_bytes, max_arguments, max_argument_bytes).await;
+                    handle_client(
+                        stream,
+                        scheduler,
+                        grace_ms,
+                        max_current,
+                        max_message_bytes,
+                        max_arguments,
+                        max_argument_bytes,
+                    )
+                    .await;
                 });
             }
             accept_res = listener.accept() => {
-                let (mut stream, _) = match accept_res {
+                let (stream, _) = match accept_res {
                     Ok(res) => res,
                     Err(e) => {
                         error!("Error al aceptar conexión del socket: {}", e);
@@ -526,6 +531,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 // Si estamos en proceso de apagado, rechazamos nuevas solicitudes
                 if shutting_down.load(Ordering::SeqCst) {
+                    let mut stream = stream;
                     let _ = stream.write_all(b"Error: El demonio se esta apagando, no se aceptan nuevos comandos.\n").await;
                     let _ = stream.shutdown().await;
                     continue;
@@ -539,7 +545,16 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let max_argument_bytes = cfg.max_argument_bytes;
 
                 tokio::spawn(async move {
-                    handle_client(stream, scheduler, grace_ms, max_current, max_message_bytes, max_arguments, max_argument_bytes).await;
+                    handle_client(
+                        stream,
+                        scheduler,
+                        grace_ms,
+                        max_current,
+                        max_message_bytes,
+                        max_arguments,
+                        max_argument_bytes,
+                    )
+                    .await;
                 });
             }
         }
