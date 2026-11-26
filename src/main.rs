@@ -2,6 +2,7 @@ use speedyG::config::Config;
 use speedyG::executor::Executor;
 use speedyG::parser::parse_with_limits;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
+use speedyG::protocol::parse_and_validate_header;
 use speedyG::scheduler::{CancelOutcome, Scheduler};
 use speedyG::state_machine::JobState;
 use std::fs;
@@ -128,7 +129,20 @@ async fn handle_client<S>(
             continue;
         }
 
-        let response = match parse_with_limits(input_str, max_arguments, max_argument_bytes) {
+        let payload = match parse_and_validate_header(input_str) {
+            Ok(cmd_line) => cmd_line,
+            Err(err_msg) => {
+                warn!("Solicitud rechazada por protocolo: {}", err_msg);
+                let out = format!("Error de protocolo: {}\n", err_msg);
+                if let Err(e) = reader.get_mut().write_all(out.as_bytes()).await {
+                    error!("Error al escribir en el socket: {}", e);
+                    return;
+                }
+                continue;
+            }
+        };
+
+        let response = match parse_with_limits(payload.trim(), max_arguments, max_argument_bytes) {
             Ok(cmd) => match cmd.program.as_str() {
                 "health" => "OK: Daemon speedyg funcionando correctamente\n".to_string(),
                 "help" => {
@@ -246,7 +260,6 @@ async fn handle_client<S>(
         }
     }
 }
-
 fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max_current: usize) {
     tokio::spawn(async move {
         // Verificar que el Job siga en estado Running antes de ejecutarlo
