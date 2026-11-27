@@ -1,11 +1,12 @@
 // src/bin/speedyg.rs
 
 // Cliente CLI del demonio speedyG.
-// El socket al que se conecta se determnina en este orden:
+// El socket al que se conecta se determina en este orden:
 //      1. Flag --socket <ruta>
 //      2. Variable de entorno SPEEDYG_SOCKET
 //      3. Valor por defecto: /tmp/speedyg.sock
 
+use speedyG::protocol::attach_version_header;
 use std::env;
 use std::process;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -40,6 +41,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let command_raw = command_args.join(" ");
+    let wire_message = format!("{}\n", attach_version_header(&command_raw));
 
     let mut stream = match UnixStream::connect(&_socket_path).await {
         Ok(stream) => stream,
@@ -52,16 +54,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    if let Err(e) = stream.write_all(command_raw.as_bytes()).await {
+    if let Err(e) = stream.write_all(wire_message.as_bytes()).await {
         eprintln!("Error al enviar datos al demonio: {}", e);
         process::exit(1);
     }
 
-    //stream.write_all(command_raw.as_bytes()).await?;
     stream.shutdown().await?;
 
     let mut response = String::new();
     stream.read_to_string(&mut response).await?;
+
+    if response.starts_with("Error de protocolo:") {
+        eprint!("{}", response);
+        process::exit(1);
+    }
+
     print!("{}", response);
 
     Ok(())

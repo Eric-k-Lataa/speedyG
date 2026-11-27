@@ -3,5 +3,6 @@ pub mod config;
 pub mod executor;
 pub mod parser;
 pub mod persistence;
+pub mod protocol;
 pub mod scheduler;
 pub mod state_machine;
