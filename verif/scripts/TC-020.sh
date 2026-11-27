@@ -205,7 +205,7 @@ echo "$HEALTH" > "$RUN_DIR/health-check.txt"
 echo "[INFO] Respuesta de health: '$HEALTH'" | tee -a "$LOG"
 
 check "[RF-29] Daemon responde satisfactoriamente a health tras la terminación inesperada" \
-    "$(grep -q "OK" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 check_no_zombies
 
