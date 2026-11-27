@@ -244,7 +244,7 @@ echo "$HEALTH" > "$RUN_DIR/health-check.txt"
 echo "[INFO] Respuesta de health: '$HEALTH'" | tee -a "$LOG"
 
 check "[RNF-08] Daemon responde satisfactoriamente a health tras anomalías (obtenido: '$HEALTH')" \
-    "$(grep -q "OK" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # FASE 6: Limpieza y comprobación de procesos zombis

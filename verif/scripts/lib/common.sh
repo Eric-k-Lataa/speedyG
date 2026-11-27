@@ -338,6 +338,13 @@ check() {
     fi
 }
 
+# ── health_is_ok <respuesta de health> ───────────────────────────────────────
+# Devuelve 0 si la respuesta de `health` indica servicio activo (línea
+# `status=active`). No compara la respuesta completa: uptime_seconds varía.
+health_is_ok() {
+    grep -q '^status=active$' <<< "$1"
+}
+
 # ── block <descripción> ───────────────────────────────────────────────────────
 # Registra una comprobación que NO pudo evaluarse porque la funcionalidad que
 # necesita aún no existe (no es FAIL del sistema ni error de ambiente).

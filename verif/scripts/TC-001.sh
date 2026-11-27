@@ -90,7 +90,7 @@ OUT6=$(client health 2>&1)
 echo "$OUT6" | tee -a "$LOG"
 echo "$OUT6" > "$RUN_DIR/health-after-error.txt"
 
-assert_contains "Daemon responde health correctamente" "OK: Daemon speedyg funcionando correctamente" "$OUT6"
+assert_contains "Daemon responde health correctamente" "status=active" "$OUT6"
 
 # ── Diagnóstico: fds y procesos zombie ───────────────────────────────────────
 echo "" | tee -a "$LOG"

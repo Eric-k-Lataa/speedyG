@@ -262,6 +262,6 @@ echo "l1_final=$ST_L1_FINAL l2_final=$ST_L2_FINAL l3_final=$ST_L3_FINAL" \
 # ── Salud final ───────────────────────────────────────────────────────────────
 HEALTH=$(client health 2>&1)
 check "[CIERRE] Daemon responde health tras reinicio de verificación (obtenido: '$HEALTH')" \
-    "$(echo "$HEALTH" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 finish_run

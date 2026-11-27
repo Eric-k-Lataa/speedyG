@@ -274,7 +274,7 @@ check "Las 25 iteraciones de cancelaciones concurrentes fueron exitosas" \
 # Salud del daemon
 HEALTH=$(client health 2>&1)
 check "Daemon responde a comando health con OK tras las 25 iteraciones" \
-    "$(grep -q "OK:" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 # Sin procesos residuales de pruebas
 REM_TEST_PROCS=$(pgrep -f "sleep 10" 2>/dev/null | tr '\n' ' ')

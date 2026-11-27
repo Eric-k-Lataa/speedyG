@@ -185,7 +185,7 @@ echo "[9] Verificando salud del daemon y ausencia de procesos zombis" | tee -a "
 
 HEALTH=$(client health 2>&1)
 check "Daemon responde a health con OK (obtenido: '$HEALTH')" \
-    "$(grep -q "OK:" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 check_no_zombies
 
