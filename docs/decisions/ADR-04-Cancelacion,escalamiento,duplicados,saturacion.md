@@ -122,25 +122,7 @@ Estas decisiones deben garantizar la consistencia de los estados, evitar proceso
 
 ## 6. Retención de resultados
 
-**Alternativa A: Eliminar resultados automáticamente después de un periodo**
-
-**Ventajas:**
-- Limita el crecimiento de almacenamiento
-- Reduce la necesidad de mantenimiento manual
-
-**Desventajas:**
-- Los resultados pueden desaparecer antes de que el usuario los consulte
-- El periodo de retención debe configurarse y documentarse
-
-**Alternativa B: Conservar los resultados hasta su eliminación manual**
-
-**Ventajas:**
-- Permite consultar el historial sin un limite temporal
-- Evita la pérdida automática de resultados
-
-**Desventajas:**
-- El almacenamiento puede crecer con el tiempo
-- Es necesario disponer de un mecanismo de eliminación manual
+La política de retención de resultados se define en el **ADR-07: Política de retención de resultados y límites de recursos**, que sustituye las alternativas anteriores.
 
 ## Decisión 
 
@@ -151,7 +133,7 @@ Se proponen las siguientes decisiones SpeedyG:
 3. La cancelación enviará SIGTERM** al grupo de procesos del trabajo. Si el trabajo no termina dentro de un tiempo configurable, se enviará SIGKILL **Caso de aceptación: TC-021**
 4. Las señales se enviarán al grupo de procesos completo del trabajo, incluyendo el proceso principal y sus procesos hijos, para evitar que queden procesos ejecutándose después de cancelar el trabajo **Caso de aceptación: TC-021**
 5. Las solicitudes de cancelación sobre un mismo trabajo se procesarán de forma serializada. La primera solicitud valida iniciará la cancelación y las giuientes recibirán una respuesta que indique si la cancelación sigue en curso o si la cancelación se completó **Caso de aceptación: TC-017**
-6. Los resultados se conservarán permanentemente hasta que un usuario autorizado los elimine manualmente.
+6. La retención de resultados se regirá por lo establecido en el ADR-07, que establece un máximo de 1000 trabajos terminados y la eliminación automática de los registros más antiguos al alcanzar dicho límite
 
 ## Consecuencias
 
@@ -162,7 +144,7 @@ Se proponen las siguientes decisiones SpeedyG:
 - La cancelación dispone de un mecanismo de escalamiento si el trabajo no termina voluntariamente
 - El uso de grupos de procesos permite dirigir las señales al proceso principal y a sus hijos
 - La serialización de cancelaciones facilita mantener estados consistentes ante solicitudes concurrentes
-- Los resultados permanecen disponibles hasta que un usuario autorizado los elimine
+- Los resultados se conservan de acuerdo con el límite de retención establecido en el ADR-07
 
 ### Negativas
 
@@ -171,7 +153,7 @@ Se proponen las siguientes decisiones SpeedyG:
 - `SIGKILL` termina los procesos de forma forzada y no permite realizar tareas de limpieza dentro de ellos.
 - La gestión de grupos de procesos requiere identificar y controlar correctamente los procesos asociados a cada trabajo
 - La serialización de cancelaciones requiere coordinar el acceso al estado compartido 
-- La conservación permanente puede incrementar el uso de almacenamiento con el tiempo
+- Los resultados más antiguos pueden dejar de estar disponibles cuando se alcanza el límite del historial
 
 ## Riesgos
 - Una comprobación incorrecta de la capacidad de la cola podría permitir aceptar más trabajos de los establecidos.
@@ -179,8 +161,7 @@ Se proponen las siguientes decisiones SpeedyG:
 - Si el grupo de procesos no se configura correctamente, la cancelación podría afectar procesos ajenos al trabajo o dejar procesos hijos activos.
 - Si un trabajo termina justo cuando se está intentando cancelar, el sistema podría intentar detenerlo nuevamente o mostrar un estado incorrecto
 - Si varias cancelaciones se procesan al mismo tiempo sin coordinación, el estado final del trabajo podría no coincidir con las respuestas enviadas a los clientes
-- Si los resultados se eliminan manualmente por error, podría perderse información útil para revisar qué ocurrió durante la ejecución de un trabajo
-
+- Si la eliminación automática de resultados se realiza incorrectamente, podrían eliminarse registros que todavía sean necesarios o superarse el límite de trabajos terminados establecido en el ADR-07
 
 
 ## Requisitos afectados
@@ -203,6 +184,11 @@ Se proponen las siguientes decisiones SpeedyG:
 - +RF-26: Permite responder de manera coherente ante solicitudes simultáneas de cancelación
 - +RNF-27: Ayuda a mantener estados consistentes cuando varias solicitudes actúan sobre el mismo trabajo
 
-**Conservación permanente de resultados**
+**Retención limitada de resultados**
 - +RF-12: Conserva metadatos y resultados después de reiniciar el servicio.
 - +RF-13: Requiere recuperar el historial persistido al iniciar el servicio.
+- +RNF-06: Establece la capacidad mínima de 500 registros sin pérdida de metadatos.
+
+## Evidencia y prototipo de referencia
+- Estado actual del repositorio: persistencia de resultados y metadatos en SQLite mediante `src/persistence.rs`, gestión del historial en `src/scheduler.rs` y recuperación de trabajos al iniciar el servicio.
+- ADR-07: establece la política de retención máxima de 1000 trabajos terminados y la eliminación automática de los registros más antiguos.
