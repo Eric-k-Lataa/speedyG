@@ -85,6 +85,8 @@ async fn handle_client<S>(
     service_started_at: Instant,
     grace_ms: u64,
     max_current: usize,
+    max_output_bytes: usize,
+    max_completed_jobs: usize,
     max_message_bytes: usize,
     max_arguments: usize,
     max_argument_bytes: usize,
@@ -238,7 +240,7 @@ async fn handle_client<S>(
                                         });
                                     }
                                     info!("Job #{} cancelado", id);
-                                    despachar(Arc::clone(&scheduler), max_current);
+                                    despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
                                 }
                                 respuesta
                             }
@@ -265,7 +267,7 @@ async fn handle_client<S>(
 
                     match resultado {
                         Ok((job_id, _full_command)) => {
-                            despachar(Arc::clone(&scheduler), max_current);
+                            despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
                             format!("Job #{} encolado correctamente\n", job_id)
                         }
                         Err(error) => format!("{}\n", error),
@@ -284,7 +286,14 @@ async fn handle_client<S>(
         }
     }
 }
-fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max_current: usize) {
+fn lanzar_job(
+    scheduler: SharedScheduler,
+    job_id: u32,
+    full_command: String,
+    max_current: usize,
+    max_output_bytes: usize,
+    max_completed_jobs: usize,
+) {
     tokio::spawn(async move {
         // Verificar que el Job siga en estado Running antes de ejecutarlo
         {
@@ -310,7 +319,7 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
             Ok(res) => res,
             Err(e) => {
                 let mut sched = lock(&scheduler);
-                sched.complete_job(job_id, 1, "".into(), e);
+                sched.complete_job(job_id, 1, "".into(), e, false, max_completed_jobs);
                 return;
             }
         };
@@ -344,12 +353,12 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
             if let Some(pid) = pid_opt {
                 Executor::kill_process_group(pid, 100).await;
             }
-            let _ = Executor::wait_child(child).await;
+            let _ = Executor::wait_child(child, max_output_bytes).await;
             return;
         }
 
         // Esperamos a que el proceso termine de forma asíncrona
-        let exec_result = Executor::wait_child(child).await;
+        let exec_result = Executor::wait_child(child, max_output_bytes).await;
 
         // Marcar como completado y guardar.
         {
@@ -369,6 +378,8 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
                 exec_result.exit_code,
                 exec_result.stdout,
                 exec_result.stderr,
+                exec_result.output_truncated,
+                max_completed_jobs,
             ) {
                 info!(
                     "Job #{} terminó con código {}",
@@ -380,7 +391,12 @@ fn lanzar_job(scheduler: SharedScheduler, job_id: u32, full_command: String, max
             }
         }
         // Despachar el siguiente trabajo si hay capacidad
-        despachar(Arc::clone(&scheduler), max_current);
+        despachar(
+            Arc::clone(&scheduler),
+            max_current,
+            max_output_bytes,
+            max_completed_jobs,
+        );
     });
 }
 
@@ -403,7 +419,12 @@ fn mensaje_cancelacion(id: u32, outcome: CancelOutcome) -> String {
     }
 }
 
-fn despachar(scheduler: SharedScheduler, max_current: usize) {
+fn despachar(
+    scheduler: SharedScheduler,
+    max_current: usize,
+    max_output_bytes: usize,
+    max_completed_jobs: usize,
+) {
     loop {
         let siguiente = {
             let mut sched = lock(&scheduler);
@@ -416,7 +437,14 @@ fn despachar(scheduler: SharedScheduler, max_current: usize) {
         };
         match siguiente {
             Some((job_id, full_command)) => {
-                lanzar_job(Arc::clone(&scheduler), job_id, full_command, max_current);
+                lanzar_job(
+                    Arc::clone(&scheduler),
+                    job_id,
+                    full_command,
+                    max_current,
+                    max_output_bytes,
+                    max_completed_jobs,
+                );
             }
             None => break,
         }
@@ -488,7 +516,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     // despachar los trabajos recuperados respetando el limite de concurrencia
-    despachar(Arc::clone(&scheduler), cfg.max_current);
+    despachar(
+        Arc::clone(&scheduler),
+        cfg.max_current,
+        cfg.max_output_bytes,
+        cfg.max_completed_jobs,
+    );
 
     // Configurar escuchas de señales SIGINT (Ctrl+C) y SIGTERM
     let mut sigint = signal(SignalKind::interrupt())?;
@@ -543,6 +576,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let scheduler = Arc::clone(&scheduler);
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
+                let max_output_bytes = cfg.max_output_bytes;
+                let max_completed_jobs = cfg.max_completed_jobs;
                 let max_message_bytes = cfg.max_message_bytes;
                 let max_arguments = cfg.max_arguments;
                 let max_argument_bytes = cfg.max_argument_bytes;
@@ -554,6 +589,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         service_started_at,
                         grace_ms,
                         max_current,
+                        max_output_bytes,
+            max_completed_jobs,
                         max_message_bytes,
                         max_arguments,
                         max_argument_bytes,
@@ -581,6 +618,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 let scheduler = Arc::clone(&scheduler);
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
+            let max_output_bytes = cfg.max_output_bytes;
+        let max_completed_jobs = cfg.max_completed_jobs;
                 let max_message_bytes = cfg.max_message_bytes;
                 let max_arguments = cfg.max_arguments;
                 let max_argument_bytes = cfg.max_argument_bytes;
@@ -592,6 +631,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         service_started_at,
                         grace_ms,
                         max_current,
+            max_output_bytes,
+            max_completed_jobs,
                         max_message_bytes,
                         max_arguments,
                         max_argument_bytes,

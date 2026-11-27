@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     exit_code  INTEGER,
     stdout      TEXT,
     stderr      TEXT,
+    output_truncated INTEGER NOT NULL DEFAULT 0,
     received_at TEXT   NOT NULL,
     started_at TEXT,
     finished_at TEXT,
@@ -38,8 +39,8 @@ CREATE TABLE IF NOT EXISTS meta (
 ";
 
 const UPSERT_JOB: &str = "
-INSERT INTO jobs (id, program, args, state, exit_code, stdout, stderr, received_at, started_at, finished_at, location, position)
-VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+INSERT INTO jobs (id, program, args, state, exit_code, stdout, stderr, output_truncated, received_at, started_at, finished_at, location, position)
+VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)
 ON CONFLICT(id) DO UPDATE SET
     program    = excluded.program,
     args       = excluded.args,
@@ -47,6 +48,7 @@ ON CONFLICT(id) DO UPDATE SET
     exit_code  = excluded.exit_code,
     stdout     = excluded.stdout,
     stderr     = excluded.stderr,
+    output_truncated = excluded.output_truncated,
     received_at = excluded.received_at,
     started_at = excluded.started_at,
     finished_at = excluded.finished_at,
@@ -57,6 +59,7 @@ WHERE jobs.state     IS NOT excluded.state
    OR jobs.exit_code IS NOT excluded.exit_code
    OR jobs.stdout    IS NOT excluded.stdout
    OR jobs.stderr    IS NOT excluded.stderr
+   OR jobs.output_truncated IS NOT excluded.output_truncated
    OR jobs.location  IS NOT excluded.location
    OR jobs.position  IS NOT excluded.position
 ";
@@ -204,6 +207,21 @@ fn abrir_db(ruta: &Path) -> Result<Connection, PersistenceError> {
     conn.pragma_update(None, "journal_mode", "WAL")?;
     conn.pragma_update(None, "synchronous", "FULL")?;
     conn.execute_batch(ESQUEMA)?;
+    let tiene_columna: bool = conn.query_row(
+        "SELECT EXISTS(
+            SELECT 1 FROM pragma_table_info('jobs')
+            WHERE name = 'output_truncated'
+        )",
+        [],
+        |r| r.get(0),
+    )?;
+
+    if !tiene_columna {
+        conn.execute(
+            "ALTER TABLE jobs ADD COLUMN output_truncated INTEGER NOT NULL DEFAULT 0",
+            [],
+        )?;
+    }
     Ok(conn)
 }
 
@@ -211,6 +229,7 @@ fn guardar_sqlite(sched: &Scheduler, ruta: &Path) -> Result<(), PersistenceError
     let mut conn = abrir_db(ruta)?;
 
     let tx = conn.transaction_with_behavior(TransactionBehavior::Immediate)?;
+    tx.execute("DELETE FROM jobs", [])?;
     {
         let mut stmt = tx.prepare_cached(UPSERT_JOB)?;
         for (pos, job) in sched.pending_jobs().into_iter().enumerate() {
@@ -253,6 +272,7 @@ fn insertar_job(
         job.get_exit_code(),
         stdout_ref,
         stderr_ref,
+        job.get_output_truncated(),
         received_str,
         started_str,
         finished_str,
@@ -287,7 +307,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
     })?;
 
     let mut stmt = conn.prepare(
-        "SELECT id, program, args, state, exit_code, stdout, stderr, received_at, started_at, finished_at, location
+        "SELECT id, program, args, state, exit_code, stdout, stderr,output_truncated, received_at, started_at, finished_at, location
          FROM jobs ORDER BY position ASC, id ASC",
     )?;
     let filas = stmt
@@ -300,10 +320,11 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
                 r.get::<_, Option<i32>>(4)?,
                 r.get::<_, Option<String>>(5)?,
                 r.get::<_, Option<String>>(6)?,
-                r.get::<_, String>(7)?,
-                r.get::<_, Option<String>>(8)?,
+                r.get::<_, bool>(7)?,
+                r.get::<_, String>(8)?,
                 r.get::<_, Option<String>>(9)?,
-                r.get::<_, String>(10)?,
+                r.get::<_, Option<String>>(10)?,
+                r.get::<_, String>(11)?,
             ))
         })?
         .collect::<Result<Vec<_>, _>>()?;
@@ -320,6 +341,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
         exit_code,
         stdout,
         stderr,
+        output_truncated,
         rec_str,
         start_str,
         finish_str,
@@ -366,6 +388,7 @@ fn cargar_sqlite(ruta: &Path) -> Result<Option<Scheduler>, PersistenceError> {
             exit_code,
             stdout,
             stderr,
+            output_truncated,
             None,
             received_at,
             started_at,
