@@ -46,6 +46,10 @@ impl Scheduler {
         self.queue_cap = capacity;
     }
 
+    pub fn get_queue_cap(&self) -> usize {
+        self.queue_cap
+    }
+
     // Primer intento de filtro para status
     pub fn filter_jobs_by_state(&self, state_str: &str) -> Vec<&Job> {
         let target = state_str.to_lowercase();
