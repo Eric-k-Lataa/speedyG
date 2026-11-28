@@ -390,4 +390,71 @@ check "Sin procesos residuales de sleep 1002 en el sistema${REM_B:+ (PIDs:$REM_B
 echo "[INFO] File descriptors abiertos por daemon: $(count_open_fds)" | tee -a "$LOG"
 check_no_zombies
 
+# ── Paso 10: Bitácora de eventos (A2-12: RF-14, RF-23, RNF-15, RNF-22) ───────
+echo "" | tee -a "$LOG"
+echo "[10] Extrayendo y verificando la bitácora de eventos (events.jsonl)" | tee -a "$LOG"
+
+EVENTS_SRC="$DATA_DIR/events.jsonl"
+EVENTS_OUT="$RUN_DIR/events.jsonl"
+EVENTS_EXTRACT="$RUN_DIR/events-extracto.txt"
+
+# DATA_DIR se elimina al terminar la corrida: copiar antes de finish_run.
+check "La bitácora existe en el directorio de datos configurado ($EVENTS_SRC)" \
+    "$([[ -s "$EVENTS_SRC" ]] && echo 0 || echo 1)"
+
+if [[ -s "$EVENTS_SRC" ]]; then
+    cp "$EVENTS_SRC" "$EVENTS_OUT"
+
+    # Extracto del ciclo de vida: eventos de A, B y C y las solicitudes que los originaron.
+    REQ_IDS=$(grep -E "\"job_id\":($ID_A|$ID_B|$ID_C)[,}]" "$EVENTS_OUT" \
+        | grep -oE '"request_id":"req-[0-9]+"' | sort -u | cut -d'"' -f4 | paste -sd'|')
+    {
+        echo "# Extracto de bitácora TC-005 (A=$ID_A running->cancelado, B=$ID_B queued->cancelado, C=$ID_C succeeded)"
+        grep -E "\"job_id\":($ID_A|$ID_B|$ID_C)[,}]${REQ_IDS:+|\"request_id\":\"($REQ_IDS)\"}" "$EVENTS_OUT"
+    } > "$EVENTS_EXTRACT"
+    cat "$EVENTS_EXTRACT" | tee -a "$LOG"
+
+    ev() {   # ev <evento> <job_id> -> nº de líneas con ese evento y trabajo
+        grep -E "\"event\":\"$1\"" "$EVENTS_OUT" | grep -cE "\"job_id\":$2[,}]"
+    }
+
+    # Cada entrada: marca temporal, nivel, evento (RF-14)
+    BAD_LINES=0
+    while IFS= read -r line; do
+        grep -qE '"timestamp":"[0-9]{4}-[0-9]{2}-[0-9]{2}T[^"]+"' <<< "$line" \
+            && grep -qE '"level":"(INFO|WARN|ERROR)"' <<< "$line" \
+            && grep -qE '"event":"[a-z_]+"' <<< "$line" || BAD_LINES=$((BAD_LINES + 1))
+    done < "$EVENTS_OUT"
+    check "Cada entrada tiene timestamp, level y event (entradas inválidas: $BAD_LINES)" \
+        "$([[ "$BAD_LINES" -eq 0 ]] && echo 0 || echo 1)"
+
+    check "Se registra la recepción de solicitudes (request_received)" \
+        "$(grep -q '"event":"request_received"' "$EVENTS_OUT" && echo 0 || echo 1)"
+    check "Se registra el encolado de A, B y C (job_queued con job_id)" \
+        "$([[ "$(ev job_queued "$ID_A")" -ge 1 && "$(ev job_queued "$ID_B")" -ge 1 && "$(ev job_queued "$ID_C")" -ge 1 ]] && echo 0 || echo 1)"
+    check "Se registra el inicio de A y C (job_started)" \
+        "$([[ "$(ev job_started "$ID_A")" -ge 1 && "$(ev job_started "$ID_C")" -ge 1 ]] && echo 0 || echo 1)"
+    check "B nunca registra inicio (cancelado en cola)" \
+        "$([[ "$(ev job_started "$ID_B")" -eq 0 ]] && echo 0 || echo 1)"
+    check "Se registra la cancelación de A (en ejecución) y de B (en cola)" \
+        "$([[ "$(ev job_canceled "$ID_A")" -ge 1 && "$(ev job_canceled "$ID_B")" -ge 1 ]] && echo 0 || echo 1)"
+    check "Se registra el fin de C (job_finished)" \
+        "$([[ "$(ev job_finished "$ID_C")" -ge 1 ]] && echo 0 || echo 1)"
+
+    # Correlación solicitud <-> trabajo (RNF-22)
+    CORR_OK=0
+    for jid in "$ID_A" "$ID_B" "$ID_C"; do
+        grep -E '"event":"job_queued"' "$EVENTS_OUT" | grep -E "\"job_id\":$jid[,}]" \
+            | grep -qE '"request_id":"req-[0-9]+"' || CORR_OK=1
+    done
+    check "job_queued correlaciona request_id con job_id para A, B y C (RNF-22)" "$CORR_OK"
+
+    # Sin datos sensibles (RNF-15)
+    SENSITIVE=$(grep -ciE 'tcp_allowlist|password|passwd|secret|token|api[_-]?key|credential' "$EVENTS_OUT" || true)
+    check "La bitácora no contiene secretos ni configuración sensible (coincidencias: ${SENSITIVE:-0})" \
+        "$([[ "${SENSITIVE:-0}" -eq 0 ]] && echo 0 || echo 1)"
+    check "La bitácora no expone rutas de configuración (socket/data-dir)" \
+        "$( ! grep -qF -e "$SOCKET" -e "$DATA_DIR" "$EVENTS_OUT" && echo 0 || echo 1)"
+fi
+
 finish_run
