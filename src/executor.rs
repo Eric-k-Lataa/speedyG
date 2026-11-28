@@ -1,5 +1,10 @@
 // src/executor.rs
 use std::process::Stdio;
+use std::sync::{
+    atomic::{AtomicUsize, Ordering},
+    Arc,
+};
+use tokio::io::AsyncReadExt;
 use tokio::process::{Child, Command};
 
 /// Resultado de la ejecución de un subproceso
@@ -9,6 +14,7 @@ pub struct ExecutionResult {
     pub success: bool,
     pub stdout: String,
     pub stderr: String,
+    pub output_truncated: bool,
 }
 
 #[cfg(unix)]
@@ -24,6 +30,44 @@ fn nombre_senal(sig: i32) -> String {
         15 => "SIGTERM".to_string(),
         _ => format!("SIG{}", sig),
     }
+}
+
+// Lee la salida de un proceso por bloques, conservando solamente los bytes permitidos por el límite compartido entre stdout y stderr
+async fn read_limited<R>(
+    mut reader: R,
+    max_bytes: usize,
+    total_bytes: Arc<AtomicUsize>,
+    truncated: Arc<std::sync::atomic::AtomicBool>,
+) -> Vec<u8>
+where
+    R: tokio::io::AsyncRead + Unpin,
+{
+    let mut output = Vec::new();
+    let mut buffer = [0u8; 8192];
+
+    loop {
+        match reader.read(&mut buffer).await {
+            Ok(0) | Err(_) => break,
+            Ok(n) => {
+                let previous = total_bytes
+                    .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |current| {
+                        Some(current.saturating_add(n))
+                    })
+                    .unwrap_or_else(|current| current);
+
+                let available = max_bytes.saturating_sub(previous);
+                let keep = n.min(available);
+
+                output.extend_from_slice(&buffer[..keep]);
+
+                if keep < n {
+                    truncated.store(true, Ordering::Relaxed);
+                }
+            }
+        }
+    }
+
+    output
 }
 
 pub struct Executor;
@@ -88,20 +132,41 @@ impl Executor {
     }
 
     /// Espera a que un proceso hijo termine y extrae su resultado
-    pub async fn wait_child(child: Child) -> ExecutionResult {
+    pub async fn wait_child(mut child: Child, max_output_bytes: usize) -> ExecutionResult {
         use std::os::unix::process::ExitStatusExt;
 
-        let output = child.wait_with_output().await;
+        let stdout_reader = child.stdout.take().unwrap();
+        let stderr_reader = child.stderr.take().unwrap();
 
-        match output {
-            Ok(out) => {
-                let mut stderr = String::from_utf8_lossy(&out.stderr).to_string();
-                let exit_code = match out.status.code() {
+        let total_bytes = Arc::new(AtomicUsize::new(0));
+        let truncated = Arc::new(std::sync::atomic::AtomicBool::new(false));
+
+        let (stdout, stderr, status) = tokio::join!(
+            read_limited(
+                stdout_reader,
+                max_output_bytes,
+                total_bytes.clone(),
+                truncated.clone()
+            ),
+            read_limited(
+                stderr_reader,
+                max_output_bytes,
+                total_bytes.clone(),
+                truncated.clone()
+            ),
+            child.wait(),
+        );
+
+        let mut stderr = String::from_utf8_lossy(&stderr).to_string();
+
+        match status {
+            Ok(status) => {
+                let exit_code = match status.code() {
                     Some(code) => code,
                     None => {
-                        if let Some(sig) = out.status.signal() {
-                            let sig_name = nombre_senal(sig);
-                            let diag = format!("Terminado por señal {} ({})", sig, sig_name);
+                        if let Some(sig) = status.signal() {
+                            let diag =
+                                format!("Terminado por señal {} ({})", sig, nombre_senal(sig));
                             if stderr.is_empty() {
                                 stderr = diag;
                             } else {
@@ -116,9 +181,10 @@ impl Executor {
 
                 ExecutionResult {
                     exit_code,
-                    success: out.status.success(),
-                    stdout: String::from_utf8_lossy(&out.stdout).to_string(),
+                    success: status.success(),
+                    stdout: String::from_utf8_lossy(&stdout).to_string(),
                     stderr,
+                    output_truncated: truncated.load(Ordering::Relaxed),
                 }
             }
             Err(e) => ExecutionResult {
@@ -126,6 +192,7 @@ impl Executor {
                 success: false,
                 stdout: String::new(),
                 stderr: e.to_string(),
+                output_truncated: truncated.load(Ordering::Relaxed),
             },
         }
     }
