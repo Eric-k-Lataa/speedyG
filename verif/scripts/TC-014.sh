@@ -138,6 +138,35 @@ ls -l "$CLONE"/target/release/speedyG "$CLONE"/target/release/speedyg \
 check "[RNF-02] Cargo.lock no cambió durante el build (reproducible con --locked)" \
     "$(git -C "$CLONE" diff --quiet -- Cargo.lock && echo 0 || echo 1)"
 
+# ── Entorno del clon: distribución, toolchain, dependencias y commit ─────────
+# Se consulta desde el clon (rust-toolchain.toml aplica ahí), no desde el repo original.
+PINNED_CHANNEL="$(sed -n 's/^channel *= *"\(.*\)"/\1/p' "$CLONE/rust-toolchain.toml" | tr -d '\r')"
+CLONE_RUSTC="$(cd "$CLONE" && rustc --version 2>/dev/null || echo n/a)"
+{
+    echo "== distribucion (/etc/os-release) =="
+    if [[ -r /etc/os-release ]]; then
+        grep -E '^(PRETTY_NAME|NAME|VERSION|VERSION_ID|ID)=' /etc/os-release
+    else
+        echo "n/a"
+    fi
+    echo "kernel=$(uname -r)"
+    echo "arch=$(uname -m)"
+    echo "== toolchain del clon =="
+    echo "toolchain_fijado=$PINNED_CHANNEL"
+    echo "rustc=$CLONE_RUSTC"
+    echo "cargo=$(cd "$CLONE" && cargo --version 2>/dev/null || echo n/a)"
+    echo "== commit del clon =="
+    echo "commit=$CLONE_COMMIT"
+    echo "describe=$CLONE_DESCRIBE"
+    echo "== dependencias =="
+    echo "cargo_lock_sha256=$(sha256sum "$CLONE/Cargo.lock" | cut -d' ' -f1)"
+} > "$RUN_DIR/clone-environment.txt"
+run_in_clone dependencies cargo tree --locked --depth 1
+check "[RNF-02] rustc del clon corresponde al toolchain fijado (${PINNED_CHANNEL:-n/a}): $CLONE_RUSTC" \
+    "$([[ -n "$PINNED_CHANNEL" && "$CLONE_RUSTC" == *"$PINNED_CHANNEL"* ]] && echo 0 || echo 1)"
+check "[RNF-02] Lista de dependencias registrada (cargo tree --locked)" \
+    "$([[ -s "$RUN_DIR/dependencies.log" ]] && grep -q 'speedyG' "$RUN_DIR/dependencies.log" && echo 0 || echo 1)"
+
 # ── RNF-19 / RNF-20: calidad con los comandos documentados ───────────────────
 run_in_clone fmt make fmt
 check "[RNF-19] make fmt sin diferencias" "$?"
