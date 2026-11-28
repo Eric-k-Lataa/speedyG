@@ -37,9 +37,9 @@
 
 | Req ID | Descripción breve | Prioridad | Método | Caso(s) | Evidencia | Resultado | Defecto/Excepción |
 |:-------|:------------------|:---------:|:------:|:--------|:----------|:---------:|:------------------|
-| RNF-01 | Compilar y ejecutar en Linux declarado | Alta | Prueba | TC-014 | resultado + log | Pendiente | falta diseñar el script |
-| RNF-02 | Construcción reproducible desde clon limpio | Alta | Prueba/Inspección | TC-014 | log de build | Pendiente | falta diseñar el script |
-| RNF-03 | Sin privilegios de root | Alta | Prueba | TC-014 | `id -u` + log | Pendiente | falta diseñar el script |
+| RNF-01 | Compilar y ejecutar en Linux declarado | Alta | Prueba | TC-014 | `environment.txt` + `clone-environment.txt` | PASS | N/A |
+| RNF-02 | Construcción reproducible desde clon limpio | Alta | Prueba/Inspección | TC-014 | `clone-info.txt` + `build.log` + `dependencies.log` | PASS | N/A |
+| RNF-03 | Sin privilegios de root | Alta | Prueba | TC-014 | `id.txt` (`id -u`) + log | PASS | N/A |
 | RNF-04 | Con límite 3, al menos 3 trabajos simultáneos | Alta | Prueba | TC-002 | ps-samples + resumen | PASS | N/A |
 | RNF-05 | Consulta de estado ≤ 1 s con 100 trabajos | Alta | Prueba | TC-004 | tiempos medidos | PASS | N/A |
 | RNF-06 | Soportar al menos 500 registros sin pérdida | Alta | Prueba | TC-007 | conteo antes/después de reiniciar | PASS | N/A |
@@ -55,8 +55,8 @@
 | RNF-16 | Mínimo privilegio y modelo de amenazas básico | Alta | Inspección | documento de amenazas (propuesto) | documento | Pendiente | — |
 | RNF-17 | Módulos con responsabilidades identificables | Alta | Inspección | revisión de `src/` | estructura del repositorio | PASS | N/A |
 | RNF-18 | Interfaces públicas y decisiones documentadas | Alta | Inspección | ADR + guías | documentos | PASS | N/A |
-| RNF-19 | Compilar sin advertencias nuevas | Alta | Prueba | TC-014 (propuesto) | log de `cargo build` y `clippy` en CI | Pendiente | — |
-| RNF-20 | Pruebas con un único comando documentado | Alta | Prueba | TC-014 (propuesto) | ejecución de `run-all.sh` | Pendiente | — |
+| RNF-19 | Compilar sin advertencias nuevas | Alta | Prueba | TC-014 | `build.log`, `warnings.txt`, `clippy.log` | PASS | N/A |
+| RNF-20 | Pruebas con un único comando documentado | Alta | Prueba | TC-014 | `commands.txt` (`make verify` definido y documentado) + `test.log` | PASS | N/A |
 | RNF-21 | Errores con operación, causa y acción sugerida | Alta | Prueba | TC-015, TC-016 | mensajes capturados | BLOCKED | Falta TC-015 |
 | RNF-22 | Bitácora que correlaciona solicitud con trabajo | Alta | Prueba | TC-020 (propuesto) | daemon.log | Pendiente | — |
 | RNF-23 | Guía de usuario suficiente sin asistencia | Alta | Prueba/Demo | TC-015 | prueba con un usuario ajeno | Pendiente | — |
@@ -72,7 +72,6 @@
 | RNF-33 | Liberación de memoria, procesos, archivos y sockets bajo estrés | Alta | Prueba | TC-024 | fds + procesos + memoria | Pendiente | — |
 | RNF-34 | Decisiones de seguridad/consistencia con análisis de riesgo y prueba | Alta | Inspección | ADR + registro de riesgos (propuesto) | documentos | Pendiente | — |
 
->>>>>>> Stashed changes
 ## Cobertura por caso
 
 | Caso | Título | Requisitos | Script | Estado |
@@ -86,7 +85,7 @@
 | TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | `TC-007.sh` | PASS |
 | TC-008 | Aislamiento de fallo | RNF-08, RNF-09 | `TC-008.sh` | Pendiente |
 | TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | `TC-009.sh` | PASS |
-| TC-014 | Cierre controlado | RF-15, RNF-25, RNF-30 | `TC-014.sh` | Sin redactar |
+| TC-014 | Construcción reproducible desde clon limpio | RNF-01, RNF-02, RNF-03, RNF-19, RNF-20 | `TC-014.sh` | PASS |
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
 | TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | PASS |
 | TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | PASS |
@@ -95,12 +94,14 @@
 | TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | `TC-022.sh` | BLOCKED |
 | TC-024 | Liberación de recursos bajo carga | RNF-33 | `TC-024.sh` | PASS |
 
-Los TC-010 a TC-015, TC-019 y TC-023 aparecen en la matriz pero aún no tienen archivo ni script. Hay que confirmar con el equipo cuáles entran en este avance. TC-019 (RF-28) sí lo exige el brief del Avance 02.
+Los TC-010 a TC-013, TC-015, TC-019 y TC-023 aparecen en la matriz pero aún no tienen archivo ni script. Hay que confirmar con el equipo cuáles entran en este avance. TC-019 (RF-28) sí lo exige el brief del Avance 02.
+
+`PASS (CI)` indica que el caso pasó en la ejecución de CI (run-id `20261127-184647-18977`, commit `d865e6a`, `ubuntu-latest`). TC-014 queda pendiente de ejecutarse sobre la etiqueta `v1.0.0-rc1` y de la reproducción por un integrante distinto del autor.
 
 ## Decisiones pendientes
 
 1. **RNF-06** (500 registros): el plan oficial no define caso. Se propone cubrirlo dentro de TC-007.
 2. **RF-14, RNF-22** (bitácora): el plan oficial no define caso. Se propone evaluar `daemon.log` dentro de TC-016 y TC-020.
 3. **RNF-15, RNF-16, RNF-17, RNF-18, RNF-34**: son de inspección documental; falta decidir qué documento sirve de evidencia.
-4. **RNF-19, RNF-20**: se propone cubrirlos con el CI (`clippy` y `run-all.sh`).
+4. **RNF-19, RNF-20**: se cubren con TC-014 (`make build`, `make clippy`, `make test`; `make verify` definido y documentado).
 5. **TC-019** no tiene redactor asignado.
