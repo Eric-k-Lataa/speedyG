@@ -20,6 +20,8 @@ pub const DEFAULT_MAX_ARGUMENTS: usize = 32;
 pub const DEFAULT_MAX_ARGUMENT_BYTES: usize = 256;
 pub const DEFAULT_MAX_OUTPUT_BYTES: usize = 1_000_000;
 pub const DEFAULT_MAX_COMPLETED_JOBS: usize = 1000;
+pub const DEFAULT_MAX_CONCURRENT_CLIENTS: usize = 5;
+pub const DEFAULT_IDLE_TIMEOUT_SECS: u64 = 300;
 
 pub const DEFAULT_SPEEDYG_TCP_ENABLED: bool = true;
 pub const DEFAULT_SPEEDYG_TCP_HOST: &str = "127.0.0.1";
@@ -46,7 +48,7 @@ pub struct Config {
     pub tcp_port: u16,
     // Lista blanca de IPs permitidas cuando tcp_host no es loopback (A3-09)
     pub tcp_allowlist: Vec<IpAddr>,
-    // Número máximo de bytes permitiddos por mensaje
+    // Número máximo de bytes permitidos por mensaje
     pub max_message_bytes: usize,
     // Número máximo de argumentos permitidos por comando
     pub max_arguments: usize,
@@ -56,6 +58,10 @@ pub struct Config {
     pub max_output_bytes: usize,
     // Número máximo de trabajos terminados conservados en el historial
     pub max_completed_jobs: usize,
+    // Número máximo de clientes conectados simultaneamente
+    pub max_concurrent_clients: usize,
+    // Cantidad de segundos inactivos antes de ser desconectado
+    pub idle_timeout_secs: u64,
 }
 
 impl Default for Config {
@@ -75,6 +81,8 @@ impl Default for Config {
             max_argument_bytes: DEFAULT_MAX_ARGUMENT_BYTES,
             max_output_bytes: DEFAULT_MAX_OUTPUT_BYTES,
             max_completed_jobs: DEFAULT_MAX_COMPLETED_JOBS,
+            max_concurrent_clients: DEFAULT_MAX_CONCURRENT_CLIENTS,
+            idle_timeout_secs: DEFAULT_IDLE_TIMEOUT_SECS,
         }
     }
 }
@@ -102,7 +110,7 @@ impl Config {
             cfg.max_current = parse_usize("SPEEDYG_MAX_CURRENT", &v)?;
         }
         if let Ok(v) = get_env("SPEEDYG_GRACE_MS") {
-            cfg.grace_ms = parse_u64("SPEEDYG_GRACE_MS", &v)?;
+            cfg.grace_ms = parse_u64("SPEEDYG_GRACE_MS", &v)?; //Política documentada en el ADR de transporte o en la guía técnica
         }
         if let Ok(v) = get_env("SPEEDYG_DATA_DIR") {
             cfg.data_dir = v;
@@ -133,6 +141,12 @@ impl Config {
         }
         if let Ok(v) = get_env("SPEEDYG_MAX_COMPLETED_JOBS") {
             cfg.max_completed_jobs = parse_usize("SPEEDYG_MAX_COMPLETED_JOBS", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_CONCURRENT_CLIENTS") {
+            cfg.max_concurrent_clients = parse_usize("SPEEDYG_MAX_CONCURRENT_CLIENTS", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_IDLE_TIMEOUT_SECS") {
+            cfg.idle_timeout_secs = parse_u64("SPEEDYG_IDLE_TIMEOUT_SECS", &v)?;
         }
 
         // 2. Flags CLI (mayor precedencia)
@@ -203,6 +217,16 @@ impl Config {
                     cfg.max_argument_bytes = parse_usize("--max-argument-bytes", val)?;
                     i += 2;
                 }
+                "--max-concurrent-clients" => {
+                    let val = next_arg(args, i, "--max-concurrent-clients")?;
+                    cfg.max_concurrent_clients = parse_usize("--max-concurrent-clients", val)?;
+                    i += 2;
+                }
+                "--idle-timeout-secs" => {
+                    let val = next_arg(args, i, "--idle-timeout-secs")?;
+                    cfg.idle_timeout_secs = parse_u64("--idle-timeout-secs", val)?;
+                    i += 2;
+                }
 
                 _ => {
                     i += 1;
@@ -271,6 +295,12 @@ impl Config {
         }
         if self.max_completed_jobs == 0 {
             return Err("Config: 'max_completed_jobs' no puede ser cero".to_string());
+        }
+        if self.max_concurrent_clients == 0 {
+            return Err("Config: 'max_concurrent_clients' no puede ser cero".to_string());
+        }
+        if self.idle_timeout_secs < 2 {
+            return Err("Config: 'idle_timeout_secs' no puede ser menor a 2 segundos".to_string());
         }
         Ok(())
     }
