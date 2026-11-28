@@ -112,7 +112,7 @@ check "Siguen presentes los $FIRST_BATCH trabajos aceptados, sin un séptimo (en
 # ── Paso 5: el daemon sigue vivo ─────────────────────────────────────────────
 HEALTH=$(client health 2>&1)
 echo "health: $HEALTH" | tee -a "$LOG"
-assert_contains "El daemon responde health tras el rechazo" "OK: Daemon speedyg funcionando correctamente" "$HEALTH"
+assert_contains "El daemon responde health tras el rechazo" "status=active" "$HEALTH"
 
 # ── Paso 6: recuperación al liberarse espacio ────────────────────────────────
 echo "" | tee -a "$LOG"

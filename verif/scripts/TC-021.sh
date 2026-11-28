@@ -202,7 +202,7 @@ echo "$HEALTH" > "$RUN_DIR/health-check.txt"
 echo "[INFO] Respuesta de health: '$HEALTH'" | tee -a "$LOG"
 
 check "[RF-30] Daemon responde satisfactoriamente a health tras escalamiento" \
-    "$(grep -q "OK" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 check_no_zombies
 

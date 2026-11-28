@@ -378,7 +378,7 @@ echo "[9] Verificando salud del daemon y ausencia de procesos residuales / zombi
 
 HEALTH=$(client health 2>&1)
 check "Daemon responde a comando health con OK (obtenido: '$HEALTH')" \
-    "$(grep -q "OK:" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 REM_A=$(pgrep -f "sleep 1001" 2>/dev/null | tr '\n' ' ')
 REM_B=$(pgrep -f "sleep 1002" 2>/dev/null | tr '\n' ' ')

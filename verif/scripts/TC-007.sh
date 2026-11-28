@@ -410,7 +410,7 @@ echo "[10] Verificando salud general y ausencia de procesos huérfanos / zombis"
 
 HEALTH=$(client health 2>&1)
 check "Daemon responde correctamente a health tras ciclo completo (obtenido: '$HEALTH')" \
-    "$(grep -q "OK:" <<< "$HEALTH" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH" && echo 0 || echo 1)"
 
 check_no_zombies
 

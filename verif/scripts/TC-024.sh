@@ -129,7 +129,7 @@ check_no_zombies
 H1=$(client health 2>&1)
 echo "post-rafaga1: $H1" >> "$RUN_DIR/health-checks.txt"
 check "[A] Daemon responde health tras ráfaga 1" \
-    "$(echo "$H1" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$H1" && echo 0 || echo 1)"
 
 # ── Pausa de reposo entre ráfagas y medición de FDs ──────────────────────────
 sleep 2
@@ -160,7 +160,7 @@ check_no_zombies
 H2=$(client health 2>&1)
 echo "post-rafaga2: $H2" >> "$RUN_DIR/health-checks.txt"
 check "[A] Daemon responde health tras ráfaga 2" \
-    "$(echo "$H2" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$H2" && echo 0 || echo 1)"
 
 sleep 2
 FDS_POST_LOAD=$(measure_fds)
@@ -249,7 +249,7 @@ check_no_zombies
 H3=$(client health 2>&1)
 echo "post-cancel: $H3" >> "$RUN_DIR/health-checks.txt"
 check "[B] Daemon responde health tras cancelaciones" \
-    "$(echo "$H3" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$H3" && echo 0 || echo 1)"
 
 sleep 2
 FDS_POST_CANCEL=$(measure_fds)

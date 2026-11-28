@@ -243,7 +243,7 @@ for ITER in $(seq 1 $ITERATIONS); do
 
     HEALTH_OUT=$(client health 2>&1)
     check "[A-iter${ITER}] health responde OK" \
-        "$(echo "$HEALTH_OUT" | grep -q "OK" && echo 0 || echo 1)"
+        "$(health_is_ok "$HEALTH_OUT" && echo 0 || echo 1)"
 
     # Comprobar que ningún ID aceptado desapareció
     MISSING=0
@@ -635,7 +635,7 @@ check "[C4] Daemon arranca y socket responde pese a archivos ilegibles" \
 
 C4_HEALTH=$(client health 2>&1)
 check "[C4] health responde OK con archivos ilegibles (obtenido: '$C4_HEALTH')" \
-    "$(echo "$C4_HEALTH" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$C4_HEALTH" && echo 0 || echo 1)"
 
 C4_STATUS=$(client status 2>&1)
 echo "$C4_STATUS" > "$RUN_DIR/corrupt-C4.txt"
@@ -658,7 +658,7 @@ echo "════════════════════════�
 
 HEALTH_FINAL=$(client health 2>&1)
 check "[CIERRE] Daemon responde health al terminar (obtenido: '$HEALTH_FINAL')" \
-    "$(echo "$HEALTH_FINAL" | grep -q "OK" && echo 0 || echo 1)"
+    "$(health_is_ok "$HEALTH_FINAL" && echo 0 || echo 1)"
 
 # Eliminar cualquier proceso huérfano residual de los marcadores usados en el TC
 for marker in "sleep 1003" "sleep 1005" "sleep 1006"; do

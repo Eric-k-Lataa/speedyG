@@ -55,7 +55,16 @@ Comprueba que responde (en otra terminal):
 cargo run --bin speedyg -- health
 ```
 
-Resultado esperado: `OK: Daemon speedyg funcionando correctamente`.
+Resultado esperado: una respuesta de varias líneas con el resumen de salud del servicio; la primera línea es `status=active`:
+
+```text
+status=active
+service_version=<versión>
+uptime_seconds=<segundos desde el arranque>
+running=<trabajos en ejecución>
+queued=<trabajos en cola>
+queue_capacity=<capacidad máxima de la cola>
+```
 
 > **Sobre `--`:** al usar `cargo run`, lo que va después de `--` se entrega al programa.
 
@@ -127,7 +136,7 @@ Los estados `Succeeded`, `Failed`, `Canceled` e `Interrupted` son **finales**: n
 | Situación | Mensaje (orientativo) | Significado | Qué hacer |
 | --- | --- | --- | --- |
 | Trabajo aceptado | `Job #N encolado correctamente` | El trabajo quedó registrado con ese ID | Guarda el ID |
-| Servicio activo | `OK: Daemon speedyg funcionando correctamente` | El servicio responde | Nada |
+| Servicio activo | `status=active` (seguido de versión, uptime, trabajos en ejecución, en cola y capacidad de la cola) | El servicio responde | Nada |
 | Estado de un trabajo | `Job #N: <comando> [<Estado>]` | Estado actual | Nada |
 | Comando no autorizado | rechazo con la causa (ej. `rm archivo.txt`) | La política prohíbe ese comando | Usa un comando permitido |
 | Comando vacío o mal formado | rechazo con la causa | La solicitud no es válida | Revisa la sintaxis |
