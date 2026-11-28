@@ -59,8 +59,10 @@ where
         if n == 0 {
             if raw.is_empty() {
                 return Ok(None);
+            } else {
+                warn!("Cliente desconectado con mensaje incompleto (sin salto de línea); solicitud descartada sin efecto");
+                return Ok(None);
             }
-            break;
         }
 
         if raw.len() + chunk.len() > max_message_bytes {
@@ -312,7 +314,10 @@ async fn handle_client<S>(
         };
 
         if let Err(e) = reader.get_mut().write_all(response.as_bytes()).await {
-            error!("Error al escribir en el socket: {}", e);
+            warn!(
+                "Cliente desconectado o error al enviar respuesta ({}); el estado ya aplicado en el scheduler se conserva",
+                e
+            );
             return;
         }
     }
