@@ -20,7 +20,7 @@ pub const DEFAULT_MAX_ARGUMENTS: usize = 32;
 pub const DEFAULT_MAX_ARGUMENT_BYTES: usize = 256;
 pub const DEFAULT_MAX_OUTPUT_BYTES: usize = 1_000_000;
 pub const DEFAULT_MAX_COMPLETED_JOBS: usize = 1000;
-pub const DEFAULT_MAX_CONCURRENT_CLIENTS: usize = 5;
+pub const DEFAULT_MAX_CONCURRENT_CLIENTS: usize = 128;
 pub const DEFAULT_IDLE_TIMEOUT_SECS: u64 = 300;
 
 pub const DEFAULT_SPEEDYG_TCP_ENABLED: bool = true;
