@@ -1,5 +1,8 @@
 # ADR-04: Cancelación, escalamiento, duplicados y saturación
 
+**Estado:** Aceptado
+**Fecha:** 27-10-2026
+
 ## Contexto 
 
 SpeedyG necesita definir el comportamiento del sistema cuando la cola alcanza su capacidad máxima, se reciben solicitudes duplicadas, se cancelan trabajos y los procesos no terminan normalmente. También es necesario establecer cómo se manejan las cancelaciones concurrentes y cuánto tiempo se conservan los resultados.

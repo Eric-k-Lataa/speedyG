@@ -1,5 +1,8 @@
 # ADR-07: Política de retención de resultados y límites de recursos
 
+**Estado:** Aceptado
+**Fecha:** 26-11-2026
+
 ## Contexto
 
 Actualmente, SpeedyG almacena los metadatos y las salidas (`stdout` y `stderr`) de los trabajos ejecutados en SQLite, pero no cuenta con límites definidos para el tamaño de las salidas ni para la cantidad de registros conservados en el historial.

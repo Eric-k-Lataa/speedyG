@@ -1,5 +1,8 @@
 # ADR-06: Protocolo de Red
 
+**Estado:** Aceptado
+**Fecha:** 24-11-2026
+
 ## Contexto
 
 Actualmente el daemon de SpeedyG (`src/main.rs`) escucha únicamente en un *Unix Domain Socket* local (`/tmp/speedyg.sock`) mediante `UnixStream`, mientras que el cliente efímero (`src/bin/speedyg.rs`) envía peticiones de forma puntual desde la terminal. Cada conexión realiza una única lectura de hasta 1024 bytes sin delimitación de mensajes ni campo de versión del protocolo.

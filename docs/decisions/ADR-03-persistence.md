@@ -1,8 +1,11 @@
 # ADR-03: Mecanismo de persistencia
 
+**Estado:** Aceptado
+**Fecha:** 11-09-2026
+
 ## Contexto
 
-speedyG necesita almacenar la información de los trabajos ejecutados para permitir su consulta y recuperación.
+SpeedyG necesita almacenar los metadatos y las salidas de los trabajos ejecutados para permitir su consulta y recuperación después de reiniciar el servicio.
 
 ## Alternativas consideradas
 
@@ -32,7 +35,13 @@ speedyG necesita almacenar la información de los trabajos ejecutados para permi
 
 ## Decisión
 
-La implementación de JSON guarda el estado del scheduler en un archivo legible (scheduler.json) y permite recuperar jobs al reiniciar el demonio, proporciona persistencia básica y tolerancia mínima a fallos, cumpliendo con los requisitos básicos.
+Se selecciona SQLite como mecanismo principal de persistencia y JSON como mecanismo de respaldo.
+
+SQLite almacena los metadatos y resultados de los trabajos, así como la información necesaria para recuperar el estado del scheduler después de reiniciar el daemon
+
+Además, se genera un respaldo en JSON (`scheduler.json`) después de guardar correctamente en SQLite. Si la carga desde SQLite falla, el sistema intenta recuperar la información desde JSON
+
+Esta combinación permite aprovechar las transacciones y consultas de SQLite, manteniendo una alternativa de recuperación mediante un archivo legible
 
 ## Consecuencias
 
