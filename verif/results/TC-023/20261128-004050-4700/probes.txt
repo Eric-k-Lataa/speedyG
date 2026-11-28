@@ -1,0 +1,10 @@
+M-01: msg='v=1.0|health' sent=13/13 send_error=none closed_by_peer=1 read_error=none response_bytes=93 
+M-02: msg='v=2.0|health' sent=13/13 send_error=none closed_by_peer=1 read_error=none response_bytes=107 
+M-03: msg='v=0.9|health' sent=13/13 send_error=none closed_by_peer=1 read_error=none response_bytes=107 
+M-04: msg='v=1.1|health' sent=13/13 send_error=none closed_by_peer=1 read_error=none response_bytes=99 
+M-05: msg='health' sent=7/7 send_error=none closed_by_peer=1 read_error=none response_bytes=108 
+M-06: msg='1.0|health' sent=11/11 send_error=none closed_by_peer=1 read_error=none response_bytes=67 
+M-07: msg='v=abc|health' sent=13/13 send_error=none closed_by_peer=1 read_error=none response_bytes=85 
+M-08: msg='v=1|health' sent=11/11 send_error=none closed_by_peer=1 read_error=none response_bytes=83 
+M-09: msg='v=2.0|sleep 5' sent=14/14 send_error=none closed_by_peer=1 read_error=none response_bytes=107 
+REC: msg='v=1.0|echo recuperado' sent=22/22 send_error=none closed_by_peer=1 read_error=none response_bytes=30 

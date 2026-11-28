@@ -1,0 +1,20 @@
+[2m2026-11-22T01:43:45.083849Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-006-20261121-194344-53979-8h2n5R.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m2 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-006-20261121-194344-53979-data-Ci2TF7
+[2m2026-11-22T01:43:45.084094Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-006-20261121-194344-53979-8h2n5R.sock
+[2m2026-11-22T01:43:45.084154Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:43:45.084193Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:43:46.167615Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo SOLO_STDOUT_LINEA_1
+[2m2026-11-22T01:43:46.173171Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-22T01:43:46.304848Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo "SOLO_STDERR_LINEA_1" >&2
+[2m2026-11-22T01:43:46.309012Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:43:46.439590Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: echo "OUT_CANAL_1"; echo "ERR_CANAL_2" >&2
+[2m2026-11-22T01:43:46.443586Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-22T01:43:46.586685Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: echo "MSG_FAIL_ERR" >&2; exit 42
+[2m2026-11-22T01:43:46.592398Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 42
+[2m2026-11-22T01:43:46.714740Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: for i in $(seq 1 1000); do echo "LINEA_BIG_$i"; done
+[2m2026-11-22T01:43:46.730691Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-22T01:43:46.877018Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: binario_inexistente_speedyg_test_xyz
+[2m2026-11-22T01:43:46.883081Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 127
+[2m2026-11-22T01:43:47.262522Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:43:47.262661Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:43:47.374181Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-006-20261121-194344-53979-8h2n5R.sock eliminado correctamente.
+[2m2026-11-22T01:43:47.374350Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

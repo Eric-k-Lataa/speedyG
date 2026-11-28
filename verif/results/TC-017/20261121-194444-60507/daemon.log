@@ -1,0 +1,183 @@
+[2m2026-11-22T01:44:44.730065Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-017-20261121-194444-60507-mDO13Y.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-017-20261121-194444-60507-data-caIddL
+[2m2026-11-22T01:44:44.730212Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-017-20261121-194444-60507-mDO13Y.sock
+[2m2026-11-22T01:44:44.730259Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:44:44.730291Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:44:45.773801Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 1001
+[2m2026-11-22T01:44:45.825679Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 cancelado
+[2m2026-11-22T01:44:45.826663Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:47.948683Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 1002
+[2m2026-11-22T01:44:48.080628Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 cancelado
+[2m2026-11-22T01:44:48.081494Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:50.219551Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: sleep 1003
+[2m2026-11-22T01:44:50.349292Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 cancelado
+[2m2026-11-22T01:44:50.351273Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:52.546311Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: sleep 1004
+[2m2026-11-22T01:44:52.678194Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 cancelado
+[2m2026-11-22T01:44:52.680359Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:54.869023Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: sleep 1005
+[2m2026-11-22T01:44:54.998384Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 cancelado
+[2m2026-11-22T01:44:55.001048Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:57.243729Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: sleep 1006
+[2m2026-11-22T01:44:57.318280Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 cancelado
+[2m2026-11-22T01:44:57.321675Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:59.448741Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: sleep 1007
+[2m2026-11-22T01:44:59.582836Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 cancelado
+[2m2026-11-22T01:44:59.584622Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:01.748603Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: sleep 1008
+[2m2026-11-22T01:45:01.802685Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 cancelado
+[2m2026-11-22T01:45:01.803183Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:03.953497Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ejecutando: sleep 1009
+[2m2026-11-22T01:45:04.094106Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 cancelado
+[2m2026-11-22T01:45:04.096466Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:06.299930Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 ejecutando: sleep 1010
+[2m2026-11-22T01:45:06.426741Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 cancelado
+[2m2026-11-22T01:45:06.428674Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:08.617792Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 ejecutando: sleep 2000
+[2m2026-11-22T01:45:08.660482Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 ejecutando: sleep 2000
+[2m2026-11-22T01:45:08.692798Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 ejecutando: sleep 2000
+[2m2026-11-22T01:45:08.722476Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 ejecutando: sleep 2000
+[2m2026-11-22T01:45:09.087087Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 cancelado
+[2m2026-11-22T01:45:09.121439Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 cancelado
+[2m2026-11-22T01:45:09.122173Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:09.130266Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 cancelado
+[2m2026-11-22T01:45:09.131216Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:09.139467Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 cancelado
+[2m2026-11-22T01:45:09.140199Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:09.151774Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 cancelado
+[2m2026-11-22T01:45:09.152498Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:11.278706Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 ejecutando: sleep 2000
+[2m2026-11-22T01:45:11.316649Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 ejecutando: sleep 2000
+[2m2026-11-22T01:45:11.348735Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ejecutando: sleep 2000
+[2m2026-11-22T01:45:11.385634Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ejecutando: sleep 2000
+[2m2026-11-22T01:45:11.786910Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 cancelado
+[2m2026-11-22T01:45:11.843614Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 cancelado
+[2m2026-11-22T01:45:11.845821Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:11.862404Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 cancelado
+[2m2026-11-22T01:45:11.865799Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:11.879624Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 cancelado
+[2m2026-11-22T01:45:11.881183Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:11.898769Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 cancelado
+[2m2026-11-22T01:45:11.900851Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:14.058217Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 ejecutando: sleep 2000
+[2m2026-11-22T01:45:14.094271Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 ejecutando: sleep 2000
+[2m2026-11-22T01:45:14.139989Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 ejecutando: sleep 2000
+[2m2026-11-22T01:45:14.173719Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 ejecutando: sleep 2000
+[2m2026-11-22T01:45:14.575027Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #25 cancelado
+[2m2026-11-22T01:45:14.631128Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 cancelado
+[2m2026-11-22T01:45:14.632378Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:14.646248Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 cancelado
+[2m2026-11-22T01:45:14.647400Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:14.666329Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 cancelado
+[2m2026-11-22T01:45:14.668858Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:14.682828Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 cancelado
+[2m2026-11-22T01:45:14.684046Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:16.834474Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 ejecutando: sleep 2000
+[2m2026-11-22T01:45:16.876173Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 ejecutando: sleep 2000
+[2m2026-11-22T01:45:16.916730Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 ejecutando: sleep 2000
+[2m2026-11-22T01:45:16.951071Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 ejecutando: sleep 2000
+[2m2026-11-22T01:45:17.359571Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #30 cancelado
+[2m2026-11-22T01:45:17.415569Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 cancelado
+[2m2026-11-22T01:45:17.417281Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:17.436368Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 cancelado
+[2m2026-11-22T01:45:17.438437Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:17.452457Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 cancelado
+[2m2026-11-22T01:45:17.453911Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:17.468227Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 cancelado
+[2m2026-11-22T01:45:17.469511Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:19.618226Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 ejecutando: sleep 2000
+[2m2026-11-22T01:45:19.669550Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 ejecutando: sleep 2000
+[2m2026-11-22T01:45:19.709401Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 ejecutando: sleep 2000
+[2m2026-11-22T01:45:19.744516Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 ejecutando: sleep 2000
+[2m2026-11-22T01:45:20.145525Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #35 cancelado
+[2m2026-11-22T01:45:20.201569Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 cancelado
+[2m2026-11-22T01:45:20.202610Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:20.219438Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 cancelado
+[2m2026-11-22T01:45:20.220761Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:20.241674Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 cancelado
+[2m2026-11-22T01:45:20.243332Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:20.258758Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 cancelado
+[2m2026-11-22T01:45:20.260599Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:22.415527Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 ejecutando: sleep 2000
+[2m2026-11-22T01:45:22.459467Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #37 ejecutando: sleep 2000
+[2m2026-11-22T01:45:22.503525Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 ejecutando: sleep 2000
+[2m2026-11-22T01:45:22.540425Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 ejecutando: sleep 2000
+[2m2026-11-22T01:45:22.942233Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #40 cancelado
+[2m2026-11-22T01:45:23.003456Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 cancelado
+[2m2026-11-22T01:45:23.005056Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:23.022417Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #37 cancelado
+[2m2026-11-22T01:45:23.023820Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #37 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:23.040514Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 cancelado
+[2m2026-11-22T01:45:23.041785Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:23.057325Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 cancelado
+[2m2026-11-22T01:45:23.058714Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:25.207352Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 ejecutando: sleep 2000
+[2m2026-11-22T01:45:25.257323Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 ejecutando: sleep 2000
+[2m2026-11-22T01:45:25.295277Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 ejecutando: sleep 2000
+[2m2026-11-22T01:45:25.333428Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 ejecutando: sleep 2000
+[2m2026-11-22T01:45:25.734881Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #45 cancelado
+[2m2026-11-22T01:45:25.797455Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 cancelado
+[2m2026-11-22T01:45:25.798761Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:25.817207Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 cancelado
+[2m2026-11-22T01:45:25.818762Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:25.836079Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 cancelado
+[2m2026-11-22T01:45:25.837381Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:25.853886Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 cancelado
+[2m2026-11-22T01:45:25.855015Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:28.025740Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 ejecutando: sleep 2000
+[2m2026-11-22T01:45:28.070909Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 ejecutando: sleep 2000
+[2m2026-11-22T01:45:28.111705Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 ejecutando: sleep 2000
+[2m2026-11-22T01:45:28.152236Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 ejecutando: sleep 2000
+[2m2026-11-22T01:45:28.560393Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #50 cancelado
+[2m2026-11-22T01:45:28.623473Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 cancelado
+[2m2026-11-22T01:45:28.624683Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:28.642273Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 cancelado
+[2m2026-11-22T01:45:28.643460Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:28.661692Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 cancelado
+[2m2026-11-22T01:45:28.663045Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:28.681005Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 cancelado
+[2m2026-11-22T01:45:28.682210Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:30.862054Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 ejecutando: sleep 2000
+[2m2026-11-22T01:45:30.906558Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 ejecutando: sleep 2000
+[2m2026-11-22T01:45:30.948202Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 ejecutando: sleep 2000
+[2m2026-11-22T01:45:30.996512Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 ejecutando: sleep 2000
+[2m2026-11-22T01:45:31.406552Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #55 cancelado
+[2m2026-11-22T01:45:31.465150Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 cancelado
+[2m2026-11-22T01:45:31.466423Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:31.484460Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 cancelado
+[2m2026-11-22T01:45:31.485750Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:31.506053Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 cancelado
+[2m2026-11-22T01:45:31.507961Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:31.530067Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 cancelado
+[2m2026-11-22T01:45:31.531300Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:33.695300Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 ejecutando: sleep 2000
+[2m2026-11-22T01:45:33.742163Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 ejecutando: sleep 2000
+[2m2026-11-22T01:45:33.791239Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 ejecutando: sleep 2000
+[2m2026-11-22T01:45:33.835469Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 ejecutando: sleep 2000
+[2m2026-11-22T01:45:34.251842Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #60 cancelado
+[2m2026-11-22T01:45:34.328799Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 cancelado
+[2m2026-11-22T01:45:34.330639Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:34.351543Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 cancelado
+[2m2026-11-22T01:45:34.352748Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:34.373003Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 cancelado
+[2m2026-11-22T01:45:34.375517Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:34.393567Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 cancelado
+[2m2026-11-22T01:45:34.394716Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:36.565401Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 ejecutando: sleep 1021
+[2m2026-11-22T01:45:36.706360Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 cancelado
+[2m2026-11-22T01:45:36.710050Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:39.005275Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 ejecutando: sleep 1022
+[2m2026-11-22T01:45:39.128972Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 cancelado
+[2m2026-11-22T01:45:39.130982Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:41.324452Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 ejecutando: sleep 1023
+[2m2026-11-22T01:45:41.465201Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 cancelado
+[2m2026-11-22T01:45:41.471119Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:43.688745Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 ejecutando: sleep 1024
+[2m2026-11-22T01:45:43.829105Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 cancelado
+[2m2026-11-22T01:45:43.833629Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:46.121889Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 ejecutando: sleep 1025
+[2m2026-11-22T01:45:46.248505Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 cancelado
+[2m2026-11-22T01:45:46.250781Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:48.758135Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:45:48.758211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:45:48.866354Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-017-20261121-194444-60507-mDO13Y.sock eliminado correctamente.
+[2m2026-11-22T01:45:48.866552Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

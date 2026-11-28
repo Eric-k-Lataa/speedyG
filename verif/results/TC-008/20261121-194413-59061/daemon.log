@@ -1,0 +1,18 @@
+[2m2026-11-22T01:44:14.164676Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-008-20261121-194413-59061-2oC7He.sock [3mqueue_cap[0m[2m=[0m10 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-008-20261121-194413-59061-data-G3fZ7a
+[2m2026-11-22T01:44:14.165243Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-008-20261121-194413-59061-2oC7He.sock
+[2m2026-11-22T01:44:14.165327Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:44:14.165370Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:44:15.260010Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 1001
+[2m2026-11-22T01:44:15.293701Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 1002
+[2m2026-11-22T01:44:15.326625Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: sleep 1003
+[2m2026-11-22T01:44:17.656027Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código -1
+[2m2026-11-22T01:44:19.842156Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: comando_invalido_xyz_999
+[2m2026-11-22T01:44:19.846245Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 127
+[2m2026-11-22T01:44:19.939366Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 cancelado
+[2m2026-11-22T01:44:19.941169Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:19.954840Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 cancelado
+[2m2026-11-22T01:44:19.957552Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:44:21.097073Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:44:21.097226Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:44:21.204826Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-008-20261121-194413-59061-2oC7He.sock eliminado correctamente.
+[2m2026-11-22T01:44:21.205042Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

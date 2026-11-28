@@ -1,0 +1,4 @@
+A: sleep 3 -> Job #1 encolado correctamente
+B: sleep 2 -> Job #2 encolado correctamente
+C: timeout 1 sleep 5 -> Job #3 encolado correctamente
+D: sleep 1 -> Job #4 encolado correctamente

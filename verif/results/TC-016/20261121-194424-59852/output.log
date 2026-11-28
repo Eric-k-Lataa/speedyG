@@ -1,0 +1,104 @@
+========================================
+TC-016  —  run 20261121-194424-59852
+========================================
+tc_id=TC-016
+run_id=20261121-194424-59852
+date=2026-11-21 19:44:24 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=53a982f3ef8d99d5cfaf5b20e13ecfce0e68ac1e
+socket=/tmp/speedyg-TC-016-20261121-194424-59852-ZnxyrC.sock
+data_dir=/tmp/speedyg-TC-016-20261121-194424-59852-data-rAKLua
+db=/tmp/speedyg-TC-016-20261121-194424-59852-data-rAKLua/speedyg.db
+json=/tmp/speedyg-TC-016-20261121-194424-59852-data-rAKLua/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 3 --queue-cap 3
+[INFO] Socket: /tmp/speedyg-TC-016-20261121-194424-59852-ZnxyrC.sock
+[INFO] PID del daemon: 59892
+[PASS] Daemon disponible (PID 59892).
+[PASS] Configuración efectiva del daemon: max_current=3 queue_cap=3
+
+[1] Enviando 6 trabajos: sleep 8
+envio 1: Job #1 encolado correctamente
+envio 2: Job #2 encolado correctamente
+envio 3: Job #3 encolado correctamente
+envio 4: Job #4 encolado correctamente
+envio 5: Job #5 encolado correctamente
+envio 6: Job #6 encolado correctamente
+[PASS] Los 6 primeros envíos fueron aceptados (aceptados: 6)
+[PASS] Los IDs aceptados son distintos (distintos: 6)
+
+[2] Estado saturado antes del rechazo
+--- Pendientes / En ejecución ---
+Job #1: sleep 8 [Running]
+Job #2: sleep 8 [Running]
+Job #3: sleep 8 [Running]
+Job #4: sleep 8 [Queued]
+Job #5: sleep 8 [Queued]
+Job #6: sleep 8 [Queued]
+[PASS] Antes del rechazo hay 3 Running (obtenidos: 3)
+[PASS] Antes del rechazo hay 3 Queued (obtenidos: 3)
+
+[3] Séptima solicitud (debe ser rechazada)
+respuesta: Error al enviar 'sleep': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+tiempo_respuesta_s: 0.027
+[PASS] La séptima solicitud NO fue aceptada
+[PASS] El rechazo respondió en menos de 3s (0.027s)
+[PASS] RNF-21: el mensaje indica la operación (sleep)
+[PASS] RNF-21: el mensaje indica la causa (cola llena, capacidad 3)
+[PASS] RNF-21: el mensaje sugiere una acción (esperar/reintentar)
+
+[4] Estado tras el rechazo
+--- Pendientes / En ejecución ---
+Job #1: sleep 8 [Running]
+Job #2: sleep 8 [Running]
+Job #3: sleep 8 [Running]
+Job #4: sleep 8 [Queued]
+Job #5: sleep 8 [Queued]
+Job #6: sleep 8 [Queued]
+[PASS] Siguen presentes los 6 trabajos aceptados, sin un séptimo (en status: 6)
+health: OK: Daemon speedyg funcionando correctamente
+[PASS] El daemon responde health tras el rechazo
+
+[5] Reintentando 'echo recuperado' hasta que se libere espacio (máx. 20s)
+t=0s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=1s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=2s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=3s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=4s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=5s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=6s: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+t=7s: Job #7 encolado correctamente
+[PASS] Al liberarse espacio una nueva solicitud fue aceptada
+[PASS] El rechazo no consumió ID: ID esperado 7, obtenido '7'
+
+[6] Esperando fin de los 7 trabajos aceptados (máx. 40s)
+--- Historial ---
+Job #1: sleep 8 [Succeeded] (exit code: 0)
+Job #2: sleep 8 [Succeeded] (exit code: 0)
+Job #3: sleep 8 [Succeeded] (exit code: 0)
+Job #4: sleep 8 [Succeeded] (exit code: 0)
+Job #7: echo recuperado [Succeeded] (exit code: 0)
+Job #5: sleep 8 [Succeeded] (exit code: 0)
+Job #6: sleep 8 [Succeeded] (exit code: 0)
+[PASS] Los 7 trabajos aceptados terminaron en Succeeded con exit code 0 (obtenidos: 7)
+[PASS] RF-23: daemon.log registra el rechazo por cola llena (entradas: 8)
+
+[INFO] File descriptors abiertos por daemon: 11
+[PASS] Sin procesos zombi bajo daemon PID 59892.
+[PASS] Sin procesos hijos residuales bajo daemon PID 59892.
+
+========================================
+RESULTADO: PASS
+PASS: 19  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 59892...

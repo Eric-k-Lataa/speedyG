@@ -1,0 +1,8 @@
+2026-11-22T01:24:32.640527Z  WARN speedyG::scheduler: Error al enviar 'sleep': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:32.853678Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:33.888116Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:34.913695Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:35.951282Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:36.979864Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:38.008503Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+2026-11-22T01:24:39.036033Z  WARN speedyG::scheduler: Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio

@@ -1,0 +1,4 @@
+Job #63: sleep 1023 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:46 UTC
+  ├─ Iniciado:  2026-11-22 01:25:46 UTC
+  └─ Finalizado: 2026-11-22 01:25:46 UTC

@@ -1,0 +1,3 @@
+--- Pendientes / En ejecución ---
+Job #1: sleep 2001 [Running]
+Job #2: echo siguiente-tras-muerte [Queued]

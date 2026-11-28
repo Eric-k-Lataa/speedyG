@@ -1,0 +1,5 @@
+daemon_pid=24580
+pids_sleep2001=24620 24621 
+pids_sleep2002=24636 24638 
+sigterm_ts=1795310668.362200783 daemon_pid=24580
+sigterm_elapsed=1s daemon_dead=1

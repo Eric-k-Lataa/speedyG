@@ -1,0 +1,119 @@
+========================================
+TC-017  —  run 20261121-192449-25585
+========================================
+tc_id=TC-017
+run_id=20261121-192449-25585
+date=2026-11-21 19:24:49 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=a0b3b9f1971c5e08a6857f5931c327d21cc3d1c8
+socket=/tmp/speedyg-TC-017-20261121-192449-25585-sUIzia.sock
+data_dir=/tmp/speedyg-TC-017-20261121-192449-25585-data-Ce3ED1
+db=/tmp/speedyg-TC-017-20261121-192449-25585-data-Ce3ED1/speedyg.db
+json=/tmp/speedyg-TC-017-20261121-192449-25585-data-Ce3ED1/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 10
+[INFO] Socket: /tmp/speedyg-TC-017-20261121-192449-25585-sUIzia.sock
+[INFO] PID del daemon: 25625
+[PASS] Daemon disponible (PID 25625).
+[PASS] Configuración efectiva del daemon: max_current=4 queue_cap=10
+
+[INFO] Iniciando 25 iteraciones de cancelaciones concurrentes
+
+── Iteración 1/25 [G1: Running, 2 clientes, comando: 'sleep 1001'] ──
+[PASS] Iteración 1 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 2/25 [G1: Running, 2 clientes, comando: 'sleep 1002'] ──
+[PASS] Iteración 2 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 3/25 [G1: Running, 2 clientes, comando: 'sleep 1003'] ──
+[PASS] Iteración 3 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 4/25 [G1: Running, 2 clientes, comando: 'sleep 1004'] ──
+[PASS] Iteración 4 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 5/25 [G1: Running, 2 clientes, comando: 'sleep 1005'] ──
+[PASS] Iteración 5 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 6/25 [G1: Running, 2 clientes, comando: 'sleep 1006'] ──
+[PASS] Iteración 6 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 7/25 [G1: Running, 2 clientes, comando: 'sleep 1007'] ──
+[PASS] Iteración 7 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 8/25 [G1: Running, 2 clientes, comando: 'sleep 1008'] ──
+[PASS] Iteración 8 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 9/25 [G1: Running, 2 clientes, comando: 'sleep 1009'] ──
+[PASS] Iteración 9 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 10/25 [G1: Running, 2 clientes, comando: 'sleep 1010'] ──
+[PASS] Iteración 10 [G1]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 11/25 [G2: Queued, 2 clientes, comando: 'sleep 1011'] ──
+[PASS] Iteración 11 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 12/25 [G2: Queued, 2 clientes, comando: 'sleep 1012'] ──
+[PASS] Iteración 12 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 13/25 [G2: Queued, 2 clientes, comando: 'sleep 1013'] ──
+[PASS] Iteración 13 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 14/25 [G2: Queued, 2 clientes, comando: 'sleep 1014'] ──
+[PASS] Iteración 14 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 15/25 [G2: Queued, 2 clientes, comando: 'sleep 1015'] ──
+[PASS] Iteración 15 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 16/25 [G2: Queued, 2 clientes, comando: 'sleep 1016'] ──
+[PASS] Iteración 16 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 17/25 [G2: Queued, 2 clientes, comando: 'sleep 1017'] ──
+[PASS] Iteración 17 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 18/25 [G2: Queued, 2 clientes, comando: 'sleep 1018'] ──
+[PASS] Iteración 18 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 19/25 [G2: Queued, 2 clientes, comando: 'sleep 1019'] ──
+[PASS] Iteración 19 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 20/25 [G2: Queued, 2 clientes, comando: 'sleep 1020'] ──
+[PASS] Iteración 20 [G2]: Cancelación concurrente correcta (1 iniciada, 1 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 21/25 [G3: Running, 5 clientes, comando: 'sleep 1021'] ──
+[PASS] Iteración 21 [G3]: Cancelación concurrente correcta (1 iniciada, 4 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 22/25 [G3: Running, 5 clientes, comando: 'sleep 1022'] ──
+[PASS] Iteración 22 [G3]: Cancelación concurrente correcta (1 iniciada, 4 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 23/25 [G3: Running, 5 clientes, comando: 'sleep 1023'] ──
+[PASS] Iteración 23 [G3]: Cancelación concurrente correcta (1 iniciada, 4 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 24/25 [G3: Running, 5 clientes, comando: 'sleep 1024'] ──
+[PASS] Iteración 24 [G3]: Cancelación concurrente correcta (1 iniciada, 4 en curso/ya cancelado, estado final Canceled).
+
+── Iteración 25/25 [G3: Running, 5 clientes, comando: 'sleep 1025'] ──
+[PASS] Iteración 25 [G3]: Cancelación concurrente correcta (1 iniciada, 4 en curso/ya cancelado, estado final Canceled).
+
+[INFO] Resumen de iteraciones: 25/25 aprobadas
+[PASS] Las 25 iteraciones de cancelaciones concurrentes fueron exitosas
+[PASS] Daemon responde a comando health con OK tras las 25 iteraciones
+[PASS] Sin procesos residuales de sleep 10XX en el sistema
+[INFO] File descriptors abiertos por daemon: 11
+[PASS] Sin procesos zombi bajo daemon PID 25625.
+[PASS] Sin procesos hijos residuales bajo daemon PID 25625.
+
+========================================
+RESULTADO: PASS
+PASS: 32  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 25625...

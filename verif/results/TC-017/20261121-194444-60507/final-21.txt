@@ -1,0 +1,4 @@
+Job #61: sleep 1021 [Canceled]
+  ├─ Recibido:  2026-11-22 01:45:36 UTC
+  ├─ Iniciado:  2026-11-22 01:45:36 UTC
+  └─ Finalizado: 2026-11-22 01:45:36 UTC

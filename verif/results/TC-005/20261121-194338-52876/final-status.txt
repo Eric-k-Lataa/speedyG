@@ -1,0 +1,14 @@
+Job #1: sleep 1001 [Canceled]
+  ├─ Recibido:  2026-11-22 01:43:39 UTC
+  ├─ Iniciado:  2026-11-22 01:43:39 UTC
+  └─ Finalizado: 2026-11-22 01:43:40 UTC
+Job #2: sleep 1002 [Canceled]
+  ├─ Recibido:  2026-11-22 01:43:39 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:43:40 UTC
+Job #3: echo siguiente [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:43:39 UTC
+  ├─ Iniciado:  2026-11-22 01:43:40 UTC
+  └─ Finalizado: 2026-11-22 01:43:40 UTC
+  [stdout]:
+    │ siguiente

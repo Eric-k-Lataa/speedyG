@@ -1,0 +1,4 @@
+Job #2: sleep 10 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:42:43 UTC
+  ├─ Iniciado:  2026-11-22 01:42:43 UTC
+  └─ Finalizado: 2026-11-22 01:42:53 UTC

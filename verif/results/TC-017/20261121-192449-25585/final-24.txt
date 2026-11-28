@@ -1,0 +1,4 @@
+Job #64: sleep 1024 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:49 UTC
+  ├─ Iniciado:  2026-11-22 01:25:49 UTC
+  └─ Finalizado: 2026-11-22 01:25:49 UTC

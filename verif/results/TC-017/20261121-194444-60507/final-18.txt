@@ -1,0 +1,4 @@
+Job #50: sleep 1018 [Canceled]
+  ├─ Recibido:  2026-11-22 01:45:28 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:45:28 UTC

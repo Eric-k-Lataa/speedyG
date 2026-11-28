@@ -1,0 +1,4 @@
+Job #62: sleep 1022 [Canceled]
+  ├─ Recibido:  2026-11-22 01:45:38 UTC
+  ├─ Iniciado:  2026-11-22 01:45:38 UTC
+  └─ Finalizado: 2026-11-22 01:45:39 UTC

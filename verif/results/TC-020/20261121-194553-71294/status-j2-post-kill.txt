@@ -1,0 +1,6 @@
+Job #2: echo siguiente-tras-muerte [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:45:54 UTC
+  ├─ Iniciado:  2026-11-22 01:45:57 UTC
+  └─ Finalizado: 2026-11-22 01:45:57 UTC
+  [stdout]:
+    │ siguiente-tras-muerte

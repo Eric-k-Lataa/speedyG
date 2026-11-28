@@ -1,0 +1,6 @@
+total_submitted=20
+total_distinct=20
+IDs_A=1 2 3 4 5
+IDs_B=6 7 8 9 10 11 12 13 14 15
+IDs_C=16 17
+IDs_D=18 19 20

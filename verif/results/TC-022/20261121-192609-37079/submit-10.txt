@@ -1,0 +1,20 @@
+iter=10 job=1: Job #187 encolado correctamente
+iter=10 job=2: Job #189 encolado correctamente
+iter=10 job=3: Job #188 encolado correctamente
+iter=10 job=4: Job #190 encolado correctamente
+iter=10 job=5: Job #191 encolado correctamente
+iter=10 job=6: Job #195 encolado correctamente
+iter=10 job=7: Job #199 encolado correctamente
+iter=10 job=8: Job #203 encolado correctamente
+iter=10 job=9: 
+iter=10 job=10: Job #193 encolado correctamente
+iter=10 job=11: Job #194 encolado correctamente
+iter=10 job=12: Job #198 encolado correctamente
+iter=10 job=13: Job #192 encolado correctamente
+iter=10 job=14: Job #197 encolado correctamente
+iter=10 job=15: Job #201 encolado correctamente
+iter=10 job=16: Job #196 encolado correctamente
+iter=10 job=17: Job #200 encolado correctamente
+iter=10 job=18: Job #202 encolado correctamente
+iter=10 job=19: Job #204 encolado correctamente
+iter=10 job=20: Job #205 encolado correctamente

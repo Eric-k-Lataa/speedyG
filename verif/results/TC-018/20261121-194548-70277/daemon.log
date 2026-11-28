@@ -1,0 +1,51 @@
+[2m2026-11-22T01:45:49.130715Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-018-20261121-194548-70277-Qc4uKx.sock [3mqueue_cap[0m[2m=[0m30 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-018-20261121-194548-70277-data-KXyA5l
+[2m2026-11-22T01:45:49.130909Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-018-20261121-194548-70277-Qc4uKx.sock
+[2m2026-11-22T01:45:49.130959Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:45:49.130994Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:45:50.239160Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo dup-A
+[2m2026-11-22T01:45:50.243539Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-22T01:45:50.270569Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo dup-A
+[2m2026-11-22T01:45:50.274102Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:45:50.295315Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: echo dup-A
+[2m2026-11-22T01:45:50.298483Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-22T01:45:50.320274Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: echo dup-A
+[2m2026-11-22T01:45:50.323426Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-11-22T01:45:50.349066Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: echo dup-A
+[2m2026-11-22T01:45:50.353640Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-22T01:45:50.454901Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.456757Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.461165Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0
+[2m2026-11-22T01:45:50.502031Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.507592Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.508090Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.529956Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 terminó con código 0
+[2m2026-11-22T01:45:50.544205Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 terminó con código 0
+[2m2026-11-22T01:45:50.558590Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.558863Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-11-22T01:45:50.574798Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.575216Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 terminó con código 0
+[2m2026-11-22T01:45:50.592129Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 terminó con código 0
+[2m2026-11-22T01:45:50.605065Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.605191Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.605959Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 ejecutando: echo dup-B
+[2m2026-11-22T01:45:50.608855Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 terminó con código 0
+[2m2026-11-22T01:45:50.619226Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 terminó con código 0
+[2m2026-11-22T01:45:50.638649Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 terminó con código 0
+[2m2026-11-22T01:45:50.645709Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 terminó con código 0
+[2m2026-11-22T01:45:50.654075Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 ejecutando: echo dup-C
+[2m2026-11-22T01:45:50.657177Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 terminó con código 0
+[2m2026-11-22T01:45:50.675144Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 ejecutando: echo dup-C
+[2m2026-11-22T01:45:50.678345Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 terminó con código 0
+[2m2026-11-22T01:45:51.132679Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ejecutando: sleep 3001
+[2m2026-11-22T01:45:51.173908Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ejecutando: sleep 3001
+[2m2026-11-22T01:45:51.203744Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 ejecutando: sleep 3001
+[2m2026-11-22T01:45:51.960192Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 cancelado
+[2m2026-11-22T01:45:51.961567Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:53.183788Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 cancelado
+[2m2026-11-22T01:45:53.184531Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:53.192644Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 cancelado
+[2m2026-11-22T01:45:53.193470Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:45:53.368921Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:45:53.369006Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:45:53.474002Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-018-20261121-194548-70277-Qc4uKx.sock eliminado correctamente.
+[2m2026-11-22T01:45:53.474151Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

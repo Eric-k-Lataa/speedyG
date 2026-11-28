@@ -1,0 +1,150 @@
+========================================
+TC-005  —  run 20261121-192344-17969
+========================================
+tc_id=TC-005
+run_id=20261121-192344-17969
+date=2026-11-21 19:23:44 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=a0b3b9f1971c5e08a6857f5931c327d21cc3d1c8
+socket=/tmp/speedyg-TC-005-20261121-192344-17969-iBei4s.sock
+data_dir=/tmp/speedyg-TC-005-20261121-192344-17969-data-uMcnkJ
+db=/tmp/speedyg-TC-005-20261121-192344-17969-data-uMcnkJ/speedyg.db
+json=/tmp/speedyg-TC-005-20261121-192344-17969-data-uMcnkJ/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 3
+[INFO] Socket: /tmp/speedyg-TC-005-20261121-192344-17969-iBei4s.sock
+[INFO] PID del daemon: 18009
+[PASS] Daemon disponible (PID 18009).
+[PASS] Configuración efectiva del daemon: max_current=1 queue_cap=3
+
+[1] Enviando A='sleep 1001' B='sleep 1002' C='echo siguiente'
+A: sleep 1001 -> Job #1 encolado correctamente
+B: sleep 1002 -> Job #2 encolado correctamente
+C: echo siguiente -> Job #3 encolado correctamente
+[PASS] Los 3 envíos fueron aceptados con IDs distintos (distintos: 3)
+
+[2] Comprobando estados iniciales: A=Running, B=Queued, C=Queued
+Job #1: sleep 1001 [Running]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  2026-11-22 01:23:46 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #2: sleep 1002 [Queued]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+Job #3: echo siguiente [Queued]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+[PASS] A está en Running antes de cancelar (obtenido: 'Running')
+[PASS] B está en Queued antes de cancelar (obtenido: 'Queued')
+[PASS] C está en Queued antes de cancelar (obtenido: 'Queued')
+
+[3] Cancelando B (Job #2) estando en cola
+Job #2 cancelado correctamente
+[PASS] Respuesta de cancelar B indica cancelación e incluye ID #2
+Job #2: sleep 1002 [Canceled]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:23:46 UTC
+Job #1: sleep 1001 [Running]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  2026-11-22 01:23:46 UTC
+  └─ Finalizado: En curso / No finalizado
+Job #3: echo siguiente [Queued]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: En curso / No finalizado
+[PASS] B pasa a estado Canceled tras cancelar en cola (obtenido: 'Canceled')
+[PASS] A sigue en Running tras cancelar B en cola (obtenido: 'Running')
+[PASS] C sigue en Queued tras cancelar B en cola (obtenido: 'Queued')
+[PASS] Proceso de B ('sleep 1002') nunca fue ejecutado en el SO (encontrados: 0)
+
+[4] Localizando PID de A y cancelando en ejecución
+daemon_pid=18009
+direct_children=18074
+marker_pids_sleep_1001=18074
+18076
+all_tracked_pids_A=18074 18076 
+[PASS] Se identificó el proceso activo de A antes de cancelar ('sleep 1001')
+Job #1 cancelado correctamente
+[PASS] Respuesta de cancelar A indica cancelación e incluye ID #1
+[PASS] A pasa a estado Canceled dentro de 5s (tiempo: 0s)
+[PASS] El proceso de A ('sleep 1001') deja de existir en el SO dentro de 5s
+
+[5] Observación posterior (3s): verificar estabilidad de Canceled
+[PASS] A permanece en Canceled tras 3s (obtenido: 'Canceled')
+[PASS] B permanece en Canceled tras 3s (obtenido: 'Canceled')
+
+[6] Verificando avance de C tras liberación de ranura (máx. 15s)
+[PASS] C avanza y termina en Succeeded tras cancelarse A (tiempo: 0s)
+[PASS] C finaliza con exit code: 0
+
+[7] Evaluando cancelaciones inválidas (RNF-21)
+--- cancel terminado (Job #3) ---
+Error: No se puede cancelar el Job #3: ya está terminado (estado: Succeeded). Consulta 'status 3' para ver su resultado
+--- cancel ya cancelado (Job #1) ---
+Job #1 ya estaba cancelado; no se realizó una nueva cancelación
+--- cancel id inexistente (99999) ---
+Error: No se puede cancelar el Job #99999: no encontrado (no existe un trabajo con ese ID). Usa 'status' para ver los IDs disponibles
+--- cancel sin id ---
+Error de sintaxis: cancel requiere un ID
+--- cancel id no numerico (abc) ---
+Error de sintaxis: El ID debe ser un entero
+[PASS] cancel <terminado> reporta error con ID #3 y motivo (terminado/Succeeded)
+[PASS] cancel <ya cancelado> indica que el Job #1 ya estaba cancelado
+[PASS] cancel <inexistente> reporta error con ID 99999 (no encontrado / inexistente)
+[PASS] cancel sin ID devuelve mensaje de uso o error de sintaxis
+[PASS] cancel abc devuelve mensaje de ID entero / numérico
+[PASS] C sigue en Succeeded con exit code 0 tras cancelaciones inválidas
+[PASS] A sigue en Canceled tras cancelaciones inválidas
+
+[8] Verificando estado final y secuencias de estado observadas
+Job #1: sleep 1001 [Canceled]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  2026-11-22 01:23:46 UTC
+  └─ Finalizado: 2026-11-22 01:23:47 UTC
+Job #2: sleep 1002 [Canceled]
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:23:46 UTC
+Job #3: echo siguiente [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:23:46 UTC
+  ├─ Iniciado:  2026-11-22 01:23:47 UTC
+  └─ Finalizado: 2026-11-22 01:23:47 UTC
+  [stdout]:
+    │ siguiente
+JOB 1 Running>Canceled |
+JOB 2 Queued>Canceled |
+JOB 3 Queued>Succeeded |
+MAXRUN 1
+[PASS] A: secuencia de estados 'Running>Canceled' cumple (Queued>)?Running>Canceled
+[PASS] A: sin regresiones de estado
+[PASS] B: secuencia de estados 'Queued>Canceled' cumple Queued>Canceled (nunca entró a Running)
+[PASS] B: sin regresiones de estado
+[PASS] C: secuencia de estados 'Queued>Succeeded' cumple Queued>(Running>)?Succeeded y registra hora de inicio
+[PASS] C: sin regresiones de estado
+
+[9] Verificando salud del daemon y ausencia de procesos residuales / zombis
+[PASS] Daemon responde a comando health con OK (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+[PASS] Sin procesos residuales de sleep 1001 en el sistema
+[PASS] Sin procesos residuales de sleep 1002 en el sistema
+[INFO] File descriptors abiertos por daemon: 11
+[PASS] Sin procesos zombi bajo daemon PID 18009.
+[PASS] Sin procesos hijos residuales bajo daemon PID 18009.
+
+========================================
+RESULTADO: PASS
+PASS: 37  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 18009...

@@ -1,0 +1,5 @@
+--- Pendientes / En ejecución ---
+Job #1: sleep 1001 [Running]
+Job #3: sleep 1003 [Running]
+--- Historial ---
+Job #2: sleep 1002 [Failed(-1)] (exit code: -1)

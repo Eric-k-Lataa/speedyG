@@ -1,0 +1,7 @@
+trabajos_almacenados=106
+repeticiones_por_consulta=10
+umbral_s=1.0
+bytes_listado=5275
+status-por-id MAX=0.007s
+status-listado MAX=0.007s
+status-filtrado MAX=0.007s

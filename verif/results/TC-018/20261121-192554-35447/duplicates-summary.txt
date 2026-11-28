@@ -1,0 +1,6 @@
+escenario_A_esperado=5 obtenido=5
+escenario_B_esperado=10 obtenido=10
+escenario_C_esperado=2 obtenido=2
+escenario_D_esperado=3 obtenido=3
+total_esperado=20 total_obtenido=20
+total_en_status=20

@@ -1,0 +1,3 @@
+sonda: status Succeeded
+--- Jobs con estado 'Succeeded' ---
+Job #1: echo hola [Succeeded] (exit code: 0)

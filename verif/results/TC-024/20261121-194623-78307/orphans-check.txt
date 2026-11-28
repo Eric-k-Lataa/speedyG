@@ -1,0 +1,2 @@
+orphans_sleep3001=ninguno
+orphans_after_close=ninguno

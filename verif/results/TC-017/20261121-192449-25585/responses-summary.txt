@@ -1,0 +1,180 @@
+iter=1 target_id=1 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #1 cancelado correctamente
+exit_code=0
+  c2: Job #1 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=2 target_id=2 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #2 cancelado correctamente
+exit_code=0
+  c2: Job #2 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=3 target_id=3 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #3 cancelado correctamente
+exit_code=0
+  c2: Job #3 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=4 target_id=4 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #4 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c2: Job #4 cancelado correctamente
+exit_code=0
+iter=5 target_id=5 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #5 cancelado correctamente
+exit_code=0
+  c2: Job #5 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=6 target_id=6 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #6 cancelado correctamente
+exit_code=0
+  c2: Job #6 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=7 target_id=7 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #7 cancelado correctamente
+exit_code=0
+  c2: Job #7 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=8 target_id=8 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #8 cancelado correctamente
+exit_code=0
+  c2: Job #8 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=9 target_id=9 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #9 cancelado correctamente
+exit_code=0
+  c2: Job #9 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=10 target_id=10 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #10 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c2: Job #10 cancelado correctamente
+exit_code=0
+iter=11 target_id=15 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #15 cancelado correctamente
+exit_code=0
+  c2: Job #15 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=12 target_id=20 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #20 cancelado correctamente
+exit_code=0
+  c2: Job #20 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=13 target_id=25 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #25 cancelado correctamente
+exit_code=0
+  c2: Job #25 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=14 target_id=30 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #30 cancelado correctamente
+exit_code=0
+  c2: Job #30 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=15 target_id=35 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #35 cancelado correctamente
+exit_code=0
+  c2: Job #35 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=16 target_id=40 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #40 cancelado correctamente
+exit_code=0
+  c2: Job #40 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=17 target_id=45 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #45 cancelado correctamente
+exit_code=0
+  c2: Job #45 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=18 target_id=50 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #50 cancelado correctamente
+exit_code=0
+  c2: Job #50 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=19 target_id=55 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #55 cancelado correctamente
+exit_code=0
+  c2: Job #55 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=20 target_id=60 clients=2
+  initiated=1 in_progress=0 already=1 other=0
+  c1: Job #60 cancelado correctamente
+exit_code=0
+  c2: Job #60 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=21 target_id=61 clients=5
+  initiated=1 in_progress=0 already=4 other=0
+  c1: Job #61 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c2: Job #61 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c3: Job #61 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c4: Job #61 cancelado correctamente
+exit_code=0
+  c5: Job #61 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=22 target_id=62 clients=5
+  initiated=1 in_progress=0 already=4 other=0
+  c1: Job #62 cancelado correctamente
+exit_code=0
+  c2: Job #62 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c3: Job #62 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c4: Job #62 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c5: Job #62 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=23 target_id=63 clients=5
+  initiated=1 in_progress=0 already=4 other=0
+  c1: Job #63 cancelado correctamente
+exit_code=0
+  c2: Job #63 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c3: Job #63 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c4: Job #63 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c5: Job #63 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=24 target_id=64 clients=5
+  initiated=1 in_progress=0 already=4 other=0
+  c1: Job #64 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c2: Job #64 cancelado correctamente
+exit_code=0
+  c3: Job #64 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c4: Job #64 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c5: Job #64 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+iter=25 target_id=65 clients=5
+  initiated=1 in_progress=0 already=4 other=0
+  c1: Job #65 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c2: Job #65 cancelado correctamente
+exit_code=0
+  c3: Job #65 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c4: Job #65 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0
+  c5: Job #65 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0

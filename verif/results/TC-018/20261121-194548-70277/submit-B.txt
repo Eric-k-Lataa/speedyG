@@ -1,0 +1,10 @@
+B2: echo dup-B -> Job #6 encolado correctamente
+B1: echo dup-B -> Job #7 encolado correctamente
+B4: echo dup-B -> Job #11 encolado correctamente
+B7: echo dup-B -> Job #10 encolado correctamente
+B6: echo dup-B -> Job #8 encolado correctamente
+B8: echo dup-B -> Job #9 encolado correctamente
+B10: echo dup-B -> Job #12 encolado correctamente
+B9: echo dup-B -> Job #13 encolado correctamente
+B5: echo dup-B -> Job #14 encolado correctamente
+B3: echo dup-B -> Job #15 encolado correctamente

@@ -1,0 +1,5 @@
+Job #204: sleep 1005 [Canceled]
+  ├─ Recibido:  2026-11-22 01:46:17 UTC
+  ├─ Iniciado:  2026-11-22 01:46:17 UTC
+  └─ Finalizado: 2026-11-22 01:46:17 UTC
+

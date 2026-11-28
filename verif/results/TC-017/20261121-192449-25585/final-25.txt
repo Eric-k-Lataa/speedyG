@@ -1,0 +1,4 @@
+Job #65: sleep 1025 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:51 UTC
+  ├─ Iniciado:  2026-11-22 01:25:51 UTC
+  └─ Finalizado: 2026-11-22 01:25:51 UTC

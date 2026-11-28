@@ -1,0 +1,2 @@
+C1: echo dup-C -> Job #16 encolado correctamente
+C2: echo dup-C -> Job #17 encolado correctamente
