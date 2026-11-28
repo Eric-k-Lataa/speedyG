@@ -1,0 +1,73 @@
+{"timestamp":"2026-11-28T19:08:59.752553843+00:00","level":"INFO","event":"service_started","message":"Demonio speedyG iniciado"}
+{"timestamp":"2026-11-28T19:09:00.823543070+00:00","level":"INFO","event":"request_received","request_id":"req-1","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.826174245+00:00","level":"INFO","event":"request_received","request_id":"req-2","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.830659858+00:00","level":"INFO","event":"job_queued","request_id":"req-2","job_id":1,"message":"Trabajo #1 encolado (programa: sleep)"}
+{"timestamp":"2026-11-28T19:09:00.837547881+00:00","level":"INFO","event":"job_started","job_id":1,"message":"Iniciando ejecución de trabajo #1"}
+{"timestamp":"2026-11-28T19:09:00.865742328+00:00","level":"INFO","event":"request_received","request_id":"req-3","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.869579745+00:00","level":"INFO","event":"job_queued","request_id":"req-3","job_id":2,"message":"Trabajo #2 encolado (programa: sleep)"}
+{"timestamp":"2026-11-28T19:09:00.892993896+00:00","level":"INFO","event":"request_received","request_id":"req-4","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.896727234+00:00","level":"INFO","event":"job_queued","request_id":"req-4","job_id":3,"message":"Trabajo #3 encolado (programa: echo)"}
+{"timestamp":"2026-11-28T19:09:00.954474953+00:00","level":"INFO","event":"request_received","request_id":"req-5","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.084936754+00:00","level":"INFO","event":"request_received","request_id":"req-6","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.215005381+00:00","level":"INFO","event":"request_received","request_id":"req-7","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.344276518+00:00","level":"INFO","event":"request_received","request_id":"req-8","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.451806817+00:00","level":"INFO","event":"request_received","request_id":"req-9","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.463532645+00:00","level":"INFO","event":"request_received","request_id":"req-10","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.474054406+00:00","level":"INFO","event":"request_received","request_id":"req-11","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.474203575+00:00","level":"INFO","event":"request_received","request_id":"req-12","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.552727804+00:00","level":"INFO","event":"request_received","request_id":"req-13","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.556651404+00:00","level":"INFO","event":"job_canceled","request_id":"req-13","job_id":2,"message":"Cancelación solicitada para trabajo #2"}
+{"timestamp":"2026-11-28T19:09:01.589807490+00:00","level":"INFO","event":"request_received","request_id":"req-14","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.603661382+00:00","level":"INFO","event":"request_received","request_id":"req-15","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.605568648+00:00","level":"INFO","event":"request_received","request_id":"req-16","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.620959382+00:00","level":"INFO","event":"request_received","request_id":"req-17","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.741688524+00:00","level":"INFO","event":"request_received","request_id":"req-18","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.871128930+00:00","level":"INFO","event":"request_received","request_id":"req-19","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.919930450+00:00","level":"INFO","event":"request_received","request_id":"req-20","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.923903933+00:00","level":"INFO","event":"job_canceled","request_id":"req-20","job_id":1,"message":"Cancelación solicitada para trabajo #1"}
+{"timestamp":"2026-11-28T19:09:01.928887038+00:00","level":"INFO","event":"job_started","job_id":3,"message":"Iniciando ejecución de trabajo #3"}
+{"timestamp":"2026-11-28T19:09:01.941676187+00:00","level":"INFO","event":"job_finished","job_id":3,"message":"Trabajo #3 finalizado con exit_code=0"}
+{"timestamp":"2026-11-28T19:09:01.964678386+00:00","level":"INFO","event":"request_received","request_id":"req-21","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.000723718+00:00","level":"INFO","event":"request_received","request_id":"req-22","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.123483380+00:00","level":"INFO","event":"request_received","request_id":"req-23","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.244407324+00:00","level":"INFO","event":"request_received","request_id":"req-24","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.374325286+00:00","level":"INFO","event":"request_received","request_id":"req-25","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.504113120+00:00","level":"INFO","event":"request_received","request_id":"req-26","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.633720417+00:00","level":"INFO","event":"request_received","request_id":"req-27","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.766046828+00:00","level":"INFO","event":"request_received","request_id":"req-28","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:02.895053509+00:00","level":"INFO","event":"request_received","request_id":"req-29","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.023888416+00:00","level":"INFO","event":"request_received","request_id":"req-30","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.153769455+00:00","level":"INFO","event":"request_received","request_id":"req-31","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.281379813+00:00","level":"INFO","event":"request_received","request_id":"req-32","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.410080191+00:00","level":"INFO","event":"request_received","request_id":"req-33","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.539743652+00:00","level":"INFO","event":"request_received","request_id":"req-34","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.669719485+00:00","level":"INFO","event":"request_received","request_id":"req-35","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.799810603+00:00","level":"INFO","event":"request_received","request_id":"req-36","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:03.929685429+00:00","level":"INFO","event":"request_received","request_id":"req-37","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.059394099+00:00","level":"INFO","event":"request_received","request_id":"req-38","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.190023505+00:00","level":"INFO","event":"request_received","request_id":"req-39","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.319308767+00:00","level":"INFO","event":"request_received","request_id":"req-40","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.448780686+00:00","level":"INFO","event":"request_received","request_id":"req-41","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.579029006+00:00","level":"INFO","event":"request_received","request_id":"req-42","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.714407427+00:00","level":"INFO","event":"request_received","request_id":"req-43","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.844283958+00:00","level":"INFO","event":"request_received","request_id":"req-44","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:04.974593558+00:00","level":"INFO","event":"request_received","request_id":"req-45","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.104580677+00:00","level":"INFO","event":"request_received","request_id":"req-46","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.118742937+00:00","level":"INFO","event":"request_received","request_id":"req-47","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.128843884+00:00","level":"INFO","event":"request_received","request_id":"req-48","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.202267161+00:00","level":"INFO","event":"request_received","request_id":"req-49","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.225287501+00:00","level":"INFO","event":"request_received","request_id":"req-50","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.238282413+00:00","level":"INFO","event":"request_received","request_id":"req-51","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.379032492+00:00","level":"INFO","event":"request_received","request_id":"req-52","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.389516337+00:00","level":"INFO","event":"request_received","request_id":"req-53","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.399475471+00:00","level":"INFO","event":"request_received","request_id":"req-54","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.408785691+00:00","level":"INFO","event":"request_received","request_id":"req-55","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.409157154+00:00","level":"WARN","event":"request_rejected","request_id":"req-55","message":"Error de sintaxis: cancel requiere un ID"}
+{"timestamp":"2026-11-28T19:09:05.417997407+00:00","level":"INFO","event":"request_received","request_id":"req-56","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.418335865+00:00","level":"WARN","event":"request_rejected","request_id":"req-56","message":"Error de sintaxis: El ID debe ser un entero"}
+{"timestamp":"2026-11-28T19:09:05.515359485+00:00","level":"INFO","event":"request_received","request_id":"req-57","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.525769544+00:00","level":"INFO","event":"request_received","request_id":"req-58","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.588133678+00:00","level":"INFO","event":"request_received","request_id":"req-59","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.598776707+00:00","level":"INFO","event":"request_received","request_id":"req-60","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.608722027+00:00","level":"INFO","event":"request_received","request_id":"req-61","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:05.729088190+00:00","level":"INFO","event":"request_received","request_id":"req-62","message":"Solicitud recibida"}

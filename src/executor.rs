@@ -93,14 +93,14 @@ impl Executor {
     }
 
     #[cfg(unix)]
-    pub async fn kill_process_group(pid: u32, grace_ms: u64) {
+    pub async fn kill_process_group(pid: u32, grace_ms: u64) -> bool {
         use nix::sys::signal::{kill, Signal};
         use nix::unistd::Pid;
         use std::time::{Duration, Instant};
         use tracing::{info, warn};
 
         if pid == 0 {
-            return;
+            return false;
         }
 
         let pgid = Pid::from_raw(-(pid as i32));
@@ -116,7 +116,7 @@ impl Executor {
         while Instant::now() < deadline {
             if kill(pgid, None).is_err() {
                 info!(pid = pid, pgid = %pgid, "Grupo de procesos terminado tras SIGTERM");
-                return;
+                return false;
             }
             tokio::time::sleep(Duration::from_millis(25)).await;
         }
@@ -129,6 +129,7 @@ impl Executor {
         );
 
         let _ = kill(pgid, Signal::SIGKILL);
+        true
     }
 
     /// Espera a que un proceso hijo termine y extrae su resultado
