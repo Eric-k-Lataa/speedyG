@@ -9,13 +9,12 @@ use std::fs;
 use std::net::{IpAddr, SocketAddr};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex, MutexGuard};
-use std::time::Duration;
 use std::time::Instant;
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
 use tokio::sync::Semaphore;
-use tokio::time::timeout;
+use tokio::time::{timeout, Duration};
 use tracing::{error, info, warn};
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
@@ -345,9 +344,18 @@ async fn try_spawn_client<S>(
                 "Conexión rechazada ({}): límite de {} clientes simultáneos alcanzado",
                 peer_label, max_concurrent_clients
             );
+            let mut reader = BufReader::new(stream);
+            let mut discard = Vec::new();
+            let _ = timeout(
+                Duration::from_millis(100),
+                reader.read_until(b'\n', &mut discard),
+            )
+            .await;
+
             let msg = "Error: servidor saturado, límite de clientes simultáneos alcanzado.\n";
-            let _ = stream.write_all(msg.as_bytes()).await;
-            let _ = stream.shutdown().await;
+            let _ = reader.get_mut().write_all(msg.as_bytes()).await;
+            let _ = reader.get_mut().flush().await;
+            let _ = reader.get_mut().shutdown().await;
             return;
         }
     };
