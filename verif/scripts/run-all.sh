@@ -73,6 +73,7 @@ run_tc "TC-018"
 run_tc "TC-020"
 run_tc "TC-021"
 run_tc "TC-022"
+run_tc "TC-023"
 run_tc "TC-024"
 
 # ── Resumen global ────────────────────────────────────────────────────────────

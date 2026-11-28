@@ -71,17 +71,11 @@ Se cumplen **todos** los siguientes criterios:
 
 **Hora:** `Pendiente`
 
-**Autor del caso:** Erick Saúl Padilla Franco
-
-**Ejecutor:** `Pendiente`
-
-**Verificador independiente:** `Pendiente`
+**Ejecutor:** `Erick Padilla`
 
 **Branch:** `Pendiente`
 
 **Commit:** `Pendiente`
-
-**Resultado:** `Pendiente`
 
 ### Resumen de ejecución
 
