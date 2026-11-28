@@ -1,0 +1,44 @@
+Fecha: Sat Nov 28 01:57:33 AM UTC 2026 | Commit: 911e7de
+speedyg - Cliente CLI de JobRunner (local y remoto)
+
+USO:
+  speedyg [OPCIONES DE CONEXIÓN] <COMANDO> [ARGUMENTOS...]
+
+OPCIONES DE RED Y CONEXIÓN (Precedencia: CLI > Entorno > Local):
+  --host <ip_o_host>     Dirección del servidor TCP (env: SPEEDYG_HOST, default: 127.0.0.1)
+  --port <puerto>        Puerto TCP del servidor (env: SPEEDYG_PORT, default: 7878)
+  --socket <ruta>        Ruta del Unix Socket local (env: SPEEDYG_SOCKET, default: /tmp/speedyg.sock)
+  --timeout-ms <ms>      Timeout de conexión y lectura en ms (env: SPEEDYG_TIMEOUT_MS, default: 5000)
+  -h, --help             Muestra esta ayuda detallada
+
+COMANDOS:
+  <programa> [args...]   Encola un comando o programa para ejecución
+  status [id | estado]   Consulta todos los jobs, uno por ID o filtra por estado
+  list                   Alias de 'status' (lista todos los jobs)
+  cancel <id>            Solicita cancelar un job en cola o ejecución
+  health                 Muestra el estado de salud y capacidad del servicio
+  help                   Muestra esta ayuda
+
+CÓDIGOS DE SALIDA:
+  0  Éxito
+  2  Error de uso o parámetros inválidos
+  3  Error de conexión, timeout o acceso rechazado por red
+  4  Solicitud rechazada por el servidor (error de sintaxis, cola llena, job no encontrado)
+  5  Versión de protocolo incompatible
+status=active
+service_version=1.0.0-rc1
+uptime_seconds=718
+running=0
+queued=0
+queue_capacity=3
+status=active
+service_version=1.0.0-rc1
+uptime_seconds=718
+running=0
+queued=0
+queue_capacity=3
+Job #3 encolado correctamente
+--- Historial ---
+Job #1: echo Hola desde TCP [Succeeded] (exit code: 0)
+Job #2: echo Hola desde TCP [Succeeded] (exit code: 0)
+Job #3: echo Hola TCP [Succeeded] (exit code: 0)
