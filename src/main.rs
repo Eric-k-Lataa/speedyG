@@ -13,6 +13,8 @@ use std::time::Instant;
 use tokio::io::{AsyncBufReadExt, AsyncRead, AsyncWrite, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, UnixListener};
 use tokio::signal::unix::{signal, SignalKind};
+use tokio::sync::Semaphore;
+use tokio::time::{timeout, Duration};
 use tracing::{error, info, warn};
 
 type SharedScheduler = Arc<Mutex<Scheduler>>;
@@ -57,8 +59,10 @@ where
         if n == 0 {
             if raw.is_empty() {
                 return Ok(None);
+            } else {
+                warn!("Cliente desconectado con mensaje incompleto (sin salto de línea); solicitud descartada sin efecto");
+                return Ok(None);
             }
-            break;
         }
 
         if raw.len() + chunk.len() > max_message_bytes {
@@ -90,18 +94,37 @@ async fn handle_client<S>(
     max_message_bytes: usize,
     max_arguments: usize,
     max_argument_bytes: usize,
+    idle_timeout_secs: u64,
+    _permit: tokio::sync::OwnedSemaphorePermit,
 ) where
     S: AsyncRead + AsyncWrite + Unpin,
 {
     let mut reader = BufReader::new(stream);
+    let idle_duration = Duration::from_secs(idle_timeout_secs);
 
     loop {
-        let raw_msg = match read_message_line(&mut reader, max_message_bytes).await {
-            Ok(Some(msg)) => msg,
-            Ok(None) => return,
-            Err(err_msg) => {
+        let read_res = timeout(
+            idle_duration,
+            read_message_line(&mut reader, max_message_bytes),
+        )
+        .await;
+
+        let raw_msg = match read_res {
+            Ok(Ok(Some(msg))) => msg,
+            Ok(Ok(None)) => return,
+            Ok(Err(err_msg)) => {
                 warn!("Solicitud rechazada: {}", err_msg.trim());
                 let _ = reader.get_mut().write_all(err_msg.as_bytes()).await;
+                let _ = reader.get_mut().shutdown().await;
+                return;
+            }
+            Err(_) => {
+                warn!(
+                    "Conexión cerrada por inactividad tras {}s",
+                    idle_timeout_secs
+                );
+                let msg = "Error: conexión cerrada por inactividad.\n";
+                let _ = reader.get_mut().write_all(msg.as_bytes()).await;
                 let _ = reader.get_mut().shutdown().await;
                 return;
             }
@@ -164,17 +187,15 @@ async fn handle_client<S>(
                          running={}\n\
                          queued={}\n\
                          queue_capacity={}\n",
-                         env!("CARGO_PKG_VERSION"),
-                         uptime_seconds,
-                         running,
-                         queued,
-                         sched.get_queue_cap()
-    		     )
-		},
-                "help" => {
-                    "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
-                        .to_string()
+                        env!("CARGO_PKG_VERSION"),
+                        uptime_seconds,
+                        running,
+                        queued,
+                        sched.get_queue_cap()
+                    )
                 }
+                "help" => "Comandos disponibles: health, help, status [id], cancel <id>, list\n"
+                    .to_string(),
                 "status" => {
                     let sched = lock(&scheduler);
                     if let Some(id_str) = cmd.args.first() {
@@ -240,11 +261,18 @@ async fn handle_client<S>(
                                         });
                                     }
                                     info!("Job #{} cancelado", id);
-                                    despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
+                                    despachar(
+                                        Arc::clone(&scheduler),
+                                        max_current,
+                                        max_output_bytes,
+                                        max_completed_jobs,
+                                    );
                                 }
                                 respuesta
                             }
-                            Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
+                            Err(_) => {
+                                "Error: El ID debe ser un número entero positivo\n".to_string()
+                            }
                         }
                     } else {
                         "Uso: cancel <id>\n".to_string()
@@ -267,7 +295,12 @@ async fn handle_client<S>(
 
                     match resultado {
                         Ok((job_id, _full_command)) => {
-                            despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
+                            despachar(
+                                Arc::clone(&scheduler),
+                                max_current,
+                                max_output_bytes,
+                                max_completed_jobs,
+                            );
                             format!("Job #{} encolado correctamente\n", job_id)
                         }
                         Err(error) => format!("{}\n", error),
@@ -281,11 +314,73 @@ async fn handle_client<S>(
         };
 
         if let Err(e) = reader.get_mut().write_all(response.as_bytes()).await {
-            error!("Error al escribir en el socket: {}", e);
+            warn!(
+                "Cliente desconectado o error al enviar respuesta ({}); el estado ya aplicado en el scheduler se conserva",
+                e
+            );
             return;
         }
     }
 }
+
+#[allow(clippy::too_many_arguments)]
+async fn try_spawn_client<S>(
+    stream: S,
+    peer_label: String,
+    semaphore: &Arc<Semaphore>,
+    max_concurrent_clients: usize,
+    scheduler: SharedScheduler,
+    service_started_at: Instant,
+    grace_ms: u64,
+    max_current: usize,
+    max_output_bytes: usize,
+    max_completed_jobs: usize,
+    max_message_bytes: usize,
+    max_arguments: usize,
+    max_argument_bytes: usize,
+    idle_timeout_secs: u64,
+) where
+    S: AsyncRead + AsyncWrite + Unpin + Send + 'static,
+{
+    let permit = match semaphore.clone().try_acquire_owned() {
+        Ok(permit) => permit,
+        Err(_) => {
+            warn!(
+                "Conexión rechazada ({}): límite de {} clientes simultáneos alcanzado",
+                peer_label, max_concurrent_clients
+            );
+            let mut reader = BufReader::new(stream);
+            let mut discard = Vec::new();
+            let _ = timeout(
+                Duration::from_millis(100),
+                reader.read_until(b'\n', &mut discard),
+            )
+            .await;
+
+            let msg = "Error: servidor saturado, límite de clientes simultáneos alcanzado.\n";
+            let _ = reader.get_mut().write_all(msg.as_bytes()).await;
+            let _ = reader.get_mut().flush().await;
+            let _ = reader.get_mut().shutdown().await;
+            return;
+        }
+    };
+
+    tokio::spawn(handle_client(
+        stream,
+        scheduler,
+        service_started_at,
+        grace_ms,
+        max_current,
+        max_output_bytes,
+        max_completed_jobs,
+        max_message_bytes,
+        max_arguments,
+        max_argument_bytes,
+        idle_timeout_secs,
+        permit,
+    ));
+}
+
 fn lanzar_job(
     scheduler: SharedScheduler,
     job_id: u32,
@@ -531,6 +626,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let shutting_down = Arc::new(AtomicBool::new(false));
 
     // Bucle principal selectivo entre aceptar conexiones o recibir señales de apagado
+    let client_semaphore = Arc::new(tokio::sync::Semaphore::new(cfg.max_concurrent_clients));
     loop {
         tokio::select! {
             _ = sigint.recv() => {
@@ -573,31 +669,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     continue;
                 }
 
-                let scheduler = Arc::clone(&scheduler);
-                let grace_ms = cfg.grace_ms;
-                let max_current = cfg.max_current;
-                let max_output_bytes = cfg.max_output_bytes;
-                let max_completed_jobs = cfg.max_completed_jobs;
-                let max_message_bytes = cfg.max_message_bytes;
-                let max_arguments = cfg.max_arguments;
-                let max_argument_bytes = cfg.max_argument_bytes;
-
-                tokio::spawn(async move {
-                    handle_client(
-                        stream,
-                        scheduler,
-                        service_started_at,
-                        grace_ms,
-                        max_current,
-                        max_output_bytes,
-            max_completed_jobs,
-                        max_message_bytes,
-                        max_arguments,
-                        max_argument_bytes,
-                    )
-                    .await;
-                });
+                try_spawn_client(
+                    stream,
+                    peer_addr.to_string(),
+                    &client_semaphore,
+                    cfg.max_concurrent_clients,
+                    Arc::clone(&scheduler),
+                    service_started_at,
+                    cfg.grace_ms,
+                    cfg.max_current,
+                    cfg.max_output_bytes,
+                    cfg.max_completed_jobs,
+                    cfg.max_message_bytes,
+                    cfg.max_arguments,
+                    cfg.max_argument_bytes,
+                    cfg.idle_timeout_secs,
+                )
+                .await;
             }
+
             accept_res = listener.accept() => {
                 let (stream, _) = match accept_res {
                     Ok(res) => res,
@@ -615,30 +705,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     continue;
                 }
 
-                let scheduler = Arc::clone(&scheduler);
-                let grace_ms = cfg.grace_ms;
-                let max_current = cfg.max_current;
-            let max_output_bytes = cfg.max_output_bytes;
-        let max_completed_jobs = cfg.max_completed_jobs;
-                let max_message_bytes = cfg.max_message_bytes;
-                let max_arguments = cfg.max_arguments;
-                let max_argument_bytes = cfg.max_argument_bytes;
-
-                tokio::spawn(async move {
-                    handle_client(
-                        stream,
-                        scheduler,
-                        service_started_at,
-                        grace_ms,
-                        max_current,
-            max_output_bytes,
-            max_completed_jobs,
-                        max_message_bytes,
-                        max_arguments,
-                        max_argument_bytes,
-                    )
-                    .await;
-                });
+                try_spawn_client(
+                    stream,
+                    "unix".to_string(),
+                    &client_semaphore,
+                    cfg.max_concurrent_clients,
+                    Arc::clone(&scheduler),
+                    service_started_at,
+                    cfg.grace_ms,
+                    cfg.max_current,
+                    cfg.max_output_bytes,
+                    cfg.max_completed_jobs,
+                    cfg.max_message_bytes,
+                    cfg.max_arguments,
+                    cfg.max_argument_bytes,
+                    cfg.idle_timeout_secs,
+                )
+                .await;
             }
         }
     }
