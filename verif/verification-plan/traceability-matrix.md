@@ -68,7 +68,7 @@
 | RNF-29 | Backpressure o rechazo explícito en límites | Crítica | Prueba | TC-016 | rejection.txt + recovery.txt | PASS | — |
 | RNF-30 | Sin procesos huérfanos tras cierre o falla | Crítica | Prueba | TC-020, TC-021, TC-009 | ps + log | Pendiente | — |
 | RNF-31 | Recuperación distingue pendientes, terminados e interrumpidos | Crítica | Prueba | TC-007, TC-022 | estados antes/después | BLOCKED | Falta 022 |
-| RNF-32 | Compatibilidad de versión del protocolo | Alta | Prueba | TC-023 | `M-01.resp` … `M-09.resp` + `daemon.log` | Pendiente | Script redactado, sin ejecutar |
+| RNF-32 | Compatibilidad de versión del protocolo | Alta | Prueba | TC-023 | `M-01.resp` … `M-09.resp` + `daemon.log` | PASS | N/A |
 | RNF-33 | Liberación de memoria, procesos, archivos y sockets bajo estrés | Alta | Prueba | TC-024 | fds + procesos + memoria | Pendiente | — |
 | RNF-34 | Decisiones de seguridad/consistencia con análisis de riesgo y prueba | Alta | Inspección | ADR + registro de riesgos (propuesto) | documentos | Pendiente | — |
 
@@ -92,7 +92,7 @@
 | TC-020 | Terminación inesperada del hijo | RF-29, RNF-30 | `TC-020.sh` | BLOCKED |
 | TC-021 | Escalamiento de cancelación | RF-30, RNF-30 | `TC-021.sh` | BLOCKED |
 | TC-022 | Interrupción durante persistencia | RNF-11, RNF-28, RNF-31 | `TC-022.sh` | BLOCKED |
-| TC-023 | Compatibilidad de protocolo | RNF-32 | `TC-023.sh` | Pendiente |
+| TC-023 | Compatibilidad de protocolo | RNF-32 | `TC-023.sh` | PASS |
 | TC-024 | Liberación de recursos bajo carga | RNF-33 | `TC-024.sh` | PASS |
 
 Los TC-010 a TC-013, TC-015 y TC-019 aparecen en la matriz pero aún no tienen archivo ni script. Hay que confirmar con el equipo cuáles entran en este avance. TC-019 (RF-28) sí lo exige el brief del Avance 02.
