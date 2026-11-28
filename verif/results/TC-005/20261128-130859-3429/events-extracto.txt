@@ -1,0 +1,14 @@
+# Extracto de bitácora TC-005 (A=1 running->cancelado, B=2 queued->cancelado, C=3 succeeded)
+{"timestamp":"2026-11-28T19:09:00.826174245+00:00","level":"INFO","event":"request_received","request_id":"req-2","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.830659858+00:00","level":"INFO","event":"job_queued","request_id":"req-2","job_id":1,"message":"Trabajo #1 encolado (programa: sleep)"}
+{"timestamp":"2026-11-28T19:09:00.837547881+00:00","level":"INFO","event":"job_started","job_id":1,"message":"Iniciando ejecución de trabajo #1"}
+{"timestamp":"2026-11-28T19:09:00.865742328+00:00","level":"INFO","event":"request_received","request_id":"req-3","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.869579745+00:00","level":"INFO","event":"job_queued","request_id":"req-3","job_id":2,"message":"Trabajo #2 encolado (programa: sleep)"}
+{"timestamp":"2026-11-28T19:09:00.892993896+00:00","level":"INFO","event":"request_received","request_id":"req-4","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:00.896727234+00:00","level":"INFO","event":"job_queued","request_id":"req-4","job_id":3,"message":"Trabajo #3 encolado (programa: echo)"}
+{"timestamp":"2026-11-28T19:09:01.552727804+00:00","level":"INFO","event":"request_received","request_id":"req-13","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.556651404+00:00","level":"INFO","event":"job_canceled","request_id":"req-13","job_id":2,"message":"Cancelación solicitada para trabajo #2"}
+{"timestamp":"2026-11-28T19:09:01.919930450+00:00","level":"INFO","event":"request_received","request_id":"req-20","message":"Solicitud recibida"}
+{"timestamp":"2026-11-28T19:09:01.923903933+00:00","level":"INFO","event":"job_canceled","request_id":"req-20","job_id":1,"message":"Cancelación solicitada para trabajo #1"}
+{"timestamp":"2026-11-28T19:09:01.928887038+00:00","level":"INFO","event":"job_started","job_id":3,"message":"Iniciando ejecución de trabajo #3"}
+{"timestamp":"2026-11-28T19:09:01.941676187+00:00","level":"INFO","event":"job_finished","job_id":3,"message":"Trabajo #3 finalizado con exit_code=0"}
