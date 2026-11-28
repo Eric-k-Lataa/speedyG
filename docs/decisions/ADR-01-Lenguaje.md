@@ -1,5 +1,8 @@
 # ADR-01: Lenguaje de programación
 
+**Estado:** Aceptado
+**Fecha:** 11-09-2026
+
 ## Contexto
 El proyecto SpeedyG requiere un lenguaje de programación que permita concurrencia, manejo de procesos y comunicación de red de manera segura y eficiente.
 

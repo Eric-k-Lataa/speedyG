@@ -1,5 +1,8 @@
 # ADR-05: Modelo de Concurrencia, Estado Compartido y Gestión de Procesos Hijos
 
+**Estado:** Aceptado
+**Fecha:** 30-10-2026
+
 ## Contexto
 ADR-02 definió la arquitectura base basada en Event Loop y FSM. Para concretar la implementación en Rust sobre Linux, se requiere definir la estrategia de acceso al estado compartido (cola y tabla de trabajos) y el mecanismo para lanzar, supervisar y cancelar procesos hijos sin introducir estados inconsistentes ni procesos zombi.
 

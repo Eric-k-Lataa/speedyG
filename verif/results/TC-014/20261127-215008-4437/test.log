@@ -1,0 +1,197 @@
+cargo test --locked
+   Compiling cfg-if v1.0.5
+   Compiling once_cell v1.21.4
+   Compiling smallvec v1.16.6
+   Compiling libc v0.2.191
+   Compiling zerocopy v0.8.64
+   Compiling serde_core v1.0.229
+   Compiling scopeguard v1.2.0
+   Compiling pin-project-lite v0.2.18
+   Compiling lazy_static v1.5.1
+   Compiling bitflags v2.13.2
+   Compiling log v0.4.35
+   Compiling zmij v1.0.23
+   Compiling thread_local v1.1.10
+   Compiling lock_api v0.4.14
+   Compiling sharded-slab v0.1.7
+   Compiling libsqlite3-sys v0.30.1
+   Compiling tracing-core v0.1.36
+   Compiling num-traits v0.2.19
+   Compiling nu-ansi-term v0.50.3
+   Compiling memchr v2.8.3
+   Compiling fallible-iterator v0.3.0
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling iana-time-zone v0.1.65
+   Compiling bytes v1.12.2
+   Compiling itoa v1.0.19
+   Compiling tracing-log v0.2.0
+   Compiling tracing v0.1.44
+   Compiling tracing-subscriber v0.3.23
+   Compiling errno v0.3.15
+   Compiling parking_lot_core v0.9.12
+   Compiling socket2 v0.6.5
+   Compiling mio v1.2.5
+   Compiling nix v0.31.4
+   Compiling signal-hook-registry v1.4.8
+   Compiling parking_lot v0.12.5
+   Compiling tokio v1.54.1
+   Compiling serde v1.0.229
+   Compiling serde_json v1.0.154
+   Compiling chrono v0.4.45
+   Compiling ahash v0.8.12
+   Compiling hashbrown v0.14.5
+   Compiling hashlink v0.9.1
+   Compiling rusqlite v0.32.1
+   Compiling speedyG v1.0.0-rc1 (/tmp/speedyg-TC-014-clone-VpCYG5)
+warning: unused `Result` that must be used
+  --> tests/persistence_test.rs:69:5
+   |
+69 |     s.add_job("sleep".into(), vec!["60".into()]);
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+69 |     let _ = s.add_job("sleep".into(), vec!["60".into()]);
+   |     +++++++
+
+warning: `speedyG` (test "persistence_test") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.16s
+     Running unittests src/lib.rs (target/debug/deps/speedyG-58c636e33c145594)
+
+running 5 tests
+test config::tests::cli_overrides_env_and_supports_disable_tcp ... ok
+test config::tests::rejects_invalid_port_or_ip ... ok
+test config::tests::rejects_unspecified_or_public_ip_without_allowlist ... ok
+test config::tests::allows_non_loopback_with_allowlist ... ok
+test config::tests::defaults_bind_loopback_tcp ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/speedyG-cc67c1ee51d00f0a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/speedyg.rs (target/debug/deps/speedyg-b1732780816aa4ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/executor_test.rs (target/debug/deps/executor_test-0bc0f0b20a34b34f)
+
+running 7 tests
+test test_multiline_output ... ok
+test test_successful_execution ... ok
+test test_stderr_capture ... ok
+test test_failed_exit_code ... ok
+test test_empty_command_string ... ok
+test test_non_existent_command ... ok
+test test_command_with_pipes_and_subshells ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/parser_test.rs (target/debug/deps/parser_test-e8c06a6daba03711)
+
+running 12 tests
+test parse_exceeds_max_argument_bytes ... ok
+test parse_unreserved_command_with_invalid_args ... ok
+test parse_list_command ... ok
+test parse_exceeds_max_arguments ... ok
+test parse_with_valid_limits ... ok
+test validate_health_with_args ... ok
+test parse_unreserved_command ... ok
+test reserved_command ... ok
+test validate_health_without_args ... ok
+test parse_list_with_args ... ok
+test validate_status_with_id ... ok
+test validate_status_with_invalid_id ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/persistence_test.rs (target/debug/deps/persistence_test-7915709c83643037)
+
+running 9 tests
+test sin_datos_previos_inicia_vacio ... ok
+test json_de_respaldo_es_legible ... ok
+test si_sqlite_esta_corrupta_se_usa_json ... ok
+test si_falta_sqlite_se_usa_json ... ok
+test guardar_y_cargar_conserva_todo ... ok
+test cancelacion_se_refleja_en_persistencia ... ok
+test recuperacion_tras_reinicio ... ok
+test rendimiento_500_jobs ... ok
+test concurrencia_sin_corrupcion_ni_ids_repetidos ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+
+     Running tests/protcol_test.rs (target/debug/deps/protcol_test-7be7e966145c0525)
+
+running 6 tests
+test accepts_exact_current_version_and_extracts_payload ... ok
+test rejects_newer_unsupported_minor_version ... ok
+test accepts_compatible_earlier_minor_version ... ok
+test rejects_malformed_or_missing_header ... ok
+test attaches_current_version_header_to_payload ... ok
+test rejects_incompatible_major_version_with_supported_info ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scheduler_test.rs (target/debug/deps/scheduler_test-a17dad82e5995fa7)
+
+running 7 tests
+test acepta_jobs_mientras_haya_espacio_en_la_cola ... ok
+test rechaza_jobs_cuando_la_cola_esta_llena ... ok
+test respeta_el_limite_de_trabajos_concurrentes ... ok
+test permite_agregar_job_despues_de_iniciar_uno ... ok
+test inicia_el_siguiente_job_cuando_hay_capacidad ... ok
+test no_inicia_jobs_si_el_limite_es_cero ... ok
+test job_rechazado_no_consume_id ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/state_machine_test.rs (target/debug/deps/state_machine_test-63a286f363564222)
+
+running 31 tests
+test test_canceled_cannot_be_canceled_again ... ok
+test test_failed_cannot_be_interrupted ... ok
+test test_failed_job_completion ... ok
+test test_interrupted_cannot_be_canceled ... ok
+test test_interrupted_cannot_become_succeeded ... ok
+test test_canceled_cannot_become_succeeded ... ok
+test test_failed_cannot_be_canceled ... ok
+test test_canceled_cannot_be_interrupted ... ok
+test test_failed_cannot_return_to_running ... ok
+test test_interrupted_cannot_return_to_running ... ok
+test test_interrupted_cannot_be_complete ... ok
+test test_failed_remains_after_restart ... ok
+test test_canceled_remains_after_restart ... ok
+test test_queued_cannot_become_failed ... ok
+test test_canceled_cannot_return_to_running ... ok
+test test_failed_cannot_become_succeeded ... ok
+test test_job_cancellation ... ok
+test test_queued_cannot_become_interrupted ... ok
+test test_interrupted_remains_after_restart ... ok
+test test_running_cannot_return_to_queued ... ok
+test test_running_to_canceled_transition ... ok
+test test_queued_cannot_complete ... ok
+test test_running_to_interrupted_transition ... ok
+test test_succeeded_cannot_be_canceled ... ok
+test test_succeeded_cannot_be_interrupted ... ok
+test test_succeeded_cannot_become_failed ... ok
+test test_succeeded_cannot_return_to_running ... ok
+test test_running_cannot_become_queued ... ok
+test test_successful_job_completion ... ok
+test test_queued_to_running_transition ... ok
+test test_succeeded_remains_after_restart ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests speedyG
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

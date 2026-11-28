@@ -85,7 +85,8 @@
 | TC-006 | Capturar stdout/stderr y código | RF-11, RF-07 | `TC-006.sh` | PASS |
 | TC-007 | Reinicio y recuperación | RF-12, RF-13, RNF-06, RNF-10, RNF-11, RNF-31 | `TC-007.sh` | PASS |
 | TC-008 | Aislamiento de fallo | RNF-08, RNF-09 | `TC-008.sh` | Pendiente |
-| TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | — | Sin redactar |
+| TC-009 | Cierre controlado | RF-15, RNF-25, RNF-30 | `TC-009.sh` | PASS |
+| TC-014 | Cierre controlado | RF-15, RNF-25, RNF-30 | `TC-014.sh` | Sin redactar |
 | TC-016 | Saturación de cola y rechazo explícito | RF-23, RF-25, RNF-21, RNF-29 | `TC-016.sh` | PASS |
 | TC-017 | Cancelaciones concurrentes | RF-26, RNF-27 | `TC-017.sh` | PASS |
 | TC-018 | Solicitud duplicada | RF-27, RNF-27 | `TC-018.sh` | PASS |
