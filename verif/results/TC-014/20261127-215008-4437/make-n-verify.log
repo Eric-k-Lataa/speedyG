@@ -1,0 +1,5 @@
+cargo fmt --check
+cargo clippy --locked -- -D warnings
+cargo test --locked
+cargo build --locked --bins
+bash verif/scripts/run-all.sh

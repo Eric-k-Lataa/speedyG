@@ -1,0 +1,2 @@
+-rwxrwxr-x 2 uriel uriel 1012224 nov 27 21:51 /tmp/speedyg-TC-014-clone-VpCYG5/target/release/speedyg
+-rwxrwxr-x 2 uriel uriel 4285088 nov 27 21:51 /tmp/speedyg-TC-014-clone-VpCYG5/target/release/speedyG

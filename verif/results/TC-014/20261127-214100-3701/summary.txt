@@ -1,0 +1,6 @@
+result=FAIL
+pass=2
+fail=1
+blocked=0
+date=2026-11-27 21:41:00 CST
+run_dir=/home/uriel/Escritorio/speedyG/verif/results/TC-014/20261127-214100-3701
