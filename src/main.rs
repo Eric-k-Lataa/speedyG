@@ -1,5 +1,6 @@
 use speedyG::config::Config;
 use speedyG::executor::Executor;
+use speedyG::logger::EventLogger;
 use speedyG::parser::parse_with_limits;
 use speedyG::persistence::{cargar_scheduler, guardar_scheduler};
 use speedyG::protocol::parse_and_validate_header;
@@ -46,35 +47,29 @@ where
 {
     let mut raw = Vec::new();
     let mut chunk = Vec::new();
-
     loop {
         chunk.clear();
         let n = reader
             .read_until(b'\n', &mut chunk)
             .await
             .map_err(|e| format!("Error de lectura en el socket: {}", e))?;
-
         if n == 0 {
             if raw.is_empty() {
                 return Ok(None);
             }
             break;
         }
-
         if raw.len() + chunk.len() > max_message_bytes {
             return Err("Error: el mensaje supera el tamanio maximo permitido.\n".to_string());
         }
-
         raw.extend_from_slice(&chunk);
         if raw.ends_with(b"\n") {
             break;
         }
     }
-
     let text = String::from_utf8(raw).map_err(|_| {
         "Error: mensaje rechazado por formato UTF-8 invalido. Envia texto valido.\n".to_string()
     })?;
-
     Ok(Some(text))
 }
 
@@ -82,6 +77,7 @@ where
 async fn handle_client<S>(
     stream: S,
     scheduler: SharedScheduler,
+    event_logger: EventLogger,
     service_started_at: Instant,
     grace_ms: u64,
     max_current: usize,
@@ -101,11 +97,20 @@ async fn handle_client<S>(
             Ok(None) => return,
             Err(err_msg) => {
                 warn!("Solicitud rechazada: {}", err_msg.trim());
+                event_logger.warn("request_rejected", None, None, err_msg.trim());
                 let _ = reader.get_mut().write_all(err_msg.as_bytes()).await;
                 let _ = reader.get_mut().shutdown().await;
                 return;
             }
         };
+
+        let req_id = event_logger.next_request_id();
+        event_logger.info(
+            "request_received",
+            Some(&req_id),
+            None,
+            "Solicitud recibida",
+        );
 
         // Quitar solo el salto de línea delimitador del final del mensaje
         let without_newline = raw_msg
@@ -116,6 +121,12 @@ async fn handle_client<S>(
 
         if input_str.is_empty() {
             warn!("Solicitud rechazada: mensaje vacio");
+            event_logger.warn(
+                "request_rejected",
+                Some(&req_id),
+                None,
+                "Solicitud rechazada: mensaje vacio",
+            );
             let msg = "Error: mensaje vacio. Envia un comando valido.\n";
             if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
                 error!("Error al escribir en el socket: {}", e);
@@ -126,6 +137,12 @@ async fn handle_client<S>(
 
         if input_str.chars().any(|c| c.is_control()) {
             warn!("Solicitud rechazada: contiene caracteres de control");
+            event_logger.warn(
+                "request_rejected",
+                Some(&req_id),
+                None,
+                "Solicitud rechazada: contiene caracteres de control",
+            );
             let msg = "Error: el mensaje contiene caracteres no permitidos.\n";
             if let Err(e) = reader.get_mut().write_all(msg.as_bytes()).await {
                 error!("Error al escribir en el socket: {}", e);
@@ -138,6 +155,12 @@ async fn handle_client<S>(
             Ok(cmd_line) => cmd_line,
             Err(err_msg) => {
                 warn!("Solicitud rechazada por protocolo: {}", err_msg);
+                event_logger.warn(
+                    "request_rejected",
+                    Some(&req_id),
+                    None,
+                    &format!("Solicitud rechazada por protocolo: {}", err_msg),
+                );
                 let out = format!("Error de protocolo: {}\n", err_msg);
                 if let Err(e) = reader.get_mut().write_all(out.as_bytes()).await {
                     error!("Error al escribir en el socket: {}", e);
@@ -151,9 +174,7 @@ async fn handle_client<S>(
             Ok(cmd) => match cmd.program.as_str() {
                 "health" => {
                     let uptime_seconds = service_started_at.elapsed().as_secs();
-
                     let sched = lock(&scheduler);
-
                     let running = sched.filter_jobs_by_state("running").len();
                     let queued = sched.filter_jobs_by_state("queued").len();
 
@@ -164,13 +185,13 @@ async fn handle_client<S>(
                          running={}\n\
                          queued={}\n\
                          queue_capacity={}\n",
-                         env!("CARGO_PKG_VERSION"),
-                         uptime_seconds,
-                         running,
-                         queued,
-                         sched.get_queue_cap()
-    		     )
-		},
+                        env!("CARGO_PKG_VERSION"),
+                        uptime_seconds,
+                        running,
+                        queued,
+                        sched.get_queue_cap()
+                    )
+                }
                 "help" => {
                     "Comandos disponibles: health, help, status [id], cancel <id>, echo, sleep, ls\n"
                         .to_string()
@@ -199,7 +220,6 @@ async fn handle_client<S>(
                     } else {
                         let pending = sched.pending_jobs();
                         let history = sched.history_jobs();
-
                         if pending.is_empty() && history.is_empty() {
                             "No hay jobs registrados.\n".to_string()
                         } else {
@@ -234,17 +254,45 @@ async fn handle_client<S>(
                                 };
 
                                 if outcome == CancelOutcome::Canceled {
+                                    event_logger.info(
+                                        "job_canceled",
+                                        Some(&req_id),
+                                        Some(id),
+                                        &format!("Cancelación solicitada para trabajo #{}", id),
+                                    );
                                     if let Some(pid) = pid_opt {
+                                        let logger_kill = event_logger.clone();
                                         tokio::spawn(async move {
-                                            Executor::kill_process_group(pid, grace_ms).await;
+                                            let escalated =
+                                                Executor::kill_process_group(pid, grace_ms).await;
+                                            if escalated {
+                                                logger_kill.warn(
+                                                    "job_escalation_sigkill",
+                                                    None,
+                                                    Some(id),
+                                                    &format!(
+                                                        "Trabajo #{} escalado a SIGKILL tras vencer grace_ms",
+                                                        id
+                                                    ),
+                                                );
+                                            }
                                         });
                                     }
                                     info!("Job #{} cancelado", id);
-                                    despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
+                                    despachar(
+                                        Arc::clone(&scheduler),
+                                        event_logger.clone(),
+                                        max_current,
+                                        max_output_bytes,
+                                        max_completed_jobs,
+                                    );
                                 }
+
                                 respuesta
                             }
-                            Err(_) => "Error: El ID debe ser un número entero positivo\n".to_string(),
+                            Err(_) => {
+                                "Error: El ID debe ser un número entero positivo\n".to_string()
+                            }
                         }
                     } else {
                         "Uso: cancel <id>\n".to_string()
@@ -253,7 +301,6 @@ async fn handle_client<S>(
                 _ => {
                     let resultado = {
                         let mut sched = lock(&scheduler);
-
                         match sched.add_job(cmd.program.clone(), cmd.args.clone()) {
                             Ok(job) => {
                                 let job_id = job.get_id();
@@ -267,15 +314,44 @@ async fn handle_client<S>(
 
                     match resultado {
                         Ok((job_id, _full_command)) => {
-                            despachar(Arc::clone(&scheduler), max_current, max_output_bytes, max_completed_jobs);
+                            event_logger.info(
+                                "job_queued",
+                                Some(&req_id),
+                                Some(job_id),
+                                &format!(
+                                    "Trabajo #{} encolado (programa: {})",
+                                    job_id, cmd.program
+                                ),
+                            );
+                            despachar(
+                                Arc::clone(&scheduler),
+                                event_logger.clone(),
+                                max_current,
+                                max_output_bytes,
+                                max_completed_jobs,
+                            );
                             format!("Job #{} encolado correctamente\n", job_id)
                         }
-                        Err(error) => format!("{}\n", error),
+                        Err(error) => {
+                            event_logger.warn(
+                                "job_rejected",
+                                Some(&req_id),
+                                None,
+                                "Trabajo rechazado: cola en capacidad máxima",
+                            );
+                            format!("{}\n", error)
+                        }
                     }
                 }
             },
             Err(err_msg) => {
                 warn!("Solicitud rechazada: {}", err_msg);
+                event_logger.warn(
+                    "request_rejected",
+                    Some(&req_id),
+                    None,
+                    &format!("Error de sintaxis: {}", err_msg),
+                );
                 format!("Error de sintaxis: {}\n", err_msg)
             }
         };
@@ -286,8 +362,10 @@ async fn handle_client<S>(
         }
     }
 }
+
 fn lanzar_job(
     scheduler: SharedScheduler,
+    event_logger: EventLogger,
     job_id: u32,
     full_command: String,
     max_current: usize,
@@ -298,7 +376,6 @@ fn lanzar_job(
         // Verificar que el Job siga en estado Running antes de ejecutarlo
         {
             let sched = lock(&scheduler);
-
             if !matches!(
                 sched.get_job(job_id).map(|job| job.get_state()),
                 Some(JobState::Running)
@@ -313,24 +390,28 @@ fn lanzar_job(
 
         // Ejecutar y obtener pid
         info!("Job #{} ejecutando: {}", job_id, full_command);
+        event_logger.info(
+            "job_started",
+            None,
+            Some(job_id),
+            &format!("Iniciando ejecución de trabajo #{}", job_id),
+        );
 
         // 1. Lanzamos el proceso inmediatamente para obtener el PID
         let (child, pid_opt) = match Executor::spawn_cmd(&full_command) {
             Ok(res) => res,
             Err(e) => {
+                event_logger.error(
+                    "job_error",
+                    None,
+                    Some(job_id),
+                    &format!("Error al iniciar proceso del trabajo #{}: {}", job_id, e),
+                );
                 let mut sched = lock(&scheduler);
                 sched.complete_job(job_id, 1, "".into(), e, false, max_completed_jobs);
                 return;
             }
         };
-
-        // 2. REGISTRAMOS EL PID EN EL SCHEDULER AL INSTANTE (Antes de esperar)
-        /* if let Some(pid) = pid_opt {
-            let mut sched = lock(&scheduler);
-            sched.set_job_pid(job_id, pid);
-        }
-        */
-        //Comente esta parte porque me estaba dando problemas con huerfanos, es remplazada por el siguiente bloque de codigo
 
         // Verificamos que sigue el job activo en la cola y registramos PID
         let sigue_activo = {
@@ -351,7 +432,18 @@ fn lanzar_job(
                 job_id
             );
             if let Some(pid) = pid_opt {
-                Executor::kill_process_group(pid, 100).await;
+                let escalated = Executor::kill_process_group(pid, 100).await;
+                if escalated {
+                    event_logger.warn(
+                        "job_escalation_sigkill",
+                        None,
+                        Some(job_id),
+                        &format!(
+                            "Trabajo #{} escalado a SIGKILL durante cancelación en spawn",
+                            job_id
+                        ),
+                    );
+                }
             }
             let _ = Executor::wait_child(child, max_output_bytes).await;
             return;
@@ -360,6 +452,18 @@ fn lanzar_job(
         // Esperamos a que el proceso termine de forma asíncrona
         let exec_result = Executor::wait_child(child, max_output_bytes).await;
 
+        if exec_result.output_truncated {
+            event_logger.warn(
+                "job_output_truncated",
+                None,
+                Some(job_id),
+                &format!(
+                    "Salida del trabajo #{} truncada al alcanzar el límite máximo",
+                    job_id
+                ),
+            );
+        }
+
         // Marcar como completado y guardar.
         {
             let mut sched = lock(&scheduler);
@@ -367,7 +471,6 @@ fn lanzar_job(
                 .history_jobs()
                 .iter()
                 .any(|j| j.get_id() == job_id && matches!(j.get_state(), JobState::Canceled));
-
             if ya_cancelado {
                 info!(
                     "Job #{} ya estaba cancelado; se ignora salida de wait_child",
@@ -381,18 +484,29 @@ fn lanzar_job(
                 exec_result.output_truncated,
                 max_completed_jobs,
             ) {
+                persistir(&sched);
                 info!(
                     "Job #{} terminó con código {}",
                     job_id, exec_result.exit_code
                 );
-                persistir(&sched);
+                event_logger.info(
+                    "job_finished",
+                    None,
+                    Some(job_id),
+                    &format!(
+                        "Trabajo #{} finalizado con exit_code={}",
+                        job_id, exec_result.exit_code
+                    ),
+                );
             } else {
                 info!("Job #{} ya no estaba en cola activa al finalizar.", job_id);
             }
         }
+
         // Despachar el siguiente trabajo si hay capacidad
         despachar(
             Arc::clone(&scheduler),
+            event_logger,
             max_current,
             max_output_bytes,
             max_completed_jobs,
@@ -421,6 +535,7 @@ fn mensaje_cancelacion(id: u32, outcome: CancelOutcome) -> String {
 
 fn despachar(
     scheduler: SharedScheduler,
+    event_logger: EventLogger,
     max_current: usize,
     max_output_bytes: usize,
     max_completed_jobs: usize,
@@ -429,16 +544,17 @@ fn despachar(
         let siguiente = {
             let mut sched = lock(&scheduler);
             let siguiente = sched.start_next_job(max_current);
-
             if siguiente.is_some() {
                 persistir(&sched);
             }
             siguiente
         };
+
         match siguiente {
             Some((job_id, full_command)) => {
                 lanzar_job(
                     Arc::clone(&scheduler),
+                    event_logger.clone(),
                     job_id,
                     full_command,
                     max_current,
@@ -466,14 +582,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     info!(
-        socket_path    = %cfg.socket_path,
-        tcp_enabled    = %cfg.tcp_enabled,
-        tcp_host       = %cfg.tcp_host,
-        tcp_port       = %cfg.tcp_port,
-        queue_cap      = %cfg.queue_cap,
-        max_current    = %cfg.max_current,
-        grace_ms       = %cfg.grace_ms,
-        data_dir       = %cfg.data_dir,
+        socket_path = %cfg.socket_path,
+        tcp_enabled = %cfg.tcp_enabled,
+        tcp_host = %cfg.tcp_host,
+        tcp_port = %cfg.tcp_port,
+        queue_cap = %cfg.queue_cap,
+        max_current = %cfg.max_current,
+        grace_ms = %cfg.grace_ms,
+        data_dir = %cfg.data_dir,
         "Configuración cargada"
     );
 
@@ -483,6 +599,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Err(e) = fs::create_dir_all(&cfg.data_dir) {
         error!("Error al crear directorio de datos {}: {}", cfg.data_dir, e);
     }
+
+    // Inicializar bitácora estructurada de eventos (A2-12)
+    let event_logger = EventLogger::new(&cfg.data_dir).unwrap_or_else(|err| {
+        eprintln!("Error al inicializar bitácora de eventos: {}", err);
+        std::process::exit(1);
+    });
+    event_logger.info("service_started", None, None, "Demonio speedyG iniciado");
 
     // Eliminar el socket si quedó de una ejecución previa
     if fs::metadata(&socket_path).is_ok() {
@@ -505,7 +628,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Scheduler compartido entre las conexiones. Se carga de SQLite/JSON.
     let mut sched = cargar_scheduler();
     sched.set_queue_cap(cfg.queue_cap);
-
     let scheduler: SharedScheduler = Arc::new(Mutex::new(sched));
 
     // Recuperación tras reinicio: Running -> Interrupted; Queued, permanece en cola.
@@ -518,6 +640,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // despachar los trabajos recuperados respetando el limite de concurrencia
     despachar(
         Arc::clone(&scheduler),
+        event_logger.clone(),
         cfg.max_current,
         cfg.max_output_bytes,
         cfg.max_completed_jobs,
@@ -543,7 +666,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 shutting_down.store(true, Ordering::SeqCst);
                 break;
             }
-
             tcp_res = async {
                 match tcp_listener.as_ref() {
                     Some(tcp) => tcp.accept().await,
@@ -574,6 +696,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
 
                 let scheduler = Arc::clone(&scheduler);
+                let event_logger = event_logger.clone();
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
                 let max_output_bytes = cfg.max_output_bytes;
@@ -586,11 +709,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     handle_client(
                         stream,
                         scheduler,
+                        event_logger,
                         service_started_at,
                         grace_ms,
                         max_current,
                         max_output_bytes,
-            max_completed_jobs,
+                        max_completed_jobs,
                         max_message_bytes,
                         max_arguments,
                         max_argument_bytes,
@@ -610,16 +734,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 // Si estamos en proceso de apagado, rechazamos nuevas solicitudes
                 if shutting_down.load(Ordering::SeqCst) {
                     let mut stream = stream;
-                    let _ = stream.write_all(b"Error: El demonio se esta apagando, no se aceptan nuevos comandos.\n").await;
+                    let _ = stream
+                        .write_all(b"Error: El demonio se esta apagando, no se aceptan nuevos comandos.\n")
+                        .await;
                     let _ = stream.shutdown().await;
                     continue;
                 }
 
                 let scheduler = Arc::clone(&scheduler);
+                let event_logger = event_logger.clone();
                 let grace_ms = cfg.grace_ms;
                 let max_current = cfg.max_current;
-            let max_output_bytes = cfg.max_output_bytes;
-        let max_completed_jobs = cfg.max_completed_jobs;
+                let max_output_bytes = cfg.max_output_bytes;
+                let max_completed_jobs = cfg.max_completed_jobs;
                 let max_message_bytes = cfg.max_message_bytes;
                 let max_arguments = cfg.max_arguments;
                 let max_argument_bytes = cfg.max_argument_bytes;
@@ -628,11 +755,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     handle_client(
                         stream,
                         scheduler,
+                        event_logger,
                         service_started_at,
                         grace_ms,
                         max_current,
-            max_output_bytes,
-            max_completed_jobs,
+                        max_output_bytes,
+                        max_completed_jobs,
                         max_message_bytes,
                         max_arguments,
                         max_argument_bytes,
@@ -674,15 +802,28 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     for (id, pid_opt) in running_targets {
         if let Some(pid) = pid_opt {
             let g_ms = cfg.grace_ms;
+            let logger_kill = event_logger.clone();
             kill_handles.push(tokio::spawn(async move {
                 info!(
                     "Enviando señal de terminación a grupo de job #{} (PID {})",
                     id, pid
                 );
-                Executor::kill_process_group(pid, g_ms).await;
+                let escalated = Executor::kill_process_group(pid, g_ms).await;
+                if escalated {
+                    logger_kill.warn(
+                        "job_escalation_sigkill",
+                        None,
+                        Some(id),
+                        &format!(
+                            "Trabajo #{} escalado a SIGKILL durante apagado del demonio",
+                            id
+                        ),
+                    );
+                }
             }));
         }
     }
+
     for handle in kill_handles {
         let _ = handle.await;
     }
@@ -703,6 +844,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
+    event_logger.info(
+        "service_stopped",
+        None,
+        None,
+        "Demonio speedyG detenido limpiamente",
+    );
     info!("Demonio speedyG detenido de forma limpia.");
     Ok(())
 }
