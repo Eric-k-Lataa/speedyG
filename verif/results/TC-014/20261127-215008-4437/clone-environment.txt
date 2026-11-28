@@ -1,0 +1,17 @@
+== distribucion (/etc/os-release) ==
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="13"
+VERSION="13 (trixie)"
+ID=debian
+kernel=6.12.117+deb13-amd64
+arch=x86_64
+== toolchain del clon ==
+toolchain_fijado=1.98.1
+rustc=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+== commit del clon ==
+commit=e65fe2b96d5f7c21daf1616bac1f061d597a64c0
+describe=v1.0.0-rc1
+== dependencias ==
+cargo_lock_sha256=c2242de2f7be0356d66b8301e37bee4f7bce7974c7f8c83e3c2e0e68daa8c80d

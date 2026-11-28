@@ -1,0 +1,49 @@
+========================================
+TC-014  —  run 20261127-215008-4437
+========================================
+tc_id=TC-014
+run_id=20261127-215008-4437
+date=2026-11-27 21:50:08 CST
+os=Linux
+kernel=6.12.117+deb13-amd64
+arch=x86_64
+hostname=debian
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=uriel
+commit=1bf66bcfd59bdf33f226b363ae6b4d2756ab38c0
+socket=/tmp/speedyg-TC-014-20261127-215008-4437-NuGfls.sock
+data_dir=/tmp/speedyg-TC-014-20261127-215008-4437-data-pwqwSO
+db=/tmp/speedyg-TC-014-20261127-215008-4437-data-pwqwSO/speedyg.db
+json=/tmp/speedyg-TC-014-20261127-215008-4437-data-pwqwSO/scheduler.json
+daemon_bin=/home/uriel/Escritorio/speedyG/target/debug/speedyG
+client_bin=/home/uriel/Escritorio/speedyG/target/debug/speedyg
+========================================
+[PASS] [RNF-01] Sistema operativo es Linux (uname -s = Linux)
+[PASS] [RNF-03] La construcción no se ejecuta como root (id -u = 1000)
+[INFO] Hay cambios sin commit en /home/uriel/Escritorio/speedyG; el clon NO los incluye.
+[PASS] [RNF-02] Clon limpio creado (ref: v1.0.0-rc1)
+[INFO] Commit probado: e65fe2b96d5f7c21daf1616bac1f061d597a64c0 (v1.0.0-rc1)
+[PASS] [RNF-02] rust-toolchain.toml versionado
+[PASS] [RNF-02] Cargo.lock versionado
+[PASS] [RNF-02] Sin target/ versionado
+[PASS] [RNF-02] Sin binarios ELF versionados
+[PASS] [RNF-20] 'make verify' definido en el Makefile del clon
+[PASS] [RNF-20] README documenta 'make verify'
+[INFO] make build (puede tardar varios minutos)...
+[PASS] [RNF-02] make build (cargo build --release --locked) termina con éxito
+[PASS] [RNF-19] Build sin advertencias (warnings: 0)
+[PASS] [RNF-02] target/release/speedyG existe y es ejecutable
+[PASS] [RNF-02] target/release/speedyg existe y es ejecutable
+[PASS] [RNF-02] Cargo.lock no cambió durante el build (reproducible con --locked)
+[PASS] [RNF-02] rustc del clon corresponde al toolchain fijado (1.98.1): rustc 1.98.1 (48a229cea 2026-09-01)
+[PASS] [RNF-02] Lista de dependencias registrada (cargo tree --locked)
+[PASS] [RNF-19] make fmt sin diferencias
+[PASS] [RNF-19] make clippy (-D warnings) sin advertencias
+[PASS] [RNF-20] make test termina con éxito
+[PASS] [RNF-02] Árbol limpio tras construir (artefactos cubiertos por .gitignore)
+
+========================================
+RESULTADO: PASS
+PASS: 20  FAIL: 0  BLOCKED: 0
+========================================
