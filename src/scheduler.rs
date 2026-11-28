@@ -199,6 +199,8 @@ impl Scheduler {
         exit_code: i32,
         stdout: String,
         stderr: String,
+        output_truncated: bool,
+        max_completed_jobs: usize,
     ) -> bool {
         if let Some(pos) = self.queue.iter().position(|j| j.get_id() == id) {
             let mut job = self.queue.remove(pos).unwrap();
@@ -207,9 +209,25 @@ impl Scheduler {
             job.transition(JobEvent::Completed(exit_code));
 
             // Asignamos las salidas capturadas
-            job.set_output(stdout, stderr);
+            job.set_output(stdout, stderr, output_truncated);
 
             self.history.push(job);
+
+            while self.history.len() > max_completed_jobs {
+                let oldest = self
+                    .history
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, job)| job.get_finished_at().is_some())
+                    .min_by_key(|(_, job)| job.get_finished_at())
+                    .map(|(index, _)| index);
+
+                if let Some(index) = oldest {
+                    self.history.remove(index);
+                } else {
+                    break;
+                }
+            }
             true
         } else {
             false

@@ -18,6 +18,8 @@ pub const DEFAULT_SPEEDYG_DATA_DIR: &str = "/tmp/speedyg-data";
 pub const DEFAULT_MAX_MESSAGE_BYTES: usize = 65536;
 pub const DEFAULT_MAX_ARGUMENTS: usize = 32;
 pub const DEFAULT_MAX_ARGUMENT_BYTES: usize = 256;
+pub const DEFAULT_MAX_OUTPUT_BYTES: usize = 1_000_000;
+pub const DEFAULT_MAX_COMPLETED_JOBS: usize = 1000;
 
 pub const DEFAULT_SPEEDYG_TCP_ENABLED: bool = true;
 pub const DEFAULT_SPEEDYG_TCP_HOST: &str = "127.0.0.1";
@@ -50,6 +52,10 @@ pub struct Config {
     pub max_arguments: usize,
     // Número máximo de bytes permitidos por argumento
     pub max_argument_bytes: usize,
+    // Número máximo de bytes de salida almacenados por trabajo
+    pub max_output_bytes: usize,
+    // Número máximo de trabajos terminados conservados en el historial
+    pub max_completed_jobs: usize,
 }
 
 impl Default for Config {
@@ -67,6 +73,8 @@ impl Default for Config {
             max_message_bytes: DEFAULT_MAX_MESSAGE_BYTES,
             max_arguments: DEFAULT_MAX_ARGUMENTS,
             max_argument_bytes: DEFAULT_MAX_ARGUMENT_BYTES,
+            max_output_bytes: DEFAULT_MAX_OUTPUT_BYTES,
+            max_completed_jobs: DEFAULT_MAX_COMPLETED_JOBS,
         }
     }
 }
@@ -119,6 +127,12 @@ impl Config {
         }
         if let Ok(v) = get_env("SPEEDYG_MAX_ARGUMENT_BYTES") {
             cfg.max_argument_bytes = parse_usize("SPEEDYG_MAX_ARGUMENT_BYTES", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_OUTPUT_BYTES") {
+            cfg.max_output_bytes = parse_usize("SPEEDYG_MAX_OUTPUT_BYTES", &v)?;
+        }
+        if let Ok(v) = get_env("SPEEDYG_MAX_COMPLETED_JOBS") {
+            cfg.max_completed_jobs = parse_usize("SPEEDYG_MAX_COMPLETED_JOBS", &v)?;
         }
 
         // 2. Flags CLI (mayor precedencia)
@@ -251,6 +265,12 @@ impl Config {
         }
         if self.max_argument_bytes == 0 {
             return Err("Config: 'max_argument_bytes' no puede ser cero".to_string());
+        }
+        if self.max_output_bytes == 0 {
+            return Err("Config: 'max_output_bytes' no puede ser cero".to_string());
+        }
+        if self.max_completed_jobs == 0 {
+            return Err("Config: 'max_completed_jobs' no puede ser cero".to_string());
         }
         Ok(())
     }

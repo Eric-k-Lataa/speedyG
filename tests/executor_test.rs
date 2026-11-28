@@ -5,7 +5,7 @@ use speedyG::executor::{ExecutionResult, Executor};
 // Helper interno para mantener limpios los tests con el nuevo flujo de 2 fases
 async fn run_helper(cmd: &str) -> ExecutionResult {
     let (child, _pid) = Executor::spawn_cmd(cmd).expect("Fallo al hacer spawn del comando");
-    Executor::wait_child(child).await
+    Executor::wait_child(child, 1_000_000).await
 }
 
 #[tokio::test]
@@ -73,4 +73,32 @@ async fn test_empty_command_string() {
     assert_eq!(result.exit_code, 0);
     assert!(result.stdout.is_empty());
     assert!(result.stderr.is_empty());
+}
+
+#[tokio::test]
+async fn conserva_salida_si_no_supera_el_limite() {
+    let (child, _) = Executor::spawn_cmd("printf 'hola'").unwrap();
+    let result = Executor::wait_child(child, 10).await;
+
+    assert_eq!(result.stdout, "hola");
+    assert!(!result.output_truncated);
+}
+
+#[tokio::test]
+async fn trunca_salida_cuando_supera_el_limite() {
+    let (child, _) = Executor::spawn_cmd("printf '1234567890'").unwrap();
+    let result = Executor::wait_child(child, 5).await;
+
+    assert_eq!(result.stdout.len(), 5);
+    assert_eq!(result.stdout, "12345");
+    assert!(result.output_truncated);
+}
+
+#[tokio::test]
+async fn comparte_limite_entre_stdout_y_stderr() {
+    let (child, _) = Executor::spawn_cmd("printf '123456'; printf '7890' >&2").unwrap();
+    let result = Executor::wait_child(child, 8).await;
+
+    assert_eq!(result.stdout.len() + result.stderr.len(), 8);
+    assert!(result.output_truncated);
 }

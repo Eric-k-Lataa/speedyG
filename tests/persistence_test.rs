@@ -29,11 +29,11 @@ fn scheduler_ejemplo() -> Scheduler {
     s.add_job("echo".to_string(), vec!["hola".to_string()])
         .unwrap();
     s.start_job(1);
-    s.complete_job(1, 0, "".into(), "".into());
+    s.complete_job(1, 0, "".into(), "".into(), false, 1000);
 
     s.add_job("sh".to_string(), vec!["-c".to_string()]).unwrap();
     s.start_job(2);
-    s.complete_job(2, 3, "".into(), "".into());
+    s.complete_job(2, 3, "".into(), "".into(), false, 1000);
 
     s.add_job("sleep".to_string(), vec!["100".to_string()])
         .unwrap();
@@ -171,7 +171,7 @@ fn concurrencia_sin_corrupcion_ni_ids_repetidos() {
                         .unwrap()
                         .get_id();
                     s.start_job(id);
-                    s.complete_job(id, 0, "".into(), "".into());
+                    s.complete_job(id, 0, "".into(), "".into(), false, 1000);
                     guardar_en(&s, &db, &json).unwrap();
                 }
             })
@@ -200,7 +200,7 @@ fn rendimiento_500_jobs() {
             .unwrap()
             .get_id();
         s.start_job(id);
-        s.complete_job(id, 0, "".into(), "".into());
+        s.complete_job(id, 0, "".into(), "".into(), false, 1000);
     }
     let t = Instant::now();
     guardar_en(&s, &db, &json).unwrap();
@@ -210,5 +210,51 @@ fn rendimiento_500_jobs() {
     assert_eq!(cargado.history_jobs().len(), 500);
     assert!(dur.as_secs_f64() < 2.0, "tardó demasiado: {:?}", dur);
     println!("Guardar + cargar 500 jobs: {:?}", dur);
+    let _ = fs::remove_dir_all(dir);
+}
+
+#[test]
+fn retencion_de_trabajos_se_conserva_tras_reiniciar() {
+    let (db, json, dir) = rutas("retencion");
+
+    let mut s = Scheduler::new();
+
+    for i in 1..=3 {
+        s.add_job("echo".into(), vec![i.to_string()]).unwrap();
+        s.start_job(i);
+        assert!(s.complete_job(i, 0, "".into(), "".into(), false, 2));
+    }
+
+    assert_eq!(s.history_jobs().len(), 2);
+
+    guardar_en(&s, &db, &json).unwrap();
+
+    let cargado = cargar_desde(&db, &json);
+
+    assert_eq!(cargado.history_jobs().len(), 2);
+    assert!(cargado.get_job(1).is_none());
+    assert!(cargado.get_job(2).is_some());
+    assert!(cargado.get_job(3).is_some());
+
+    let _ = fs::remove_dir_all(dir);
+}
+
+#[test]
+fn salida_truncada_se_conserva_tras_reiniciar() {
+    let (db, json, dir) = rutas("output_truncated");
+
+    let mut s = Scheduler::new();
+
+    s.add_job("echo".into(), vec!["hola".into()]).unwrap();
+    s.start_job(1);
+
+    assert!(s.complete_job(1, 0, "salida".into(), "".into(), true, 1000));
+
+    guardar_en(&s, &db, &json).unwrap();
+
+    let cargado = cargar_desde(&db, &json);
+
+    assert!(cargado.get_job(1).unwrap().get_output_truncated());
+
     let _ = fs::remove_dir_all(dir);
 }

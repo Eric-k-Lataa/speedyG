@@ -62,6 +62,8 @@ pub struct Job {
     exit_code: Option<i32>, // Almacena el codigo de salida
     stdout: Option<String>,
     stderr: Option<String>,
+    #[serde(default)]
+    output_truncated: bool,
     pid: Option<u32>,
     received_at: DateTime<Utc>,
     started_at: Option<DateTime<Utc>>,
@@ -84,6 +86,7 @@ pub fn new_job(id: u32, program: String, args: Vec<String>, waiting: bool) -> Jo
         exit_code: None,
         stdout: None,
         stderr: None,
+        output_truncated: false,
         pid: None,
         received_at: now,
         started_at: if !waiting { Some(now) } else { None },
@@ -148,7 +151,9 @@ impl fmt::Display for Job {
                 writeln!(f, "  [stderr]:\n{}", indent_text(err))?;
             }
         }
-
+        if self.output_truncated {
+            writeln!(f, "  [salida truncada: se alcanzó el límite máximo]")?;
+        }
         Ok(())
     }
 }
@@ -175,9 +180,10 @@ impl Job {
     }
 
     //"setter" para las salidas
-    pub fn set_output(&mut self, stdout: String, stderr: String) {
+    pub fn set_output(&mut self, stdout: String, stderr: String, output_truncated: bool) {
         self.stdout = Some(stdout);
         self.stderr = Some(stderr);
+        self.output_truncated = output_truncated;
     }
 
     //setter para el pid
@@ -215,6 +221,7 @@ impl Job {
         exit_code: Option<i32>,
         stdout: Option<String>,
         stderr: Option<String>,
+        output_truncated: bool,
         pid: Option<u32>,
         received_at: DateTime<Utc>,
         started_at: Option<DateTime<Utc>>,
@@ -228,6 +235,7 @@ impl Job {
             exit_code,
             stdout,
             stderr,
+            output_truncated,
             pid,
             received_at,
             started_at,
@@ -261,6 +269,10 @@ impl Job {
 
     pub fn get_stderr(&self) -> Option<&String> {
         self.stderr.as_ref()
+    }
+
+    pub fn get_output_truncated(&self) -> bool {
+        self.output_truncated
     }
 
     pub fn get_pid(&self) -> Option<u32> {
