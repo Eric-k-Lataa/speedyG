@@ -320,7 +320,7 @@ async fn handle_client<S>(
 
 #[allow(clippy::too_many_arguments)]
 async fn try_spawn_client<S>(
-    mut stream: S,
+    stream: S,
     peer_label: String,
     semaphore: &Arc<Semaphore>,
     max_concurrent_clients: usize,
