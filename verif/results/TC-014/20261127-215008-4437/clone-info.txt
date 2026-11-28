@@ -1,0 +1,4 @@
+clone_dir=/tmp/speedyg-TC-014-clone-VpCYG5
+ref=v1.0.0-rc1
+commit=e65fe2b96d5f7c21daf1616bac1f061d597a64c0
+describe=v1.0.0-rc1

@@ -1,0 +1,6 @@
+make-n-verify: rc=0 (make -n verify)
+build: rc=0 (make build)
+dependencies: rc=0 (cargo tree --locked --depth 1)
+fmt: rc=0 (make fmt)
+clippy: rc=0 (make clippy)
+test: rc=0 (make test)

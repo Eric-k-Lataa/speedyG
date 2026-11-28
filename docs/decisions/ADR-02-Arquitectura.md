@@ -1,5 +1,8 @@
 # ADR-02: Selección de la Arquitectura
 
+**Estado:** Aceptado
+**Fecha:** 11-09-2026
+
 ## Contexto
 
 SpeedyG necesita una arquitectura base para su motor de ejecución capaz de gestionar múltiples trabajos concurrentes, 

@@ -7,7 +7,7 @@ speedyG es un servicio (*daemon*) para Linux que ejecuta comandos como **trabajo
 - Debian (probado en Debian 13, kernel 6.12) o distribución Linux equivalente.
 - Rust y Cargo (instalados con `rustup`).
 - Git.
-- No necesitas ser root.
+- No necesitas permisos de administrador para ejecutar SpeedyG. La instalación de dependencias del sistema sí requiere permisos de administrador.
 
 ## 2. Instalación
 
@@ -29,13 +29,21 @@ cd speedyG
 cargo build
 cargo test
 ```
+### Instalación de los ejecutables
+
+Desde el directorio del repositorio, instala los ejecutables para poder utilizar `speedyG` y `speedyg` directamente, sin anteponer `cargo run`:
+
+```bash
+cargo install --path . 
+```
+Los ejecutables quedan instalados en ~/.cargo/bin. Asegúrate de que este directorio esté incluido en tu variable PATH.
 
 Se generan dos programas en `target/debug/`:
 
 | Programa | Qué es |
 | --- | --- |
-| `speedyG` | El **servicio** (daemon). Se despierta el Daemon y escucha |
-| `speedyg` | El **cliente**: el comando para enviar ordenes a daemon |
+| `speedyG` | El servicio (daemon), encargado de gestionar y ejecutar los trabajos |
+| `speedyg` | El cliente CLI, utilizado para enviar comandos al servicio |
 
 > Ojo con las mayúsculas: `speedyG` (servicio) y `speedyg` (cliente) son programas distintos.
 
@@ -44,7 +52,7 @@ Se generan dos programas en `target/debug/`:
 En una terminal:
 
 ```bash
-cargo run --bin speedyG
+speedyG
 ```
 
 Debes ver una línea parecida a: `Demonio speedyG escuchando en /tmp/speedyg.sock`. **Deja esa terminal abierta**; para detener el servicio presiona `Ctrl+C`.
@@ -52,7 +60,7 @@ Debes ver una línea parecida a: `Demonio speedyG escuchando en /tmp/speedyg.soc
 Comprueba que responde (en otra terminal):
 
 ```bash
-cargo run --bin speedyg -- health
+speedyg health
 ```
 
 Resultado esperado: una respuesta de varias líneas con el resumen de salud del servicio; la primera línea es `status=active`:
@@ -66,16 +74,33 @@ queued=<trabajos en cola>
 queue_capacity=<capacidad máxima de la cola>
 ```
 
-> **Sobre `--`:** al usar `cargo run`, lo que va después de `--` se entrega al programa.
-
 Para consultar los comandos disponibles: 
 ```bash
-cargo run --bin speedyg -- help
+speedyg help
 ```
+
+### Conexión desde otro equipo
+
+SpeedyG también contempla conexiones mediante TCP para permitir que otros equipos de una red privada o VPN utilicen el servicio.
+
+Para habilitarlas, el administrador debe configurar:
+
+- `tcp_enabled`: habilita el servicio TCP.
+- `tcp_host`: dirección IP de escucha. Por defecto, `127.0.0.1`.
+- `tcp_port`: puerto de escucha. Por defecto, `7878`.
+- `tcp_allowlist`: direcciones IP autorizadas para conexiones no locales.
+
+Cuando `tcp_host` utiliza una dirección distinta de `127.0.0.1`, es obligatorio configurar `tcp_allowlist` con las direcciones IP autorizadas.
+
+El equipo cliente debe encontrarse en la red permitida y utilizar la dirección y el puerto configurados en el servicio.
+
+Se recomienda no exponer el servicio directamente a Internet.
+
+
 ## 4. Enviar un trabajo
 
 ```bash
-cargo run --bin speedyg -- echo hola
+speedyg echo hola
 ```
 
 Respuesta esperada: `Job #7 encolado correctamente`. El número es el **ID del trabajo**: anótalo, lo necesitas para consultarlo o cancelarlo.
@@ -83,13 +108,13 @@ Respuesta esperada: `Job #7 encolado correctamente`. El número es el **ID del t
 Trabajo de varios segundos, para practicar:
 
 ```bash
-cargo run --bin speedyg -- sleep 30
+speedyg sleep 30
 ```
 
 ## 5. Consultar el estado
 
 ```bash
-cargo run --bin speedyg -- status 7
+speedyg status 7
 ```
 
 Ejemplos de respuesta:
@@ -99,10 +124,12 @@ Job #8: sleep 10 [Running]
 Job #8: sleep 10 [Succeeded] (exit code: 0)
 ```
 
+La consulta muestra el estado del trabajo y, cuando está disponible, su código de salida y resultado de ejecución. La salida almacenada tiene un límite de 1.000.000 de bytes por trabajo. Si se supera, el contenido excedente se descarta y se indica que la salida fue truncada.
+
 ## 6. Listar trabajos
 
 ```bash
-cargo run --bin speedyg -- list
+speedyg list
 ```
 
 Muestra el ID y el estado de cada trabajo registrado.
@@ -110,10 +137,10 @@ Muestra el ID y el estado de cada trabajo registrado.
 ## 7. Cancelar un trabajo
 
 ```bash
-cargo run --bin speedyg -- cancel 8 
+speedyg cancel 8 
 ```
 
-- Si el trabajo está **en cola**, se marca como cancelado, y aunque termine el resultado es ignorado.
+- Si el trabajo está **en cola**, se marca como cancelado, y aunque termine, el resultado es ignorado.
 - Si dos personas cancelan a la vez, ambas reciben una respuesta clara y el trabajo queda en un único estado final. No se puede cancelar algo ya cancelado por otra terminal
 
 ### Estados posibles
@@ -138,7 +165,6 @@ Los estados `Succeeded`, `Failed`, `Canceled` e `Interrupted` son **finales**: n
 | Trabajo aceptado | `Job #N encolado correctamente` | El trabajo quedó registrado con ese ID | Guarda el ID |
 | Servicio activo | `status=active` (seguido de versión, uptime, trabajos en ejecución, en cola y capacidad de la cola) | El servicio responde | Nada |
 | Estado de un trabajo | `Job #N: <comando> [<Estado>]` | Estado actual | Nada |
-| Comando no autorizado | rechazo con la causa (ej. `rm archivo.txt`) | La política prohíbe ese comando | Usa un comando permitido |
 | Comando vacío o mal formado | rechazo con la causa | La solicitud no es válida | Revisa la sintaxis |
 | No se puede conectar | error de conexión al socket | El servicio no está corriendo, o el socket no existe | Inicia el servicio (sección 3) |
 | Job inexistente | mensaje de "no existe" | Job no encontrado | Revisa el ID con `status` |
@@ -149,12 +175,29 @@ Los estados `Succeeded`, `Failed`, `Canceled` e `Interrupted` son **finales**: n
 
 | Problema | Causa probable | Solución |
 | --- | --- | --- |
-| `Address already in use` o el servicio no arranca | Quedó un socket de una ejecución anterior | Comprueba que no haya otro servicio (`pgrep speedyG`) y borra el socket (`rm /tmp/speedyg.sock`) |
+| `Address already in use` o el servicio no arranca | Puede existir otra instancia del servicio o un socket residual | Comprueba si hay otro servicio (`pgrep -a speedyG`). Si no está ejecutándose, elimina el socket residual (`rm /tmp/speedyg.sock`) e intenta iniciar nuevamente |
 | El cliente no conecta | Servicio detenido | Inicia el servicio |
 | Un trabajo se queda en `Queued` | Se alcanzó el límite de concurrencia | Espera a que termine alguno o súbe en la configuración |
-| Mucho texto de compilación al usar `cargo run` | Cargo recompila | Usa `./target/debug/speedyg ...` |
+| El comando `speedyg` no se reconoce | Los ejecutables no están instalados o `~/.cargo/bin` no está en `PATH` | Ejecuta `cargo install --path .` desde el repositorio y verifica la variable `PATH` |
 
-## 10. Prueba con una persona ajena (RNF-23)
+## 10. Cerrar y recuperar el servicio
+
+Para detener el servicio de forma controlada, presiona `Ctrl+C` en la terminal donde se está ejecutando.
+
+- Los trabajos en ejecución reciben una solicitud de cancelación.
+- Los trabajos en cola pueden comenzar si se libera capacidad antes de que termine el servicio.
+- Si el servicio se cierra mientras todavía hay trabajos en ejecución, estos se recuperan como `Interrupted` al iniciar nuevamente.
+- Los trabajos que permanecían en cola se conservan para continuar su ejecución después de la recuperación.
+
+Si la terminal se cierra inesperadamente, los trabajos que estaban en ejecución se recuperan como `Interrupted`, mientras que los que estaban en cola se conservan.
+
+Para recuperar el servicio, vuelve a iniciarlo:
+
+```bash
+speedyG
+```
+
+## 11. Prueba con una persona ajena (RNF-23)
 
 Para cerrar el issue #83 hace falta que alguien ajeno al equipo siga **solo esta guía**. Anota aquí el resultado:
 

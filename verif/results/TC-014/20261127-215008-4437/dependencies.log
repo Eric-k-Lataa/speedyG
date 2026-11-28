@@ -1,0 +1,10 @@
+speedyG v1.0.0-rc1 (/tmp/speedyg-TC-014-clone-VpCYG5)
+├── chrono v0.4.45
+├── nix v0.31.4
+│   [build-dependencies]
+├── rusqlite v0.32.1
+├── serde v1.0.229
+├── serde_json v1.0.154
+├── tokio v1.54.1
+├── tracing v0.1.44
+└── tracing-subscriber v0.3.23

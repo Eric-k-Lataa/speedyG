@@ -23,15 +23,84 @@ Los estados de un trabajo son:
 
 ```
 QUEUED ──► RUNNING ──► SUCCEEDED
-                  ├──► FAILED
-                  └──► CANCELED
+   │           ├────► FAILED
+   │           ├────► CANCELED
+   │           └────► INTERRUPTED
+   │
+   └───────────────► CANCELED
+
 ```
 
-Las decisiones arquitectónicas relevantes se documentan como ADR en [`docs/decisions/`](docs/decisions/README.md). Más detalle en la [guía técnica](docs/technical-guide/README.md).
+Las decisiones arquitectónicas relevantes se documentan como ADR en [`docs/decisions/`](docs/decisions/README.md). Más detalle en la [guía técnica](docs/technical-guide/README.md) y la [guía de usuario](docs/user-guide/README.md). La [matriz de trazabilidad](verif/verification-plan/traceability-matrix.md) relaciona los requisitos con sus casos de verificación.
+
+El estado `INTERRUPTED` identifica los trabajos que se encontraban en ejecución cuando el servicio se interrumpió y que son detectados durante el proceso de recuperación.
+
+## Estructura del repositorio
+
+```text
+speedyG/
+├── Cargo.toml
+├── Cargo.lock
+├── rust-toolchain.toml
+├── Makefile
+├── config.example.toml
+├── README.md
+├── src/
+│   ├── bin/
+│   │   └── speedyg.rs
+│   ├── config.rs
+│   ├── executor.rs
+│   ├── lib.rs
+│   ├── main.rs
+│   ├── parser.rs
+│   ├── persistence.rs
+│   ├── protocol.rs
+│   ├── scheduler.rs
+│   ├── state_machine.rs
+│   └── README.md
+├── tests/
+│   ├── executor_test.rs
+│   ├── parser_test.rs
+│   ├── persistence_test.rs
+│   ├── protcol_test.rs
+│   ├── scheduler_test.rs
+│   └── state_machine_test.rs
+├── docs/
+│   ├── ai-usage/
+│   ├── change-requests/
+│   ├── decisions/
+│   ├── incidents/
+│   ├── technical-guide/
+│   ├── user-guide/
+│   ├── coding_standard.md
+│   └── README.md
+├── project-management/
+│   ├── 01-minuta.md
+│   ├── 02-minuta.md
+│   ├── 03-minuta.md
+│   ├── cronograma.md
+│   ├── Matriz de roles.md
+│   ├── risk register.md
+│   └── README.md
+└── verif/
+    ├── scripts/
+    │   ├── lib/
+    │   ├── run-all.sh
+    │   └── TC-*.sh
+    ├── test-cases/
+    │   ├── TC-*.md
+    │   └── Template.md
+    ├── test-data/
+    ├── results/
+    ├── verification-plan/
+    │   ├── traceability-matrix.md
+    │   └── verification-plan.md
+    └── README.md
+```
 
 ## Requisitos
 
-- Linux (probado en Debian 13). El proyecto usa sockets Unix y señales POSIX, por lo que **no compila en Windows ni macOS**.
+- Linux (probado en Debian 13). Linux es la plataforma objetivo del proyecto, debido a su integración con sockets Unix y señales POSIX.
 - `git`, `make`, `bash` y un compilador de C (`build-essential`), necesario para compilar SQLite embebido.
 - Rust **1.98.1**. La versión está fijada en [`rust-toolchain.toml`](rust-toolchain.toml); con `rustup` se instala sola, junto con `rustfmt` y `clippy`.
 
@@ -114,17 +183,6 @@ El demonio se configura con variables de entorno o flags. Todos los parámetros,
 
 El CI ([`rust-ci.yml`](.github/workflows/rust-ci.yml)) ejecuta `fmt`, `clippy -D warnings`, `build`, `test` y `run-all` con los mismos comandos de `make`.
 
-### Fallos conocidos (temporal)
-
-`verif/scripts/run-all.sh` tiene una lista `KNOWN_FAILS` de casos que aún no pasan por causas ajenas a este repositorio. Se reportan como `KNOWN-FAIL` y no rompen el CI:
-
-| TC | Motivo |
-|---|---|
-| TC-020 | Pendiente de implementación, issue/PR #64 |
-| TC-022 | Bug de persistencia, issue #147 |
-
-La lista debe quedar vacía antes de etiquetar `v1.0.0`.
-
 ## Dependencias
 
 Todas las dependencias directas están en [`Cargo.toml`](Cargo.toml) y sus versiones exactas en `Cargo.lock`.
@@ -156,6 +214,8 @@ git push origin v1.0.0-rc1
 
 - Estructura base: `Cargo.toml`, `Cargo.lock`, `rust-toolchain.toml`, `Makefile`, `src/`, `tests/`, `verif/`, `docs/`, `project-management/`.
 - Módulos en `src/`: `main.rs`, `lib.rs`, `parser.rs`, `persistence.rs`, `state_machine.rs`, `scheduler.rs`, `executor.rs`, `config.rs`.
-- ADR documentados: lenguaje, arquitectura, persistencia, cancelación/escalamiento/duplicados/saturación y concurrencia (ver [`docs/decisions/`](docs/decisions/README.md)).
-- Se implementaron y verificaron la ejecución, consulta, cancelación, concurrencia, persistencia y recuperación de trabajos.
-- Hay normativas de control para el manejo de errores y señales.
+- ADR documentados: lenguaje, arquitectura, persistencia, cancelación/escalamiento/duplicados/saturación, concurrencia, protocolo de red, retención de resultados y limite de recursos (ver [`docs/decisions/`](docs/decisions/README.md)).
+- Se implementaron la ejecución y administración de trabajos mediante una máquina de estados, con cola FIFO, límite de trabajos en espera, concurrencia máxima, manejo de solicitudes duplicadas y cancelación con escalamiento de señales (`SIGTERM` y `SIGKILL`).
+- Se implementaron el protocolo de comunicación, el versionado, la delimitación de mensajes, los límites de tamaño de solicitudes, las consultas de salud, las respuestas de error y los mecanismos de conexión mediante sockets Unix y TCP definidos para el servicio.
+- Se implementaron la captura y retención limitada de salidas, el límite del historial de trabajos, la persistencia en SQLite con respaldo JSON, la recuperación tras reinicios y el cierre controlado del servicio.
+- Se cuenta con pruebas unitarias y casos de verificación para validar el funcionamiento de los componentes y los requisitos del sistema.
