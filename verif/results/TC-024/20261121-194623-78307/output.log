@@ -1,0 +1,74 @@
+========================================
+TC-024  —  run 20261121-194623-78307
+========================================
+tc_id=TC-024
+run_id=20261121-194623-78307
+date=2026-11-21 19:46:23 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=53a982f3ef8d99d5cfaf5b20e13ecfce0e68ac1e
+socket=/tmp/speedyg-TC-024-20261121-194623-78307-Ea0Ggm.sock
+data_dir=/tmp/speedyg-TC-024-20261121-194623-78307-data-AMFX3T
+db=/tmp/speedyg-TC-024-20261121-194623-78307-data-AMFX3T/speedyg.db
+json=/tmp/speedyg-TC-024-20261121-194623-78307-data-AMFX3T/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 120
+[INFO] Socket: /tmp/speedyg-TC-024-20261121-194623-78307-Ea0Ggm.sock
+[INFO] PID del daemon: 78347
+[PASS] Daemon disponible (PID 78347).
+[PASS] Configuración efectiva del daemon: max_current=4 queue_cap=120
+
+════════════════════════════════════════
+[ESCENARIO A] Carga de trabajos rápidos
+════════════════════════════════════════
+[INFO] FDs en línea base: 11
+
+[A] Ráfaga 1: 100 envíos echo carga-A en paralelo
+[PASS] [A] Ráfaga 1 completamente vaciada en máximo 30s
+[PASS] Sin procesos zombi bajo daemon PID 78347.
+[PASS] Sin procesos hijos residuales bajo daemon PID 78347.
+[PASS] [A] Daemon responde health tras ráfaga 1
+[INFO] FDs en reposo entre ráfagas: 11
+[PASS] [A reposo-entre-rafagas] Variación de FDs ≤ 10 respecto a línea base (base=11 actual=11 delta=0)
+
+[A] Ráfaga 2: 100 envíos echo carga-B en paralelo
+[PASS] [A] Ráfaga 2 completamente vaciada en máximo 30s
+[PASS] Sin procesos zombi bajo daemon PID 78347.
+[PASS] Sin procesos hijos residuales bajo daemon PID 78347.
+[PASS] [A] Daemon responde health tras ráfaga 2
+[INFO] FDs tras segunda ráfaga: 11
+[PASS] [A post-carga] Variación de FDs ≤ 10 respecto a línea base (base=11 actual=11 delta=0)
+
+════════════════════════════════════════
+[ESCENARIO B] Cancelación bajo presión
+════════════════════════════════════════
+[INFO] Trabajos sleep 3001 enviados: 20
+[PASS] [B] Al menos 1 trabajo sleep 3001 aceptado (aceptados: 20)
+[PASS] [B] Todos los trabajos sleep 3001 alcanzaron estado terminal tras cancelar (ok: 1)
+[PASS] [B] Sin procesos residuales sleep 3001 en el SO (PIDs: 'ninguno')
+[PASS] Sin procesos zombi bajo daemon PID 78347.
+[PASS] Sin procesos hijos residuales bajo daemon PID 78347.
+[PASS] [B] Daemon responde health tras cancelaciones
+[INFO] FDs tras cancelaciones: 11
+[PASS] [B post-cancelacion] Variación de FDs ≤ 10 respecto a línea base (base=11 actual=11 delta=0)
+
+════════════════════════════════════════
+[ESCENARIO C] Cierre tras carga máxima
+════════════════════════════════════════
+[INFO] Enviando SIGTERM -> PID 78347
+[PASS] [C] Daemon termina en máximo 10s tras SIGTERM (dead: 1)
+[PASS] [C] Socket Unix liberado en máximo 10s tras cierre (liberado: 1)
+[PASS] [C] Sin procesos huérfanos sleep 3001 tras el cierre (PIDs: 'ninguno')
+
+========================================
+RESULTADO: PASS
+PASS: 22  FAIL: 0  BLOCKED: 0
+========================================

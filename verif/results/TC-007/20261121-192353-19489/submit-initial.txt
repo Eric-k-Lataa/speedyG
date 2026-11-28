@@ -1,0 +1,7 @@
+J1: echo terminado-exito -> Job #1 encolado correctamente
+J2: false -> Job #2 encolado correctamente
+J3: sleep 1003 -> Job #3 encolado correctamente
+J4: sleep 1004 -> Job #4 encolado correctamente
+J5: echo en-cola-1 -> Job #5 encolado correctamente
+J6: echo en-cola-2 -> Job #6 encolado correctamente
+J7: echo post-reinicio -> Job #7 encolado correctamente

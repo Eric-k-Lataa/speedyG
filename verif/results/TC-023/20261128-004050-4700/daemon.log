@@ -1,0 +1,19 @@
+[2m2026-11-28T06:40:50.364100Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-023-20261128-004050-4700-QRwKj8.sock [3mtcp_enabled[0m[2m=[0mtrue [3mtcp_host[0m[2m=[0m127.0.0.1 [3mtcp_port[0m[2m=[0m7878 [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-023-20261128-004050-4700-data-mSKQzv
+[2m2026-11-28T06:40:50.364313Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-023-20261128-004050-4700-QRwKj8.sock
+[2m2026-11-28T06:40:50.364401Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando por TCP en 127.0.0.1:7878
+[2m2026-11-28T06:40:50.364449Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-28T06:40:50.364483Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-28T06:40:51.597831Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión mayor de protocolo incompatible (2.0). Versiones soportadas: 1.x (actual 1.0)
+[2m2026-11-28T06:40:51.669718Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión mayor de protocolo incompatible (0.9). Versiones soportadas: 1.x (actual 1.0)
+[2m2026-11-28T06:40:51.741589Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión menor de protocolo no soportada (1.1). Versiones soportadas: 1.0..1.0
+[2m2026-11-28T06:40:51.815655Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Encabezado de protocolo ausente o mal formado (se esperaba v=<major>.<minor>|<comando>)
+[2m2026-11-28T06:40:51.884464Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Encabezado inválido '1.0': falta prefijo 'v='
+[2m2026-11-28T06:40:51.953149Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión incompatible 'abc': se esperaba formato <major>.<minor>
+[2m2026-11-28T06:40:52.022396Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión incompatible '1': se esperaba formato <major>.<minor>
+[2m2026-11-28T06:40:52.092343Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Solicitud rechazada por protocolo: Versión mayor de protocolo incompatible (2.0). Versiones soportadas: 1.x (actual 1.0)
+[2m2026-11-28T06:40:52.194045Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo recuperado
+[2m2026-11-28T06:40:52.195363Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-28T06:40:52.286712Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-28T06:40:52.286762Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-28T06:40:52.390022Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-023-20261128-004050-4700-QRwKj8.sock eliminado correctamente.
+[2m2026-11-28T06:40:52.390150Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

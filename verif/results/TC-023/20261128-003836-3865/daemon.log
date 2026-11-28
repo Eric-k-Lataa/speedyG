@@ -1,0 +1,27 @@
+[2m2026-11-28T06:38:36.560885Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-023-20261128-003836-3865-leGWMh.sock [3mtcp_enabled[0m[2m=[0mtrue [3mtcp_host[0m[2m=[0m127.0.0.1 [3mtcp_port[0m[2m=[0m7878 [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-023-20261128-003836-3865-data-CbDXQA
+[2m2026-11-28T06:38:36.561309Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-023-20261128-003836-3865-leGWMh.sock
+[2m2026-11-28T06:38:36.561421Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando por TCP en 127.0.0.1:7878
+[2m2026-11-28T06:38:36.561469Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-28T06:38:36.561505Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-28T06:38:37.792525Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: v=1.0|health
+[2m2026-11-28T06:38:37.798066Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 127
+[2m2026-11-28T06:38:38.034828Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: v=2.0|health
+[2m2026-11-28T06:38:38.038211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 127
+[2m2026-11-28T06:38:38.153412Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: v=0.9|health
+[2m2026-11-28T06:38:38.155543Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 127
+[2m2026-11-28T06:38:38.248456Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: v=1.1|health
+[2m2026-11-28T06:38:38.250857Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 127
+[2m2026-11-28T06:38:38.424358Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: 1.0|health
+[2m2026-11-28T06:38:38.426205Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 127
+[2m2026-11-28T06:38:38.504811Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: v=abc|health
+[2m2026-11-28T06:38:38.506284Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 127
+[2m2026-11-28T06:38:38.573048Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: v=1|health
+[2m2026-11-28T06:38:38.574592Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 127
+[2m2026-11-28T06:38:38.644408Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: v=2.0|sleep 5
+[2m2026-11-28T06:38:38.745517Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ejecutando: v=1.0|echo recuperado
+[2m2026-11-28T06:38:38.747188Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 terminó con código 0
+[2m2026-11-28T06:38:43.648200Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 terminó con código 0
+[2m2026-11-28T06:38:49.109785Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-28T06:38:49.109835Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-28T06:38:49.213093Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-023-20261128-003836-3865-leGWMh.sock eliminado correctamente.
+[2m2026-11-28T06:38:49.213215Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

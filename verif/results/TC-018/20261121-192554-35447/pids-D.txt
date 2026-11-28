@@ -1,0 +1,7 @@
+procs_before_cancel=3
+pids=35998 36013 36035 
+status_D1=Running
+status_D2=Canceled
+status_D3=Running
+procs_after_cancel=2
+pids=35998 36035 

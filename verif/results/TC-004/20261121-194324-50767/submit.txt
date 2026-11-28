@@ -1,0 +1,6 @@
+S: echo hola -> Job #1 encolado correctamente
+F: false -> Job #2 encolado correctamente
+R: sleep 8 -> Job #3 encolado correctamente
+Q1: echo en-cola-1 -> Job #4 encolado correctamente
+Q2: echo en-cola-2 -> Job #5 encolado correctamente
+X: echo cancelar -> Job #6 encolado correctamente

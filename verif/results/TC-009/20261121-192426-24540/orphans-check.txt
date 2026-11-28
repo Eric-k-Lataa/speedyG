@@ -1,0 +1,3 @@
+orphans_sleep2001=ninguno
+orphans_sleep2002=ninguno
+zombies=ninguno

@@ -1,0 +1,6 @@
+Job #1: echo hola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:22:50 UTC
+  ├─ Iniciado:  2026-11-22 01:22:50 UTC
+  └─ Finalizado: 2026-11-22 01:22:50 UTC
+  [stdout]:
+    │ hola

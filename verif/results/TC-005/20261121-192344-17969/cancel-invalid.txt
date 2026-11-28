@@ -1,0 +1,10 @@
+--- cancel terminado (Job #3) ---
+Error: No se puede cancelar el Job #3: ya está terminado (estado: Succeeded). Consulta 'status 3' para ver su resultado
+--- cancel ya cancelado (Job #1) ---
+Job #1 ya estaba cancelado; no se realizó una nueva cancelación
+--- cancel id inexistente (99999) ---
+Error: No se puede cancelar el Job #99999: no encontrado (no existe un trabajo con ese ID). Usa 'status' para ver los IDs disponibles
+--- cancel sin id ---
+Error de sintaxis: cancel requiere un ID
+--- cancel id no numerico (abc) ---
+Error de sintaxis: El ID debe ser un entero

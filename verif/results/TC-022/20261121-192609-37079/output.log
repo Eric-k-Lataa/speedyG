@@ -1,0 +1,271 @@
+========================================
+TC-022  —  run 20261121-192609-37079
+========================================
+tc_id=TC-022
+run_id=20261121-192609-37079
+date=2026-11-21 19:26:09 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=a0b3b9f1971c5e08a6857f5931c327d21cc3d1c8
+socket=/tmp/speedyg-TC-022-20261121-192609-37079-mGzmWw.sock
+data_dir=/tmp/speedyg-TC-022-20261121-192609-37079-data-1Jij6g
+db=/tmp/speedyg-TC-022-20261121-192609-37079-data-1Jij6g/speedyg.db
+json=/tmp/speedyg-TC-022-20261121-192609-37079-data-1Jij6g/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+[INFO] Verificando herramientas opcionales...
+
+════════════════════════════════════════
+[ESCENARIO A] Interrupción bajo carga de escritura
+════════════════════════════════════════
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Socket: /tmp/speedyg-TC-022-20261121-192609-37079-mGzmWw.sock
+[INFO] PID del daemon: 37129
+[PASS] Daemon disponible (PID 37129).
+[PASS] Configuración efectiva del daemon: max_current=4 queue_cap=30
+
+[A] Iteración 1/10 (delay=0.085s)
+[INFO] SIGKILL -> PID 37129
+[PASS] [A-iter1] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter1] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 37570
+[PASS] [A-iter1] Daemon reinicia y socket responde (0.017s)
+[PASS] [A-iter1] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter1] health responde OK
+[PASS] [A-iter1] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter1] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter1] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter1] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter1] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter1] ID nuevo (#21) es mayor que el máximo actual (#20)
+
+[A] Iteración 2/10 (delay=0.120s)
+[INFO] SIGKILL -> PID 37570
+[PASS] [A-iter2] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter2] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 38089
+[PASS] [A-iter2] Daemon reinicia y socket responde (0.011s)
+[PASS] [A-iter2] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter2] health responde OK
+[PASS] [A-iter2] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter2] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter2] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter2] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter2] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter2] ID nuevo (#42) es mayor que el máximo actual (#41)
+
+[A] Iteración 3/10 (delay=0.155s)
+[INFO] SIGKILL -> PID 38089
+[PASS] [A-iter3] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter3] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 38596
+[PASS] [A-iter3] Daemon reinicia y socket responde (0.009s)
+[PASS] [A-iter3] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter3] health responde OK
+[PASS] [A-iter3] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter3] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter3] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter3] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter3] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter3] ID nuevo (#63) es mayor que el máximo actual (#62)
+
+[A] Iteración 4/10 (delay=0.190s)
+[INFO] SIGKILL -> PID 38596
+[PASS] [A-iter4] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter4] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 39119
+[PASS] [A-iter4] Daemon reinicia y socket responde (0.008s)
+[PASS] [A-iter4] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter4] health responde OK
+[PASS] [A-iter4] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter4] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter4] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter4] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter4] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter4] ID nuevo (#84) es mayor que el máximo actual (#83)
+
+[A] Iteración 5/10 (delay=0.225s)
+[INFO] SIGKILL -> PID 39119
+[PASS] [A-iter5] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter5] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 39662
+[PASS] [A-iter5] Daemon reinicia y socket responde (0.008s)
+[PASS] [A-iter5] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter5] health responde OK
+[PASS] [A-iter5] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter5] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter5] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter5] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter5] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter5] ID nuevo (#105) es mayor que el máximo actual (#104)
+
+[A] Iteración 6/10 (delay=0.260s)
+[INFO] SIGKILL -> PID 39662
+[PASS] [A-iter6] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter6] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 40188
+[PASS] [A-iter6] Daemon reinicia y socket responde (0.009s)
+[PASS] [A-iter6] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter6] health responde OK
+[PASS] [A-iter6] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter6] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter6] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter6] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter6] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter6] ID nuevo (#126) es mayor que el máximo actual (#125)
+
+[A] Iteración 7/10 (delay=0.295s)
+[INFO] SIGKILL -> PID 40188
+[PASS] [A-iter7] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter7] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 40742
+[PASS] [A-iter7] Daemon reinicia y socket responde (0.007s)
+[PASS] [A-iter7] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter7] health responde OK
+[PASS] [A-iter7] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter7] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter7] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter7] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter7] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter7] ID nuevo (#147) es mayor que el máximo actual (#146)
+
+[A] Iteración 8/10 (delay=0.330s)
+[INFO] SIGKILL -> PID 40742
+[PASS] [A-iter8] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter8] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 41260
+[PASS] [A-iter8] Daemon reinicia y socket responde (0.006s)
+[PASS] [A-iter8] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter8] health responde OK
+[PASS] [A-iter8] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter8] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter8] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter8] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter8] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter8] ID nuevo (#168) es mayor que el máximo actual (#167)
+
+[A] Iteración 9/10 (delay=0.365s)
+[INFO] SIGKILL -> PID 41260
+[PASS] [A-iter9] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter9] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 41781
+[PASS] [A-iter9] Daemon reinicia y socket responde (0.008s)
+[PASS] [A-iter9] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter9] health responde OK
+[PASS] [A-iter9] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter9] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter9] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter9] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter9] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter9] ID nuevo (#186) es mayor que el máximo actual (#185)
+
+[A] Iteración 10/10 (delay=0.400s)
+[INFO] SIGKILL -> PID 41781
+[PASS] [A-iter10] speedyg.db pasa PRAGMA integrity_check (resultado: ok)
+[PASS] [A-iter10] scheduler.json es JSON válido (resultado: ok)
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 4 --queue-cap 30
+[INFO] Nuevo PID del daemon: 42307
+[PASS] [A-iter10] Daemon reinicia y socket responde (0.009s)
+[PASS] [A-iter10] status responde en menos de 3s (latencia: 0s)
+[PASS] [A-iter10] health responde OK
+[PASS] [A-iter10] Ningún ID aceptado desaparece tras reiniciar (faltantes: 0)
+[PASS] [A-iter10] Sin IDs duplicados en status (duplicados: 0)
+[PASS] [A-iter10] Sin trabajos Queued/Running tras recuperación (30s)
+[PASS] [A-iter10] Sin trabajos en Running tras recuperación (encontrados: 0)
+[PASS] [A-iter10] Todo Succeeded tiene exit code 0 (con code!=0: 0)
+[PASS] [A-iter10] ID nuevo (#206) es mayor que el máximo actual (#205)
+
+════════════════════════════════════════
+[ESCENARIO B] Clasificación tras reinicio
+════════════════════════════════════════
+[INFO] SIGKILL -> PID 42307
+[PASS] Configuración efectiva del daemon: max_current=1 queue_cap=10
+[PASS] [B] D enviado y aceptado (ID #207)
+[PASS] [B] D llegó a Succeeded
+[PASS] [B] E enviado y aceptado (ID #208)
+[PASS] [B] E quedó Canceled
+[PASS] [B] A enviado y aceptado (ID #209)
+[PASS] [B] A está en Running
+[PASS] [B] B enviado (ID #210)
+[PASS] [B] C enviado (ID #211)
+[PASS] [B] B está Queued
+[PASS] [B] C está Queued
+[INFO] SIGKILL -> PID 42453
+[INFO] Eliminando procesos huérfanos (sleep 1003): 42579
+42580
+[INFO] Reiniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 1 --queue-cap 10
+[INFO] Nuevo PID del daemon: 42719
+[PASS] [B] Daemon reinicia tras SIGKILL (socket responde en 0.007s)
+[PASS] [B] D permanece Succeeded tras reinicio (estado: Succeeded)
+[PASS] [B] E permanece Canceled tras reinicio (estado: Canceled)
+[PASS] [B] A queda Interrupted (no Running/Succeeded) tras reinicio (estado: Interrupted)
+[PASS] [B] Datos de D idénticos antes y después del reinicio (diff lines: 0)
+[PASS] [B] Datos de E idénticos antes y después del reinicio (diff lines: 0)
+[PASS] [B] B termina en Succeeded (estado final: Succeeded)
+[PASS] [B] C termina en Succeeded (estado final: Succeeded)
+[PASS] [B] A permanece Interrupted al final (estado final: Interrupted)
+
+════════════════════════════════════════
+[ESCENARIO C] Archivos de persistencia dañados
+════════════════════════════════════════
+[INFO] SIGKILL -> PID 42719
+[PASS] Configuración efectiva del daemon: max_current=4 queue_cap=30
+[PASS] [C] Línea base: BL1=Succeeded BL2=Succeeded BL3=Canceled
+[INFO] SIGKILL -> PID 42935
+[INFO] Línea base guardada de forma segura en /home/elataa/Documents/Workspace/speedyG/verif/results/TC-022/20261121-192609-37079/tc022-baseline-backup
+
+[C1] Archivo .tmp parcial
+[PASS] [C1] BL1 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C1] BL2 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C1] BL3 coincide con línea base: Canceled (obtenido: Canceled)
+[INFO] SIGKILL -> PID 43106
+
+[C2] scheduler.json truncado a la mitad
+[PASS] [C2] BL1 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C2] BL2 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C2] BL3 coincide con línea base: Canceled (obtenido: Canceled)
+[INFO] SIGKILL -> PID 43172
+
+[C3] speedyg.db corrupto; JSON intacto
+[PASS] [C3] BL1 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C3] BL2 coincide con línea base: Succeeded (obtenido: Succeeded)
+[PASS] [C3] BL3 coincide con línea base: Canceled (obtenido: Canceled)
+[PASS] [C3] daemon.log registra evento de recuperación/error al leer la base (ocurrencias: 3)
+[PASS] [C3] Trabajo nuevo aceptado tras recuperación (ID #215)
+[INFO] SIGKILL -> PID 43234
+[FAIL] [C3] Trabajo nuevo (#215) sobrevive al segundo reinicio (estado: )
+[INFO] SIGKILL -> PID 43317
+
+[C4] Base y JSON ilegibles
+[PASS] [C4] Daemon arranca y socket responde pese a archivos ilegibles
+[PASS] [C4] health responde OK con archivos ilegibles (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+[PASS] [C4] status no muestra trabajos inventados (trabajos en status: 0)
+[PASS] [C4] daemon.log registra el error de lectura (ocurrencias: 16)
+
+════════════════════════════════════════
+[CIERRE] Verificación final y limpieza
+════════════════════════════════════════
+[PASS] [CIERRE] Daemon responde health al terminar (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+
+========================================
+RESULTADO: FAIL
+PASS: 150  FAIL: 1  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 43345...

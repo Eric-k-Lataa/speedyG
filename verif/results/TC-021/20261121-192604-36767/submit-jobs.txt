@@ -1,0 +1,2 @@
+J1: sh -c trap '' TERM; sleep 2002 & wait -> Job #1 encolado correctamente
+J2: echo siguiente-tras-escalamiento -> Job #2 encolado correctamente

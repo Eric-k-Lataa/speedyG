@@ -1,0 +1,21 @@
+--- Historial ---
+Job #1: echo dup-A [Succeeded] (exit code: 0)
+Job #2: echo dup-A [Succeeded] (exit code: 0)
+Job #3: echo dup-A [Succeeded] (exit code: 0)
+Job #4: echo dup-A [Succeeded] (exit code: 0)
+Job #5: echo dup-A [Succeeded] (exit code: 0)
+Job #8: echo dup-B [Succeeded] (exit code: 0)
+Job #9: echo dup-B [Succeeded] (exit code: 0)
+Job #7: echo dup-B [Succeeded] (exit code: 0)
+Job #10: echo dup-B [Succeeded] (exit code: 0)
+Job #6: echo dup-B [Succeeded] (exit code: 0)
+Job #13: echo dup-B [Succeeded] (exit code: 0)
+Job #14: echo dup-B [Succeeded] (exit code: 0)
+Job #11: echo dup-B [Succeeded] (exit code: 0)
+Job #15: echo dup-B [Succeeded] (exit code: 0)
+Job #12: echo dup-B [Succeeded] (exit code: 0)
+Job #16: echo dup-C [Succeeded] (exit code: 0)
+Job #17: echo dup-C [Succeeded] (exit code: 0)
+Job #19: sleep 3001 [Canceled]
+Job #18: sleep 3001 [Canceled]
+Job #20: sleep 3001 [Canceled]

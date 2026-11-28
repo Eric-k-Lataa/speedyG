@@ -1,0 +1,10 @@
+iter=1 restart_secs=0.017
+iter=2 restart_secs=0.011
+iter=3 restart_secs=0.009
+iter=4 restart_secs=0.008
+iter=5 restart_secs=0.008
+iter=6 restart_secs=0.009
+iter=7 restart_secs=0.007
+iter=8 restart_secs=0.006
+iter=9 restart_secs=0.008
+iter=10 restart_secs=0.009

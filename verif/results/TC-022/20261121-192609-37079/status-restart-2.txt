@@ -1,0 +1,43 @@
+--- Pendientes / En ejecución ---
+Job #38: echo carga-2-17 [Running]
+Job #39: echo carga-2-18 [Running]
+Job #40: echo carga-2-19 [Running]
+Job #41: echo carga-2-20 [Running]
+--- Historial ---
+Job #1: echo carga-1-1 [Succeeded] (exit code: 0)
+Job #2: echo carga-1-2 [Succeeded] (exit code: 0)
+Job #3: echo carga-1-3 [Succeeded] (exit code: 0)
+Job #5: echo carga-1-6 [Succeeded] (exit code: 0)
+Job #4: echo carga-1-4 [Succeeded] (exit code: 0)
+Job #6: echo carga-1-5 [Succeeded] (exit code: 0)
+Job #8: echo carga-1-8 [Succeeded] (exit code: 0)
+Job #7: echo carga-1-7 [Succeeded] (exit code: 0)
+Job #12: echo carga-1-13 [Succeeded] (exit code: 0)
+Job #10: echo carga-1-11 [Succeeded] (exit code: 0)
+Job #9: echo carga-1-9 [Succeeded] (exit code: 0)
+Job #11: echo carga-1-10 [Succeeded] (exit code: 0)
+Job #13: echo carga-1-14 [Succeeded] (exit code: 0)
+Job #14: echo carga-1-15 [Succeeded] (exit code: 0)
+Job #17: echo carga-1-17 [Succeeded] (exit code: 0)
+Job #15: echo carga-1-12 [Succeeded] (exit code: 0)
+Job #19: echo carga-1-19 [Succeeded] (exit code: 0)
+Job #16: echo carga-1-16 [Succeeded] (exit code: 0)
+Job #18: echo carga-1-20 [Succeeded] (exit code: 0)
+Job #20: echo carga-1-18 [Succeeded] (exit code: 0)
+Job #21: echo nuevo [Succeeded] (exit code: 0)
+Job #22: echo carga-2-1 [Succeeded] (exit code: 0)
+Job #24: echo carga-2-3 [Succeeded] (exit code: 0)
+Job #25: echo carga-2-4 [Succeeded] (exit code: 0)
+Job #23: echo carga-2-2 [Succeeded] (exit code: 0)
+Job #27: echo carga-2-7 [Succeeded] (exit code: 0)
+Job #29: echo carga-2-10 [Succeeded] (exit code: 0)
+Job #26: echo carga-2-6 [Succeeded] (exit code: 0)
+Job #28: echo carga-2-5 [Succeeded] (exit code: 0)
+Job #30: echo carga-2-8 [Succeeded] (exit code: 0)
+Job #31: echo carga-2-9 [Succeeded] (exit code: 0)
+Job #33: echo carga-2-11 [Succeeded] (exit code: 0)
+Job #32: echo carga-2-14 [Succeeded] (exit code: 0)
+Job #34: echo carga-2-12 [Interrupted]
+Job #35: echo carga-2-16 [Interrupted]
+Job #36: echo carga-2-13 [Interrupted]
+Job #37: echo carga-2-15 [Succeeded] (exit code: 0)

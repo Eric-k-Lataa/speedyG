@@ -1,0 +1,18 @@
+Job #1: sleep 2001 [Canceled]
+  ├─ Recibido:  2026-11-22 01:24:27 UTC
+  ├─ Iniciado:  2026-11-22 01:24:27 UTC
+  └─ Finalizado: 2026-11-22 01:24:28 UTC
+
+Job #2: sleep 2002 [Canceled]
+  ├─ Recibido:  2026-11-22 01:24:27 UTC
+  ├─ Iniciado:  2026-11-22 01:24:27 UTC
+  └─ Finalizado: 2026-11-22 01:24:28 UTC
+
+Job #3: echo en-cola [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:24:27 UTC
+  ├─ Iniciado:  2026-11-22 01:24:28 UTC
+  └─ Finalizado: 2026-11-22 01:24:28 UTC
+  [stdout]:
+    │ en-cola
+
+l1_final=Canceled l2_final=Canceled l3_final=Succeeded

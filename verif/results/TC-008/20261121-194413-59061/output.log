@@ -1,0 +1,82 @@
+========================================
+TC-008  —  run 20261121-194413-59061
+========================================
+tc_id=TC-008
+run_id=20261121-194413-59061
+date=2026-11-21 19:44:13 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=53a982f3ef8d99d5cfaf5b20e13ecfce0e68ac1e
+socket=/tmp/speedyg-TC-008-20261121-194413-59061-2oC7He.sock
+data_dir=/tmp/speedyg-TC-008-20261121-194413-59061-data-G3fZ7a
+db=/tmp/speedyg-TC-008-20261121-194413-59061-data-G3fZ7a/speedyg.db
+json=/tmp/speedyg-TC-008-20261121-194413-59061-data-G3fZ7a/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 3 --queue-cap 10
+[INFO] Socket: /tmp/speedyg-TC-008-20261121-194413-59061-2oC7He.sock
+[INFO] PID del daemon: 59101
+[PASS] Daemon disponible (PID 59101).
+[PASS] Configuración efectiva del daemon: max_current=3 queue_cap=10
+
+════════════════════════════════════════
+[FASE 1] Lanzamiento de trabajos concurrentes J1, J2, J3
+════════════════════════════════════════
+J1: sleep 1001 -> Job #1 encolado correctamente
+J2: sleep 1002 -> Job #2 encolado correctamente
+J3: sleep 1003 -> Job #3 encolado correctamente
+[PASS] Los 3 trabajos fueron aceptados con IDs válidos y distintos (distintos: 3)
+[PASS] J1 (sleep 1001) está en estado Running (obtenido: 'Running')
+[PASS] J2 (sleep 1002) está en estado Running (obtenido: 'Running')
+[PASS] J3 (sleep 1003) está en estado Running (obtenido: 'Running')
+
+════════════════════════════════════════
+[FASE 2] Identificación de subprocesos en el SO
+════════════════════════════════════════
+[INFO] PIDs identificados: Daemon=59101 J1=59152 J2=59167 J3=59182
+[PASS] Subproceso de trabajo testigo J1 identificado en el SO (PID: '59152')
+[PASS] Subproceso de trabajo víctima J2 identificado en el SO (PID: '59167')
+[PASS] Subproceso de trabajo testigo J3 identificado en el SO (PID: '59182')
+
+════════════════════════════════════════
+[FASE 3] Inyección de kill -9 al subproceso víctima J2 (PID: 59167)
+════════════════════════════════════════
+[INFO] Señal SIGKILL enviada a subproceso de J2.
+
+════════════════════════════════════════
+[FASE 4] Verificación de aislamiento de fallo (RNF-09)
+════════════════════════════════════════
+[PASS] [RNF-09] Daemon continúa ejecutándose con su PID original (59101) tras el kill de J2
+[PASS] [RNF-09] Subproceso testigo J1 (PID 59152) sigue vivo en el SO tras el fallo de J2
+[PASS] [RNF-09] Subproceso testigo J3 (PID 59182) sigue vivo en el SO tras el fallo de J2
+[PASS] [RNF-09] Trabajo testigo J1 continúa en estado Running en el daemon (estado: 'Running')
+[PASS] [RNF-09] Trabajo testigo J3 continúa en estado Running en el daemon (estado: 'Running')
+[PASS] [RNF-09] Trabajo víctima J2 transicionó a estado terminal tras kill (estado: 'Failed')
+
+════════════════════════════════════════
+[FASE 5] Verificación de resiliencia ante solicitudes inválidas y salud (RNF-08)
+════════════════════════════════════════
+[INFO] Solicitud inválida enviada: 'comando_invalido_xyz_999' -> 'Job #4 encolado correctamente'
+[PASS] [RNF-08] Daemon no termina tras recibir solicitud inválida
+[INFO] Respuesta de health: 'OK: Daemon speedyg funcionando correctamente'
+[PASS] [RNF-08] Daemon responde satisfactoriamente a health tras anomalías (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+
+════════════════════════════════════════
+[FASE 6] Limpieza de trabajos activos y verificación de procesos
+════════════════════════════════════════
+[PASS] Sin procesos zombi bajo daemon PID 59101.
+[PASS] Sin procesos hijos residuales bajo daemon PID 59101.
+
+========================================
+RESULTADO: PASS
+PASS: 19  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 59101...

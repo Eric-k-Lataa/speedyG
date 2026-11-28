@@ -1,0 +1,30 @@
+[2m2026-11-22T01:24:30.256728Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-016-20261121-192430-24929-WzflO2.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m3 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-016-20261121-192430-24929-data-eoL9IY
+[2m2026-11-22T01:24:30.256873Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-016-20261121-192430-24929-WzflO2.sock
+[2m2026-11-22T01:24:30.256969Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:24:30.257015Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:24:31.336779Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 8
+[2m2026-11-22T01:24:31.374107Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 8
+[2m2026-11-22T01:24:31.406760Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: sleep 8
+[2m2026-11-22T01:24:32.640527Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'sleep': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:32.853678Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:33.888116Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:34.913695Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:35.951282Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:36.979864Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:38.008503Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:39.036033Z[0m [33m WARN[0m [2mspeedyG::scheduler[0m[2m:[0m Error al enviar 'echo': la cola está llena (capacidad: 3). Espera a que se libere un espacio
+[2m2026-11-22T01:24:39.344365Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-22T01:24:39.352744Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: sleep 8
+[2m2026-11-22T01:24:39.381289Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:24:39.389037Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: sleep 8
+[2m2026-11-22T01:24:39.413971Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-22T01:24:39.422401Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: sleep 8
+[2m2026-11-22T01:24:47.359883Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-11-22T01:24:47.367793Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo recuperado
+[2m2026-11-22T01:24:47.370630Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-11-22T01:24:47.395361Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-22T01:24:47.428978Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0
+[2m2026-11-22T01:24:49.516249Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:24:49.516406Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:24:49.621815Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-016-20261121-192430-24929-WzflO2.sock eliminado correctamente.
+[2m2026-11-22T01:24:49.622019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

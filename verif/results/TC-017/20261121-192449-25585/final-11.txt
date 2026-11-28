@@ -1,0 +1,4 @@
+Job #15: sleep 1011 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:14 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:25:14 UTC

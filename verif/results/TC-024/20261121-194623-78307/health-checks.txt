@@ -1,0 +1,3 @@
+post-rafaga1: OK: Daemon speedyg funcionando correctamente
+post-rafaga2: OK: Daemon speedyg funcionando correctamente
+post-cancel: OK: Daemon speedyg funcionando correctamente

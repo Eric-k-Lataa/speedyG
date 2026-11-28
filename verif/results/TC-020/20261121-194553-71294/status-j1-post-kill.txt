@@ -1,0 +1,4 @@
+Job #1: sleep 2001 [Failed(-1)] (exit code: -1)
+  ├─ Recibido:  2026-11-22 01:45:54 UTC
+  ├─ Iniciado:  2026-11-22 01:45:54 UTC
+  └─ Finalizado: 2026-11-22 01:45:57 UTC

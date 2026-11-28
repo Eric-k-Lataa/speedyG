@@ -1,0 +1,4 @@
+Job #30: sleep 1014 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:22 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:25:22 UTC

@@ -1,0 +1,4 @@
+daemon_alive=1
+pid_j1=59152 alive=1
+pid_j2=59167 alive=0
+pid_j3=59182 alive=1

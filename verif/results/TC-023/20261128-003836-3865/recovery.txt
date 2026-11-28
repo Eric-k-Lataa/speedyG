@@ -1,0 +1,5 @@
+== health tras los rechazos ==
+OK: Daemon speedyg funcionando correctamente
+== v=1.0|echo recuperado ==
+Job #9 encolado correctamente
+rechazos_en_daemon_log=0 (esperados: 8)

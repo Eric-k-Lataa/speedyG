@@ -1,0 +1,4 @@
+Job #1: sleep 1001 [Canceled]
+  ├─ Recibido:  2026-11-22 01:44:45 UTC
+  ├─ Iniciado:  2026-11-22 01:44:45 UTC
+  └─ Finalizado: 2026-11-22 01:44:45 UTC

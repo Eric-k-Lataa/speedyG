@@ -1,0 +1,2 @@
+--- Historial ---
+Job #1: echo recuperado [Succeeded] (exit code: 0)

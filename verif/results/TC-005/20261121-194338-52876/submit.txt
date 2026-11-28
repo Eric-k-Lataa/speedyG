@@ -1,0 +1,3 @@
+A: sleep 1001 -> Job #1 encolado correctamente
+B: sleep 1002 -> Job #2 encolado correctamente
+C: echo siguiente -> Job #3 encolado correctamente

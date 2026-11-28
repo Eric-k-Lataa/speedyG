@@ -1,0 +1,15 @@
+[2m2026-11-22T01:23:21.162730Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-003-20261121-192321-14209-LziiKR.sock [3mqueue_cap[0m[2m=[0m3 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-003-20261121-192321-14209-data-IbRQ1A
+[2m2026-11-22T01:23:21.162939Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-003-20261121-192321-14209-LziiKR.sock
+[2m2026-11-22T01:23:21.162992Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:23:21.163036Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:23:22.267498Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 3
+[2m2026-11-22T01:23:23.027814Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 cancelado
+[2m2026-11-22T01:23:25.276814Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-22T01:23:25.283708Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: sleep 2
+[2m2026-11-22T01:23:27.290128Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:23:27.297850Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: timeout 1 sleep 5
+[2m2026-11-22T01:23:28.308016Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 124
+[2m2026-11-22T01:23:31.401953Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:23:31.402114Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:23:31.513132Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-003-20261121-192321-14209-LziiKR.sock eliminado correctamente.
+[2m2026-11-22T01:23:31.513300Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

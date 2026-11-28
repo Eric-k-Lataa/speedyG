@@ -1,0 +1,4 @@
+Job #8: sleep 1008 [Canceled]
+  ├─ Recibido:  2026-11-22 01:45:01 UTC
+  ├─ Iniciado:  2026-11-22 01:45:01 UTC
+  └─ Finalizado: 2026-11-22 01:45:01 UTC

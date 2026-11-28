@@ -1,0 +1,10 @@
+--- Historial ---
+Job #1: v=1.0|health [Failed(127)] (exit code: 127)
+Job #2: v=2.0|health [Failed(127)] (exit code: 127)
+Job #3: v=0.9|health [Failed(127)] (exit code: 127)
+Job #4: v=1.1|health [Failed(127)] (exit code: 127)
+Job #5: 1.0|health [Failed(127)] (exit code: 127)
+Job #6: v=abc|health [Failed(127)] (exit code: 127)
+Job #7: v=1|health [Failed(127)] (exit code: 127)
+Job #9: v=1.0|echo recuperado [Succeeded] (exit code: 0)
+Job #8: v=2.0|sleep 5 [Succeeded] (exit code: 0)

@@ -1,0 +1,10 @@
+== health tras los rechazos ==
+status=active
+service_version=1.0.0-rc1
+uptime_seconds=1
+running=0
+queued=0
+queue_capacity=3
+== v=1.0|echo recuperado ==
+Job #1 encolado correctamente
+rechazos_en_daemon_log=8 (esperados: 8)

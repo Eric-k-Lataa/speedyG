@@ -1,0 +1,451 @@
+[2m2026-11-22T01:26:35.453602Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-024-20261121-192635-43414-i2Cki3.sock [3mqueue_cap[0m[2m=[0m120 [3mmax_current[0m[2m=[0m4 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-024-20261121-192635-43414-data-hUAYoj
+[2m2026-11-22T01:26:35.453880Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-024-20261121-192635-43414-i2Cki3.sock
+[2m2026-11-22T01:26:35.453943Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:26:35.453982Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:26:36.776246Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 ejecutando: echo carga-A-4
+[2m2026-11-22T01:26:36.782291Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 ejecutando: echo carga-A-2
+[2m2026-11-22T01:26:36.789716Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #4 terminó con código 0
+[2m2026-11-22T01:26:36.808704Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 ejecutando: echo carga-A-7
+[2m2026-11-22T01:26:36.811326Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo carga-A-3
+[2m2026-11-22T01:26:36.813654Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: echo carga-A-1
+[2m2026-11-22T01:26:36.816009Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #3 terminó con código 0
+[2m2026-11-22T01:26:36.819559Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 ejecutando: echo carga-A-9
+[2m2026-11-22T01:26:37.018591Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #6 terminó con código 0
+[2m2026-11-22T01:26:37.043998Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 ejecutando: echo carga-A-10
+[2m2026-11-22T01:26:37.076966Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:26:37.122510Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 ejecutando: echo carga-A-6
+[2m2026-11-22T01:26:37.162207Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #5 terminó con código 0
+[2m2026-11-22T01:26:37.176171Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 ejecutando: echo carga-A-8
+[2m2026-11-22T01:26:37.211428Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código 0
+[2m2026-11-22T01:26:37.271505Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 ejecutando: echo carga-A-21
+[2m2026-11-22T01:26:37.278270Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #9 terminó con código 0
+[2m2026-11-22T01:26:37.292271Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #8 terminó con código 0
+[2m2026-11-22T01:26:37.292261Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 ejecutando: echo carga-A-11
+[2m2026-11-22T01:26:37.305804Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 ejecutando: echo carga-A-59
+[2m2026-11-22T01:26:37.305824Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #10 terminó con código 0
+[2m2026-11-22T01:26:37.319303Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 ejecutando: echo carga-A-80
+[2m2026-11-22T01:26:37.319317Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #7 terminó con código 0
+[2m2026-11-22T01:26:37.337092Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 ejecutando: echo carga-A-39
+[2m2026-11-22T01:26:37.337572Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #11 terminó con código 0
+[2m2026-11-22T01:26:37.354806Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #13 terminó con código 0
+[2m2026-11-22T01:26:37.368782Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 ejecutando: echo carga-A-73
+[2m2026-11-22T01:26:37.368782Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 ejecutando: echo carga-A-14
+[2m2026-11-22T01:26:37.368982Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #14 terminó con código 0
+[2m2026-11-22T01:26:37.391753Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 ejecutando: echo carga-A-65
+[2m2026-11-22T01:26:37.391948Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #15 terminó con código 0
+[2m2026-11-22T01:26:37.406380Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 ejecutando: echo carga-A-43
+[2m2026-11-22T01:26:37.406451Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #16 terminó con código 0
+[2m2026-11-22T01:26:37.421407Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 ejecutando: echo carga-A-5
+[2m2026-11-22T01:26:37.421443Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #12 terminó con código 0
+[2m2026-11-22T01:26:37.435281Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #17 terminó con código 0
+[2m2026-11-22T01:26:37.449155Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #18 terminó con código 0
+[2m2026-11-22T01:26:37.468038Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 ejecutando: echo carga-A-47
+[2m2026-11-22T01:26:37.468066Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 ejecutando: echo carga-A-66
+[2m2026-11-22T01:26:37.468092Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 ejecutando: echo carga-A-44
+[2m2026-11-22T01:26:37.468243Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #19 terminó con código 0
+[2m2026-11-22T01:26:37.482892Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 ejecutando: echo carga-A-17
+[2m2026-11-22T01:26:37.483118Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #22 terminó con código 0
+[2m2026-11-22T01:26:37.497419Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #21 terminó con código 0
+[2m2026-11-22T01:26:37.511268Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #25 ejecutando: echo carga-A-74
+[2m2026-11-22T01:26:37.511281Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #20 terminó con código 0
+[2m2026-11-22T01:26:37.525390Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 ejecutando: echo carga-A-25
+[2m2026-11-22T01:26:37.525454Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 ejecutando: echo carga-A-20
+[2m2026-11-22T01:26:37.525576Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #25 terminó con código 0
+[2m2026-11-22T01:26:37.539940Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 ejecutando: echo carga-A-19
+[2m2026-11-22T01:26:37.539975Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #23 terminó con código 0
+[2m2026-11-22T01:26:37.554329Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #26 terminó con código 0
+[2m2026-11-22T01:26:37.568312Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 ejecutando: echo carga-A-69
+[2m2026-11-22T01:26:37.568333Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #24 terminó con código 0
+[2m2026-11-22T01:26:37.582556Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #30 ejecutando: echo carga-A-41
+[2m2026-11-22T01:26:37.582615Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 ejecutando: echo carga-A-15
+[2m2026-11-22T01:26:37.582718Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #29 terminó con código 0
+[2m2026-11-22T01:26:37.597439Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 ejecutando: echo carga-A-46
+[2m2026-11-22T01:26:37.597487Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #27 terminó con código 0
+[2m2026-11-22T01:26:37.611811Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 ejecutando: echo carga-A-12
+[2m2026-11-22T01:26:37.611824Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #28 terminó con código 0
+[2m2026-11-22T01:26:37.627152Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #30 terminó con código 0
+[2m2026-11-22T01:26:37.644279Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 ejecutando: echo carga-A-40
+[2m2026-11-22T01:26:37.644279Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 ejecutando: echo carga-A-26
+[2m2026-11-22T01:26:37.644458Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #32 terminó con código 0
+[2m2026-11-22T01:26:37.659389Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #35 ejecutando: echo carga-A-76
+[2m2026-11-22T01:26:37.659428Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #31 terminó con código 0
+[2m2026-11-22T01:26:37.674322Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #33 terminó con código 0
+[2m2026-11-22T01:26:37.688784Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #37 ejecutando: echo carga-A-37
+[2m2026-11-22T01:26:37.688809Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #34 terminó con código 0
+[2m2026-11-22T01:26:37.703397Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 ejecutando: echo carga-A-35
+[2m2026-11-22T01:26:37.703449Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 ejecutando: echo carga-A-13
+[2m2026-11-22T01:26:37.703623Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #37 terminó con código 0
+[2m2026-11-22T01:26:37.718638Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 ejecutando: echo carga-A-51
+[2m2026-11-22T01:26:37.718678Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #35 terminó con código 0
+[2m2026-11-22T01:26:37.733362Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #38 terminó con código 0
+[2m2026-11-22T01:26:37.747888Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 ejecutando: echo carga-A-86
+[2m2026-11-22T01:26:37.747906Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #36 terminó con código 0
+[2m2026-11-22T01:26:37.764106Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 ejecutando: echo carga-A-38
+[2m2026-11-22T01:26:37.764169Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #40 ejecutando: echo carga-A-16
+[2m2026-11-22T01:26:37.764323Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #41 terminó con código 0
+[2m2026-11-22T01:26:37.779704Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 ejecutando: echo carga-A-77
+[2m2026-11-22T01:26:37.779745Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #39 terminó con código 0
+[2m2026-11-22T01:26:37.795281Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #40 terminó con código 0
+[2m2026-11-22T01:26:37.810168Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #42 terminó con código 0
+[2m2026-11-22T01:26:37.824928Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 ejecutando: echo carga-A-42
+[2m2026-11-22T01:26:37.824970Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #45 ejecutando: echo carga-A-83
+[2m2026-11-22T01:26:37.824968Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 ejecutando: echo carga-A-18
+[2m2026-11-22T01:26:37.825131Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #43 terminó con código 0
+[2m2026-11-22T01:26:37.840648Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 ejecutando: echo carga-A-68
+[2m2026-11-22T01:26:37.840800Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #45 terminó con código 0
+[2m2026-11-22T01:26:37.856533Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #44 terminó con código 0
+[2m2026-11-22T01:26:37.871481Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 ejecutando: echo carga-A-34
+[2m2026-11-22T01:26:37.871509Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #46 terminó con código 0
+[2m2026-11-22T01:26:37.886659Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #50 ejecutando: echo carga-A-85
+[2m2026-11-22T01:26:37.886717Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 ejecutando: echo carga-A-22
+[2m2026-11-22T01:26:37.886890Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #49 terminó con código 0
+[2m2026-11-22T01:26:37.902030Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 ejecutando: echo carga-A-23
+[2m2026-11-22T01:26:37.902080Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #47 terminó con código 0
+[2m2026-11-22T01:26:37.917224Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #48 terminó con código 0
+[2m2026-11-22T01:26:37.932322Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 ejecutando: echo carga-A-49
+[2m2026-11-22T01:26:37.932337Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #50 terminó con código 0
+[2m2026-11-22T01:26:37.947532Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 ejecutando: echo carga-A-75
+[2m2026-11-22T01:26:37.947597Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 ejecutando: echo carga-A-27
+[2m2026-11-22T01:26:37.947702Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #53 terminó con código 0
+[2m2026-11-22T01:26:37.963018Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #55 ejecutando: echo carga-A-32
+[2m2026-11-22T01:26:37.963064Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #51 terminó con código 0
+[2m2026-11-22T01:26:37.978454Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 ejecutando: echo carga-A-28
+[2m2026-11-22T01:26:37.978472Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #54 terminó con código 0
+[2m2026-11-22T01:26:37.993822Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 ejecutando: echo carga-A-45
+[2m2026-11-22T01:26:37.993837Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #52 terminó con código 0
+[2m2026-11-22T01:26:38.009329Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 ejecutando: echo carga-A-64
+[2m2026-11-22T01:26:38.009583Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #57 terminó con código 0
+[2m2026-11-22T01:26:38.025036Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 ejecutando: echo carga-A-88
+[2m2026-11-22T01:26:38.025052Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #56 terminó con código 0
+[2m2026-11-22T01:26:38.040503Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #60 ejecutando: echo carga-A-30
+[2m2026-11-22T01:26:38.040520Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #55 terminó con código 0
+[2m2026-11-22T01:26:38.056173Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 ejecutando: echo carga-A-78
+[2m2026-11-22T01:26:38.056407Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #58 terminó con código 0
+[2m2026-11-22T01:26:38.071934Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 ejecutando: echo carga-A-24
+[2m2026-11-22T01:26:38.071952Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #59 terminó con código 0
+[2m2026-11-22T01:26:38.087599Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 ejecutando: echo carga-A-87
+[2m2026-11-22T01:26:38.087615Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #60 terminó con código 0
+[2m2026-11-22T01:26:38.103787Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 ejecutando: echo carga-A-31
+[2m2026-11-22T01:26:38.103977Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #63 terminó con código 0
+[2m2026-11-22T01:26:38.119715Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 ejecutando: echo carga-A-50
+[2m2026-11-22T01:26:38.119731Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #62 terminó con código 0
+[2m2026-11-22T01:26:38.135535Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #61 terminó con código 0
+[2m2026-11-22T01:26:38.151118Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #67 ejecutando: echo carga-A-29
+[2m2026-11-22T01:26:38.151131Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #66 ejecutando: echo carga-A-53
+[2m2026-11-22T01:26:38.151284Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #65 terminó con código 0
+[2m2026-11-22T01:26:38.167469Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #68 ejecutando: echo carga-A-62
+[2m2026-11-22T01:26:38.167526Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #64 terminó con código 0
+[2m2026-11-22T01:26:38.183739Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #69 ejecutando: echo carga-A-70
+[2m2026-11-22T01:26:38.183750Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #67 terminó con código 0
+[2m2026-11-22T01:26:38.199687Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #70 ejecutando: echo carga-A-95
+[2m2026-11-22T01:26:38.199709Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #66 terminó con código 0
+[2m2026-11-22T01:26:38.215775Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #71 ejecutando: echo carga-A-58
+[2m2026-11-22T01:26:38.215999Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #70 terminó con código 0
+[2m2026-11-22T01:26:38.232057Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #69 terminó con código 0
+[2m2026-11-22T01:26:38.247997Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #73 ejecutando: echo carga-A-98
+[2m2026-11-22T01:26:38.248016Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #68 terminó con código 0
+[2m2026-11-22T01:26:38.264092Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #74 ejecutando: echo carga-A-63
+[2m2026-11-22T01:26:38.264151Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #72 ejecutando: echo carga-A-55
+[2m2026-11-22T01:26:38.264284Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #73 terminó con código 0
+[2m2026-11-22T01:26:38.280682Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #75 ejecutando: echo carga-A-54
+[2m2026-11-22T01:26:38.280690Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #71 terminó con código 0
+[2m2026-11-22T01:26:38.297395Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #76 ejecutando: echo carga-A-33
+[2m2026-11-22T01:26:38.297406Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #72 terminó con código 0
+[2m2026-11-22T01:26:38.313547Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #74 terminó con código 0
+[2m2026-11-22T01:26:38.329650Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #78 ejecutando: echo carga-A-81
+[2m2026-11-22T01:26:38.329713Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #77 ejecutando: echo carga-A-60
+[2m2026-11-22T01:26:38.329886Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #76 terminó con código 0
+[2m2026-11-22T01:26:38.346274Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #79 ejecutando: echo carga-A-72
+[2m2026-11-22T01:26:38.346333Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #75 terminó con código 0
+[2m2026-11-22T01:26:38.363795Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #77 terminó con código 0
+[2m2026-11-22T01:26:38.380285Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #78 terminó con código 0
+[2m2026-11-22T01:26:38.396539Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #82 ejecutando: echo carga-A-71
+[2m2026-11-22T01:26:38.396602Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #81 ejecutando: echo carga-A-56
+[2m2026-11-22T01:26:38.396601Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #80 ejecutando: echo carga-A-84
+[2m2026-11-22T01:26:38.396786Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #79 terminó con código 0
+[2m2026-11-22T01:26:38.413840Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #83 ejecutando: echo carga-A-61
+[2m2026-11-22T01:26:38.414196Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #80 terminó con código 0
+[2m2026-11-22T01:26:38.432489Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #82 terminó con código 0
+[2m2026-11-22T01:26:38.448988Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #81 terminó con código 0
+[2m2026-11-22T01:26:38.465574Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #86 ejecutando: echo carga-A-57
+[2m2026-11-22T01:26:38.465621Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #85 ejecutando: echo carga-A-48
+[2m2026-11-22T01:26:38.465622Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #84 ejecutando: echo carga-A-67
+[2m2026-11-22T01:26:38.465803Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #83 terminó con código 0
+[2m2026-11-22T01:26:38.482942Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #87 ejecutando: echo carga-A-36
+[2m2026-11-22T01:26:38.483151Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #84 terminó con código 0
+[2m2026-11-22T01:26:38.500215Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #88 ejecutando: echo carga-A-79
+[2m2026-11-22T01:26:38.500233Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #86 terminó con código 0
+[2m2026-11-22T01:26:38.516996Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #85 terminó con código 0
+[2m2026-11-22T01:26:38.536663Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #90 ejecutando: echo carga-A-82
+[2m2026-11-22T01:26:38.536706Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #89 ejecutando: echo carga-A-92
+[2m2026-11-22T01:26:38.536983Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #88 terminó con código 0
+[2m2026-11-22T01:26:38.557826Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #91 ejecutando: echo carga-A-94
+[2m2026-11-22T01:26:38.557855Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #87 terminó con código 0
+[2m2026-11-22T01:26:38.578408Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #92 ejecutando: echo carga-A-96
+[2m2026-11-22T01:26:38.578423Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #89 terminó con código 0
+[2m2026-11-22T01:26:38.599133Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #93 ejecutando: echo carga-A-99
+[2m2026-11-22T01:26:38.599376Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #90 terminó con código 0
+[2m2026-11-22T01:26:38.620497Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #91 terminó con código 0
+[2m2026-11-22T01:26:38.641331Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #95 ejecutando: echo carga-A-52
+[2m2026-11-22T01:26:38.641349Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #92 terminó con código 0
+[2m2026-11-22T01:26:38.662091Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #96 ejecutando: echo carga-A-97
+[2m2026-11-22T01:26:38.662159Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #94 ejecutando: echo carga-A-100
+[2m2026-11-22T01:26:38.662315Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #95 terminó con código 0
+[2m2026-11-22T01:26:38.683019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #97 ejecutando: echo carga-A-93
+[2m2026-11-22T01:26:38.683074Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #93 terminó con código 0
+[2m2026-11-22T01:26:38.704045Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #96 terminó con código 0
+[2m2026-11-22T01:26:38.724682Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #99 ejecutando: echo carga-A-89
+[2m2026-11-22T01:26:38.724708Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #94 terminó con código 0
+[2m2026-11-22T01:26:38.745550Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #100 ejecutando: echo carga-A-90
+[2m2026-11-22T01:26:38.745632Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #98 ejecutando: echo carga-A-91
+[2m2026-11-22T01:26:38.745758Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #99 terminó con código 0
+[2m2026-11-22T01:26:38.756431Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #97 terminó con código 0
+[2m2026-11-22T01:26:38.767143Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #100 terminó con código 0
+[2m2026-11-22T01:26:38.777683Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #98 terminó con código 0
+[2m2026-11-22T01:26:41.914004Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #101 ejecutando: echo carga-B-2
+[2m2026-11-22T01:26:41.914096Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #102 ejecutando: echo carga-B-3
+[2m2026-11-22T01:26:41.914004Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #103 ejecutando: echo carga-B-1
+[2m2026-11-22T01:26:41.935847Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #104 ejecutando: echo carga-B-9
+[2m2026-11-22T01:26:41.943048Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #102 terminó con código 0
+[2m2026-11-22T01:26:41.964073Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #105 ejecutando: echo carga-B-6
+[2m2026-11-22T01:26:41.970888Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #101 terminó con código 0
+[2m2026-11-22T01:26:41.997684Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #106 ejecutando: echo carga-B-4
+[2m2026-11-22T01:26:42.018487Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #103 terminó con código 0
+[2m2026-11-22T01:26:42.053405Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #107 ejecutando: echo carga-B-5
+[2m2026-11-22T01:26:42.948292Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #107 terminó con código 0
+[2m2026-11-22T01:26:42.969422Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #106 terminó con código 0
+[2m2026-11-22T01:26:42.990122Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #109 ejecutando: echo carga-B-11
+[2m2026-11-22T01:26:42.990134Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #105 terminó con código 0
+[2m2026-11-22T01:26:43.011017Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #110 ejecutando: echo carga-B-66
+[2m2026-11-22T01:26:43.011023Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #104 terminó con código 0
+[2m2026-11-22T01:26:43.032391Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #108 ejecutando: echo carga-B-10
+[2m2026-11-22T01:26:43.032466Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #111 ejecutando: echo carga-B-12
+[2m2026-11-22T01:26:43.032595Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #110 terminó con código 0
+[2m2026-11-22T01:26:43.053694Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #112 ejecutando: echo carga-B-58
+[2m2026-11-22T01:26:43.053747Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #109 terminó con código 0
+[2m2026-11-22T01:26:43.076110Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #111 terminó con código 0
+[2m2026-11-22T01:26:43.101523Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #108 terminó con código 0
+[2m2026-11-22T01:26:43.125450Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #115 ejecutando: echo carga-B-7
+[2m2026-11-22T01:26:43.125482Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #114 ejecutando: echo carga-B-69
+[2m2026-11-22T01:26:43.125493Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #112 terminó con código 0
+[2m2026-11-22T01:26:43.125450Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #113 ejecutando: echo carga-B-61
+[2m2026-11-22T01:26:43.150012Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #116 ejecutando: echo carga-B-57
+[2m2026-11-22T01:26:43.150103Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #114 terminó con código 0
+[2m2026-11-22T01:26:43.174199Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #117 ejecutando: echo carga-B-68
+[2m2026-11-22T01:26:43.174209Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #113 terminó con código 0
+[2m2026-11-22T01:26:43.198396Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #115 terminó con código 0
+[2m2026-11-22T01:26:43.222469Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #119 ejecutando: echo carga-B-14
+[2m2026-11-22T01:26:43.222513Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #118 ejecutando: echo carga-B-32
+[2m2026-11-22T01:26:43.222671Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #117 terminó con código 0
+[2m2026-11-22T01:26:43.247182Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #116 terminó con código 0
+[2m2026-11-22T01:26:43.271651Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #121 ejecutando: echo carga-B-48
+[2m2026-11-22T01:26:43.271661Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #119 terminó con código 0
+[2m2026-11-22T01:26:43.297111Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #120 ejecutando: echo carga-B-33
+[2m2026-11-22T01:26:43.297150Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #118 terminó con código 0
+[2m2026-11-22T01:26:43.325839Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #123 ejecutando: echo carga-B-71
+[2m2026-11-22T01:26:43.325854Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #121 terminó con código 0
+[2m2026-11-22T01:26:43.354546Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #122 ejecutando: echo carga-B-78
+[2m2026-11-22T01:26:43.354572Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #124 ejecutando: echo carga-B-84
+[2m2026-11-22T01:26:43.354822Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #123 terminó con código 0
+[2m2026-11-22T01:26:43.388232Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #125 ejecutando: echo carga-B-72
+[2m2026-11-22T01:26:43.388271Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #120 terminó con código 0
+[2m2026-11-22T01:26:43.423242Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #122 terminó con código 0
+[2m2026-11-22T01:26:43.458103Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #127 ejecutando: echo carga-B-79
+[2m2026-11-22T01:26:43.458171Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #126 ejecutando: echo carga-B-18
+[2m2026-11-22T01:26:43.458205Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #124 terminó con código 0
+[2m2026-11-22T01:26:43.492830Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #128 ejecutando: echo carga-B-51
+[2m2026-11-22T01:26:43.492872Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #125 terminó con código 0
+[2m2026-11-22T01:26:43.520322Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #129 ejecutando: echo carga-B-75
+[2m2026-11-22T01:26:43.520335Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #126 terminó con código 0
+[2m2026-11-22T01:26:43.548455Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #127 terminó con código 0
+[2m2026-11-22T01:26:43.575777Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #131 ejecutando: echo carga-B-40
+[2m2026-11-22T01:26:43.575819Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #130 ejecutando: echo carga-B-73
+[2m2026-11-22T01:26:43.576009Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #129 terminó con código 0
+[2m2026-11-22T01:26:43.603664Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #132 ejecutando: echo carga-B-38
+[2m2026-11-22T01:26:43.603729Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #128 terminó con código 0
+[2m2026-11-22T01:26:43.631406Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #133 ejecutando: echo carga-B-55
+[2m2026-11-22T01:26:43.631418Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #131 terminó con código 0
+[2m2026-11-22T01:26:43.659338Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #130 terminó con código 0
+[2m2026-11-22T01:26:43.686823Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #135 ejecutando: echo carga-B-31
+[2m2026-11-22T01:26:43.686869Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #134 ejecutando: echo carga-B-8
+[2m2026-11-22T01:26:43.687041Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #133 terminó con código 0
+[2m2026-11-22T01:26:43.716418Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #136 ejecutando: echo carga-B-46
+[2m2026-11-22T01:26:43.716496Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #132 terminó con código 0
+[2m2026-11-22T01:26:43.749758Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #137 ejecutando: echo carga-B-35
+[2m2026-11-22T01:26:43.749783Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #135 terminó con código 0
+[2m2026-11-22T01:26:43.782897Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #134 terminó con código 0
+[2m2026-11-22T01:26:43.816499Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #138 ejecutando: echo carga-B-39
+[2m2026-11-22T01:26:43.816499Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #139 ejecutando: echo carga-B-81
+[2m2026-11-22T01:26:43.816689Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #137 terminó con código 0
+[2m2026-11-22T01:26:43.852960Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #140 ejecutando: echo carga-B-77
+[2m2026-11-22T01:26:43.853019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #136 terminó con código 0
+[2m2026-11-22T01:26:43.894830Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #138 terminó con código 0
+[2m2026-11-22T01:26:43.937101Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #139 terminó con código 0
+[2m2026-11-22T01:26:43.978919Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #143 ejecutando: echo carga-B-53
+[2m2026-11-22T01:26:43.978979Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #141 ejecutando: echo carga-B-44
+[2m2026-11-22T01:26:43.978992Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #142 ejecutando: echo carga-B-22
+[2m2026-11-22T01:26:43.979196Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #140 terminó con código 0
+[2m2026-11-22T01:26:44.021990Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #144 ejecutando: echo carga-B-42
+[2m2026-11-22T01:26:44.022140Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #141 terminó con código 0
+[2m2026-11-22T01:26:44.064968Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #143 terminó con código 0
+[2m2026-11-22T01:26:44.107545Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #142 terminó con código 0
+[2m2026-11-22T01:26:44.149323Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #145 ejecutando: echo carga-B-70
+[2m2026-11-22T01:26:44.149353Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #146 ejecutando: echo carga-B-34
+[2m2026-11-22T01:26:44.149343Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #147 ejecutando: echo carga-B-83
+[2m2026-11-22T01:26:44.149583Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #144 terminó con código 0
+[2m2026-11-22T01:26:44.192513Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #148 ejecutando: echo carga-B-50
+[2m2026-11-22T01:26:44.193336Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #145 terminó con código 0
+[2m2026-11-22T01:26:44.237118Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #149 ejecutando: echo carga-B-80
+[2m2026-11-22T01:26:44.237147Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #146 terminó con código 0
+[2m2026-11-22T01:26:44.279660Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #148 terminó con código 0
+[2m2026-11-22T01:26:44.322746Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #147 terminó con código 0
+[2m2026-11-22T01:26:44.365981Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #152 ejecutando: echo carga-B-63
+[2m2026-11-22T01:26:44.366186Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #150 ejecutando: echo carga-B-13
+[2m2026-11-22T01:26:44.366227Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #149 terminó con código 0
+[2m2026-11-22T01:26:44.365982Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #151 ejecutando: echo carga-B-96
+[2m2026-11-22T01:26:44.411275Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #153 ejecutando: echo carga-B-45
+[2m2026-11-22T01:26:44.411540Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #152 terminó con código 0
+[2m2026-11-22T01:26:44.449725Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #150 terminó con código 0
+[2m2026-11-22T01:26:44.449714Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #154 ejecutando: echo carga-B-54
+[2m2026-11-22T01:26:44.475409Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #153 terminó con código 0
+[2m2026-11-22T01:26:44.501004Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #156 ejecutando: echo carga-B-92
+[2m2026-11-22T01:26:44.501021Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #151 terminó con código 0
+[2m2026-11-22T01:26:44.526749Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #155 ejecutando: echo carga-B-43
+[2m2026-11-22T01:26:44.526864Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #156 terminó con código 0
+[2m2026-11-22T01:26:44.526749Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #157 ejecutando: echo carga-B-60
+[2m2026-11-22T01:26:44.553019Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #154 terminó con código 0
+[2m2026-11-22T01:26:44.578962Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #155 terminó con código 0
+[2m2026-11-22T01:26:44.604741Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #160 ejecutando: echo carga-B-62
+[2m2026-11-22T01:26:44.604766Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #158 ejecutando: echo carga-B-19
+[2m2026-11-22T01:26:44.604765Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #159 ejecutando: echo carga-B-89
+[2m2026-11-22T01:26:44.604795Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #157 terminó con código 0
+[2m2026-11-22T01:26:44.630993Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #161 ejecutando: echo carga-B-76
+[2m2026-11-22T01:26:44.631176Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #159 terminó con código 0
+[2m2026-11-22T01:26:44.657091Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #160 terminó con código 0
+[2m2026-11-22T01:26:44.682841Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #163 ejecutando: echo carga-B-99
+[2m2026-11-22T01:26:44.682864Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #158 terminó con código 0
+[2m2026-11-22T01:26:44.708800Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #164 ejecutando: echo carga-B-100
+[2m2026-11-22T01:26:44.708837Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #162 ejecutando: echo carga-B-87
+[2m2026-11-22T01:26:44.709003Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #163 terminó con código 0
+[2m2026-11-22T01:26:44.734973Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #165 ejecutando: echo carga-B-85
+[2m2026-11-22T01:26:44.735021Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #161 terminó con código 0
+[2m2026-11-22T01:26:44.760945Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #164 terminó con código 0
+[2m2026-11-22T01:26:44.786878Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #162 terminó con código 0
+[2m2026-11-22T01:26:44.817231Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #168 ejecutando: echo carga-B-91
+[2m2026-11-22T01:26:44.817291Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #166 ejecutando: echo carga-B-15
+[2m2026-11-22T01:26:44.817293Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #167 ejecutando: echo carga-B-56
+[2m2026-11-22T01:26:44.817457Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #165 terminó con código 0
+[2m2026-11-22T01:26:44.851211Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #169 ejecutando: echo carga-B-82
+[2m2026-11-22T01:26:44.851416Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #166 terminó con código 0
+[2m2026-11-22T01:26:44.889262Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #170 ejecutando: echo carga-B-27
+[2m2026-11-22T01:26:44.889281Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #168 terminó con código 0
+[2m2026-11-22T01:26:44.926620Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #171 ejecutando: echo carga-B-41
+[2m2026-11-22T01:26:44.926641Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #167 terminó con código 0
+[2m2026-11-22T01:26:44.964494Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #172 ejecutando: echo carga-B-93
+[2m2026-11-22T01:26:44.964774Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #171 terminó con código 0
+[2m2026-11-22T01:26:45.002688Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #173 ejecutando: echo carga-B-64
+[2m2026-11-22T01:26:45.002708Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #170 terminó con código 0
+[2m2026-11-22T01:26:45.043626Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #169 terminó con código 0
+[2m2026-11-22T01:26:45.088015Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #175 ejecutando: echo carga-B-49
+[2m2026-11-22T01:26:45.088066Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #174 ejecutando: echo carga-B-17
+[2m2026-11-22T01:26:45.088323Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #173 terminó con código 0
+[2m2026-11-22T01:26:45.132436Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #176 ejecutando: echo carga-B-90
+[2m2026-11-22T01:26:45.132500Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #172 terminó con código 0
+[2m2026-11-22T01:26:45.175855Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #177 ejecutando: echo carga-B-74
+[2m2026-11-22T01:26:45.175883Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #174 terminó con código 0
+[2m2026-11-22T01:26:45.216829Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #175 terminó con código 0
+[2m2026-11-22T01:26:45.257472Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #179 ejecutando: echo carga-B-97
+[2m2026-11-22T01:26:45.257557Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #178 ejecutando: echo carga-B-16
+[2m2026-11-22T01:26:45.257806Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #177 terminó con código 0
+[2m2026-11-22T01:26:45.299563Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #180 ejecutando: echo carga-B-52
+[2m2026-11-22T01:26:45.299641Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #176 terminó con código 0
+[2m2026-11-22T01:26:45.340984Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #178 terminó con código 0
+[2m2026-11-22T01:26:45.382653Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #182 ejecutando: echo carga-B-28
+[2m2026-11-22T01:26:45.383179Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #181 ejecutando: echo carga-B-23
+[2m2026-11-22T01:26:45.383529Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #179 terminó con código 0
+[2m2026-11-22T01:26:45.426901Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #183 ejecutando: echo carga-B-86
+[2m2026-11-22T01:26:45.426940Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #182 terminó con código 0
+[2m2026-11-22T01:26:45.472441Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #181 terminó con código 0
+[2m2026-11-22T01:26:45.513642Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #184 ejecutando: echo carga-B-94
+[2m2026-11-22T01:26:45.513714Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #180 terminó con código 0
+[2m2026-11-22T01:26:45.513642Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #185 ejecutando: echo carga-B-20
+[2m2026-11-22T01:26:45.555723Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #183 terminó con código 0
+[2m2026-11-22T01:26:45.597874Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #184 terminó con código 0
+[2m2026-11-22T01:26:45.638990Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #188 ejecutando: echo carga-B-98
+[2m2026-11-22T01:26:45.639010Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #186 ejecutando: echo carga-B-30
+[2m2026-11-22T01:26:45.639028Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #187 ejecutando: echo carga-B-36
+[2m2026-11-22T01:26:45.639077Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #185 terminó con código 0
+[2m2026-11-22T01:26:45.680747Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #189 ejecutando: echo carga-B-26
+[2m2026-11-22T01:26:45.681062Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #186 terminó con código 0
+[2m2026-11-22T01:26:45.722436Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #188 terminó con código 0
+[2m2026-11-22T01:26:45.763709Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #191 ejecutando: echo carga-B-25
+[2m2026-11-22T01:26:45.763738Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #187 terminó con código 0
+[2m2026-11-22T01:26:45.805213Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #192 ejecutando: echo carga-B-95
+[2m2026-11-22T01:26:45.805289Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #190 ejecutando: echo carga-B-37
+[2m2026-11-22T01:26:45.805467Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #191 terminó con código 0
+[2m2026-11-22T01:26:45.847227Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #193 ejecutando: echo carga-B-24
+[2m2026-11-22T01:26:45.847285Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #189 terminó con código 0
+[2m2026-11-22T01:26:45.888996Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #192 terminó con código 0
+[2m2026-11-22T01:26:45.930172Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #195 ejecutando: echo carga-B-47
+[2m2026-11-22T01:26:45.930200Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #190 terminó con código 0
+[2m2026-11-22T01:26:45.972352Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #196 ejecutando: echo carga-B-67
+[2m2026-11-22T01:26:45.972352Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #194 ejecutando: echo carga-B-21
+[2m2026-11-22T01:26:45.972556Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #195 terminó con código 0
+[2m2026-11-22T01:26:46.014515Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #197 ejecutando: echo carga-B-29
+[2m2026-11-22T01:26:46.014584Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #193 terminó con código 0
+[2m2026-11-22T01:26:46.056371Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #196 terminó con código 0
+[2m2026-11-22T01:26:46.098726Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #194 terminó con código 0
+[2m2026-11-22T01:26:46.140497Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #200 ejecutando: echo carga-B-65
+[2m2026-11-22T01:26:46.140531Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #199 ejecutando: echo carga-B-59
+[2m2026-11-22T01:26:46.140580Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #198 ejecutando: echo carga-B-88
+[2m2026-11-22T01:26:46.140729Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #197 terminó con código 0
+[2m2026-11-22T01:26:46.162615Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #200 terminó con código 0
+[2m2026-11-22T01:26:46.183602Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #198 terminó con código 0
+[2m2026-11-22T01:26:46.204559Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #199 terminó con código 0
+[2m2026-11-22T01:26:48.813462Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #202 ejecutando: sleep 3001
+[2m2026-11-22T01:26:48.813476Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #201 ejecutando: sleep 3001
+[2m2026-11-22T01:26:48.973426Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #203 ejecutando: sleep 3001
+[2m2026-11-22T01:26:49.070690Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #204 ejecutando: sleep 3001
+[2m2026-11-22T01:26:51.701063Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #201 cancelado
+[2m2026-11-22T01:26:51.737400Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #202 cancelado
+[2m2026-11-22T01:26:51.770036Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #203 cancelado
+[2m2026-11-22T01:26:51.803004Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #219 cancelado
+[2m2026-11-22T01:26:51.900736Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #207 ejecutando: sleep 3001
+[2m2026-11-22T01:26:51.926224Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #213 cancelado
+[2m2026-11-22T01:26:51.926438Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #205 ejecutando: sleep 3001
+[2m2026-11-22T01:26:51.926536Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #206 ejecutando: sleep 3001
+[2m2026-11-22T01:26:51.952497Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #217 cancelado
+[2m2026-11-22T01:26:51.952586Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #202 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:51.975335Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #205 cancelado
+[2m2026-11-22T01:26:52.020684Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #209 cancelado
+[2m2026-11-22T01:26:52.043233Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #220 cancelado
+[2m2026-11-22T01:26:52.044549Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #208 ejecutando: sleep 3001
+[2m2026-11-22T01:26:52.067193Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #208 cancelado
+[2m2026-11-22T01:26:52.067266Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #201 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.090098Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Job #208 cancelado durante spawn; terminando proceso
+[2m2026-11-22T01:26:52.090112Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #210 ejecutando: sleep 3001
+[2m2026-11-22T01:26:52.115084Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #204 cancelado
+[2m2026-11-22T01:26:52.137727Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #215 cancelado
+[2m2026-11-22T01:26:52.160266Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #211 cancelado
+[2m2026-11-22T01:26:52.182904Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #212 ejecutando: sleep 3001
+[2m2026-11-22T01:26:52.207377Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #212 cancelado
+[2m2026-11-22T01:26:52.230080Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #207 cancelado
+[2m2026-11-22T01:26:52.254840Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #216 cancelado
+[2m2026-11-22T01:26:52.254880Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Job #212 cancelado durante spawn; terminando proceso
+[2m2026-11-22T01:26:52.366168Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #218 cancelado
+[2m2026-11-22T01:26:52.366324Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Job #218 ya no está en ejecución (¿cancelado?); no se ejecuta
+[2m2026-11-22T01:26:52.366448Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #214 ejecutando: sleep 3001
+[2m2026-11-22T01:26:52.406073Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #214 cancelado
+[2m2026-11-22T01:26:52.440808Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #206 cancelado
+[2m2026-11-22T01:26:52.440837Z[0m [33m WARN[0m [2mspeedyG[0m[2m:[0m Job #214 cancelado durante spawn; terminando proceso
+[2m2026-11-22T01:26:52.474418Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #210 cancelado
+[2m2026-11-22T01:26:52.474514Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #203 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.474682Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #204 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.476471Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #206 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.476811Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #207 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.477387Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #205 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:52.478057Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #210 ya estaba cancelado; se ignora salida de wait_child
+[2m2026-11-22T01:26:55.074567Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:26:55.074692Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:26:55.226090Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-024-20261121-192635-43414-i2Cki3.sock eliminado correctamente.
+[2m2026-11-22T01:26:55.226294Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

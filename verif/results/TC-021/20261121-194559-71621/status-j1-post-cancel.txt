@@ -1,0 +1,4 @@
+Job #1: sh -c trap '' TERM; sleep 2002 & wait [Canceled]
+  ├─ Recibido:  2026-11-22 01:46:01 UTC
+  ├─ Iniciado:  2026-11-22 01:46:01 UTC
+  └─ Finalizado: 2026-11-22 01:46:03 UTC

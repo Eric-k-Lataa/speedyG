@@ -1,0 +1,4 @@
+Job #45: sleep 1017 [Canceled]
+  ├─ Recibido:  2026-11-22 01:25:31 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:25:31 UTC

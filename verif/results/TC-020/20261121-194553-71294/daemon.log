@@ -1,0 +1,12 @@
+[2m2026-11-22T01:45:53.716021Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Configuración cargada [3msocket_path[0m[2m=[0m/tmp/speedyg-TC-020-20261121-194553-71294-uT8WGl.sock [3mqueue_cap[0m[2m=[0m5 [3mmax_current[0m[2m=[0m1 [3mgrace_ms[0m[2m=[0m5000 [3mdata_dir[0m[2m=[0m/tmp/speedyg-TC-020-20261121-194553-71294-data-OKmmYp
+[2m2026-11-22T01:45:53.716234Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG escuchando en /tmp/speedyg-TC-020-20261121-194553-71294-uT8WGl.sock
+[2m2026-11-22T01:45:53.716288Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m SQLite sin datos previos; se intentará el respaldo JSON
+[2m2026-11-22T01:45:53.716323Z[0m [32m INFO[0m [2mspeedyG::persistence[0m[2m:[0m No hay datos previos; se inicia un Scheduler vacío
+[2m2026-11-22T01:45:54.814102Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 ejecutando: sleep 2001
+[2m2026-11-22T01:45:57.143782Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #1 terminó con código -1
+[2m2026-11-22T01:45:57.148656Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 ejecutando: echo siguiente-tras-muerte
+[2m2026-11-22T01:45:57.150675Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Job #2 terminó con código 0
+[2m2026-11-22T01:45:59.661750Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Recibida señal SIGTERM. Iniciando apagado limpio...
+[2m2026-11-22T01:45:59.661829Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Ejecutando rutina de limpieza de cierre...
+[2m2026-11-22T01:45:59.768012Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Archivo de socket /tmp/speedyg-TC-020-20261121-194553-71294-uT8WGl.sock eliminado correctamente.
+[2m2026-11-22T01:45:59.768164Z[0m [32m INFO[0m [2mspeedyG[0m[2m:[0m Demonio speedyG detenido de forma limpia.

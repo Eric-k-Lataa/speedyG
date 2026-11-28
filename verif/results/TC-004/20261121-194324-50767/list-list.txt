@@ -1,0 +1,8 @@
+--- Pendientes / En ejecución ---
+Job #3: sleep 8 [Running]
+Job #4: echo en-cola-1 [Queued]
+Job #5: echo en-cola-2 [Queued]
+--- Historial ---
+Job #1: echo hola [Succeeded] (exit code: 0)
+Job #2: false [Failed(1)] (exit code: 1)
+Job #6: echo cancelar [Canceled]

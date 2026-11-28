@@ -1,0 +1,7 @@
+Job #203: echo terminado [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:46:17 UTC
+  ├─ Iniciado:  2026-11-22 01:46:17 UTC
+  └─ Finalizado: 2026-11-22 01:46:17 UTC
+  [stdout]:
+    │ terminado
+

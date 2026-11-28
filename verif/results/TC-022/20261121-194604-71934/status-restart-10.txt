@@ -1,0 +1,203 @@
+--- Pendientes / En ejecución ---
+Job #195: echo carga-10-16 [Running]
+Job #196: echo carga-10-10 [Running]
+Job #197: echo carga-10-14 [Running]
+Job #198: echo carga-10-17 [Running]
+Job #199: echo carga-10-11 [Queued]
+Job #200: echo carga-10-15 [Queued]
+Job #201: echo carga-10-19 [Queued]
+--- Historial ---
+Job #1: echo carga-1-1 [Succeeded] (exit code: 0)
+Job #2: echo carga-1-2 [Succeeded] (exit code: 0)
+Job #4: echo carga-1-4 [Succeeded] (exit code: 0)
+Job #3: echo carga-1-3 [Succeeded] (exit code: 0)
+Job #7: echo carga-1-8 [Succeeded] (exit code: 0)
+Job #5: echo carga-1-5 [Succeeded] (exit code: 0)
+Job #8: echo carga-1-7 [Succeeded] (exit code: 0)
+Job #9: echo carga-1-9 [Succeeded] (exit code: 0)
+Job #6: echo carga-1-6 [Interrupted]
+Job #10: echo carga-1-11 [Interrupted]
+Job #11: echo carga-1-12 [Interrupted]
+Job #12: echo carga-1-13 [Interrupted]
+Job #15: echo carga-1-15 [Succeeded] (exit code: 0)
+Job #14: echo carga-1-14 [Succeeded] (exit code: 0)
+Job #13: echo carga-1-10 [Succeeded] (exit code: 0)
+Job #16: echo carga-1-19 [Succeeded] (exit code: 0)
+Job #18: echo carga-1-17 [Succeeded] (exit code: 0)
+Job #19: echo carga-1-20 [Succeeded] (exit code: 0)
+Job #17: echo carga-1-16 [Succeeded] (exit code: 0)
+Job #20: echo carga-1-18 [Succeeded] (exit code: 0)
+Job #21: echo nuevo [Succeeded] (exit code: 0)
+Job #22: echo carga-2-1 [Succeeded] (exit code: 0)
+Job #23: echo carga-2-2 [Succeeded] (exit code: 0)
+Job #27: echo carga-2-6 [Succeeded] (exit code: 0)
+Job #25: echo carga-2-5 [Succeeded] (exit code: 0)
+Job #26: echo carga-2-4 [Succeeded] (exit code: 0)
+Job #28: echo carga-2-10 [Succeeded] (exit code: 0)
+Job #24: echo carga-2-3 [Succeeded] (exit code: 0)
+Job #30: echo carga-2-11 [Succeeded] (exit code: 0)
+Job #29: echo carga-2-7 [Succeeded] (exit code: 0)
+Job #32: echo carga-2-8 [Succeeded] (exit code: 0)
+Job #33: echo carga-2-9 [Succeeded] (exit code: 0)
+Job #31: echo carga-2-12 [Interrupted]
+Job #34: echo carga-2-13 [Interrupted]
+Job #35: echo carga-2-14 [Interrupted]
+Job #36: echo carga-2-15 [Succeeded] (exit code: 0)
+Job #39: echo carga-2-17 [Succeeded] (exit code: 0)
+Job #37: echo carga-2-16 [Succeeded] (exit code: 0)
+Job #38: echo carga-2-19 [Succeeded] (exit code: 0)
+Job #40: echo carga-2-18 [Succeeded] (exit code: 0)
+Job #41: echo carga-2-20 [Succeeded] (exit code: 0)
+Job #42: echo nuevo [Succeeded] (exit code: 0)
+Job #43: echo carga-3-1 [Succeeded] (exit code: 0)
+Job #44: echo carga-3-3 [Succeeded] (exit code: 0)
+Job #47: echo carga-3-5 [Succeeded] (exit code: 0)
+Job #46: echo carga-3-2 [Succeeded] (exit code: 0)
+Job #45: echo carga-3-4 [Succeeded] (exit code: 0)
+Job #49: echo carga-3-9 [Succeeded] (exit code: 0)
+Job #48: echo carga-3-7 [Succeeded] (exit code: 0)
+Job #50: echo carga-3-11 [Succeeded] (exit code: 0)
+Job #52: echo carga-3-6 [Succeeded] (exit code: 0)
+Job #51: echo carga-3-10 [Succeeded] (exit code: 0)
+Job #53: echo carga-3-8 [Interrupted]
+Job #54: echo carga-3-15 [Interrupted]
+Job #55: echo carga-3-12 [Interrupted]
+Job #56: echo carga-3-16 [Interrupted]
+Job #57: echo carga-3-17 [Succeeded] (exit code: 0)
+Job #58: echo carga-3-13 [Succeeded] (exit code: 0)
+Job #59: echo carga-3-19 [Succeeded] (exit code: 0)
+Job #60: echo carga-3-18 [Succeeded] (exit code: 0)
+Job #61: echo carga-3-20 [Succeeded] (exit code: 0)
+Job #62: echo carga-3-14 [Succeeded] (exit code: 0)
+Job #63: echo nuevo [Succeeded] (exit code: 0)
+Job #66: echo carga-4-4 [Succeeded] (exit code: 0)
+Job #68: echo carga-4-5 [Succeeded] (exit code: 0)
+Job #64: echo carga-4-1 [Succeeded] (exit code: 0)
+Job #65: echo carga-4-2 [Succeeded] (exit code: 0)
+Job #67: echo carga-4-3 [Succeeded] (exit code: 0)
+Job #70: echo carga-4-13 [Succeeded] (exit code: 0)
+Job #69: echo carga-4-10 [Succeeded] (exit code: 0)
+Job #71: echo carga-4-16 [Interrupted]
+Job #72: echo carga-4-14 [Interrupted]
+Job #73: echo carga-4-11 [Interrupted]
+Job #74: echo carga-4-17 [Succeeded] (exit code: 0)
+Job #75: echo carga-4-15 [Succeeded] (exit code: 0)
+Job #77: echo carga-4-12 [Succeeded] (exit code: 0)
+Job #76: echo carga-4-6 [Succeeded] (exit code: 0)
+Job #81: echo carga-4-19 [Succeeded] (exit code: 0)
+Job #80: echo carga-4-7 [Succeeded] (exit code: 0)
+Job #78: echo carga-4-18 [Succeeded] (exit code: 0)
+Job #82: echo carga-4-8 [Succeeded] (exit code: 0)
+Job #79: echo carga-4-20 [Succeeded] (exit code: 0)
+Job #83: echo carga-4-9 [Succeeded] (exit code: 0)
+Job #84: echo nuevo [Succeeded] (exit code: 0)
+Job #88: echo carga-5-5 [Succeeded] (exit code: 0)
+Job #87: echo carga-5-3 [Succeeded] (exit code: 0)
+Job #86: echo carga-5-2 [Succeeded] (exit code: 0)
+Job #85: echo carga-5-1 [Succeeded] (exit code: 0)
+Job #91: echo carga-5-12 [Succeeded] (exit code: 0)
+Job #90: echo carga-5-11 [Succeeded] (exit code: 0)
+Job #89: echo carga-5-6 [Interrupted]
+Job #92: echo carga-5-8 [Interrupted]
+Job #93: echo carga-5-14 [Interrupted]
+Job #97: echo carga-5-16 [Succeeded] (exit code: 0)
+Job #94: echo carga-5-15 [Succeeded] (exit code: 0)
+Job #95: echo carga-5-9 [Succeeded] (exit code: 0)
+Job #99: echo carga-5-18 [Succeeded] (exit code: 0)
+Job #96: echo carga-5-13 [Succeeded] (exit code: 0)
+Job #98: echo carga-5-10 [Succeeded] (exit code: 0)
+Job #100: echo carga-5-4 [Succeeded] (exit code: 0)
+Job #101: echo carga-5-17 [Succeeded] (exit code: 0)
+Job #103: echo carga-5-20 [Succeeded] (exit code: 0)
+Job #102: echo carga-5-19 [Succeeded] (exit code: 0)
+Job #104: echo carga-5-7 [Succeeded] (exit code: 0)
+Job #105: echo nuevo [Succeeded] (exit code: 0)
+Job #106: echo carga-6-1 [Succeeded] (exit code: 0)
+Job #108: echo carga-6-5 [Succeeded] (exit code: 0)
+Job #109: echo carga-6-3 [Succeeded] (exit code: 0)
+Job #107: echo carga-6-2 [Succeeded] (exit code: 0)
+Job #110: echo carga-6-4 [Succeeded] (exit code: 0)
+Job #111: echo carga-6-9 [Succeeded] (exit code: 0)
+Job #112: echo carga-6-12 [Interrupted]
+Job #113: echo carga-6-10 [Interrupted]
+Job #114: echo carga-6-6 [Interrupted]
+Job #115: echo carga-6-7 [Interrupted]
+Job #116: echo carga-6-11 [Succeeded] (exit code: 0)
+Job #117: echo carga-6-13 [Succeeded] (exit code: 0)
+Job #118: echo carga-6-8 [Succeeded] (exit code: 0)
+Job #120: echo carga-6-16 [Succeeded] (exit code: 0)
+Job #119: echo carga-6-14 [Succeeded] (exit code: 0)
+Job #122: echo carga-6-19 [Succeeded] (exit code: 0)
+Job #121: echo carga-6-15 [Succeeded] (exit code: 0)
+Job #123: echo carga-6-20 [Succeeded] (exit code: 0)
+Job #124: echo carga-6-17 [Succeeded] (exit code: 0)
+Job #125: echo carga-6-18 [Succeeded] (exit code: 0)
+Job #126: echo nuevo [Succeeded] (exit code: 0)
+Job #127: echo carga-7-1 [Succeeded] (exit code: 0)
+Job #131: echo carga-7-8 [Succeeded] (exit code: 0)
+Job #130: echo carga-7-4 [Succeeded] (exit code: 0)
+Job #129: echo carga-7-7 [Succeeded] (exit code: 0)
+Job #133: echo carga-7-6 [Succeeded] (exit code: 0)
+Job #128: echo carga-7-2 [Interrupted]
+Job #132: echo carga-7-9 [Interrupted]
+Job #134: echo carga-7-5 [Interrupted]
+Job #135: echo carga-7-10 [Interrupted]
+Job #136: echo carga-7-3 [Succeeded] (exit code: 0)
+Job #138: echo carga-7-11 [Succeeded] (exit code: 0)
+Job #137: echo carga-7-13 [Succeeded] (exit code: 0)
+Job #139: echo carga-7-16 [Succeeded] (exit code: 0)
+Job #140: echo carga-7-12 [Succeeded] (exit code: 0)
+Job #141: echo carga-7-17 [Succeeded] (exit code: 0)
+Job #143: echo carga-7-18 [Succeeded] (exit code: 0)
+Job #142: echo carga-7-14 [Succeeded] (exit code: 0)
+Job #144: echo carga-7-19 [Succeeded] (exit code: 0)
+Job #145: echo carga-7-15 [Succeeded] (exit code: 0)
+Job #146: echo nuevo [Succeeded] (exit code: 0)
+Job #148: echo carga-8-2 [Succeeded] (exit code: 0)
+Job #147: echo carga-8-1 [Succeeded] (exit code: 0)
+Job #152: echo carga-8-13 [Succeeded] (exit code: 0)
+Job #149: echo carga-8-3 [Succeeded] (exit code: 0)
+Job #150: echo carga-8-4 [Succeeded] (exit code: 0)
+Job #151: echo carga-8-10 [Succeeded] (exit code: 0)
+Job #153: echo carga-8-16 [Interrupted]
+Job #154: echo carga-8-5 [Interrupted]
+Job #155: echo carga-8-6 [Interrupted]
+Job #156: echo carga-8-11 [Interrupted]
+Job #157: echo carga-8-17 [Succeeded] (exit code: 0)
+Job #159: echo carga-8-12 [Succeeded] (exit code: 0)
+Job #158: echo carga-8-7 [Succeeded] (exit code: 0)
+Job #161: echo carga-8-14 [Succeeded] (exit code: 0)
+Job #162: echo carga-8-8 [Succeeded] (exit code: 0)
+Job #160: echo carga-8-18 [Succeeded] (exit code: 0)
+Job #163: echo carga-8-19 [Succeeded] (exit code: 0)
+Job #165: echo carga-8-15 [Succeeded] (exit code: 0)
+Job #164: echo carga-8-20 [Succeeded] (exit code: 0)
+Job #166: echo carga-8-9 [Succeeded] (exit code: 0)
+Job #167: echo nuevo [Succeeded] (exit code: 0)
+Job #168: echo carga-9-1 [Succeeded] (exit code: 0)
+Job #171: echo carga-9-3 [Succeeded] (exit code: 0)
+Job #170: echo carga-9-2 [Succeeded] (exit code: 0)
+Job #173: echo carga-9-10 [Succeeded] (exit code: 0)
+Job #169: echo carga-9-4 [Succeeded] (exit code: 0)
+Job #172: echo carga-9-5 [Succeeded] (exit code: 0)
+Job #174: echo carga-9-13 [Interrupted]
+Job #175: echo carga-9-6 [Interrupted]
+Job #176: echo carga-9-11 [Interrupted]
+Job #178: echo carga-9-7 [Succeeded] (exit code: 0)
+Job #177: echo carga-9-14 [Succeeded] (exit code: 0)
+Job #181: echo carga-9-16 [Succeeded] (exit code: 0)
+Job #180: echo carga-9-15 [Succeeded] (exit code: 0)
+Job #182: echo carga-9-18 [Succeeded] (exit code: 0)
+Job #179: echo carga-9-12 [Succeeded] (exit code: 0)
+Job #183: echo carga-9-8 [Succeeded] (exit code: 0)
+Job #186: echo carga-9-9 [Succeeded] (exit code: 0)
+Job #185: echo carga-9-19 [Succeeded] (exit code: 0)
+Job #187: echo carga-9-20 [Succeeded] (exit code: 0)
+Job #184: echo carga-9-17 [Succeeded] (exit code: 0)
+Job #188: echo nuevo [Succeeded] (exit code: 0)
+Job #192: echo carga-10-4 [Succeeded] (exit code: 0)
+Job #189: echo carga-10-1 [Interrupted]
+Job #190: echo carga-10-3 [Interrupted]
+Job #191: echo carga-10-2 [Interrupted]
+Job #193: echo carga-10-5 [Interrupted]
+Job #194: echo carga-10-13 [Succeeded] (exit code: 0)

@@ -1,0 +1,16 @@
+Job #1: sleep 3 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:23:22 UTC
+  ├─ Iniciado:  2026-11-22 01:23:22 UTC
+  └─ Finalizado: 2026-11-22 01:23:25 UTC
+Job #2: sleep 2 [Succeeded] (exit code: 0)
+  ├─ Recibido:  2026-11-22 01:23:22 UTC
+  ├─ Iniciado:  2026-11-22 01:23:25 UTC
+  └─ Finalizado: 2026-11-22 01:23:27 UTC
+Job #3: timeout 1 sleep 5 [Failed(124)] (exit code: 124)
+  ├─ Recibido:  2026-11-22 01:23:22 UTC
+  ├─ Iniciado:  2026-11-22 01:23:27 UTC
+  └─ Finalizado: 2026-11-22 01:23:28 UTC
+Job #4: sleep 1 [Canceled]
+  ├─ Recibido:  2026-11-22 01:23:22 UTC
+  ├─ Iniciado:  Pendiente
+  └─ Finalizado: 2026-11-22 01:23:23 UTC

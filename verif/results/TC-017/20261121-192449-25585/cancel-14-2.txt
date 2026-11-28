@@ -1,0 +1,2 @@
+Job #30 ya estaba cancelado; no se realizó una nueva cancelación
+exit_code=0

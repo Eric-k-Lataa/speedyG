@@ -1,0 +1,98 @@
+{
+  "next_id": 7,
+  "queue": [
+    {
+      "id": 4,
+      "program": "sleep",
+      "args": [
+        "1004"
+      ],
+      "state": "Running",
+      "exit_code": null,
+      "stdout": null,
+      "stderr": null,
+      "pid": 19647,
+      "received_at": "2026-11-22T01:23:54.208735586Z",
+      "started_at": "2026-11-22T01:23:54.210182392Z",
+      "finished_at": null
+    },
+    {
+      "id": 5,
+      "program": "echo",
+      "args": [
+        "en-cola-1"
+      ],
+      "state": "Queued",
+      "exit_code": null,
+      "stdout": null,
+      "stderr": null,
+      "pid": null,
+      "received_at": "2026-11-22T01:23:54.231973854Z",
+      "started_at": null,
+      "finished_at": null
+    },
+    {
+      "id": 6,
+      "program": "echo",
+      "args": [
+        "en-cola-2"
+      ],
+      "state": "Queued",
+      "exit_code": null,
+      "stdout": null,
+      "stderr": null,
+      "pid": null,
+      "received_at": "2026-11-22T01:23:54.243927392Z",
+      "started_at": null,
+      "finished_at": null
+    }
+  ],
+  "history": [
+    {
+      "id": 1,
+      "program": "echo",
+      "args": [
+        "terminado-exito"
+      ],
+      "state": "Succeeded",
+      "exit_code": 0,
+      "stdout": "terminado-exito\n",
+      "stderr": "",
+      "pid": 19565,
+      "received_at": "2026-11-22T01:23:54.137752319Z",
+      "started_at": "2026-11-22T01:23:54.138973185Z",
+      "finished_at": "2026-11-22T01:23:54.141684981Z"
+    },
+    {
+      "id": 2,
+      "program": "false",
+      "args": [],
+      "state": {
+        "Failed": 1
+      },
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "",
+      "pid": 19593,
+      "received_at": "2026-11-22T01:23:54.162522639Z",
+      "started_at": "2026-11-22T01:23:54.163879464Z",
+      "finished_at": "2026-11-22T01:23:54.166762626Z"
+    },
+    {
+      "id": 3,
+      "program": "sleep",
+      "args": [
+        "1003"
+      ],
+      "state": "Canceled",
+      "exit_code": null,
+      "stdout": null,
+      "stderr": null,
+      "pid": 19621,
+      "received_at": "2026-11-22T01:23:54.186867507Z",
+      "started_at": "2026-11-22T01:23:54.188285203Z",
+      "finished_at": "2026-11-22T01:23:54.199229527Z"
+    }
+  ],
+  "queue_cap": 550
+}

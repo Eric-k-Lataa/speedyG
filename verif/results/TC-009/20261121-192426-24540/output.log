@@ -1,0 +1,71 @@
+========================================
+TC-009  —  run 20261121-192426-24540
+========================================
+tc_id=TC-009
+run_id=20261121-192426-24540
+date=2026-11-21 19:24:26 CST
+os=Linux
+kernel=6.12.115+deb13.1-amd64
+arch=x86_64
+hostname=Makena
+rust=rustc 1.98.1 (48a229cea 2026-09-01)
+cargo=cargo 1.98.1 (797e8a9bc 2026-08-05)
+branch=erick
+commit=a0b3b9f1971c5e08a6857f5931c327d21cc3d1c8
+socket=/tmp/speedyg-TC-009-20261121-192426-24540-6XjUBQ.sock
+data_dir=/tmp/speedyg-TC-009-20261121-192426-24540-data-PMA0xh
+db=/tmp/speedyg-TC-009-20261121-192426-24540-data-PMA0xh/speedyg.db
+json=/tmp/speedyg-TC-009-20261121-192426-24540-data-PMA0xh/scheduler.json
+daemon_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyG
+client_bin=/home/elataa/Documents/Workspace/speedyG/target/debug/speedyg
+========================================
+
+[INFO] Iniciando daemon: /home/elataa/Documents/Workspace/speedyG/target/debug/speedyG --max-current 2 --queue-cap 10
+[INFO] Socket: /tmp/speedyg-TC-009-20261121-192426-24540-6XjUBQ.sock
+[INFO] PID del daemon: 24580
+[PASS] Daemon disponible (PID 24580).
+[PASS] Configuración efectiva del daemon: max_current=2 queue_cap=10
+
+════════════════════════════════════════
+[FASE 1] Preparar trabajos activos y en cola
+════════════════════════════════════════
+[PASS] [FASE 1] L1 (sleep 2001) aceptado (ID #1)
+[PASS] [FASE 1] L2 (sleep 2002) aceptado (ID #2)
+[PASS] [FASE 1] L1 está en Running (estado: Running)
+[PASS] [FASE 1] L2 está en Running (estado: Running)
+[PASS] [FASE 1] L3 (echo en-cola) aceptado (ID #3)
+[PASS] [FASE 1] L3 está en Queued (estado: Queued)
+[PASS] [FASE 1] Proceso sleep 2001 existe en el SO (encontrados: 2)
+[PASS] [FASE 1] Proceso sleep 2002 existe en el SO (encontrados: 2)
+
+════════════════════════════════════════
+[FASE 2] Cierre controlado con SIGTERM
+════════════════════════════════════════
+[INFO] Enviando SIGTERM -> PID 24580 (ts=1795310668.362200783)
+[PASS] [FASE 2] El intento de envío post-SIGTERM NO recibe confirmación de encolado (respuesta: 'Error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" }')
+[PASS] [FASE 2] Daemon termina en máximo 10s tras SIGTERM (tardó: 1s)
+
+════════════════════════════════════════
+[FASE 3] Verificar liberación de recursos
+════════════════════════════════════════
+[PASS] [FASE 3] Socket Unix liberado en máximo 5s tras el cierre (liberado: 1)
+[PASS] [FASE 3] ss no muestra el socket como activo
+[PASS] [FASE 3] Sin procesos huérfanos de sleep 2001 tras el cierre (PIDs: 'ninguno')
+[PASS] [FASE 3] Sin procesos huérfanos de sleep 2002 tras el cierre (PIDs: '')
+[PASS] [FASE 3] Sin procesos zombis en el sistema tras el cierre (encontrados: 'ninguno')
+
+════════════════════════════════════════
+[FASE 4] Verificar estado final de los trabajos
+════════════════════════════════════════
+[PASS] [FASE 4] Daemon reinicia para consulta de estado final
+[PASS] [FASE 4] L1 no permanece Running tras cierre (estado: Canceled)
+[PASS] [FASE 4] L2 no permanece Running tras cierre (estado: Canceled)
+[PASS] [FASE 4] L3 no pasó a Running durante el cierre (estado final: Succeeded)
+[PASS] [CIERRE] Daemon responde health tras reinicio de verificación (obtenido: 'OK: Daemon speedyg funcionando correctamente')
+
+========================================
+RESULTADO: PASS
+PASS: 22  FAIL: 0  BLOCKED: 0
+========================================
+
+[INFO] Deteniendo daemon PID 24830...

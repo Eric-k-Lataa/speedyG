@@ -1,0 +1,2 @@
+Job #20 cancelado correctamente
+exit_code=0

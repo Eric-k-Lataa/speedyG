@@ -1,0 +1,5 @@
+Job #206: sleep 2 [Running]
+  ├─ Recibido:  2026-11-22 01:46:18 UTC
+  ├─ Iniciado:  2026-11-22 01:46:19 UTC
+  └─ Finalizado: En curso / No finalizado
+

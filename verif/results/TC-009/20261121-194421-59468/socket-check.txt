@@ -1,0 +1,4 @@
+socket_path=/tmp/speedyg-TC-009-20261121-194421-59468-fXwcDQ.sock
+socket_exists_after=no
+socket_gone=1
+ss_result=ninguno

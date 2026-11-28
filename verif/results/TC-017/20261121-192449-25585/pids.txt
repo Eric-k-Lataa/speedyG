@@ -1,0 +1,45 @@
+iter_1: pids_before=25700
+25701
+iter_1: procs_dead=1 remaining=0
+iter_2: pids_before=26021
+26022
+iter_2: procs_dead=1 remaining=0
+iter_3: pids_before=26375
+26376
+iter_3: procs_dead=1 remaining=0
+iter_4: pids_before=26699
+26700
+iter_4: procs_dead=1 remaining=0
+iter_5: pids_before=27040
+27041
+iter_5: procs_dead=1 remaining=0
+iter_6: pids_before=27376
+27377
+iter_6: procs_dead=1 remaining=0
+iter_7: pids_before=27704
+27706
+iter_7: procs_dead=1 remaining=0
+iter_8: pids_before=28039
+28042
+iter_8: procs_dead=1 remaining=0
+iter_9: pids_before=28376
+28377
+iter_9: procs_dead=1 remaining=0
+iter_10: pids_before=28699
+28700
+iter_10: procs_dead=1 remaining=0
+iter_21: pids_before=33563
+33564
+iter_21: procs_dead=1 remaining=0
+iter_22: pids_before=33922
+33924
+iter_22: procs_dead=1 remaining=0
+iter_23: pids_before=34321
+34322
+iter_23: procs_dead=1 remaining=0
+iter_24: pids_before=34672
+34673
+iter_24: procs_dead=1 remaining=0
+iter_25: pids_before=35052
+35053
+iter_25: procs_dead=1 remaining=0
