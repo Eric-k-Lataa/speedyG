@@ -25,13 +25,18 @@ Definir los estados posibles de un trabajo, las transiciones permitidas y las ac
 | `RUNNING` | Termina correctamente el trabajo | `SUCCEEDED` | Guardar resultado, libera capacidad |
 | `RUNNING` | Ocurre un error | `FAILED` | Guardar error, libera capacidad |
 | `RUNNING` | Se cancela trabajo | `CANCELED` | Guardar cancelación, libera capacidad |
-| `RUNNING` | El servicio se reinicia, el trabajo estaba en ejecución | `INTERRUPTED` | Registrar la interrupción, liberar la capacidad reservada |
-| `QUEUED` | El servicio se reinicia | `QUEUED` | Restaurar el trabajo en la cola |
-| `SUCCEEDED` | El servicio se reinicia | `SUCCEEDED` | Conservar el resultado |
-| `FAILED` | El servicio se reinicia | `FAILED` | Conservar el error |
-| `CANCELED` | El servicio se reinicia | `CANCELED` | Conservar la cancelación |
-| `INTERRUPTED` | El servicio se reinicia | `INTERRUPTED` | Conservar el estado de interrupción |
+| `RUNNING` | Recuperación después de un cierre abrupto | `INTERRUPTED` | Marcar el trabajo como interrumpido |
+| `RUNNING` | Ctrl+C (`SIGINT`) | `CANCELED` | Cancelar el trabajo y liberar la capacidad |
+| `QUEUED` | Recuperación después de un cierre abrupto | `QUEUED` | Restaurar el trabajo conservando su posición en la cola |
+| `QUEUED` | Ctrl+C (`SIGINT`) | `RUNNING` | Iniciar el trabajo si se libera capacidad antes de terminar el daemon |
+| `SUCCEEDED` | Recuperación tras reinicio | `SUCCEEDED` | Conservar el resultado |
+| `FAILED` | Recuperación tras reinicio | `FAILED` | Conservar el error |
+| `CANCELED` | Recuperación tras reinicio | `CANCELED` | Conservar la cancelación |
+| `INTERRUPTED` | Recuperación tras reinicio | `INTERRUPTED` | Conservar el estado de interrupción |
 
+Durante un cierre controlado mediante `SIGINT` (Ctrl+C), los trabajos que se encuentran en ejecución se cancelan. Al liberarse espacios, los trabajos pendientes pueden comenzar a ejecutarse. Si alguno de estos trabajos continúa en ejecución cuando termina el daemon, será recuperado como `INTERRUPTED` en el siguiente inicio.
+
+En un cierre abrupto, los trabajos que estaban en ejecución se recuperan como `INTERRUPTED`, mientras que los trabajos pendientes conservan su estado `QUEUED`.
 
 ## 4. Diagrama de estados
 
@@ -47,7 +52,7 @@ stateDiagram-v2
     RUNNING --> SUCCEEDED: Termina correctamente
     RUNNING --> FAILED: Ocurre un error
     RUNNING --> CANCELED: Se cancela trabajo
-    RUNNING --> INTERRUPTED: Reinicio del servicio
+    RUNNING --> INTERRUPTED: Recuperación tras cierre abrupto o terminación del daemon
 
     QUEUED --> QUEUED: Recuperación tras reinicio
     SUCCEEDED --> SUCCEEDED: Recuperación tras reinicio
